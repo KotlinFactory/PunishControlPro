@@ -1,0 +1,56 @@
+package org.mineacademy.punishcontrol.core;
+
+import de.leonhard.storage.util.Valid;
+import lombok.NonNull;
+import lombok.Setter;
+import lombok.experimental.FieldDefaults;
+import lombok.experimental.UtilityClass;
+import org.mineacademy.punishcontrol.core.storage.StorageProvider;
+import org.mineacademy.punishcontrol.core.storage.StorageType;
+
+
+/**
+ * Central manager & utility class
+ * of PunishControl
+ */
+@UtilityClass
+public class PunishControlManager {
+	@Setter
+	@NonNull
+	private StorageType storageType;
+	@Setter
+	@NonNull
+	private String language;
+
+	/*
+	TODO:
+	 - AutoBackuper /phc backup
+	 */
+
+	public StorageType storageType() {
+		Valid.notNull(storageType, "StorageType not yet set");
+
+		return storageType;
+	}
+
+	public String language() {
+		Valid.notNull(language, "Languages not yet set");
+
+		return language;
+	}
+
+	public StorageProvider storageProvider() {
+		return storageType().getStorageProvider();
+	}
+
+	// ----------------------------------------------------------------------------------------------------
+	// Constants
+	// ----------------------------------------------------------------------------------------------------
+
+	@UtilityClass
+	@FieldDefaults(makeFinal = true)
+	public static class FILES {
+		public String PLUGIN_FOLDER = "plugins/PunishControl-Pro";
+		public String JSON_DATA_FILE_NAME = "Punishes";
+	}
+}

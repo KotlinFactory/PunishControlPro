@@ -1,0 +1,5 @@
+# Project exclude paths
+/punishcontrol-core/target/
+/punishcontrol-plugin/target/
+/punishcontrol-proxy/target/
+/punishcontrol-spigot/target/

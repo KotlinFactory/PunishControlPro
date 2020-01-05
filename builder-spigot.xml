@@ -1,0 +1,29 @@
+<?xml version="1.0" ?>
+<project name="PunishControl-Spigot" default="Build">
+
+    <!-- Set where to put the plugin for Mac -->
+    <condition property="serverPath" value="D:\Test servers\${mc_version}">
+        <os family="windows"/>
+    </condition>
+
+    <!-- Set where to put the plugin for Windows -->
+    <condition property="serverPath" value="/Users/leonhard/TestServer/1.12TestServer">
+        <os family="mac"/>
+    </condition>
+
+    <!-- Compile the plugin and its dependencies -->
+    <target name="Build">
+        <jar jarfile="${serverPath}\plugins\${ant.project.name}.jar" basedir="punishcontrol-core/target/classes/"
+             includes="**/*">
+            <zipgroupfileset dir="${user.home}/.m2/repository/org/mineacademy/Burst/1.0.1/"
+                             includes="**/*burst-1.0.2.jar"/>
+            <fileset dir="punishcontrol-spigot/target/classes"/>
+            <fileset dir="punishcontrol-proxy/target/classes"/>
+            <fileset dir="punishcontrol-plugin/target/classes"/>
+            <fileset dir="../Protect/target/classes"/>
+            <fileset dir="../Foundation/target/classes"/>
+
+        </jar>
+    </target>
+
+</project>

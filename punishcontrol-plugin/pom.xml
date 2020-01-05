@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>PunishControlPro</artifactId>
+        <groupId>org.mineacademy</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+    <version>1.0.0</version>
+    <artifactId>punishcontrol-plugin</artifactId>
+
+
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <author>leonhard</author>
+        <plugin.name>punishcontrol-pro</plugin.name>
+        <mainClass>${project.groupId}.${plugin.name}.${project.artifactId}</mainClass>
+    </properties>
+
+
+    <repositories>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>1.18.10</version>
+            <scope>provided</scope>
+        </dependency>
+
+
+        <dependency>
+            <groupId>org.mineacademy</groupId>
+            <artifactId>punishcontrol-core</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mineacademy</groupId>
+            <artifactId>punishcontrol-proxy</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.mineacademy</groupId>
+            <artifactId>punishcontrol-spigot</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <defaultGoal>clean verify -U</defaultGoal>
+        <pluginManagement>
+            <plugins>
+<!--                <plugin>-->
+<!--                    <groupId>org.apache.maven.plugins</groupId>-->
+<!--                    <artifactId>maven-install-plugin</artifactId>-->
+<!--                    <version>3.0.0-M1</version>-->
+<!--                    <executions>-->
+<!--                        <execution>-->
+<!--                            <id>install-burst</id>-->
+<!--                            <phase>clean</phase>-->
+<!--                            <configuration>-->
+<!--                                <groupId>org.mineacademy</groupId>-->
+<!--                                <artifactId>burst</artifactId>-->
+<!--                                <version>1.0.2</version>-->
+<!--                                <file>../lib/burst.jar</file>-->
+<!--                                <packaging>jar</packaging>-->
+<!--                                <generatePom>true</generatePom>-->
+<!--                            </configuration>-->
+<!--                            <goals>-->
+<!--                                <goal>install-file</goal>-->
+<!--                            </goals>-->
+<!--                        </execution>-->
+<!--                    </executions>-->
+<!--                </plugin>-->
+
+                <plugin>
+                    <artifactId>maven-site-plugin</artifactId>
+                    <version>3.8.2</version>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-javadoc-plugin</artifactId>
+                    <version>3.1.1</version>
+                </plugin>
+
+                <plugin>
+                    <artifactId>maven-scm-publish-plugin</artifactId>
+                    <version>1.1</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.1</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <createDependencyReducedPom>false</createDependencyReducedPom>
+                    <artifactSet>
+                        <includes>
+                            <!-- We want our other modules in our final jar-->
+                            <include>org.mineacademy:punishcontrol-spigot*</include>
+                            <include>org.mineacademy:punishcontrol-proxy*</include>
+                            <include>org.mineacademy:punishcontrol-core*</include>
+                            <!-- We want our libraries in our final jar -->
+                            <include>org.mineacademy:Foundation*</include>
+                            <include>org.mineacademy:BungeeFoundation*</include>
+                            <include>org.mineacademy:Protect*</include>
+                            <include>org.mineacademy:burst*</include>
+                            <include>de.leonhard:storage*</include>
+                            <include>com.github.JavaFactoryDev:LightningStorage*</include>
+                        </includes>
+                    </artifactSet>
+                    <!--                    <relocations>-->
+                    <!--                        <relocation>-->
+                    <!--                            <pattern>org.mineacademy</pattern>-->
+                    <!--                            <shadedPattern>org.mineacademy.${plugin.name}.lib</shadedPattern>-->
+                    <!--                            <excludes>-->
+                    <!--                                <exclude>org.mineacademy.${plugin.name}.*</exclude>-->
+                    <!--                            </excludes>-->
+                    <!--                        </relocation>-->
+                    <!--                    </relocations>-->
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>3.1.2</version>
+                <configuration>
+                    <archive>
+                        <addMavenDescriptor>false</addMavenDescriptor>
+                        <manifestEntries>
+                            <Manifest-Version>${project.version}</Manifest-Version>
+                            <Built-By>${project.name} Development Team</Built-By>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <executions>
+                    <execution>
+                        <id>compile</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>compile</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>testCompile</id>
+                        <phase>test-compile</phase>
+                        <goals>
+                            <goal>testCompile</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <source>1.8</source>
+                    <target>1.8</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-deploy-plugin</artifactId>
+                <version>3.0.0-M1</version>
+                <configuration>
+                    <skip>true</skip>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <id>moveFiles</id>
+                        <phase>install</phase>
+                        <configuration>
+                            <tasks>
+                                <copy todir="/Users/leonhard/TestServer/1.12TestServer/plugins"
+                                      flatten="true" overwrite="true"
+                                      verbose="true" failonerror="true">
+                                    <fileset dir="${basedir}/target"
+                                             includes="punishcontrol-plugin-1.0.0.jar"/>
+                                </copy>
+
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

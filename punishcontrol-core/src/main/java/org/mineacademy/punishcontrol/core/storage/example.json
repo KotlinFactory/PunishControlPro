@@ -1,0 +1,42 @@
+{
+  "bans": {
+    "UUID": {
+      "MS": {
+        "creator": "UUID",
+        "target-name": "NAME",
+        "reason": "REASON",
+        "duration": 39393033093393033093039
+      }
+    }
+  },
+  "mutes": {
+    "UUID": {
+      "MS": {
+        "creator": "UUID",
+        "target-name": "NAME",
+        "reason": "REASON",
+        "duration": 39393033093393033093039
+      }
+    }
+  },
+  "warns": {
+    "UUID": {
+      "MS": {
+        "creator": "UUID",
+        "target-name": "NAME",
+        "reason": "REASON",
+        "duration": 39393033093393033093039
+      }
+    }
+  },
+  "reports": {
+    "UUID": {
+      "MS": {
+        "creator": "UUID",
+        "target-name": "NAME",
+        "reason": "REASON",
+        "duration": 39393033093393033093039
+      }
+    }
+  }
+}
