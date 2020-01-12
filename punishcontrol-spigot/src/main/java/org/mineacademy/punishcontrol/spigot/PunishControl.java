@@ -3,21 +3,18 @@ package org.mineacademy.punishcontrol.spigot;
 
 import lombok.NonNull;
 import org.mineacademy.fo.Common;
-import org.mineacademy.fo.Valid;
-import org.mineacademy.fo.command.SimpleCommandGroup;
+import org.mineacademy.fo.collection.StrictList;
 import org.mineacademy.fo.plugin.SimplePlugin;
 import org.mineacademy.fo.settings.YamlStaticConfig;
 import org.mineacademy.punishcontrol.core.SimplePunishControlPlugin;
 import org.mineacademy.punishcontrol.core.provider.Providers;
-import org.mineacademy.punishcontrol.core.provider.SettingsProvider;
 import org.mineacademy.punishcontrol.core.storage.StorageType;
-import org.mineacademy.punishcontrol.spigot.command.punishcontrol.PunishControlCommandGroup;
+import org.mineacademy.punishcontrol.spigot.command.PunishControlCommand;
 import org.mineacademy.punishcontrol.spigot.impl.SpigotPlayerProvider;
 import org.mineacademy.punishcontrol.spigot.settings.Settings;
 
 import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 public final class PunishControl extends SimplePlugin implements SimplePunishControlPlugin {
 
@@ -38,21 +35,26 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 	private void setProviders() {
 		Providers.setPlayerProvider(new SpigotPlayerProvider());
 
-		Providers.setSettingsProvider(new SettingsProvider() {
-			@Override
-			public Set<String> getReportReasons() {
-				Valid.checkNotNull(Settings.reportReasons, "Report reasons not yet set");
-				return Settings.reportReasons;
-			}
-
-			@Override
-			public boolean cacheResults() {
-				Valid.checkNotNull(Settings.cacheResults, "CacheResults not yet set");
-
-				return Settings.cacheResults;
-			}
-
-		});
+//		Providers.setSettingsProvider(new SettingsProvider() {
+//			@Override
+//			public Set<String> getReportReasons() {
+//				Valid.checkNotNull(Settings.reportReasons, "Report reasons not yet set");
+//				return Settings.reportReasons;
+//			}
+//
+//			@Override
+//			public boolean cacheResults() {
+//				Valid.checkNotNull(Settings.cacheResults, "CacheResults not yet set");
+//
+//				return Settings.cacheResults;
+//			}
+//
+//			@Override
+//			public String getJoinMessageForBannedPlayer(final Ban ban) {
+//				return null;
+//			}
+//
+//		});
 	}
 
 	// ----------------------------------------------------------------------------------------------------
@@ -61,7 +63,7 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 
 	@Override
 	public void registerCommands() {
-
+		registerCommand(new PunishControlCommand(new StrictList<>("punishcontrol", "phc", "pun", "pc")));
 	}
 
 	@Override
@@ -86,11 +88,6 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 	@Override
 	public List<Class<? extends YamlStaticConfig>> getSettings() {
 		return Collections.<Class<? extends YamlStaticConfig>>singletonList(Settings.class);
-	}
-
-	@Override
-	public SimpleCommandGroup getMainCommand() {
-		return new PunishControlCommandGroup();
 	}
 
 	@Override

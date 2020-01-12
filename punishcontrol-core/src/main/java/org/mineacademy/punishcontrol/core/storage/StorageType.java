@@ -10,6 +10,8 @@ import java.util.UUID;
 
 public enum StorageType {
 	MYSQL {
+		//TODO Cache results
+
 		@Override
 		public PlayerCache getCacheFor(final @NonNull UUID uuid) {
 			return new MySQLPlayerCache(uuid);

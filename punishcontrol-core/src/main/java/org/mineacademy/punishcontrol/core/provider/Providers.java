@@ -4,6 +4,8 @@ import de.leonhard.storage.util.Valid;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.UtilityClass;
+import org.mineacademy.punishcontrol.core.PunishControlManager;
+import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 
 @UtilityClass
 public class Providers {
@@ -19,6 +21,11 @@ public class Providers {
 	@Setter
 	@NonNull
 	private SettingsProvider settingsProvider;
+
+	//Can't be set
+	public StorageProvider storageProvider() {
+		return PunishControlManager.storageType().getStorageProvider();
+	}
 
 	public PlayerProvider playerProvider() {
 		Valid.notNull(playerProvider, "PlayerProvider not yet set.");

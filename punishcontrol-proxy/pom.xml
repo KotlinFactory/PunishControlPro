@@ -17,6 +17,10 @@
             <id>mineacademy-repo</id>
             <url>https://bitbucket.org/mineacademy/libraries/raw/master</url>
         </repository>
+        <repository>
+            <id>bungeecord-repo</id>
+            <url>https://oss.sonatype.org/content/repositories/snapshots</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -27,7 +31,6 @@
             <scope>provided</scope>
         </dependency>
 
-
         <!-- Our Core-->
         <dependency>
             <groupId>org.mineacademy</groupId>
@@ -37,17 +40,24 @@
         </dependency>
 
         <!-- BungeeCord -->
+
         <dependency>
-            <groupId>org.mineacademy.server</groupId>
-            <artifactId>BungeeCord</artifactId>
-            <version>SNAPSHOT-1417</version>
-            <scope>provided</scope>
+            <groupId>net.md-5</groupId>
+            <artifactId>bungeecord-api</artifactId>
+            <version>1.14-SNAPSHOT</version>
         </dependency>
+
+<!--        <dependency>-->
+<!--            <groupId>org.mineacademy.server</groupId>-->
+<!--            <artifactId>BungeeCord</artifactId>-->
+<!--            <version>SNAPSHOT-1417</version>-->
+<!--            <scope>provided</scope>-->
+<!--        </dependency>-->
 
         <dependency>
             <groupId>org.mineacademy</groupId>
             <artifactId>burst</artifactId>
-            <version>1.0.2</version>
+            <version>1.0.0</version>
         </dependency>
     </dependencies>
 

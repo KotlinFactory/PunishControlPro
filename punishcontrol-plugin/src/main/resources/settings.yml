@@ -1,5 +1,11 @@
 Version: 1
 Command_Aliases: [punishcontrol,phc, pun, pc]
 
-Repots:
+#JSON/MYSQL
+Storage: JSON
+
+Reports:
   Allowed_Reasons: []
+
+Advanced:
+  Cache_Results: true

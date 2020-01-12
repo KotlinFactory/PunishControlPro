@@ -11,6 +11,10 @@ import java.util.UUID;
 
 public interface StorageProvider {
 
+	boolean isBanned(@NonNull UUID uuid);
+
+	boolean isMuted(@NonNull UUID uuid);
+
 	// ----------------------------------------------------------------------------------------------------
 	// Listing all current punishes/warns/reports
 	// ----------------------------------------------------------------------------------------------------

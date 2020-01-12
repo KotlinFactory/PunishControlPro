@@ -1,12 +1,5 @@
-name: PunishControlPro
+#Change me to use the maven properties
 main: org.mineacademy.punishcontrol.proxy.PunishControl
-version: 1.0.0
+version: ${project.version}
+name: PunishControlPro
 author: ${author}
-#
-# DO NOT ALTER THIS FILE, otherwise you might end up breaking the plugin completely!
-# No support is given to modified versions.
-#
-commands:
-# The commands are built at runtime so you can change them easily within the settings.
-
-permissions:

@@ -3,17 +3,17 @@ package org.mineacademy.punishcontrol.core;
 import de.leonhard.storage.util.Valid;
 import lombok.NonNull;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.UtilityClass;
-import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 import org.mineacademy.punishcontrol.core.storage.StorageType;
-
 
 /**
  * Central manager & utility class
  * of PunishControl
  */
 @UtilityClass
+@Accessors(chain = true)
 public class PunishControlManager {
 	@Setter
 	@NonNull
@@ -37,10 +37,6 @@ public class PunishControlManager {
 		Valid.notNull(language, "Languages not yet set");
 
 		return language;
-	}
-
-	public StorageProvider storageProvider() {
-		return storageType().getStorageProvider();
 	}
 
 	// ----------------------------------------------------------------------------------------------------

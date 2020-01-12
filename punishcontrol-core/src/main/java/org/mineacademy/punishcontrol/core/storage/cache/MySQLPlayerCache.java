@@ -9,7 +9,7 @@ import org.mineacademy.punishcontrol.core.warn.Warn;
 import java.util.List;
 import java.util.UUID;
 
-public class MySQLPlayerCache extends PlayerCache {
+public final class MySQLPlayerCache extends PlayerCache {
 
 	public MySQLPlayerCache(@NonNull final UUID uuid) {
 		super(uuid);

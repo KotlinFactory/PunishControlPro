@@ -1,5 +1,6 @@
 package org.mineacademy.punishcontrol.core.storage;
 
+import de.leonhard.storage.util.Valid;
 import lombok.NonNull;
 import org.mineacademy.punishcontrol.core.punish.Ban;
 import org.mineacademy.punishcontrol.core.punish.Mute;
@@ -9,7 +10,30 @@ import org.mineacademy.punishcontrol.core.warn.Warn;
 import java.util.List;
 import java.util.UUID;
 
-public class MySQLStorageProvider extends SimpleDatabase implements StorageProvider {
+public final class MySQLStorageProvider extends SimpleDatabase implements StorageProvider {
+
+	private volatile static MySQLStorageProvider instance;
+
+	private MySQLStorageProvider() {
+		Valid.checkBoolean(instance == null, "We already have an instance of MySQLStorageProvider");
+	}
+
+	public static MySQLStorageProvider getInstance() {
+		if (instance != null) {
+			return instance;
+		}
+		return instance = new MySQLStorageProvider();
+	}
+
+	@Override
+	public boolean isBanned(@NonNull final UUID uuid) {
+		return false;
+	}
+
+	@Override
+	public boolean isMuted(@NonNull final UUID uuid) {
+		return false;
+	}
 
 	@Override
 	public List<Ban> listAllBans() {

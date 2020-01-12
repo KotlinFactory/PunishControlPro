@@ -16,6 +16,14 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <author>leonhard</author>
         <plugin.name>punishcontrol-pro</plugin.name>
+
+        <!-- Our main-classes-->
+        <proxy.main>
+            org.mineacademy.punishcontrol.proxy.PunishControl
+        </proxy.main>
+        <spigot.main>
+            org.mineacademy.punishcontrol.spigot.PunishControl
+        </spigot.main>
         <mainClass>${project.groupId}.${plugin.name}.${project.artifactId}</mainClass>
     </properties>
 
@@ -70,7 +78,7 @@
 <!--                            <configuration>-->
 <!--                                <groupId>org.mineacademy</groupId>-->
 <!--                                <artifactId>burst</artifactId>-->
-<!--                                <version>1.0.2</version>-->
+<!--                                <version>1.0.3</version>-->
 <!--                                <file>../lib/burst.jar</file>-->
 <!--                                <packaging>jar</packaging>-->
 <!--                                <generatePom>true</generatePom>-->

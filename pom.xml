@@ -5,9 +5,21 @@
     <modelVersion>4.0.0</modelVersion>
 
 
-    <!--    <properties/>-->
-    <!--    <foundation.version>5.1.5</foundation.version>-->
-    <!--    <properties/>-->
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <author>leonhard</author>
+        <plugin.name>punishcontrol-pro</plugin.name>
+
+        <!-- Our main-classes-->
+        <proxy.main>
+            org.mineacademy.punishcontrol.proxy.PunishControl
+        </proxy.main>
+        <spigot.main>
+            org.mineacademy.punishcontrol.spigot.PunishControl
+        </spigot.main>
+        <mainClass>${project.groupId}.${plugin.name}.${project.artifactId}</mainClass>
+    </properties>
+
 
     <groupId>org.mineacademy</groupId>
     <artifactId>PunishControlPro</artifactId>

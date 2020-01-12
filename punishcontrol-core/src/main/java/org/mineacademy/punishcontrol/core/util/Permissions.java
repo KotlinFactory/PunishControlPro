@@ -14,12 +14,15 @@ public class Permissions {
 
 
 	@UtilityClass
+	@FieldDefaults(makeFinal = true)
 	public class CMD {
+		public String MAIN = "PunishControl.CMD";
 		public String HELP = "PunishControl.CMD.Help";
 		public String EXPORT = "PunishControl.CMD.Export";
 	}
 
 	@UtilityClass
+	@FieldDefaults(makeFinal = true)
 	public class BANS {
 		public String BAN = "PunishControl.Bans.Ban";
 		public String LIST = "PunishControl.Bans.List";
@@ -28,6 +31,7 @@ public class Permissions {
 
 
 	@UtilityClass
+	@FieldDefaults(makeFinal = true)
 	public class MUTES {
 		public String MUTE = "PunishControl.Mutes.Mute";
 		public String LIST = "PunishControl.Mutes.List";
@@ -35,24 +39,25 @@ public class Permissions {
 	}
 
 	@UtilityClass
+	@FieldDefaults(makeFinal = true)
 	public class WARNS {
 		public String WARN = "PunishControl.Warns.Warn";
 		public String LIST = "PunishControl.Warns.List";
 	}
 
 	@UtilityClass
+	@FieldDefaults(makeFinal = true)
 	public class KICKS {
 		public String KICK = "PunishControl.Kicks.Kick";
 		public String LIST = "PunishControl.Kicks.List";
 	}
 
 	@UtilityClass
+	@FieldDefaults(makeFinal = true)
 	public class REPORTS {
 		public String REPORT_PLAYER = "PunishControl.Reports.Report";
 		public String ACCEPT = "PunishControl.Reports.Accept";
 		public String DENY = "PunishControl.Reports.Deny";
-
-
 	}
 }
 

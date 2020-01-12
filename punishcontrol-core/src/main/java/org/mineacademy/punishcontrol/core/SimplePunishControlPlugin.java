@@ -25,6 +25,10 @@ public interface SimplePunishControlPlugin {
 
 	void log(@NonNull String... message);
 
+	default void log() {
+		log(" ");
+	}
+
 	void registerCommands();
 
 	void registerListener();
@@ -74,7 +78,6 @@ public interface SimplePunishControlPlugin {
 		log(" ");
 
 		//Startup
-
 		try {
 			downloadDependencies();
 			log("Dependencies §l§a✔");
@@ -98,5 +101,9 @@ public interface SimplePunishControlPlugin {
 			log("Commands §l§c✘");
 			saveError(throwable);
 		}
+
+		log();
+
+		log("§7*--------------------------------------------------------------*");
 	}
 }

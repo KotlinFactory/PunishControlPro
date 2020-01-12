@@ -13,7 +13,7 @@ import java.util.List;
 import java.util.UUID;
 
 //We don't yet know any methods -> Will be added -> we don't want to yet implement them -> make class temporary abstract
-public class JsonStorageProvider extends Json implements StorageProvider {
+public final class JsonStorageProvider extends Json implements StorageProvider {
 
 	public JsonStorageProvider() {
 		super(PunishControlManager.FILES.JSON_DATA_FILE_NAME, PunishControlManager.FILES.PLUGIN_FOLDER);
@@ -21,6 +21,16 @@ public class JsonStorageProvider extends Json implements StorageProvider {
 
 	public static PlayerCache getFor(@NonNull final UUID uuid) {
 		return PunishControlManager.storageType().getCacheFor(uuid);
+	}
+
+	@Override
+	public boolean isBanned(@NonNull final UUID uuid) {
+		return false;
+	}
+
+	@Override
+	public boolean isMuted(@NonNull final UUID uuid) {
+		return false;
 	}
 
 	@Override

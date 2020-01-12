@@ -1,5 +1,5 @@
 #Change me to use the maven properties
 main: org.mineacademy.punishcontrol.spigot.PunishControl
-version: 1.0.0
+version: ${project.version}
 name: PunishControlPro
 author: ${author}
