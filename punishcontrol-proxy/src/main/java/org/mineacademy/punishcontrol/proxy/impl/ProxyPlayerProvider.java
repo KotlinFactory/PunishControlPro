@@ -1,67 +1,50 @@
-package org.mineacademy.punishcontrol.spigot.impl;
+package org.mineacademy.punishcontrol.proxy.impl;
 
 import lombok.NonNull;
-import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.Player;
-import org.mineacademy.fo.Common;
-import org.mineacademy.fo.remain.Remain;
+import net.md_5.bungee.api.ProxyServer;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
+import org.mineacademy.bfo.Common;
 import org.mineacademy.punishcontrol.core.provider.PlayerProvider;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class SpigotPlayerProvider implements PlayerProvider {
+public class ProxyPlayerProvider implements PlayerProvider {
 	@Override
 	public List<UUID> getOfflinePlayers() {
-		final List<UUID> result = new ArrayList<>();
-
-		for (final OfflinePlayer player : Bukkit.getOfflinePlayers()) {
-			result.add(player.getUniqueId());
-		}
-
-		return result;
+		return null;
 	}
 
 	@Override
 	public List<UUID> getOnlinePlayers() {
 		final List<UUID> result = new ArrayList<>();
-		for (final Player player : Bukkit.getOnlinePlayers()) {
+
+		for (final ProxiedPlayer player : ProxyServer.getInstance().getPlayers()) {
 			result.add(player.getUniqueId());
 		}
+
 		return result;
 	}
 
 	@Override
 	public boolean isOnline(@NonNull final UUID uuid) {
-		return Bukkit.getPlayer(uuid) != null;
+		return false;
 	}
 
 	@Override
 	public String getName(@NonNull final UUID uuid) {
-		return Remain.getOfflinePlayerByUUID(uuid).getName();
-	}
-
-	@Override
-	protected void finalize() throws Throwable {
-		super.finalize();
+		return null;
 	}
 
 	@Override
 	public UUID getUUID(@NonNull final String name) {
-		for (final OfflinePlayer player : Bukkit.getOfflinePlayers()) {
-			if (player.getName() != null && player.getName().equals(name)) {
-				return player.getUniqueId();
-			}
-		}
-
 		return null;
 	}
 
 	@Override
 	public String getIpIfOnline(@NonNull final UUID uuid) {
-		final Player player = Bukkit.getPlayer(uuid);
+		final ProxiedPlayer player = ProxyServer.getInstance().getPlayer(uuid);
 		if (player == null || player.getAddress() == null) {
 			return null;
 		}
@@ -70,7 +53,7 @@ public class SpigotPlayerProvider implements PlayerProvider {
 
 	@Override
 	public void sendIfOnline(@NonNull final UUID uuid, final @NonNull String... messages) {
-		final Player player = Bukkit.getPlayer(uuid);
+		final ProxiedPlayer player = ProxyServer.getInstance().getPlayer(uuid);
 
 		if (player == null) {
 			return;

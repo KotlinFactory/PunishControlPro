@@ -16,6 +16,7 @@ public final class PunishControlCommand extends SimpleCommand {
 
 		if (args.length != 0) {
 			doHelp();
+			return;
 		}
 
 		checkConsole();
@@ -24,5 +25,6 @@ public final class PunishControlCommand extends SimpleCommand {
 	}
 
 	private void doHelp() {
+
 	}
 }

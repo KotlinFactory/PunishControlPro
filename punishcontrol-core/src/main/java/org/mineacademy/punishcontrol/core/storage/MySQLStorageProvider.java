@@ -12,6 +12,10 @@ import java.util.UUID;
 
 public final class MySQLStorageProvider extends SimpleDatabase implements StorageProvider {
 
+	public static boolean connected() {
+		return getInstance().isConnected();
+	}
+
 	private volatile static MySQLStorageProvider instance;
 
 	private MySQLStorageProvider() {
@@ -32,6 +36,16 @@ public final class MySQLStorageProvider extends SimpleDatabase implements Storag
 
 	@Override
 	public boolean isMuted(@NonNull final UUID uuid) {
+		return false;
+	}
+
+	@Override
+	public boolean isReported(@NonNull final UUID uuid) {
+		return false;
+	}
+
+	@Override
+	public boolean isWarned(@NonNull final UUID uuid) {
 		return false;
 	}
 
@@ -113,5 +127,25 @@ public final class MySQLStorageProvider extends SimpleDatabase implements Storag
 	@Override
 	public List<Report> listReports(@NonNull final UUID uuid) {
 		return null;
+	}
+
+	@Override
+	public void saveBan(@NonNull final Ban ban) {
+
+	}
+
+	@Override
+	public void saveMute(@NonNull final Mute mute) {
+
+	}
+
+	@Override
+	public void saveWarn(@NonNull final Warn warn) {
+
+	}
+
+	@Override
+	public void saveReport(@NonNull final Report report) {
+
 	}
 }

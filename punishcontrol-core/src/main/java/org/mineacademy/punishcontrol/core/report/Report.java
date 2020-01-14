@@ -1,13 +1,13 @@
 package org.mineacademy.punishcontrol.core.report;
 
-import lombok.Getter;
+import lombok.Data;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
+import lombok.experimental.Accessors;
 
 import java.util.UUID;
 
-@Getter
-@RequiredArgsConstructor()
+@Data
+@Accessors(fluent = true)
 public final class Report {
 	@NonNull
 	private final UUID target, creator;

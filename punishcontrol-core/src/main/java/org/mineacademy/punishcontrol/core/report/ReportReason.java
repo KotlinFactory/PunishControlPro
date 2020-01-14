@@ -1,12 +1,12 @@
 package org.mineacademy.punishcontrol.core.report;
 
 
+import lombok.Data;
 import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.experimental.Accessors;
 
-@Setter
-@RequiredArgsConstructor
+@Data
+@Accessors(fluent = true)
 public final class ReportReason {
 	@NonNull
 	private final String reason;

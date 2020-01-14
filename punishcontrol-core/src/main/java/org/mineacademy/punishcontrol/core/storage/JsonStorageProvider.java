@@ -34,6 +34,16 @@ public final class JsonStorageProvider extends Json implements StorageProvider {
 	}
 
 	@Override
+	public boolean isReported(@NonNull final UUID uuid) {
+		return false;
+	}
+
+	@Override
+	public boolean isWarned(@NonNull final UUID uuid) {
+		return false;
+	}
+
+	@Override
 	public List<Ban> listAllBans() {
 		return null;
 	}
@@ -111,5 +121,25 @@ public final class JsonStorageProvider extends Json implements StorageProvider {
 	@Override
 	public List<Report> listReports(@NonNull final UUID uuid) {
 		return null;
+	}
+
+	@Override
+	public void saveBan(@NonNull final Ban ban) {
+
+	}
+
+	@Override
+	public void saveMute(@NonNull final Mute mute) {
+
+	}
+
+	@Override
+	public void saveWarn(@NonNull final Warn warn) {
+
+	}
+
+	@Override
+	public void saveReport(@NonNull final Report report) {
+
 	}
 }

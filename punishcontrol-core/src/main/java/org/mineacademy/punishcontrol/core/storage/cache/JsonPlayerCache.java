@@ -9,7 +9,7 @@ import org.mineacademy.punishcontrol.core.warn.Warn;
 import java.util.List;
 import java.util.UUID;
 
-public class JsonPlayerCache extends PlayerCache {
+public final class JsonPlayerCache extends PlayerCache {
 	public JsonPlayerCache(@NonNull final UUID uuid) {
 		super(uuid);
 	}

@@ -3,3 +3,6 @@ main: org.mineacademy.punishcontrol.spigot.PunishControl
 version: ${project.version}
 name: PunishControlPro
 author: ${author}
+
+softdepend:
+  - Essentials

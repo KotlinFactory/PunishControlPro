@@ -2,6 +2,7 @@ package org.mineacademy.punishcontrol.core.provider;
 
 import org.mineacademy.punishcontrol.core.punish.Ban;
 
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -14,6 +15,6 @@ public interface SettingsProvider {
 	//Should results be cached?
 	boolean cacheResults();
 
-	String getJoinMessageForBannedPlayer(Ban ban);
+	List<String> getJoinMessageForBannedPlayer(Ban ban);
 
 }

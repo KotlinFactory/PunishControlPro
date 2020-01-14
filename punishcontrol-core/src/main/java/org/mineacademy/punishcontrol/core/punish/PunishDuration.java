@@ -14,15 +14,15 @@ import java.util.concurrent.TimeUnit;
 public final class PunishDuration {
 	private final long ms;
 
-	public static PunishDuration of(@NonNull String humanReadableTime) {
-		return new PunishDuration(TimeUtil.toTicks(humanReadableTime) * 50); //Converting to ms (1tick = 50ms)
+	public static PunishDuration of(@NonNull final String humanReadableTime) {
+		return new PunishDuration(TimeUtil.toMS(humanReadableTime)); //Converting to ms (1tick = 50ms)
 	}
 
-	public static PunishDuration of(long ms) {
+	public static PunishDuration of(final long ms) {
 		return new PunishDuration(ms);
 	}
 
-	public static PunishDuration of(long time, TimeUnit unit) {
+	public static PunishDuration of(final long time, final TimeUnit unit) {
 		return new PunishDuration(unit.toMillis(time));
 	}
 

@@ -8,7 +8,6 @@ import java.util.UUID;
 
 @UtilityClass
 public class PlayerManager {
-
 	public List<UUID> listOfflinePlayers() {
 		return Providers.playerProvider().getOfflinePlayers();
 	}

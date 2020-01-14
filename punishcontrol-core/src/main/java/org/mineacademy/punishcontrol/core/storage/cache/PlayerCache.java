@@ -51,9 +51,9 @@ public abstract class PlayerCache {
 
 	public abstract List<Report> listReports();
 
-	public abstract void ban(Ban ban);
+	public abstract void ban(@NonNull Ban ban);
 
-	public abstract void mute(Mute mute);
+	public abstract void mute(@NonNull Mute mute);
 
 	public final List<Punish> listPunishes() {
 		final List<Punish> result = new ArrayList<>();

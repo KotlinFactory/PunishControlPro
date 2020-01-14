@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
+    <option name="DEFAULT_COMPILER" value="Eclipse" />
     <option name="BUILD_PROCESS_HEAP_SIZE" value="2000" />
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true">
@@ -14,12 +15,15 @@
         <outputRelativeToContentRoot value="true" />
         <module name="PunishControlPro.punishcontrol-core.test" />
         <module name="punishcontrol-spigot" />
-        <module name="Boss" />
         <module name="punishcontrol-proxy" />
         <module name="PunishControlPro.punishcontrol-core.main" />
         <module name="punishcontrol-plugin" />
         <module name="punishcontrol-core" />
       </profile>
     </annotationProcessing>
+    <bytecodeTargetLevel target="8" />
+  </component>
+  <component name="EclipseCompilerSettings">
+    <option name="GENERATE_NO_WARNINGS" value="true" />
   </component>
 </project>

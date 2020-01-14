@@ -15,6 +15,10 @@ public interface StorageProvider {
 
 	boolean isMuted(@NonNull UUID uuid);
 
+	boolean isReported(@NonNull UUID uuid);
+
+	boolean isWarned(@NonNull UUID uuid);
+
 	// ----------------------------------------------------------------------------------------------------
 	// Listing all current punishes/warns/reports
 	// ----------------------------------------------------------------------------------------------------
@@ -62,4 +66,16 @@ public interface StorageProvider {
 	List<Warn> listWarns(@NonNull UUID uuid);
 
 	List<Report> listReports(@NonNull UUID uuid);
+
+	// ----------------------------------------------------------------------------------------------------
+	// Saving our punishes
+	// ----------------------------------------------------------------------------------------------------
+
+	void saveBan(@NonNull Ban ban);
+
+	void saveMute(@NonNull Mute mute);
+
+	void saveWarn(@NonNull Warn warn);
+
+	void saveReport(@NonNull Report report);
 }

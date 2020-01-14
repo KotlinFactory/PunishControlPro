@@ -64,7 +64,7 @@ public class TimeUtil {
 	 * @param time
 	 * @return
 	 */
-	public String getFormattedDate(long time) {
+	public String getFormattedDate(final long time) {
 		return DATE_FORMAT.format(time);
 	}
 
@@ -84,7 +84,7 @@ public class TimeUtil {
 	 * @param time
 	 * @return
 	 */
-	public String getFormattedDateShort(long time) {
+	public String getFormattedDateShort(final long time) {
 		return DATE_FORMAT_SHORT.format(time);
 	}
 
@@ -100,56 +100,54 @@ public class TimeUtil {
 	 *                          example: 5 seconds, 10 ticks, 7 minutes, 12 hours etc..
 	 * @return the converted human time to seconds
 	 */
-	public long toTicks(String humanReadableTime) {
+	public long toTicks(final String humanReadableTime) {
 		Valid.notNull(humanReadableTime, "Time is null");
 
 		long seconds = 0L;
 
-		String[] split = humanReadableTime.split(" ");
+		final String[] split = humanReadableTime.split(" ");
 
 		for (int i = 1; i < split.length; i++) {
-			String sub = split[i].toLowerCase();
+			final String sub = split[i].toLowerCase();
 			int multiplier = 0; // e.g 2 hours = 2
 			long unit = 0; // e.g hours = 3600
 			boolean isTicks = false;
 
 			try {
 				multiplier = Integer.parseInt(split[i - 1]);
-			} catch (NumberFormatException e) {
+			} catch (final NumberFormatException e) {
 				continue;
 			}
 
 			// attempt to match the unit time
-			if (sub.startsWith("tick"))
+			if (sub.startsWith("tick")) {
 				isTicks = true;
-
-			else if (sub.startsWith("second"))
+			} else if (sub.startsWith("second")) {
 				unit = 1;
-
-			else if (sub.startsWith("minute"))
+			} else if (sub.startsWith("minute")) {
 				unit = 60;
-
-			else if (sub.startsWith("hour"))
+			} else if (sub.startsWith("hour")) {
 				unit = 3600;
-
-			else if (sub.startsWith("day"))
+			} else if (sub.startsWith("day")) {
 				unit = 86400;
-
-			else if (sub.startsWith("week"))
+			} else if (sub.startsWith("week")) {
 				unit = 604800;
-
-			else if (sub.startsWith("month"))
+			} else if (sub.startsWith("month")) {
 				unit = 2629743;
-
-			else if (sub.startsWith("year"))
+			} else if (sub.startsWith("year")) {
 				unit = 31556926;
-			else
+			} else {
 				throw new IllegalStateException("Must define date type! Example: '1 second' (Got '" + sub + "')");
+			}
 
 			seconds += multiplier * (isTicks ? 1 : unit * 20);
 		}
 
 		return seconds;
+	}
+
+	public long toMS(final String humanReadableTime) {
+		return toTicks(humanReadableTime) * 50;
 	}
 
 	/**
@@ -160,13 +158,13 @@ public class TimeUtil {
 	 * @param seconds
 	 * @return
 	 */
-	public String formatTimeGeneric(long seconds) {
-		long second = seconds % 60;
+	public String formatTimeGeneric(final long seconds) {
+		final long second = seconds % 60;
 		long minute = seconds / 60;
 		String hourMsg = "";
 
 		if (minute >= 60) {
-			long hour = seconds / 60;
+			final long hour = seconds / 60;
 			minute %= 60;
 
 			hourMsg = (hour == 1 ? "hour" : "hours") + " ";
@@ -181,10 +179,10 @@ public class TimeUtil {
 	 * @param seconds
 	 * @return
 	 */
-	public String formatTimeDays(long seconds) {
-		long minutes = seconds / 60;
-		long hours = minutes / 60;
-		long days = hours / 24;
+	public String formatTimeDays(final long seconds) {
+		final long minutes = seconds / 60;
+		final long hours = minutes / 60;
+		final long days = hours / 24;
 
 		return days + " days " + hours % 24 + " hours " + minutes % 60 + " minutes " + seconds % 60 + " seconds";
 	}
@@ -199,7 +197,7 @@ public class TimeUtil {
 	public String formatTimeShort(long seconds) {
 		long minutes = seconds / 60;
 		long hours = minutes / 60;
-		long days = hours / 24;
+		final long days = hours / 24;
 
 		hours = hours % 24;
 		minutes = minutes % 60;
