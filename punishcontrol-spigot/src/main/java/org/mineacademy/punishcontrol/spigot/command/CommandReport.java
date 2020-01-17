@@ -1,17 +1,34 @@
 package org.mineacademy.punishcontrol.spigot.command;
 
-import org.mineacademy.fo.collection.StrictList;
-import org.mineacademy.fo.command.SimpleCommand;
+import lombok.NonNull;
+import org.bukkit.command.CommandSender;
+import org.mineacademy.punishcontrol.core.punish.PunishDuration;
 
-public final class CommandReport extends SimpleCommand {
-	public CommandReport() {
-		super(new StrictList<>("report"));
+import java.util.UUID;
+
+public final class CommandReport extends AbstractPunishCommand {
+	public static CommandReport newInstance() {
+		return new CommandReport();
+	}
+
+	private CommandReport() {
+		super("report");
 		setDescription("Report a player using a sleek gui.");
 		setUsage("[player] [reason]");
 	}
 
 	@Override
-	protected void onCommand() {
+	protected void onCase2(final @NonNull CommandSender sender, final @NonNull UUID target) {
+		super.onCase2(sender, target);
+	}
 
+	@Override
+	protected void onCase3(final @NonNull CommandSender sender, final @NonNull UUID target, final @NonNull PunishDuration punishDuration) {
+		super.onCase3(sender, target, punishDuration);
+	}
+
+	@Override
+	protected void onCase4(final @NonNull CommandSender player, final @NonNull UUID target, final @NonNull PunishDuration punishDuration, final @NonNull String reason) {
+		super.onCase4(player, target, punishDuration, reason);
 	}
 }

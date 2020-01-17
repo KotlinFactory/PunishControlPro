@@ -12,10 +12,13 @@ import org.mineacademy.punishcontrol.core.provider.SettingsProvider;
 import org.mineacademy.punishcontrol.core.punish.Ban;
 import org.mineacademy.punishcontrol.core.storage.StorageType;
 import org.mineacademy.punishcontrol.spigot.command.*;
+import org.mineacademy.punishcontrol.spigot.impl.DataSetter;
 import org.mineacademy.punishcontrol.spigot.impl.SpigotPlayerProvider;
+import org.mineacademy.punishcontrol.spigot.impl.SpigotTextureProvider;
+import org.mineacademy.punishcontrol.spigot.settings.Localization;
 import org.mineacademy.punishcontrol.spigot.settings.Settings;
 
-import java.util.Collections;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -37,6 +40,7 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 	//Setting the implementations of our providers
 	private void setProviders() {
 		Providers.playerProvider(new SpigotPlayerProvider());
+		Providers.textureProvider(new SpigotTextureProvider());
 
 		Providers.settingsProvider(new SettingsProvider() {
 			@Override
@@ -66,16 +70,18 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 
 	@Override
 	public void registerCommands() {
-		registerCommand(new PunishControlCommand(new StrictList<>("punishcontrol", "phc", "pun", "pc")));
-		registerCommand(new CommandBan());
-		registerCommand(new CommandKick());
-		registerCommand(new CommandWarn());
-		registerCommand(new CommandReport());
+		registerCommand(PunishControlCommand.newInstance(new StrictList<>("punishcontrol", "phc", "pun", "pc")));
+		registerCommand(CommandBan.newInstance());
+		registerCommand(CommandKick.newInstance());
+		registerCommand(CommandWarn.newInstance());
+		registerCommand(CommandReport.newInstance());
+		registerCommand(CommandMute.newInstance());
 	}
 
 	@Override
 	public void registerListener() {
-
+		System.out.println("Registered");
+		registerEvents(DataSetter.newInstance());
 	}
 
 	@Override
@@ -84,6 +90,7 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 	}
 
 	@Override
+
 	public StorageType chooseStorageProvider() {
 		return Settings.storageType;
 	}
@@ -94,7 +101,7 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 
 	@Override
 	public List<Class<? extends YamlStaticConfig>> getSettings() {
-		return Collections.<Class<? extends YamlStaticConfig>>singletonList(Settings.class);
+		return Arrays.asList(Settings.class, Localization.class);
 	}
 
 	@Override

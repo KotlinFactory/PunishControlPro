@@ -1,4 +1,4 @@
-package org.mineacademy.punishcontrol.spigot.command;
+package org.mineacademy.punishcontrol.proxy.command.punishcontrol;
 
 public final class CommandWarn extends AbstractPunishCommand {
 

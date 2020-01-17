@@ -1,7 +1,7 @@
-package org.mineacademy.punishcontrol.spigot.command;
+package org.mineacademy.punishcontrol.proxy.command.punishcontrol;
 
 import lombok.NonNull;
-import org.bukkit.command.CommandSender;
+import net.md_5.bungee.api.CommandSender;
 import org.mineacademy.punishcontrol.core.punish.PunishDuration;
 
 import java.util.UUID;

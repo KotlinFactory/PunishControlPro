@@ -3,6 +3,7 @@
   <component name="CompilerConfiguration">
     <option name="DEFAULT_COMPILER" value="Eclipse" />
     <option name="BUILD_PROCESS_HEAP_SIZE" value="2000" />
+    <option name="BUILD_PROCESS_ADDITIONAL_VM_OPTIONS" value="-javaagent:/Users/leonhard/Repository/Etc/lombok.jar" />
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true">
         <processorPath useClasspath="false">

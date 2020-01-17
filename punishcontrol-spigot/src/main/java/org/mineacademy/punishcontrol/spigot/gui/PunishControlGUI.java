@@ -1,5 +1,6 @@
 package org.mineacademy.punishcontrol.spigot.gui;
 
+import lombok.NonNull;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryAction;
@@ -10,8 +11,18 @@ import org.mineacademy.fo.remain.CompSound;
 
 public final class PunishControlGUI extends Menu {
 
+	public static void showTo(@NonNull final Player player) {
+		new PunishControlGUI().displayTo(player);
+	}
+
+	//You can't change anything here by clicking so we only need this gui once:)
+	//And createNewInstance is already used:I
+	public static PunishControlGUI create() {
+		return new PunishControlGUI();
+	}
+
 	//TODO See boss for design.
-	public PunishControlGUI() {
+	private PunishControlGUI() {
 		setSize(9 * 5);
 		setTitle("§3Punish§5Control");
 		setSound(new SimpleSound(CompSound.CHEST_OPEN.getSound(), 0.5F, 0.5F));

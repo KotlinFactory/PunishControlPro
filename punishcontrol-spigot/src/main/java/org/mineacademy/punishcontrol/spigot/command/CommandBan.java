@@ -1,39 +1,30 @@
 package org.mineacademy.punishcontrol.spigot.command;
 
-import org.mineacademy.fo.collection.StrictList;
-import org.mineacademy.fo.command.SimpleCommand;
-import org.mineacademy.punishcontrol.spigot.gui.PlayerBrowser;
+import lombok.NonNull;
+import org.bukkit.command.CommandSender;
+import org.mineacademy.punishcontrol.core.punish.PunishDuration;
 
-public final class CommandBan extends SimpleCommand {
+import java.util.UUID;
 
-	public CommandBan() {
-		super(new StrictList<>("ban"));
-		setUsage("[player] [time] [reason]");
-		setDescription("Ban a player using a sleek gui");
+public final class CommandBan extends AbstractPunishCommand {
+
+	public static CommandBan newInstance() {
+		return new CommandBan();
+	}
+
+	private CommandBan() {
+		super("ban");
 	}
 
 	@Override
-	protected void onCommand() {
-		switch (args.length) {
-			case 0:
-				if (!isPlayer()) {
-					returnTell("Console needs to provide more information", "To run this command", "Please provide at least 2 arguments.");
-				}
-				PlayerBrowser.showTo(getPlayer(), true);
-				//SEND GUI
-				break;
-			case 1:
-				checkConsole();
-				System.out.println("k3l");
-				break;
-			case 2:
-				break;
-			case 3:
-				System.out.println("adkle");
-				break;
-		}
-
+	protected void onCase2(final @NonNull CommandSender sender, final @NonNull UUID target) {
 	}
 
+	@Override
+	protected void onCase3(final @NonNull CommandSender sender, final @NonNull UUID target, final @NonNull PunishDuration punishDuration) {
+	}
 
+	@Override
+	protected void onCase4(final @NonNull CommandSender player, final @NonNull UUID target, final @NonNull PunishDuration punishDuration, final @NonNull String reason) {
+	}
 }

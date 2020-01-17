@@ -1,6 +1,7 @@
 package org.mineacademy.punishcontrol.spigot.gui;
 
 import lombok.NonNull;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
@@ -9,6 +10,7 @@ import org.mineacademy.fo.menu.MenuPagged;
 import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.fo.remain.CompMaterial;
 import org.mineacademy.punishcontrol.core.provider.Providers;
+import org.mineacademy.punishcontrol.spigot.util.ItemUtils;
 
 import java.util.List;
 import java.util.UUID;
@@ -28,14 +30,15 @@ public final class PlayerBrowser extends MenuPagged<UUID> {
 		//Handling stuff
 		if (offlinePlayer) {
 			final List<UUID> offlinePlayers = Providers.playerProvider().getOfflinePlayers();
-			return new PlayerBrowser(getSizeForPlayers(offlinePlayers.size()), new PunishControlGUI(), offlinePlayers);
+			return new PlayerBrowser(getSizeForPlayers(offlinePlayers.size()), PunishControlGUI.create(), offlinePlayers);
 		} else {
 			final List<UUID> onlinePlayers = Providers.playerProvider().getOnlinePlayers();
-			return new PlayerBrowser(getSizeForPlayers(onlinePlayers.size()), new PunishControlGUI(), onlinePlayers);
+			return new PlayerBrowser(getSizeForPlayers(onlinePlayers.size()), PunishControlGUI.create(), onlinePlayers);
 		}
 	}
 
 	protected static int getSizeForPlayers(final int playersOnline) {
+		//TODO Rework
 		return playersOnline / 9 == 0 ? 9 : (playersOnline / 9) * 9;
 	}
 
@@ -52,14 +55,19 @@ public final class PlayerBrowser extends MenuPagged<UUID> {
 	@Override
 	protected ItemStack convertToItemStack(final UUID uuid) {
 		final String name = Providers.playerProvider().getName(uuid);
-		return ItemCreator
-				.of(CompMaterial.PLAYER_HEAD)
-				.glow(uuid.equals(getViewer().getUniqueId()))
+		final ItemStack stack = ItemCreator
+				.of(CompMaterial.fromMaterial(Material.PLAYER_HEAD))
 				.name("§3" + name)
-				.skullOwner(name)
 				.lore("Click here for more info //Change-me")
 				.build()
 				.make();
+
+		if (uuid.equals(getViewer().getUniqueId())) {
+			System.out.println("glow added");
+			ItemUtils.addGlow(stack);
+		}
+
+		return ItemUtils.setSkullTexture(stack, Providers.textureProvider().getSkinTexture(uuid));
 	}
 
 	@Override

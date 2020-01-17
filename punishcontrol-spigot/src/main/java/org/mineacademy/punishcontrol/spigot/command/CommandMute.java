@@ -6,15 +6,18 @@ import org.mineacademy.punishcontrol.core.punish.PunishDuration;
 
 import java.util.UUID;
 
-public final class CommandKick extends AbstractPunishCommand {
+public final class CommandMute extends AbstractPunishCommand {
 
-	public static CommandKick newInstance() {
-		return new CommandKick();
+	public static CommandMute newInstance() {
+		return new CommandMute();
 	}
 
-	private CommandKick() {
-		super("kick");
+	private CommandMute() {
+		super("mute");
+		setUsage("[player] [time] [reason]");
+		setDescription("Mute a player using a sleek gui");
 	}
+
 
 	@Override
 	protected void onCase2(final @NonNull CommandSender sender, final @NonNull UUID target) {

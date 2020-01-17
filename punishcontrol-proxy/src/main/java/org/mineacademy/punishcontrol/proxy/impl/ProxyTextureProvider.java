@@ -4,9 +4,10 @@ import org.mineacademy.punishcontrol.core.provider.TextureProvider;
 
 import java.util.UUID;
 
-public class ProxyTextureProvider implements TextureProvider {
+public final class ProxyTextureProvider implements TextureProvider {
+
 	@Override
-	public void saveSkinTexture(final UUID uuid, final String name) {
+	public void saveSkinTexture(final UUID uuid) {
 
 	}
 

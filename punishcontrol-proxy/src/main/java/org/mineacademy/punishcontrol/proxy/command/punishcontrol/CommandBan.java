@@ -1,19 +1,19 @@
-package org.mineacademy.punishcontrol.spigot.command;
+package org.mineacademy.punishcontrol.proxy.command.punishcontrol;
 
 import lombok.NonNull;
-import org.bukkit.command.CommandSender;
+import net.md_5.bungee.api.CommandSender;
 import org.mineacademy.punishcontrol.core.punish.PunishDuration;
 
 import java.util.UUID;
 
-public final class CommandKick extends AbstractPunishCommand {
+public final class CommandBan extends AbstractPunishCommand {
 
-	public static CommandKick newInstance() {
-		return new CommandKick();
+	public static CommandBan newInstance() {
+		return new CommandBan();
 	}
 
-	private CommandKick() {
-		super("kick");
+	private CommandBan() {
+		super("ban");
 	}
 
 	@Override

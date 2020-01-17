@@ -48,5 +48,6 @@ public class PunishControlManager {
 	public static class FILES {
 		public String PLUGIN_FOLDER = "plugins/PunishControl-Pro";
 		public String JSON_DATA_FILE_NAME = "Punishes";
+		public String SKIN_STORAGE = "Textures";
 	}
 }

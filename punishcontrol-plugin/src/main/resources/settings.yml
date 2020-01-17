@@ -1,11 +1,13 @@
-Version: 1
-Command_Aliases: [punishcontrol,phc, pun, pc]
-
 #JSON/MYSQL
 Storage: JSON
 
 Reports:
   Allowed_Reasons: []
 
+Command_Aliases: [punishcontrol,phc, pun, pc]
+
+
 Advanced:
   Cache_Results: true
+
+Version: 1
