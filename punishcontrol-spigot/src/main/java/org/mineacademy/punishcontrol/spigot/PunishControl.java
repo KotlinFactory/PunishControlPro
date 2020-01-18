@@ -15,6 +15,7 @@ import org.mineacademy.punishcontrol.spigot.command.*;
 import org.mineacademy.punishcontrol.spigot.impl.DataSetter;
 import org.mineacademy.punishcontrol.spigot.impl.SpigotPlayerProvider;
 import org.mineacademy.punishcontrol.spigot.impl.SpigotTextureProvider;
+import org.mineacademy.punishcontrol.spigot.impl.SpigotWorkingDirectoryProvider;
 import org.mineacademy.punishcontrol.spigot.listener.SpigotJoinHandler;
 import org.mineacademy.punishcontrol.spigot.settings.Localization;
 import org.mineacademy.punishcontrol.spigot.settings.Settings;
@@ -42,6 +43,7 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 	private void setProviders() {
 		Providers.playerProvider(new SpigotPlayerProvider());
 		Providers.textureProvider(new SpigotTextureProvider());
+		Providers.workingDirectoryProvider(new SpigotWorkingDirectoryProvider());
 
 		Providers.settingsProvider(new SettingsProvider() {
 			@Override

@@ -10,6 +10,7 @@ import java.util.Set;
  * by the PunishControl core
  */
 public interface SettingsProvider {
+
 	Set<String> getReportReasons();
 
 	//Should results be cached?

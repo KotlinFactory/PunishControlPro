@@ -24,6 +24,10 @@ public class Providers {
 	@NonNull
 	private SettingsProvider settingsProvider;
 
+	@Setter
+	@NonNull
+	private WorkingDirectoryProvider workingDirectoryProvider;
+
 	//StorageProvider can't be set.
 	public StorageProvider storageProvider() {
 		return PunishControlManager.storageType().getStorageProvider();
@@ -45,5 +49,11 @@ public class Providers {
 		Valid.notNull(settingsProvider, "SettingsProvider not yet set");
 
 		return settingsProvider;
+	}
+
+	public WorkingDirectoryProvider workingDirectoryProvider() {
+		Valid.notNull(workingDirectoryProvider, "WorkingDirectoryProvider not yet set");
+
+		return workingDirectoryProvider;
 	}
 }

@@ -5,6 +5,7 @@ import de.leonhard.storage.util.FileUtils;
 import de.leonhard.storage.util.Valid;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
+import org.mineacademy.punishcontrol.core.provider.Providers;
 
 import java.io.File;
 import java.nio.file.Files;
@@ -22,13 +23,13 @@ import java.util.List;
 	 */
 
 @UtilityClass
-public class MySQLDataManager {
+public class MySQLStaticConfig {
 	private final File file;
 	private List<String> lines = new ArrayList<>();
 	private long lastReloaded;
 
 	static {
-		file = FileUtils.getAndMake(new File("", "MySQL.cnf"));
+		file = FileUtils.getAndMake(new File(Providers.workingDirectoryProvider().getDataFolder(), "MySQL.cnf"));
 	}
 
 
@@ -89,6 +90,10 @@ public class MySQLDataManager {
 		final List<String> result = new ArrayList<>();
 
 		for (final String line : lines) {
+			if (line.startsWith("#")) {
+				continue;
+			}
+
 			final String[] splitted = line.split(":");
 
 			Valid.checkBoolean(splitted.length == 2, "Invalid syntax. ", line);
