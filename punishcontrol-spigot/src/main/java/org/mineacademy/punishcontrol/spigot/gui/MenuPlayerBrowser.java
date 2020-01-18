@@ -1,7 +1,7 @@
 package org.mineacademy.punishcontrol.spigot.gui;
 
 import lombok.NonNull;
-import org.bukkit.Material;
+import lombok.val;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
@@ -15,7 +15,7 @@ import org.mineacademy.punishcontrol.spigot.util.ItemUtils;
 import java.util.List;
 import java.util.UUID;
 
-public final class PlayerBrowser extends MenuPagged<UUID> {
+public final class MenuPlayerBrowser extends MenuPagged<UUID> {
 
 	public static void showTo(@NonNull final Player player) {
 		showTo(player, true);
@@ -30,10 +30,10 @@ public final class PlayerBrowser extends MenuPagged<UUID> {
 		//Handling stuff
 		if (offlinePlayer) {
 			final List<UUID> offlinePlayers = Providers.playerProvider().getOfflinePlayers();
-			return new PlayerBrowser(getSizeForPlayers(offlinePlayers.size()), PunishControlGUI.create(), offlinePlayers);
+			return new MenuPlayerBrowser(getSizeForPlayers(offlinePlayers.size()), MenuMain.create(), offlinePlayers);
 		} else {
 			final List<UUID> onlinePlayers = Providers.playerProvider().getOnlinePlayers();
-			return new PlayerBrowser(getSizeForPlayers(onlinePlayers.size()), PunishControlGUI.create(), onlinePlayers);
+			return new MenuPlayerBrowser(getSizeForPlayers(onlinePlayers.size()), MenuMain.create(), onlinePlayers);
 		}
 	}
 
@@ -42,7 +42,7 @@ public final class PlayerBrowser extends MenuPagged<UUID> {
 		return playersOnline / 9 == 0 ? 9 : (playersOnline / 9) * 9;
 	}
 
-	private PlayerBrowser(final int pageSize, final Menu parent, final Iterable<UUID> pages) {
+	private MenuPlayerBrowser(final int pageSize, final Menu parent, final Iterable<UUID> pages) {
 		super(pageSize, parent, pages);
 		setTitle("§3Player-Browser");
 	}
@@ -55,25 +55,24 @@ public final class PlayerBrowser extends MenuPagged<UUID> {
 	@Override
 	protected ItemStack convertToItemStack(final UUID uuid) {
 		final String name = Providers.playerProvider().getName(uuid);
-		final ItemStack stack = ItemCreator
-				.of(CompMaterial.fromMaterial(Material.PLAYER_HEAD))
+		final val builder = ItemCreator
+				.of(CompMaterial.PLAYER_HEAD)
 				.name("§3" + name)
-				.lore("Click here for more info //Change-me")
-				.build()
-				.make();
+				.lore("Click here for more info //Change-me");
 
-		if (uuid.equals(getViewer().getUniqueId())) {
-			System.out.println("glow added");
-			ItemUtils.addGlow(stack);
-		}
 
-		return ItemUtils.setSkullTexture(stack, Providers.textureProvider().getSkinTexture(uuid));
+//		if (uuid.equals(getViewer().getUniqueId())) {
+//			System.out.println("glow added");
+//			ItemUtils.addGlow(stack);
+//		}
+
+		return ItemUtils.setSkullTexture(builder.build().make(), Providers.textureProvider().getSkinTexture(uuid));
 	}
 
 	@Override
 	protected void onPageClick(final Player player, final UUID uuid, final ClickType clickType) {
 		player.closeInventory();
-		ChooseActionGUI.showTo(player);
+		MenuChooseAction.showTo(player);
 	}
 
 	@Override

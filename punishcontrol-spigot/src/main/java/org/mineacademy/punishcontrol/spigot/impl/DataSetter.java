@@ -20,6 +20,10 @@ public final class DataSetter implements Listener {
 	@EventHandler(ignoreCancelled = true)
 	public void onJoin(final PlayerJoinEvent event) {
 		final UUID uuid = event.getPlayer().getUniqueId();
-		Common.runLaterAsync(() -> Providers.textureProvider().saveSkinTexture(uuid));
+		final String name = event.getPlayer().getName();
+		Common.runLaterAsync(() -> {
+			Providers.textureProvider().saveSkinTexture(uuid);
+			Providers.playerProvider().saveUUIDAndName(uuid, name);
+		});
 	}
 }

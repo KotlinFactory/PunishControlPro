@@ -7,9 +7,10 @@ import org.mineacademy.fo.collection.StrictList;
 import org.mineacademy.fo.command.SimpleCommand;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.punish.PunishDuration;
-import org.mineacademy.punishcontrol.spigot.gui.PunishControlGUI;
+import org.mineacademy.punishcontrol.spigot.gui.MenuPlayerBrowser;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -38,6 +39,7 @@ public abstract class AbstractPunishCommand extends SimpleCommand {
 		this.maxArgs = maxArgs;
 	}
 
+
 	// ----------------------------------------------------------------------------------------------------
 	// Methods to override
 	// ----------------------------------------------------------------------------------------------------
@@ -62,17 +64,20 @@ public abstract class AbstractPunishCommand extends SimpleCommand {
 		this.silent = checkSilent();
 		this.superSilent = checkSuperSilent();
 
+
 		if (isSilent() && isSuperSilent()) {
 			returnTell(INVALID_SILENCE_USAGE);
 		}
 
-		switch (args.length) {
+		final List<String> finalArgs = new ArrayList<>(Arrays.asList(args));
+		finalArgs.removeAll(Arrays.asList("-S", "-s", "-silent", "-super-slient"));
+
+		switch (finalArgs.size()) {
 			case 0:
 				if (!isPlayer()) {
 					returnTell("Console needs to provide more information", "To run this command,", "please provide at least 2 arguments.");
 				}
-				//SEND GUI
-				PunishControlGUI.showTo(getPlayer());
+				MenuPlayerBrowser.showTo(getPlayer());
 				break;
 			case 1:
 				onCase2(getSender(), findTarget());
@@ -81,13 +86,13 @@ public abstract class AbstractPunishCommand extends SimpleCommand {
 				if (getMaxArgs() < 2) {
 					returnInvalidArgs();
 				}
-				onCase3(getSender(), findTarget(), PunishDuration.of(args[1]));
+				onCase3(getSender(), findTarget(), PunishDuration.of(finalArgs.get(0)));
 				break;
 			case 3:
 				if (getMaxArgs() < 3) {
 					returnInvalidArgs();
 				}
-				onCase4(getSender(), findTarget(), PunishDuration.of(args[1]), args[2]);
+				onCase4(getSender(), findTarget(), PunishDuration.of(finalArgs.get(1)), finalArgs.get(2));
 				break;
 
 		}

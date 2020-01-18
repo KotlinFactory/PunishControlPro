@@ -1,6 +1,8 @@
 #JSON/MYSQL
 Storage: JSON
 
+Locale: en
+
 Reports:
   Allowed_Reasons: []
 

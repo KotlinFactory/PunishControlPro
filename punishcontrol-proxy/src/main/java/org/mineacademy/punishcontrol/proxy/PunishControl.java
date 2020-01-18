@@ -39,7 +39,7 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 		registerCommand(CommandUnBan.newInstance());
 		registerCommand(CommandUnMute.newInstance());
 		registerCommand(CommandWarn.newInstance());
-		registerCommand(PunishControlCommand.newInstance(new StrictList<>("punishcontrol", "phc", "pun", "pc")));
+		registerCommand(CommandMain.newInstance(new StrictList<>("punishcontrol", "phc", "pun", "pc")));
 	}
 
 	@Override

@@ -4,14 +4,14 @@ import lombok.NonNull;
 import org.mineacademy.bfo.collection.StrictList;
 import org.mineacademy.bfo.command.SimpleCommand;
 
-public final class PunishControlCommand extends SimpleCommand {
+public final class CommandMain extends SimpleCommand {
 
-	public static PunishControlCommand newInstance(@NonNull final String... labels) {
-		return new PunishControlCommand(labels);
+	public static CommandMain newInstance(@NonNull final StrictList<String> labels) {
+		return new CommandMain(labels);
 	}
 
-	private PunishControlCommand(@NonNull final String... labels) {
-		super(new StrictList<>(labels));
+	private CommandMain(@NonNull final StrictList<String> labels) {
+		super(labels);
 	}
 
 	@Override
@@ -29,6 +29,12 @@ public final class PunishControlCommand extends SimpleCommand {
 	}
 
 	private void doHelp() {
+		tell(
+				"{label} djkd",
+				"",
+				""
+
+		);
 
 	}
 }

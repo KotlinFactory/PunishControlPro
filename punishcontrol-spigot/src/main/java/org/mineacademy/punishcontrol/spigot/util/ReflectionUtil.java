@@ -149,10 +149,10 @@ public final class ReflectionUtil {
 		System.out.println(e.getClass().getName() + " contains " + e.getClass().getDeclaredFields().length + " declared fields.");
 		System.out.println(e.getClass().getName() + " contains " + e.getClass().getDeclaredClasses().length + " declared classes.");
 		final Field[] fds = e.getClass().getDeclaredFields();
-		for (int i = 0; i < fds.length; i++) {
-			fds[i].setAccessible(true);
+		for (final Field fd : fds) {
+			fd.setAccessible(true);
 			try {
-				System.out.println(fds[i].getName() + " -> " + fds[i].get(e));
+				System.out.println(fd.getName() + " -> " + fd.get(e));
 			} catch (final IllegalArgumentException | IllegalAccessException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();

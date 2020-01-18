@@ -10,6 +10,8 @@ import java.util.UUID;
  */
 public interface PlayerProvider {
 
+	void saveUUIDAndName(@NonNull UUID uuid, @NonNull String name);
+
 	/**
 	 * @return Players which are on the server & players
 	 * joined the server earlier.

@@ -15,6 +15,7 @@ import org.mineacademy.punishcontrol.spigot.command.*;
 import org.mineacademy.punishcontrol.spigot.impl.DataSetter;
 import org.mineacademy.punishcontrol.spigot.impl.SpigotPlayerProvider;
 import org.mineacademy.punishcontrol.spigot.impl.SpigotTextureProvider;
+import org.mineacademy.punishcontrol.spigot.listener.SpigotJoinHandler;
 import org.mineacademy.punishcontrol.spigot.settings.Localization;
 import org.mineacademy.punishcontrol.spigot.settings.Settings;
 
@@ -70,7 +71,7 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 
 	@Override
 	public void registerCommands() {
-		registerCommand(PunishControlCommand.newInstance(new StrictList<>("punishcontrol", "phc", "pun", "pc")));
+		registerCommand(CommandMain.newInstance(new StrictList<>("punishcontrol", "phc", "pun", "pc")));
 		registerCommand(CommandBan.newInstance());
 		registerCommand(CommandKick.newInstance());
 		registerCommand(CommandWarn.newInstance());
@@ -82,6 +83,7 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 	public void registerListener() {
 		System.out.println("Registered");
 		registerEvents(DataSetter.newInstance());
+		registerEvents(SpigotJoinHandler.newInstance());
 	}
 
 	@Override
@@ -90,7 +92,6 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 	}
 
 	@Override
-
 	public StorageType chooseStorageProvider() {
 		return Settings.storageType;
 	}

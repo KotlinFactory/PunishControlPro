@@ -1,18 +1,30 @@
 package org.mineacademy.punishcontrol.spigot.impl;
 
+import de.leonhard.storage.Json;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.mineacademy.fo.Common;
+import org.mineacademy.fo.plugin.SimplePlugin;
 import org.mineacademy.fo.remain.Remain;
+import org.mineacademy.punishcontrol.core.PunishControlManager;
 import org.mineacademy.punishcontrol.core.provider.PlayerProvider;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class SpigotPlayerProvider implements PlayerProvider {
+public class SpigotPlayerProvider extends Json implements PlayerProvider {
+	public SpigotPlayerProvider() {
+		super(PunishControlManager.FILES.UUID_STORAGE, SimplePlugin.getData().getAbsolutePath() + "/data/");
+	}
+
+	@Override
+	public void saveUUIDAndName(@NonNull final UUID uuid, @NonNull final String s) {
+		set(uuid.toString(), s);
+	}
+
 	@Override
 	public List<UUID> getOfflinePlayers() {
 		final List<UUID> result = new ArrayList<>();

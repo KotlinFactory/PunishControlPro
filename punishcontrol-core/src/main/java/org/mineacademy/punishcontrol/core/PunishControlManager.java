@@ -11,6 +11,8 @@ import org.mineacademy.punishcontrol.core.storage.StorageType;
 /**
  * Central manager & utility class
  * of PunishControl
+ * <p>
+ * Saves constants.
  */
 @UtilityClass
 @Accessors(chain = true)
@@ -49,5 +51,6 @@ public class PunishControlManager {
 		public String PLUGIN_FOLDER = "plugins/PunishControl-Pro";
 		public String JSON_DATA_FILE_NAME = "Punishes";
 		public String SKIN_STORAGE = "Textures";
+		public String UUID_STORAGE = "UUIDs";
 	}
 }

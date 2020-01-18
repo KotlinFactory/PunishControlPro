@@ -4,28 +4,40 @@ import lombok.NonNull;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryAction;
+import org.bukkit.inventory.ItemStack;
 import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.fo.menu.button.Button;
-import org.mineacademy.fo.model.SimpleSound;
-import org.mineacademy.fo.remain.CompSound;
+import org.mineacademy.fo.menu.model.ItemCreator;
+import org.mineacademy.fo.remain.CompMaterial;
 
-public final class PunishControlGUI extends Menu {
+import java.util.Arrays;
+
+public final class MenuMain extends Menu {
 
 	public static void showTo(@NonNull final Player player) {
-		new PunishControlGUI().displayTo(player);
+		new MenuMain().displayTo(player);
 	}
 
 	//You can't change anything here by clicking so we only need this gui once:)
 	//And createNewInstance is already used:I
-	public static PunishControlGUI create() {
-		return new PunishControlGUI();
+	public static MenuMain create() {
+		return new MenuMain();
 	}
 
 	//TODO See boss for design.
-	private PunishControlGUI() {
+	private MenuMain() {
 		setSize(9 * 5);
 		setTitle("§3Punish§5Control");
-		setSound(new SimpleSound(CompSound.CHEST_OPEN.getSound(), 0.5F, 0.5F));
+	}
+
+	@Override
+	public ItemStack getItemAt(final int slot) {
+
+		if (Arrays.asList(0, 9, 18, 27, 36, 8, 17, 26, 35, 44, 1, 7, 37, 43).contains(slot)) {
+			return ItemCreator.of(CompMaterial.ORANGE_STAINED_GLASS_PANE, "").build().make();
+		}
+
+		return super.getItemAt(slot);
 	}
 
 	@Override
@@ -35,6 +47,6 @@ public final class PunishControlGUI extends Menu {
 
 	@Override
 	protected String[] getInfo() {
-		return new String[0];
+		return null;
 	}
 }
