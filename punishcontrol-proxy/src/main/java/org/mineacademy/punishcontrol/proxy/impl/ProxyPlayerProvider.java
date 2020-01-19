@@ -1,32 +1,38 @@
 package org.mineacademy.punishcontrol.proxy.impl;
 
-import de.leonhard.storage.Json;
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import org.mineacademy.bfo.Common;
-import org.mineacademy.bfo.plugin.SimplePlugin;
-import org.mineacademy.punishcontrol.core.PunishControlManager;
-import org.mineacademy.punishcontrol.core.provider.PlayerProvider;
+import org.mineacademy.bfo.debug.Debugger;
+import org.mineacademy.burst.provider.UUIDNameProvider;
+import org.mineacademy.punishcontrol.core.provider.AbstractPlayerProvider;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-public class ProxyPlayerProvider extends Json implements PlayerProvider {
-	public ProxyPlayerProvider(final String name, final String path) {
-		super(PunishControlManager.FILES.UUID_STORAGE, SimplePlugin.getData().getAbsolutePath() + "/data/");
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class ProxyPlayerProvider extends AbstractPlayerProvider implements UUIDNameProvider { //Compatibility
+
+	public static ProxyPlayerProvider newInstance() {
+		return new ProxyPlayerProvider();
 	}
-
-	@Override
-	public void saveUUIDAndName(@NonNull final UUID uuid, @NonNull final String s) {
-
-	}
-
 
 	@Override
 	public List<UUID> getOfflinePlayers() {
-		return null;
+		final List<UUID> result = new ArrayList<>();
+		for (final String str : singleLayerKeySet()) {
+			try {
+				result.add(UUID.fromString(str));
+			} catch (final Throwable throwable) {
+				Debugger.saveError(throwable);
+			}
+		}
+
+		return result;
 	}
 
 	@Override
@@ -42,17 +48,7 @@ public class ProxyPlayerProvider extends Json implements PlayerProvider {
 
 	@Override
 	public boolean isOnline(@NonNull final UUID uuid) {
-		return false;
-	}
-
-	@Override
-	public String getName(@NonNull final UUID uuid) {
-		return null;
-	}
-
-	@Override
-	public UUID getUUID(@NonNull final String name) {
-		return null;
+		return ProxyServer.getInstance().getPlayer(uuid) != null;
 	}
 
 	@Override

@@ -8,8 +8,14 @@ import org.mineacademy.bfo.collection.StrictList;
 import org.mineacademy.bfo.plugin.SimplePlugin;
 import org.mineacademy.burst.Burst;
 import org.mineacademy.punishcontrol.core.SimplePunishControlPlugin;
+import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.storage.StorageType;
 import org.mineacademy.punishcontrol.proxy.command.punishcontrol.*;
+import org.mineacademy.punishcontrol.proxy.impl.ProxyPlayerProvider;
+import org.mineacademy.punishcontrol.proxy.impl.ProxySettingsProvider;
+import org.mineacademy.punishcontrol.proxy.impl.ProxyTextureProvider;
+import org.mineacademy.punishcontrol.proxy.impl.ProxyWorkingDirectoryProvider;
+import org.mineacademy.punishcontrol.proxy.listener.ProxyDataSetter;
 
 public final class PunishControl extends SimplePlugin implements SimplePunishControlPlugin {
 
@@ -44,7 +50,7 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 
 	@Override
 	public void registerListener() {
-
+		registerEvents(ProxyDataSetter.newInstance());
 	}
 
 	@Override
@@ -60,5 +66,19 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 	@Override
 	public void saveError(@NonNull final Throwable t) {
 		Common.error(t);
+	}
+
+
+	private void setProviders() {
+		//Working directory
+		Providers.workingDirectoryProvider(ProxyWorkingDirectoryProvider.newInstance());
+		//Player providers
+		Providers.playerProvider(ProxyPlayerProvider.newInstance());
+		org.mineacademy.burst.provider.Providers.setUuidNameProvider(ProxyPlayerProvider.newInstance());
+		//Settings
+		Providers.settingsProvider(ProxySettingsProvider.newInstance());
+		//TextureProvider
+
+		Providers.textureProvider(ProxyTextureProvider.newInstance());
 	}
 }

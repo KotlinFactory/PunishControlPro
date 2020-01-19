@@ -5,7 +5,7 @@ import lombok.NonNull;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import org.mineacademy.burst.menu.OnePageMenu;
 
-public class MenuMain extends OnePageMenu {
+public final class MenuMain extends OnePageMenu {
 
 
 	public static void showTo(@NonNull final ProxiedPlayer player) {

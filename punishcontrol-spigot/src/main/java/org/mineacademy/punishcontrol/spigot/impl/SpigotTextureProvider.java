@@ -9,8 +9,12 @@ import org.mineacademy.punishcontrol.spigot.util.MojangUtils;
 
 import java.util.UUID;
 
-public class SpigotTextureProvider extends Json implements TextureProvider {
-	public SpigotTextureProvider() {
+public final class SpigotTextureProvider extends Json implements TextureProvider {
+	public static SpigotTextureProvider newInstance() {
+		return new SpigotTextureProvider();
+	}
+
+	private SpigotTextureProvider() {
 		super(PunishControlManager.FILES.SKIN_STORAGE, SimplePlugin.getData().getAbsolutePath() + "/data/");
 	}
 

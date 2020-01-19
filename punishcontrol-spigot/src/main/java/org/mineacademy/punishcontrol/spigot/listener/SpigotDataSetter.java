@@ -1,4 +1,4 @@
-package org.mineacademy.punishcontrol.spigot.impl;
+package org.mineacademy.punishcontrol.spigot.listener;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
@@ -11,10 +11,10 @@ import org.mineacademy.punishcontrol.core.provider.Providers;
 import java.util.UUID;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class DataSetter implements Listener {
+public final class SpigotDataSetter implements Listener {
 
-	public static DataSetter newInstance() {
-		return new DataSetter();
+	public static SpigotDataSetter newInstance() {
+		return new SpigotDataSetter();
 	}
 
 	@EventHandler(ignoreCancelled = true)

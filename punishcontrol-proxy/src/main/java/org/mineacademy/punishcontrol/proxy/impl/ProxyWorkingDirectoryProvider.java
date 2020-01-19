@@ -1,11 +1,19 @@
 package org.mineacademy.punishcontrol.proxy.impl;
 
+import lombok.AccessLevel;
+import lombok.NoArgsConstructor;
 import org.mineacademy.bfo.plugin.SimplePlugin;
 import org.mineacademy.punishcontrol.core.provider.WorkingDirectoryProvider;
 
 import java.io.File;
 
-public class ProxyWorkingDirectoryProvider implements WorkingDirectoryProvider {
+@NoArgsConstructor(access = AccessLevel.PRIVATE)
+public final class ProxyWorkingDirectoryProvider implements WorkingDirectoryProvider {
+
+	public static ProxyWorkingDirectoryProvider newInstance() {
+		return new ProxyWorkingDirectoryProvider();
+	}
+
 	@Override
 	public File getDataFolder() {
 		return SimplePlugin.getData();

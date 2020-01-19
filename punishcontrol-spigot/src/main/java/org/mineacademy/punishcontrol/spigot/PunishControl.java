@@ -12,10 +12,10 @@ import org.mineacademy.punishcontrol.core.provider.SettingsProvider;
 import org.mineacademy.punishcontrol.core.punish.Ban;
 import org.mineacademy.punishcontrol.core.storage.StorageType;
 import org.mineacademy.punishcontrol.spigot.command.*;
-import org.mineacademy.punishcontrol.spigot.impl.DataSetter;
 import org.mineacademy.punishcontrol.spigot.impl.SpigotPlayerProvider;
 import org.mineacademy.punishcontrol.spigot.impl.SpigotTextureProvider;
 import org.mineacademy.punishcontrol.spigot.impl.SpigotWorkingDirectoryProvider;
+import org.mineacademy.punishcontrol.spigot.listener.SpigotDataSetter;
 import org.mineacademy.punishcontrol.spigot.listener.SpigotJoinHandler;
 import org.mineacademy.punishcontrol.spigot.settings.Localization;
 import org.mineacademy.punishcontrol.spigot.settings.Settings;
@@ -24,7 +24,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
-public final class PunishControl extends SimplePlugin implements SimplePunishControlPlugin {
+public class PunishControl extends SimplePlugin implements SimplePunishControlPlugin {
 
 	public static PunishControl getInstance() {
 		return (PunishControl) SimplePlugin.getInstance();
@@ -41,9 +41,9 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 
 	//Setting the implementations of our providers
 	private void setProviders() {
-		Providers.playerProvider(new SpigotPlayerProvider());
-		Providers.textureProvider(new SpigotTextureProvider());
-		Providers.workingDirectoryProvider(new SpigotWorkingDirectoryProvider());
+		Providers.workingDirectoryProvider(SpigotWorkingDirectoryProvider.newInstance());
+		Providers.playerProvider(SpigotPlayerProvider.newInstance());
+		Providers.textureProvider(SpigotTextureProvider.newInstance());
 
 		Providers.settingsProvider(new SettingsProvider() {
 			@Override
@@ -84,7 +84,7 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 	@Override
 	public void registerListener() {
 		System.out.println("Registered");
-		registerEvents(DataSetter.newInstance());
+		registerEvents(SpigotDataSetter.newInstance());
 		registerEvents(SpigotJoinHandler.newInstance());
 	}
 
