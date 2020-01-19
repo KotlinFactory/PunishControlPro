@@ -14,7 +14,7 @@ public final class MenuMain extends OnePageMenu {
 
 	private MenuMain(final ProxiedPlayer player) {
 		super(player, "MenuMain", InventoryType.GENERIC_9X5);
-		setTitle("§3Punish§5Control");
+		setTitle("§3Punish§5ffControl");
 	}
 
 

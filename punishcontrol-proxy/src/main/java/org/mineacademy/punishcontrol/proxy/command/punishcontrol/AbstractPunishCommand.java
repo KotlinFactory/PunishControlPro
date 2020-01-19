@@ -62,7 +62,7 @@ public abstract class AbstractPunishCommand extends SimpleCommand {
 
 		this.silent = checkSilent();
 		this.superSilent = checkSuperSilent();
-
+		this.superSilent = checkSuperSilent();
 
 		if (isSilent() && isSuperSilent()) {
 			returnTell(INVALID_SILENCE_USAGE);
@@ -92,6 +92,9 @@ public abstract class AbstractPunishCommand extends SimpleCommand {
 				}
 				onCase4(getSender(), findTarget(), PunishDuration.of(finalArgs.get(1)), finalArgs.get(2));
 				break;
+
+			default:
+				returnInvalidArgs();
 
 		}
 	}

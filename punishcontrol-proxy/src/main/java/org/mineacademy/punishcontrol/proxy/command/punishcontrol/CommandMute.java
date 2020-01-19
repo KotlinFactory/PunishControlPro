@@ -15,9 +15,7 @@ public final class CommandMute extends AbstractPunishCommand {
 	private CommandMute() {
 		super("mute");
 		setUsage("[player] [time] [reason]");
-		setDescription("Mute a player using a sleek gui");
 	}
-
 
 	@Override
 	protected void onCase2(final @NonNull CommandSender sender, final @NonNull UUID target) {
