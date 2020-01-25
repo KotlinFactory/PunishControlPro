@@ -16,10 +16,10 @@ import java.util.UUID;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class SpigotPlayerProvider extends AbstractPlayerProvider {
 
-
 	public static SpigotPlayerProvider newInstance() {
 		return new SpigotPlayerProvider();
 	}
+
 
 	@Override
 	public List<UUID> getOfflinePlayers() {

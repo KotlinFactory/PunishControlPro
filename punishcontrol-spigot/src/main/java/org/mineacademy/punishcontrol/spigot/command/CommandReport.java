@@ -2,6 +2,7 @@ package org.mineacademy.punishcontrol.spigot.command;
 
 import lombok.NonNull;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.mineacademy.punishcontrol.core.punish.PunishDuration;
 
 import java.util.UUID;
@@ -18,8 +19,8 @@ public final class CommandReport extends AbstractPunishCommand {
 	}
 
 	@Override
-	protected void onCase2(final @NonNull CommandSender sender, final @NonNull UUID target) {
-		super.onCase2(sender, target);
+	protected void onCase2(final Player player, final @NonNull UUID target) {
+		super.onCase2(player, target);
 	}
 
 	@Override

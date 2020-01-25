@@ -24,7 +24,6 @@ public final class CommandMain extends SimpleCommand {
 			return;
 		}
 
-		checkConsole();
 		//Open GUI
 		MenuMain.showTo(getPlayer());
 	}

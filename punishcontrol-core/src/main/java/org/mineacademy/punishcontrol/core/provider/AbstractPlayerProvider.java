@@ -36,22 +36,22 @@ public abstract class AbstractPlayerProvider extends Json implements PlayerProvi
 	}
 
 	@Override
-	public final UUID getUUID(@NonNull final String name) {
+	public UUID getUUID(@NonNull final String name) {
 		for (final val entry : getFileData().toMap().entrySet()) {
-			if (entry.getValue().equals(name)) {
+			if (entry.getValue().toString().equalsIgnoreCase(name)) {
 				return UUID.fromString(entry.getKey());
 			}
-
 		}
 
 		//Not yet set.
 		//Getting from Mojang & Setting it manually.
+
+
 		final UUID uuid = UUIDFetcher.getUUID(name);
 
 		if (uuid == null) {
 			throw new LightningValidationException("No player named '" + name + "' found");
 		}
-
 
 		set(uuid.toString(), name);
 		return uuid;

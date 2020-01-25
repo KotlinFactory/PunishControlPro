@@ -8,7 +8,7 @@ import org.mineacademy.punishcontrol.core.provider.WorkingDirectoryProvider;
 import java.io.File;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class SpigotWorkingDirectoryProvider implements WorkingDirectoryProvider {
+public final class SpigotWorkingDirectoryProvider implements WorkingDirectoryProvider {
 
 	public static SpigotWorkingDirectoryProvider newInstance() {
 		return new SpigotWorkingDirectoryProvider();

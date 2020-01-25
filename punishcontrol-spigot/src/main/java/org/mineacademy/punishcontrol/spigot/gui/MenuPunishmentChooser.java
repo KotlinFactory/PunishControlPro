@@ -4,20 +4,19 @@ import lombok.NonNull;
 import org.bukkit.entity.Player;
 import org.mineacademy.fo.menu.Menu;
 
-public final class MenuChooseAction extends Menu {
+public final class MenuPunishmentChooser extends Menu {
 
 	public static void showTo(@NonNull final Player player) {
 		create().displayTo(player);
 	}
 
-	public static MenuChooseAction create() {
-		return new MenuChooseAction();
+	public static MenuPunishmentChooser create() {
+		return new MenuPunishmentChooser();
 	}
 
-	private MenuChooseAction() {
+	private MenuPunishmentChooser() {
 		super(MenuPlayerBrowser.of(true));
 		setSize(9 * 4);
-//		setSound();
 		setTitle("§3Choose an action");
 	}
 

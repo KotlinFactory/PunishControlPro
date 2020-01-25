@@ -3,10 +3,11 @@ package org.mineacademy.punishcontrol.core.storage;
 import de.leonhard.storage.internal.exception.LightningValidationException;
 import de.leonhard.storage.util.FileUtils;
 import de.leonhard.storage.util.Valid;
+import lombok.NonNull;
 import lombok.SneakyThrows;
-import lombok.experimental.UtilityClass;
-import org.mineacademy.punishcontrol.core.provider.Providers;
+import org.mineacademy.punishcontrol.core.provider.WorkingDirectoryProvider;
 
+import javax.inject.Inject;
 import java.io.File;
 import java.nio.file.Files;
 import java.util.ArrayList;
@@ -22,14 +23,19 @@ import java.util.List;
 
 	 */
 
-@UtilityClass
-public class MySQLStaticConfig {
+public final class MySQLConfig {
 	private final File file;
 	private List<String> lines = new ArrayList<>();
 	private long lastReloaded;
 
-	static {
-		file = FileUtils.getAndMake(new File(Providers.workingDirectoryProvider().getDataFolder(), "MySQL.cnf"));
+
+	public static MySQLConfig newInstance(@NonNull final WorkingDirectoryProvider provider) {
+		return new MySQLConfig(provider);
+	}
+
+	@Inject
+	public MySQLConfig(@NonNull final WorkingDirectoryProvider provider) {
+		this.file = FileUtils.getAndMake(new File(provider.getDataFolder(), "MySQL.cnf"));
 	}
 
 

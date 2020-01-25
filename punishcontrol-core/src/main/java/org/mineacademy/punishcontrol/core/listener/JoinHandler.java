@@ -8,13 +8,13 @@ import org.mineacademy.punishcontrol.core.punish.Ban;
 import java.util.List;
 import java.util.UUID;
 
-public interface JoinHandler {
+public abstract class JoinHandler {
 
-	void setCancelReason(List<String> cancelReason, @NonNull final Object event);
+	protected abstract void setCancelReason(@NonNull final List<String> cancelReason, @NonNull final Object event);
 
-	void setCancelled(boolean cancelled, Object event);
+	protected abstract void setCancelled(final boolean cancelled, @NonNull final Object event);
 
-	default void handlePlayerJoin(final UUID uuid, final Object event) {
+	protected final void handlePlayerJoin(@NonNull final UUID uuid, @NonNull final Object event) {
 		if (!PunishManager.isBanned(uuid)) {
 			return;
 		}
@@ -22,11 +22,9 @@ public interface JoinHandler {
 		setCancelled(true, event);
 		//TODO
 
-
 		final Ban ban = PunishManager.currentBan(uuid);
 
-
-		/**
+		/*
 		 * You have been banned
 		 */
 		setCancelReason(Providers.settingsProvider().getJoinMessageForBannedPlayer(ban), event);

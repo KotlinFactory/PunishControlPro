@@ -33,7 +33,7 @@ public final class Ban extends Punish {
 			return ip;
 		}
 
-
+		//Getting ip?
 		return null;
 
 	}

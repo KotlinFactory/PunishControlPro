@@ -1,6 +1,5 @@
 package org.mineacademy.punishcontrol.core.report;
 
-
 import lombok.Data;
 import lombok.NonNull;
 import lombok.experimental.Accessors;

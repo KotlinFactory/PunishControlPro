@@ -24,11 +24,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
-public class PunishControl extends SimplePlugin implements SimplePunishControlPlugin {
-
-	public static PunishControl getInstance() {
-		return (PunishControl) SimplePlugin.getInstance();
-	}
+public final class PunishControl extends SimplePlugin implements SimplePunishControlPlugin {
 
 	@Override
 	protected void onPluginStart() {

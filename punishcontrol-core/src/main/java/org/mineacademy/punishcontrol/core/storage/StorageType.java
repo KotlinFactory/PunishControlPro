@@ -12,6 +12,7 @@ public enum StorageType {
 		//TODO Cache results
 
 		@Override
+
 		public PlayerCache getCacheFor(final @NonNull UUID uuid) {
 			return new MySQLPlayerCache(uuid);
 		}

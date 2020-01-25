@@ -12,6 +12,7 @@ import java.util.UUID;
  * Abstraction layer for the
  * most used methods from StorageProvider.
  */
+
 @UtilityClass
 public class PunishManager {
 	private final StorageProvider provider = Providers.storageProvider();

@@ -7,7 +7,7 @@ import org.mineacademy.punishcontrol.core.storage.StorageType;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Settings extends SimpleSettings {
+public final class Settings extends SimpleSettings {
 	public static Set<String> reportReasons;
 	public static Boolean cacheResults;
 	public static StorageType storageType;

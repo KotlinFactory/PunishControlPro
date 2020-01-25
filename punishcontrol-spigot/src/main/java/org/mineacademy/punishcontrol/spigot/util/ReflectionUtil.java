@@ -18,7 +18,6 @@ import java.util.Map;
 @UtilityClass
 public final class ReflectionUtil {
 
-
 	private final Map<Map.Entry<Class, String>, Field> CACHED_FIELDS = new HashMap<>();
 
 	public Class<?> getClass(final String classname) throws ClassNotFoundException {

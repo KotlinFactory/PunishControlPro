@@ -1,13 +1,13 @@
 package org.mineacademy.punishcontrol.core.util;
 
 
-import de.leonhard.storage.internal.exception.LightningValidationException;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
 
 import java.io.IOException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.net.UnknownHostException;
 import java.util.Scanner;
 import java.util.UUID;
 
@@ -22,6 +22,7 @@ import java.util.UUID;
 @UtilityClass
 public class UUIDFetcher {
 	private final String urlString = "https://mcuuid.net/?q=";
+
 	public String getName(final UUID uuid) {
 		for (final String line : readStringArrayFromUrl()) {
 			if (!line.startsWith("<h3>")) {
@@ -67,8 +68,13 @@ public class UUIDFetcher {
 			urlConnection.addRequestProperty("User-Agent", "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.0)");
 
 			return new Scanner(urlConnection.getInputStream(), "UTF-8").useDelimiter("\\A").next().split("\n");
-		} catch (final IOException e) {
-			e.printStackTrace();
+		} catch (final IOException ex) {
+
+			if (ex instanceof UnknownHostException) {
+				System.err.println("Wasn't able to fetch uuid/name. We are offline.");
+			} else {
+				ex.printStackTrace();
+			}
 
 			return new String[0];
 		}

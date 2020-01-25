@@ -2,6 +2,7 @@ package org.mineacademy.punishcontrol.spigot.command;
 
 import lombok.NonNull;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.mineacademy.punishcontrol.core.punish.PunishDuration;
 
 import java.util.UUID;
@@ -17,11 +18,12 @@ public final class CommandBan extends AbstractPunishCommand {
 	}
 
 	@Override
-	protected void onCase2(final @NonNull CommandSender sender, final @NonNull UUID target) {
+	protected void onCase2(final Player player, final @NonNull UUID target) {
 	}
 
 	@Override
 	protected void onCase3(final @NonNull CommandSender sender, final @NonNull UUID target, final @NonNull PunishDuration punishDuration) {
+		System.out.println(punishDuration.getMs());
 	}
 
 	@Override

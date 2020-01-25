@@ -11,6 +11,4 @@ import java.util.UUID;
 public final class Report {
 	@NonNull
 	private final UUID target, creator;
-
-
 }

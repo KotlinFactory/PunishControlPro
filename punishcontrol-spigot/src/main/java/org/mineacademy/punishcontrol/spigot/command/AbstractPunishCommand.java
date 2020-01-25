@@ -3,6 +3,7 @@ package org.mineacademy.punishcontrol.spigot.command;
 import lombok.Getter;
 import lombok.NonNull;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 import org.mineacademy.fo.collection.StrictList;
 import org.mineacademy.fo.command.SimpleCommand;
 import org.mineacademy.punishcontrol.core.provider.Providers;
@@ -39,12 +40,11 @@ public abstract class AbstractPunishCommand extends SimpleCommand {
 		this.maxArgs = maxArgs;
 	}
 
-
 	// ----------------------------------------------------------------------------------------------------
 	// Methods to override
 	// ----------------------------------------------------------------------------------------------------
 
-	protected void onCase2(@NonNull final CommandSender sender, @NonNull final UUID target) {
+	protected void onCase2(@NonNull final Player player, @NonNull final UUID target) {
 
 	}
 
@@ -80,21 +80,25 @@ public abstract class AbstractPunishCommand extends SimpleCommand {
 				MenuPlayerBrowser.showTo(getPlayer());
 				break;
 			case 1:
-				onCase2(getSender(), findTarget());
+				if (!isPlayer()) {
+					returnTell("Console needs to provide more information", "To run this command,", "please provide at least 2 arguments.");
+				}
+				onCase2(getPlayer(), findTarget());
 				break;
 			case 2:
 				if (getMaxArgs() < 2) {
 					returnInvalidArgs();
 				}
-				onCase3(getSender(), findTarget(), PunishDuration.of(finalArgs.get(0)));
+
+				onCase3(getSender(), findTarget(), PunishDuration.of(finalArgs.get(1)));
 				break;
 			case 3:
 				if (getMaxArgs() < 3) {
 					returnInvalidArgs();
 				}
+
 				onCase4(getSender(), findTarget(), PunishDuration.of(finalArgs.get(1)), finalArgs.get(2));
 				break;
-
 		}
 	}
 

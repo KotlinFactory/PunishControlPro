@@ -72,7 +72,7 @@ public final class MenuPlayerBrowser extends MenuPagged<UUID> {
 	@Override
 	protected void onPageClick(final Player player, final UUID uuid, final ClickType clickType) {
 		player.closeInventory();
-		MenuChooseAction.showTo(player);
+		MenuPunishmentChooser.showTo(player);
 	}
 
 	@Override

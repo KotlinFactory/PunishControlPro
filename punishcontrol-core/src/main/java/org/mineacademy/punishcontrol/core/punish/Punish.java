@@ -12,11 +12,11 @@ import java.util.UUID;
 @FieldDefaults(makeFinal = true)
 @Accessors(chain = true, fluent = true)
 public abstract class Punish {
-	UUID target, creator;
+	private UUID target, creator;
 	@NonFinal
 	@NonNull
-	PunishDuration punishDuration;
-	PunishType punishType;
+	private PunishDuration punishDuration;
+	private PunishType punishType;
 
 	public boolean isOld() {
 		return punishDuration.getMs() < System.currentTimeMillis();

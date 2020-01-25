@@ -12,7 +12,6 @@ public class Permissions {
 	public String MERGE = "PunishControl.Merge";
 	public String BY_PASS = "PunishControl.bypass";
 
-
 	@UtilityClass
 	@FieldDefaults(makeFinal = true)
 	public class CMD {
@@ -28,7 +27,6 @@ public class Permissions {
 		public String LIST = "PunishControl.Bans.List";
 		public String UN_BAN = "PunishControl.Bans.UnBan";
 	}
-
 
 	@UtilityClass
 	@FieldDefaults(makeFinal = true)
