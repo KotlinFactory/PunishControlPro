@@ -28,6 +28,7 @@ public final class Ban extends Punish {
 		return (Ban) super.punishDuration(punishDuration);
 	}
 
+	@Override
 	public String ip() {
 		if (ip != null) {
 			return ip;
@@ -35,6 +36,11 @@ public final class Ban extends Punish {
 
 		//Getting ip?
 		return null;
+
+	}
+
+	@Override
+	public void create() {
 
 	}
 }

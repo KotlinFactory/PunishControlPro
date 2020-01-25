@@ -15,7 +15,6 @@ import org.mineacademy.punishcontrol.spigot.command.*;
 import org.mineacademy.punishcontrol.spigot.impl.SpigotPlayerProvider;
 import org.mineacademy.punishcontrol.spigot.impl.SpigotTextureProvider;
 import org.mineacademy.punishcontrol.spigot.impl.SpigotWorkingDirectoryProvider;
-import org.mineacademy.punishcontrol.spigot.listener.SpigotDataSetter;
 import org.mineacademy.punishcontrol.spigot.listener.SpigotJoinHandler;
 import org.mineacademy.punishcontrol.spigot.settings.Localization;
 import org.mineacademy.punishcontrol.spigot.settings.Settings;
@@ -80,7 +79,7 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 	@Override
 	public void registerListener() {
 		System.out.println("Registered");
-		registerEvents(SpigotDataSetter.newInstance());
+		registerEvents(DaggerSpigotModule.create().spigotDataSetter());
 		registerEvents(SpigotJoinHandler.newInstance());
 	}
 

@@ -12,6 +12,8 @@ import java.util.UUID;
 @FieldDefaults(makeFinal = true)
 @Accessors(chain = true, fluent = true)
 public abstract class Punish {
+	@NonFinal
+	private String ip;
 	private UUID target, creator;
 	@NonFinal
 	@NonNull
@@ -21,4 +23,6 @@ public abstract class Punish {
 	public boolean isOld() {
 		return punishDuration.getMs() < System.currentTimeMillis();
 	}
+
+	public abstract void create();
 }

@@ -54,38 +54,12 @@
             <artifactId>Foundation</artifactId>
             <version>LATEST</version>
         </dependency>
+
     </dependencies>
 
     <build>
         <defaultGoal>clean verify -U</defaultGoal>
         <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.1</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <relocations>
-                        <relocation>
-                            <pattern>org.json</pattern>
-                            <shadedPattern>de.leonhard.storage.shaded.json</shadedPattern>
-                        </relocation>
-                        <relocation>
-                            <pattern>com.esotericsoftware</pattern>
-                            <shadedPattern>de.leonhard.storage.shaded.esotericsoftware</shadedPattern>
-                        </relocation>
-                    </relocations>
-                    <createDependencyReducedPom>false</createDependencyReducedPom>
-                </configuration>
-            </plugin>
-
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>

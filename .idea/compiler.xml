@@ -13,11 +13,11 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="PunishControlPro.punishcontrol-core.test" />
-        <module name="punishcontrol-proxy" />
         <module name="PunishControlPro.punishcontrol-core.main" />
+        <module name="PunishControlPro.punishcontrol-core.test" />
         <module name="punishcontrol-plugin" />
         <module name="punishcontrol-core" />
+        <module name="punishcontrol-proxy" />
       </profile>
       <profile name="Annotation profile for PunishControlPro" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />

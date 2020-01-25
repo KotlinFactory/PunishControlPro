@@ -6,9 +6,9 @@ import lombok.val;
 import org.mineacademy.punishcontrol.core.PunishControlManager;
 import org.mineacademy.punishcontrol.core.punish.Ban;
 import org.mineacademy.punishcontrol.core.punish.Mute;
+import org.mineacademy.punishcontrol.core.punish.Warn;
 import org.mineacademy.punishcontrol.core.report.Report;
 import org.mineacademy.punishcontrol.core.storage.cache.PlayerCache;
-import org.mineacademy.punishcontrol.core.warn.Warn;
 
 import java.util.*;
 

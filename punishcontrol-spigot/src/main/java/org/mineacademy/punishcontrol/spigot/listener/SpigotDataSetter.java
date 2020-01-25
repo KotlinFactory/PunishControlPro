@@ -1,20 +1,25 @@
 package org.mineacademy.punishcontrol.spigot.listener;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
+import lombok.NonNull;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.mineacademy.fo.Common;
+import org.mineacademy.punishcontrol.core.provider.PlayerProvider;
 import org.mineacademy.punishcontrol.core.provider.Providers;
+import org.mineacademy.punishcontrol.core.provider.TextureProvider;
 
+import javax.inject.Inject;
 import java.util.UUID;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class SpigotDataSetter implements Listener {
+	private final TextureProvider textureProvider;
+	private final PlayerProvider playerProvider;
 
-	public static SpigotDataSetter newInstance() {
-		return new SpigotDataSetter();
+	@Inject
+	public SpigotDataSetter(@NonNull final TextureProvider textureProvider, @NonNull final PlayerProvider playerProvider) {
+		this.textureProvider = textureProvider;
+		this.playerProvider = playerProvider;
 	}
 
 	@EventHandler(ignoreCancelled = true)
