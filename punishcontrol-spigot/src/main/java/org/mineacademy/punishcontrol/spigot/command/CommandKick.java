@@ -1,13 +1,8 @@
 package org.mineacademy.punishcontrol.spigot.command;
 
-import lombok.NonNull;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-import org.mineacademy.punishcontrol.core.punish.PunishDuration;
+import org.mineacademy.fo.command.SimpleCommand;
 
-import java.util.UUID;
-
-public final class CommandKick extends AbstractPunishCommand {
+public final class CommandKick extends SimpleCommand {
 
 	public static CommandKick newInstance() {
 		return new CommandKick();
@@ -17,15 +12,7 @@ public final class CommandKick extends AbstractPunishCommand {
 		super("kick");
 	}
 
-	@Override
-	protected void onCase2(final Player player, final @NonNull UUID target) {
-	}
+	@Override protected void onCommand() {
 
-	@Override
-	protected void onCase3(final @NonNull CommandSender sender, final @NonNull UUID target, final @NonNull PunishDuration punishDuration) {
-	}
-
-	@Override
-	protected void onCase4(final @NonNull CommandSender player, final @NonNull UUID target, final @NonNull PunishDuration punishDuration, final @NonNull String reason) {
 	}
 }

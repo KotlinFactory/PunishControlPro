@@ -81,6 +81,11 @@ public final class Providers {
 	}
 
 	@Provides
+	public static StorageProvider provider() {
+		return PunishControlManager.storageType().getStorageProvider();
+	}
+
+	@Provides
 	public static MySQLStorageProvider mySQLStorageProvider() {
 		return (MySQLStorageProvider) StorageType.MYSQL.getStorageProvider();
 	}

@@ -6,6 +6,8 @@ import org.mineacademy.fo.Valid;
 import org.mineacademy.fo.collection.StrictList;
 import org.mineacademy.fo.plugin.SimplePlugin;
 import org.mineacademy.fo.settings.YamlStaticConfig;
+import org.mineacademy.punishcontrol.core.CoreModule;
+import org.mineacademy.punishcontrol.core.DaggerCoreModule;
 import org.mineacademy.punishcontrol.core.SimplePunishControlPlugin;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.provider.SettingsProvider;
@@ -15,7 +17,6 @@ import org.mineacademy.punishcontrol.spigot.command.*;
 import org.mineacademy.punishcontrol.spigot.impl.SpigotPlayerProvider;
 import org.mineacademy.punishcontrol.spigot.impl.SpigotTextureProvider;
 import org.mineacademy.punishcontrol.spigot.impl.SpigotWorkingDirectoryProvider;
-import org.mineacademy.punishcontrol.spigot.listener.SpigotJoinHandler;
 import org.mineacademy.punishcontrol.spigot.settings.Localization;
 import org.mineacademy.punishcontrol.spigot.settings.Settings;
 
@@ -24,6 +25,8 @@ import java.util.List;
 import java.util.Set;
 
 public final class PunishControl extends SimplePlugin implements SimplePunishControlPlugin {
+	private final SpigotModule spigotModule = DaggerSpigotModule.builder().build();
+	private final CoreModule coreModule = DaggerCoreModule.builder().build();
 
 	@Override
 	protected void onPluginStart() {
@@ -32,6 +35,9 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 		setProviders();
 
 		onPunishControlPluginStart();
+
+		//Bypass UltraPunishments
+		//Common.runLater(40, this::registerCommands);
 	}
 
 	//Setting the implementations of our providers
@@ -72,15 +78,14 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 		registerCommand(CommandBan.newInstance());
 		registerCommand(CommandKick.newInstance());
 		registerCommand(CommandWarn.newInstance());
-		registerCommand(CommandReport.newInstance());
 		registerCommand(CommandMute.newInstance());
 	}
 
 	@Override
 	public void registerListener() {
 		System.out.println("Registered");
-		registerEvents(DaggerSpigotModule.create().spigotDataSetter());
-		registerEvents(SpigotJoinHandler.newInstance());
+		registerEvents(spigotModule.spigotDataSetter());
+		registerEvents(spigotModule.spigotJoinHandler());
 	}
 
 	@Override

@@ -1,13 +1,14 @@
-#JSON/MYSQL
-Storage: JSON
+Prefix: '&8&lPUNISHCONTROL &8//&7'
 
 Locale: en
+
+#JSON/MYSQL
+Storage: JSON
 
 Reports:
   Allowed_Reasons: []
 
 Command_Aliases: [punishcontrol,phc, pun, pc]
-
 
 Advanced:
   Cache_Results: true

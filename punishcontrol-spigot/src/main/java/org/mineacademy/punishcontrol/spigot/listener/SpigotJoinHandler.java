@@ -1,22 +1,23 @@
 package org.mineacademy.punishcontrol.spigot.listener;
 
 import de.leonhard.storage.util.Valid;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.mineacademy.punishcontrol.core.listener.JoinHandler;
+import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 
+import javax.inject.Inject;
 import java.util.List;
 import java.util.UUID;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class SpigotJoinHandler extends JoinHandler implements Listener {
 
-	public static SpigotJoinHandler newInstance() {
-		return new SpigotJoinHandler();
+
+	@Inject
+	public SpigotJoinHandler(@NonNull final StorageProvider storageProvider) {
+		super(storageProvider);
 	}
 
 	@Override

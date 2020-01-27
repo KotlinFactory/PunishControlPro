@@ -7,6 +7,8 @@ import org.mineacademy.bfo.bungee.SimpleBungee;
 import org.mineacademy.bfo.collection.StrictList;
 import org.mineacademy.bfo.plugin.SimplePlugin;
 import org.mineacademy.burst.Burst;
+import org.mineacademy.punishcontrol.core.CoreModule;
+import org.mineacademy.punishcontrol.core.DaggerCoreModule;
 import org.mineacademy.punishcontrol.core.SimplePunishControlPlugin;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.storage.StorageType;
@@ -18,12 +20,14 @@ import org.mineacademy.punishcontrol.proxy.impl.ProxyWorkingDirectoryProvider;
 import org.mineacademy.punishcontrol.proxy.listener.ProxyDataSetter;
 
 public final class PunishControl extends SimplePlugin implements SimplePunishControlPlugin {
+	private final ProxyModule proxyModule = DaggerProxyModule.create();
+	private final CoreModule coreModule = DaggerCoreModule.create();
 
 	@Override
 	protected void onPluginStart() {
 		Burst.setPlugin(this); //Set the plugin for our library
+		setProviders();
 		onPunishControlPluginStart();
-
 	}
 
 	@Override

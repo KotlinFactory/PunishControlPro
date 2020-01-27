@@ -1,8 +1,8 @@
-package org.mineacademy.punishcontrol.spigot.gui;
+package org.mineacademy.punishcontrol.spigot.gui.settings;
 
 import org.mineacademy.fo.menu.Menu;
 
-public class MenuSettings extends Menu {
+public final class MenuSettings extends Menu {
 
 	@Override
 	protected String[] getInfo() {

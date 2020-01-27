@@ -28,7 +28,6 @@ public final class MySQLConfig {
 	private List<String> lines = new ArrayList<>();
 	private long lastReloaded;
 
-
 	public static MySQLConfig newInstance(@NonNull final WorkingDirectoryProvider provider) {
 		return new MySQLConfig(provider);
 	}

@@ -4,6 +4,7 @@ import dagger.Component;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.spigot.gui.MenuMySQL;
 import org.mineacademy.punishcontrol.spigot.listener.SpigotDataSetter;
+import org.mineacademy.punishcontrol.spigot.listener.SpigotJoinHandler;
 
 /**
  * Interface implemented by dagger
@@ -13,6 +14,8 @@ public interface SpigotModule {
 	MenuMySQL mysqlModule();
 
 	SpigotDataSetter spigotDataSetter();
+
+	SpigotJoinHandler spigotJoinHandler();
 
 
 }

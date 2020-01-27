@@ -3,6 +3,8 @@ package org.mineacademy.punishcontrol.core;
 import lombok.NonNull;
 import org.mineacademy.punishcontrol.core.storage.StorageType;
 
+import java.util.Random;
+
 /**
  * Class for a unified startup of
  * our Main-Plugin classes
@@ -10,8 +12,19 @@ import org.mineacademy.punishcontrol.core.storage.StorageType;
 
 public interface SimplePunishControlPlugin {
 
+	static int getRandomNumberInRange(final int min, final int max) {
+
+		if (min >= max) {
+			throw new IllegalArgumentException("max must be greater than min");
+		}
+
+		final Random r = new Random();
+		return r.nextInt((max - min) + 1) + min;
+	}
+
+
 	// ----------------------------------------------------------------------------------------------------
-	// Methods to be implemented by our two Sapphire classes
+	// Methods to be implemented by our two PunishControl classes
 	// ----------------------------------------------------------------------------------------------------
 
 	String PREFIX = "§3Punish§bControl§5+ §7┃ ";
@@ -40,6 +53,10 @@ public interface SimplePunishControlPlugin {
 	void saveError(@NonNull Throwable t);
 
 	default void downloadDependencies() {
+	}
+
+	default String[] getStartupFinishedMessages() {
+		return new String[]{"Top notch!", "Ban-hammer is swinging", "We're live!"};
 	}
 
 	default void onPunishControlPluginStart() {
@@ -103,6 +120,11 @@ public interface SimplePunishControlPlugin {
 		}
 
 		log();
+
+		//Logging an random message
+		final int index = getRandomNumberInRange(0, getStartupFinishedMessages().length - 1);
+
+		log(getStartupFinishedMessages()[index]);
 
 		log("§7*--------------------------------------------------------------*");
 	}

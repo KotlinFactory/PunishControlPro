@@ -13,7 +13,7 @@ public enum StorageType {
 
 		@Override
 
-		public PlayerCache getCacheFor(final @NonNull UUID uuid) {
+		public PlayerCache getCacheFor(final UUID uuid) {
 			return new MySQLPlayerCache(uuid);
 		}
 
@@ -24,7 +24,7 @@ public enum StorageType {
 	},
 	JSON {
 		@Override
-		public PlayerCache getCacheFor(final @NonNull UUID uuid) {
+		public PlayerCache getCacheFor(final UUID uuid) {
 			return new JsonPlayerCache(uuid);
 		}
 
@@ -38,7 +38,7 @@ public enum StorageType {
 	// Static methods to get an instance of StorageType
 	// ----------------------------------------------------------------------------------------------------
 
-	public static StorageType find(@NonNull final String name) {
+	public static StorageType find(final String name) {
 		for (final StorageType value : values()) {
 			if (value.name().equalsIgnoreCase(name)) {
 				return value;
@@ -61,6 +61,5 @@ public enum StorageType {
 	public StorageProvider getStorageProvider() {
 		throw new AbstractMethodError("Not implemented");
 	}
-
 
 }
