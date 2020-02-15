@@ -3,13 +3,10 @@ package org.mineacademy.punishcontrol.core.storage;
 import de.leonhard.storage.Json;
 import lombok.NonNull;
 import lombok.val;
-import org.jetbrains.annotations.Nullable;
 import org.mineacademy.punishcontrol.core.PunishControlManager;
 import org.mineacademy.punishcontrol.core.punish.Ban;
 import org.mineacademy.punishcontrol.core.punish.Mute;
 import org.mineacademy.punishcontrol.core.punish.Warn;
-import org.mineacademy.punishcontrol.core.storage.cache.JsonPlayerCache;
-import org.mineacademy.punishcontrol.core.storage.cache.PlayerCache;
 
 import java.util.*;
 
@@ -35,10 +32,6 @@ public final class JsonStorageProvider extends Json implements StorageProvider {
 
 	public JsonStorageProvider() {
 		super(PunishControlManager.FILES.JSON_DATA_FILE_NAME, PunishControlManager.FILES.PLUGIN_FOLDER);
-	}
-
-	@Override public PlayerCache getFor(final @NonNull UUID uuid) {
-		return new JsonPlayerCache(uuid);
 	}
 
 	@Override
@@ -273,38 +266,35 @@ public final class JsonStorageProvider extends Json implements StorageProvider {
 	// ----------------------------------------------------------------------------------------------------
 
 	@Override
-	@Nullable
-	public Ban currentBan(@NonNull final UUID uuid) {
+	public Optional<Ban> currentBan(@NonNull final UUID uuid) {
 		for (final Ban ban : listBans(uuid)) {
 			if (!ban.isOld()) {
-				return ban;
+				return Optional.of(ban);
 			}
 		}
 
-		return null;
+		return Optional.empty();
 	}
 
 	@Override
-	@Nullable
-	public Mute currentMute(@NonNull final UUID uuid) {
+	public Optional<Mute> currentMute(@NonNull final UUID uuid) {
 		for (final Mute mute : listMutes(uuid)) {
 			if (!mute.isOld()) {
-				return mute;
+				return Optional.of(mute);
 			}
 		}
-		return null;
+		return Optional.empty();
 	}
 
 	@Override
-	@Nullable
-	public Warn currentWarn(@NonNull final UUID uuid) {
+	public Optional<Warn> currentWarn(@NonNull final UUID uuid) {
 		for (final Warn warn : listWarns(uuid)) {
 			if (!warn.isOld()) {
-				return warn;
+				return Optional.of(warn);
 			}
 		}
 
-		return null;
+		return Optional.empty();
 	}
 
 
@@ -343,10 +333,13 @@ public final class JsonStorageProvider extends Json implements StorageProvider {
 	// ----------------------------------------------------------------------------------------------------
 
 	@Override public boolean removeCurrentBan(final @NonNull UUID target) {
-		final Ban ban = currentBan(target);
-		if (ban == null) {
+		final Optional<Ban> optionalBan = currentBan(target);
+
+		if (!optionalBan.isPresent()) {
 			return false;
 		}
+
+		final Ban ban = optionalBan.get();
 
 		final String path = PATH_TO_BAN
 			.replace("{uuid}", ban.target().toString())
@@ -357,10 +350,11 @@ public final class JsonStorageProvider extends Json implements StorageProvider {
 	}
 
 	@Override public boolean removeCurrentMute(final @NonNull UUID target) {
-		final Mute mute = currentMute(target);
-		if (mute == null) {
+		if (!currentMute(target).isPresent()) {
 			return false;
 		}
+
+		final Mute mute = currentMute(target).get();
 
 		final String path = PATH_TO_MUTE
 			.replace("{uuid}", mute.target().toString())
@@ -371,11 +365,13 @@ public final class JsonStorageProvider extends Json implements StorageProvider {
 	}
 
 	@Override public boolean removeCurrentWarn(final @NonNull UUID target) {
-		final Warn warn = currentWarn(target);
-		if (warn == null) {
+		final Optional<Warn> optionalWarn = currentWarn(target);
+
+		if (!optionalWarn.isPresent()) {
 			return false;
 		}
 
+		final Warn warn = optionalWarn.get();
 
 		final String path = PATH_TO_WARN
 			.replace("{uuid}", warn.target().toString())

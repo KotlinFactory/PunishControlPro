@@ -3,7 +3,6 @@ package org.mineacademy.punishcontrol.core.storage;
 import lombok.NonNull;
 import org.mineacademy.punishcontrol.core.storage.cache.JsonPlayerCache;
 import org.mineacademy.punishcontrol.core.storage.cache.MySQLPlayerCache;
-import org.mineacademy.punishcontrol.core.storage.cache.PlayerCache;
 
 import java.util.UUID;
 

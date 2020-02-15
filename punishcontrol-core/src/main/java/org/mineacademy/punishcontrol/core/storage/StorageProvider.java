@@ -4,14 +4,12 @@ import lombok.NonNull;
 import org.mineacademy.punishcontrol.core.punish.Ban;
 import org.mineacademy.punishcontrol.core.punish.Mute;
 import org.mineacademy.punishcontrol.core.punish.Warn;
-import org.mineacademy.punishcontrol.core.storage.cache.PlayerCache;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public interface StorageProvider {
-
-	PlayerCache getFor(@NonNull final UUID uuid);
 
 	boolean isBanned(@NonNull UUID uuid);
 
@@ -43,11 +41,11 @@ public interface StorageProvider {
 	// Methods to handle the data of specific players
 	// ----------------------------------------------------------------------------------------------------
 
-	Ban currentBan(@NonNull UUID uuid);
+	Optional<Ban> currentBan(@NonNull UUID uuid);
 
-	Mute currentMute(@NonNull UUID uuid);
+	Optional<Mute> currentMute(@NonNull UUID uuid);
 
-	Warn currentWarn(@NonNull UUID uuid);
+	Optional<Warn> currentWarn(@NonNull UUID uuid);
 
 	// ----------------------------------------------------------------------------------------------------
 	// List all punishes/warns/reports the player ever had

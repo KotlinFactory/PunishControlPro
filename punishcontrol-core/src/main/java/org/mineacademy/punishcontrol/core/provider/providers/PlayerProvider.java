@@ -3,6 +3,7 @@ package org.mineacademy.punishcontrol.core.provider.providers;
 import lombok.NonNull;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -26,10 +27,7 @@ public interface PlayerProvider {
 
 	UUID getUUID(@NonNull String name);
 
-	/**
-	 * @return Warning: Nullable!
-	 */
-	String getIpIfOnline(@NonNull UUID uuid);
+	Optional<String> getIpIfOnline(@NonNull UUID uuid);
 
 	void sendIfOnline(@NonNull UUID uuid, @NonNull String... messages);
 

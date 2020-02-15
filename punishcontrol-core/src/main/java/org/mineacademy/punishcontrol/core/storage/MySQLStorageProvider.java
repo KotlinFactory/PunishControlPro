@@ -6,7 +6,6 @@ import org.mineacademy.punishcontrol.core.punish.Ban;
 import org.mineacademy.punishcontrol.core.punish.Mute;
 import org.mineacademy.punishcontrol.core.punish.Warn;
 import org.mineacademy.punishcontrol.core.storage.cache.MySQLPlayerCache;
-import org.mineacademy.punishcontrol.core.storage.cache.PlayerCache;
 
 import java.util.List;
 import java.util.UUID;
@@ -30,13 +29,13 @@ public final class MySQLStorageProvider extends SimpleDatabase implements Storag
 		return instance = new MySQLStorageProvider();
 	}
 
+	@Override public PlayerCache getFor(final @NonNull UUID uuid) {
+		return new MySQLPlayerCache(this, uuid);
+	}
+
 	// ----------------------------------------------------------------------------------------------------
 	// Is a player punished?
 	// ----------------------------------------------------------------------------------------------------
-
-	@Override public PlayerCache getFor(final @NonNull UUID uuid) {
-		return new MySQLPlayerCache(uuid);
-	}
 
 	@Override public boolean isBanned(@NonNull final UUID uuid) {
 		return false;
