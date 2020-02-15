@@ -16,7 +16,6 @@ public final class MenuMySQL extends Menu {
 		this.mySQLStorageProvider = mySQLStorageProvider;
 	}
 
-
 	public static void showTo(@NonNull final Player player) {
 //		return MySQLStorageProvider.getInstance (Providers.workingDirectoryProvider());
 	}

@@ -5,7 +5,8 @@ import lombok.NonNull;
 import org.mineacademy.punishcontrol.core.punish.Ban;
 import org.mineacademy.punishcontrol.core.punish.Mute;
 import org.mineacademy.punishcontrol.core.punish.Warn;
-import org.mineacademy.punishcontrol.core.report.Report;
+import org.mineacademy.punishcontrol.core.storage.cache.MySQLPlayerCache;
+import org.mineacademy.punishcontrol.core.storage.cache.PlayerCache;
 
 import java.util.List;
 import java.util.UUID;
@@ -29,6 +30,10 @@ public final class MySQLStorageProvider extends SimpleDatabase implements Storag
 		return instance = new MySQLStorageProvider();
 	}
 
+	@Override public PlayerCache getFor(final @NonNull UUID uuid) {
+		return new MySQLPlayerCache(uuid);
+	}
+
 	@Override
 	public boolean isBanned(@NonNull final UUID uuid) {
 		return false;
@@ -40,32 +45,22 @@ public final class MySQLStorageProvider extends SimpleDatabase implements Storag
 	}
 
 	@Override
-	public boolean isReported(@NonNull final UUID uuid) {
-		return false;
-	}
-
-	@Override
 	public boolean isWarned(@NonNull final UUID uuid) {
 		return false;
 	}
 
 	@Override
-	public List<Ban> listAllBans() {
+	public List<Ban> listCurrentBans() {
 		return null;
 	}
 
 	@Override
-	public List<Mute> listAllMutes() {
+	public List<Mute> listCurrentMutes() {
 		return null;
 	}
 
 	@Override
-	public List<Warn> listAllWarns() {
-		return null;
-	}
-
-	@Override
-	public List<Report> listAllReports() {
+	public List<Warn> listCurrentWarns() {
 		return null;
 	}
 
@@ -85,11 +80,6 @@ public final class MySQLStorageProvider extends SimpleDatabase implements Storag
 	}
 
 	@Override
-	public List<Report> listReports() {
-		return null;
-	}
-
-	@Override
 	public Ban currentBan(@NonNull final UUID uuid) {
 		return null;
 	}
@@ -101,11 +91,6 @@ public final class MySQLStorageProvider extends SimpleDatabase implements Storag
 
 	@Override
 	public Warn currentWarn(@NonNull final UUID uuid) {
-		return null;
-	}
-
-	@Override
-	public Report currentReport(@NonNull final UUID uuid) {
 		return null;
 	}
 
@@ -125,11 +110,6 @@ public final class MySQLStorageProvider extends SimpleDatabase implements Storag
 	}
 
 	@Override
-	public List<Report> listReports(@NonNull final UUID uuid) {
-		return null;
-	}
-
-	@Override
 	public void saveBan(@NonNull final Ban ban) {
 
 	}
@@ -144,8 +124,15 @@ public final class MySQLStorageProvider extends SimpleDatabase implements Storag
 
 	}
 
-	@Override
-	public void saveReport(@NonNull final Report report) {
+	@Override public boolean removeCurrentBan(final @NonNull UUID target) {
+		return false;
+	}
 
+	@Override public boolean removeCurrentMute(final @NonNull UUID target) {
+		return false;
+	}
+
+	@Override public boolean removeCurrentWarn(final @NonNull UUID target) {
+		return false;
 	}
 }

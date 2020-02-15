@@ -5,7 +5,7 @@ import de.leonhard.storage.util.FileUtils;
 import de.leonhard.storage.util.Valid;
 import lombok.NonNull;
 import lombok.SneakyThrows;
-import org.mineacademy.punishcontrol.core.provider.WorkingDirectoryProvider;
+import org.mineacademy.punishcontrol.core.provider.providers.WorkingDirectoryProvider;
 
 import javax.inject.Inject;
 import java.io.File;

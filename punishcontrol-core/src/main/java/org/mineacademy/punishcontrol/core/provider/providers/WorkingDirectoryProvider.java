@@ -1,4 +1,4 @@
-package org.mineacademy.punishcontrol.core.provider;
+package org.mineacademy.punishcontrol.core.provider.providers;
 
 import java.io.File;
 

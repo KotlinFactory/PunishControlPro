@@ -5,6 +5,7 @@ import de.leonhard.storage.internal.exception.LightningValidationException;
 import lombok.NonNull;
 import lombok.val;
 import org.mineacademy.punishcontrol.core.PunishControlManager;
+import org.mineacademy.punishcontrol.core.provider.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.util.UUIDFetcher;
 
 import java.util.UUID;

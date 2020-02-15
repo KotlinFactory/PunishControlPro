@@ -30,9 +30,8 @@ public final class SpigotTextureProvider extends Json implements TextureProvider
 
 	@Override
 	public String getSkinTexture(final UUID uuid) {
-		System.out.println("key: " + uuid);
-		System.out.println("Result: " + getString(uuid.toString()));
 		return getString(uuid.toString());
 	}
+
 
 }

@@ -22,7 +22,7 @@ public final class CommandBan extends AbstractPunishCommand {
 	}
 
 	@Override
-	protected void onTargetAndDurationProvided(final Player player, final @NonNull UUID target, final String reason) {
+	protected void onTargetAndDurationProvided(final Player player, final @NonNull UUID target, final PunishDuration punishDuration) {
 	}
 
 	@Override

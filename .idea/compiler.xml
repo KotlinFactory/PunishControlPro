@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <option name="DEFAULT_COMPILER" value="Eclipse" />
     <option name="BUILD_PROCESS_HEAP_SIZE" value="2000" />
     <option name="BUILD_PROCESS_ADDITIONAL_VM_OPTIONS" value="-javaagent:/Users/leonhard/Repository/Etc/lombok.jar" />
     <annotationProcessing>
-      <profile default="true" name="Default" enabled="true">
-        <processorPath>
-          <entry name="$USER_HOME$/Downloads/lombok.jar" />
+      <profile default="true" name="Default">
+        <processorPath useClasspath="false">
+          <entry name="$USER_HOME$/Repository/Etc/lombok.jar" />
         </processorPath>
       </profile>
       <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <processorPath>
+          <entry name="$USER_HOME$/Repository/Etc/lombok.jar" />
+        </processorPath>
         <module name="PunishControlPro.punishcontrol-core.main" />
         <module name="punishcontrol-plugin" />
         <module name="punishcontrol-core" />

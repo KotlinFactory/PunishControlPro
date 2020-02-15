@@ -40,6 +40,7 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 		Common.log(message);
 	}
 
+
 	@Override
 	public void registerCommands() {
 		registerCommand(CommandBan.newInstance());

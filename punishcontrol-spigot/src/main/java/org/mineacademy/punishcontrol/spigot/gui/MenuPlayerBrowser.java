@@ -66,7 +66,11 @@ public final class MenuPlayerBrowser extends MenuPagged<UUID> {
 //			ItemUtils.addGlow(stack);
 //		}
 
-		return ItemUtils.setSkullTexture(builder.build().make(), Providers.textureProvider().getSkinTexture(uuid));
+		final String hash = Providers.textureProvider().getSkinTexture(uuid);
+		if (hash != null && !hash.isEmpty()) {
+			return ItemUtils.setSkullTexture(builder.build().make(), hash);
+		}
+		return builder.build().make();
 	}
 
 	@Override

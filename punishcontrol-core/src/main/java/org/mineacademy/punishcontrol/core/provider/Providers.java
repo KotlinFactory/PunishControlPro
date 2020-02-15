@@ -7,6 +7,10 @@ import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.mineacademy.punishcontrol.core.PunishControlManager;
+import org.mineacademy.punishcontrol.core.provider.providers.PlayerProvider;
+import org.mineacademy.punishcontrol.core.provider.providers.SettingsProvider;
+import org.mineacademy.punishcontrol.core.provider.providers.TextureProvider;
+import org.mineacademy.punishcontrol.core.provider.providers.WorkingDirectoryProvider;
 import org.mineacademy.punishcontrol.core.storage.*;
 
 /**
@@ -22,19 +26,19 @@ public final class Providers {
 
 	@Setter
 	@NonNull
-	private static PlayerProvider playerProvider;
+	private static org.mineacademy.punishcontrol.core.provider.providers.PlayerProvider playerProvider;
 
 	@Setter
 	@NonNull
-	private static TextureProvider textureProvider;
+	private static org.mineacademy.punishcontrol.core.provider.providers.TextureProvider textureProvider;
 
 	@Setter
 	@NonNull
-	private static SettingsProvider settingsProvider;
+	private static org.mineacademy.punishcontrol.core.provider.providers.SettingsProvider settingsProvider;
 
 	@Setter
 	@NonNull
-	private static WorkingDirectoryProvider workingDirectoryProvider;
+	private static org.mineacademy.punishcontrol.core.provider.providers.WorkingDirectoryProvider workingDirectoryProvider;
 
 	//StorageProvider can't be set.
 	public static StorageProvider storageProvider() {
@@ -63,7 +67,7 @@ public final class Providers {
 	}
 
 	@Provides
-	public static WorkingDirectoryProvider workingDirectoryProvider() {
+	public static org.mineacademy.punishcontrol.core.provider.providers.WorkingDirectoryProvider workingDirectoryProvider() {
 		Valid.notNull(workingDirectoryProvider, "WorkingDirectoryProvider not yet set");
 
 		return workingDirectoryProvider;

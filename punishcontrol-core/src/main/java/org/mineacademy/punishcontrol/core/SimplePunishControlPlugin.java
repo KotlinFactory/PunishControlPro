@@ -56,7 +56,7 @@ public interface SimplePunishControlPlugin {
 	}
 
 	default String[] getStartupFinishedMessages() {
-		return new String[]{"Top notch!", "Ban-hammer is swinging", "We're live!"};
+		return new String[]{"Top notch!", "Ban-hammer is swinging", "We're live!", "MineAcademy rules!"};
 	}
 
 	default void onPunishControlPluginStart() {

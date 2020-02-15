@@ -1,4 +1,4 @@
-package org.mineacademy.punishcontrol.core.provider;
+package org.mineacademy.punishcontrol.core.provider.providers;
 
 import org.mineacademy.punishcontrol.core.punish.Ban;
 

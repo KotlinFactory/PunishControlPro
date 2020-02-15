@@ -27,14 +27,14 @@ public final class MenuMain extends Menu {
 	//TODO See boss for design.
 	private MenuMain() {
 		setSize(9 * 5);
-		setTitle("§3Punish§5Control");
+		setTitle("§3Punish§bControl");
 	}
 
 	@Override
 	public ItemStack getItemAt(final int slot) {
 
 		if (Arrays.asList(0, 9, 18, 27, 36, 8, 17, 26, 35, 44, 1, 7, 37, 43).contains(slot)) {
-			return ItemCreator.of(CompMaterial.CYAN_STAINED_GLASS_PANE, "").build().make();
+			return ItemCreator.of(CompMaterial.LIGHT_BLUE_STAINED_GLASS_PANE, "").build().make();
 		}
 
 		return super.getItemAt(slot);

@@ -28,6 +28,7 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 	private final SpigotModule spigotModule = DaggerSpigotModule.builder().build();
 	private final CoreModule coreModule = DaggerCoreModule.builder().build();
 
+
 	@Override
 	protected void onPluginStart() {
 		Common.ADD_LOG_PREFIX = false;
@@ -79,11 +80,14 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 		registerCommand(CommandKick.newInstance());
 		registerCommand(CommandWarn.newInstance());
 		registerCommand(CommandMute.newInstance());
+
+		registerCommand(spigotModule.commandUnBan());
+		registerCommand(spigotModule.commandUnMute());
+		registerCommand(spigotModule.commandUnWarn());
 	}
 
 	@Override
 	public void registerListener() {
-		System.out.println("Registered");
 		registerEvents(spigotModule.spigotDataSetter());
 		registerEvents(spigotModule.spigotJoinHandler());
 	}

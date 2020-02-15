@@ -2,7 +2,6 @@ package org.mineacademy.punishcontrol.core.punish;
 
 
 import lombok.AccessLevel;
-import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.mineacademy.punishcontrol.core.util.TimeUtil;
@@ -11,7 +10,6 @@ import java.util.OptionalInt;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 
-@Getter
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class PunishDuration {
 	private final long ms;
@@ -65,5 +63,9 @@ public final class PunishDuration {
 
 	public String format() {
 		return TimeUtil.formatTimeGeneric(TimeUnit.MILLISECONDS.toSeconds(ms));
+	}
+
+	public long toMs() {
+		return ms;
 	}
 }

@@ -30,5 +30,19 @@ public final class CommandMain extends SimpleCommand {
 
 	private void doHelp() {
 
+
+		tell(
+				""
+
+		);
+
+
+		for (final AbstractPunishCommand registeredCommand : AbstractPunishCommand.REGISTERED_COMMANDS) {
+
+		}
+
+		for (final AbstractUnPunishCommand registeredCommand : AbstractUnPunishCommand.REGISTERED_COMMANDS) {
+
+		}
 	}
 }
