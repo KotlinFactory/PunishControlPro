@@ -30,99 +30,105 @@ public final class MySQLStorageProvider extends SimpleDatabase implements Storag
 		return instance = new MySQLStorageProvider();
 	}
 
+	// ----------------------------------------------------------------------------------------------------
+	// Is a player punished?
+	// ----------------------------------------------------------------------------------------------------
+
 	@Override public PlayerCache getFor(final @NonNull UUID uuid) {
 		return new MySQLPlayerCache(uuid);
 	}
 
-	@Override
-	public boolean isBanned(@NonNull final UUID uuid) {
+	@Override public boolean isBanned(@NonNull final UUID uuid) {
 		return false;
 	}
 
-	@Override
-	public boolean isMuted(@NonNull final UUID uuid) {
+	@Override public boolean isMuted(@NonNull final UUID uuid) {
 		return false;
 	}
 
-	@Override
-	public boolean isWarned(@NonNull final UUID uuid) {
+	@Override public boolean isWarned(@NonNull final UUID uuid) {
 		return false;
 	}
 
-	@Override
-	public List<Ban> listCurrentBans() {
+	// ----------------------------------------------------------------------------------------------------
+	// Listing all active punishes
+	// ----------------------------------------------------------------------------------------------------
+
+	@Override public List<Ban> listCurrentBans() {
 		return null;
 	}
 
-	@Override
-	public List<Mute> listCurrentMutes() {
+	@Override public List<Mute> listCurrentMutes() {
 		return null;
 	}
 
-	@Override
-	public List<Warn> listCurrentWarns() {
+	@Override public List<Warn> listCurrentWarns() {
 		return null;
 	}
 
-	@Override
-	public List<Ban> listBans() {
+	// ----------------------------------------------------------------------------------------------------
+	// Listing all punishes
+	// ----------------------------------------------------------------------------------------------------
+
+	@Override public List<Ban> listBans() {
 		return null;
 	}
 
-	@Override
-	public List<Mute> listMutes() {
+	@Override public List<Mute> listMutes() {
 		return null;
 	}
 
-	@Override
-	public List<Warn> listWarns() {
+	@Override public List<Warn> listWarns() {
 		return null;
 	}
 
-	@Override
-	public Ban currentBan(@NonNull final UUID uuid) {
+	// ----------------------------------------------------------------------------------------------------
+	// Getting active ban of player if possible
+	// ----------------------------------------------------------------------------------------------------
+
+	@Override public Ban currentBan(@NonNull final UUID uuid) {
 		return null;
 	}
 
-	@Override
-	public Mute currentMute(@NonNull final UUID uuid) {
+	@Override public Mute currentMute(@NonNull final UUID uuid) {
 		return null;
 	}
 
-	@Override
-	public Warn currentWarn(@NonNull final UUID uuid) {
+	@Override public Warn currentWarn(@NonNull final UUID uuid) {
 		return null;
 	}
 
-	@Override
-	public List<Ban> listBans(@NonNull final UUID uuid) {
+	@Override public List<Ban> listBans(@NonNull final UUID uuid) {
 		return null;
 	}
 
-	@Override
-	public List<Mute> listMutes(@NonNull final UUID uuid) {
+	@Override public List<Mute> listMutes(@NonNull final UUID uuid) {
 		return null;
 	}
 
-	@Override
-	public List<Warn> listWarns(@NonNull final UUID uuid) {
+	@Override public List<Warn> listWarns(@NonNull final UUID uuid) {
 		return null;
 	}
 
-	@Override
-	public void saveBan(@NonNull final Ban ban) {
+	// ----------------------------------------------------------------------------------------------------
+	// Save punishes
+	// ----------------------------------------------------------------------------------------------------
+
+	@Override public void saveBan(@NonNull final Ban ban) {
 
 	}
 
-	@Override
-	public void saveMute(@NonNull final Mute mute) {
+	@Override public void saveMute(@NonNull final Mute mute) {
 
 	}
 
-	@Override
-	public void saveWarn(@NonNull final Warn warn) {
+	@Override public void saveWarn(@NonNull final Warn warn) {
 
 	}
+
+	// ----------------------------------------------------------------------------------------------------
+	// Removing current ban
+	// ----------------------------------------------------------------------------------------------------
 
 	@Override public boolean removeCurrentBan(final @NonNull UUID target) {
 		return false;
@@ -135,4 +141,6 @@ public final class MySQLStorageProvider extends SimpleDatabase implements Storag
 	@Override public boolean removeCurrentWarn(final @NonNull UUID target) {
 		return false;
 	}
+
+
 }

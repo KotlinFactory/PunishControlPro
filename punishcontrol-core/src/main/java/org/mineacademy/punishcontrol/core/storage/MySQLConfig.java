@@ -37,7 +37,6 @@ public final class MySQLConfig {
 		this.file = FileUtils.getAndMake(new File(provider.getDataFolder(), "MySQL.cnf"));
 	}
 
-
 	@SneakyThrows
 	public void read() {
 		if (!FileUtils.hasChanged(file, lastReloaded)) {
