@@ -1,20 +1,9 @@
 package org.mineacademy.punishcontrol.core.storage;
 
-import lombok.NonNull;
-import org.mineacademy.punishcontrol.core.storage.cache.JsonPlayerCache;
-import org.mineacademy.punishcontrol.core.storage.cache.MySQLPlayerCache;
-
-import java.util.UUID;
-
 public enum StorageType {
 	MYSQL {
 		//TODO Cache results
 
-		@Override
-
-		public PlayerCache getCacheFor(final UUID uuid) {
-			return new MySQLPlayerCache(uuid);
-		}
 
 		@Override
 		public StorageProvider getStorageProvider() {
@@ -22,11 +11,6 @@ public enum StorageType {
 		}
 	},
 	JSON {
-		@Override
-		public PlayerCache getCacheFor(final UUID uuid) {
-			return new JsonPlayerCache(uuid);
-		}
-
 		@Override
 		public StorageProvider getStorageProvider() {
 			return new JsonStorageProvider();
@@ -52,10 +36,6 @@ public enum StorageType {
 	// Methods to override
 	// ----------------------------------------------------------------------------------------------------
 
-
-	public PlayerCache getCacheFor(@NonNull final UUID uuid) {
-		throw new AbstractMethodError("Not implemented");
-	}
 
 	public StorageProvider getStorageProvider() {
 		throw new AbstractMethodError("Not implemented");

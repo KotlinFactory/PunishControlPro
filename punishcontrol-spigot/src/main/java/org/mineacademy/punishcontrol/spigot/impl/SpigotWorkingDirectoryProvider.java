@@ -3,7 +3,7 @@ package org.mineacademy.punishcontrol.spigot.impl;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.mineacademy.fo.plugin.SimplePlugin;
-import org.mineacademy.punishcontrol.core.provider.WorkingDirectoryProvider;
+import org.mineacademy.punishcontrol.core.provider.providers.WorkingDirectoryProvider;
 
 import java.io.File;
 

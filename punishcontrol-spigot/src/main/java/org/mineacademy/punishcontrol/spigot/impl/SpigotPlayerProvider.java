@@ -11,6 +11,7 @@ import org.mineacademy.punishcontrol.core.provider.AbstractPlayerProvider;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -47,12 +48,12 @@ public final class SpigotPlayerProvider extends AbstractPlayerProvider {
 	}
 
 	@Override
-	public String getIpIfOnline(@NonNull final UUID uuid) {
+	public Optional<String> getIpIfOnline(@NonNull final UUID uuid) {
 		final Player player = Bukkit.getPlayer(uuid);
 		if (player == null || player.getAddress() == null) {
-			return null;
+			return Optional.empty();
 		}
-		return player.getAddress().getHostName();
+		return Optional.of(player.getAddress().getHostName());
 	}
 
 	@Override

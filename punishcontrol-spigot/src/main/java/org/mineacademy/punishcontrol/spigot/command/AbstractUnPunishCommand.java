@@ -26,7 +26,7 @@ public abstract class AbstractUnPunishCommand extends SimpleCommand {
 	private boolean superSilent;
 
 	private final String[] MORE_ARGUMENTS_AS_CONSOLE_MESSAGE = new String[]{
-			"You need to provide more information to run this command from console", "Please provide 3 arguments", "Usage: " + getUsage()
+		"You need to provide more information to run this command from console", "Please provide 3 arguments", "Usage: " + getUsage()
 	};
 
 	protected AbstractUnPunishCommand(final StorageProvider provider, final PunishType punishType, @NonNull final String... labels) {
@@ -64,13 +64,13 @@ public abstract class AbstractUnPunishCommand extends SimpleCommand {
 
 				switch (punishType) {
 					case BAN:
-						checkBoolean(provider.removeCurrentBan(target), "Player is not banned");
+						checkBoolean(provider.removeBanFor(target), "Player is not banned");
 						break;
 					case MUTE:
-						checkBoolean(provider.removeCurrentMute(target), "Player is not muted");
+						checkBoolean(provider.removeMuteFor(target), "Player is not muted");
 						break;
 					case WARN:
-						checkBoolean(provider.removeCurrentWarn(target), "Player is not warned");
+						checkBoolean(provider.removeWarnFor(target), "Player is not warned");
 						break;
 				}
 

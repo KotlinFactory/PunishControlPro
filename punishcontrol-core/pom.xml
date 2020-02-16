@@ -45,7 +45,7 @@
         <dependency>
             <groupId>com.github.JavaFactoryDev</groupId>
             <artifactId>LightningStorage</artifactId>
-            <version>3.0.2</version>
+            <version>3.0.3</version>
         </dependency>
 
         <dependency>
@@ -119,7 +119,7 @@
                 <configuration>
                     <source>1.8</source>
                     <target>1.8</target>
-                    <!--                    <compilerId>eclipse</compilerId>-->
+<!--                    <compilerId>eclipse</compilerId>-->
                     <annotationProcessorPaths>
                         <path>
                             <groupId>com.google.dagger</groupId>
@@ -135,14 +135,15 @@
                 </configuration>
                 <dependencies>
                     <dependency>
-                        <groupId>org.codehaus.plexus</groupId>
-                        <artifactId>plexus-compiler-eclipse</artifactId>
-                        <version>2.8.1</version>
-                    </dependency>
-                    <dependency>
                         <groupId>com.google.dagger</groupId>
                         <artifactId>dagger</artifactId>
                         <version>2.16</version>
+                    </dependency>
+                    <!-- https://mvnrepository.com/artifact/org.codehaus.plexus/plexus-compiler-eclipse -->
+                    <dependency>
+                        <groupId>org.codehaus.plexus</groupId>
+                        <artifactId>plexus-compiler-eclipse</artifactId>
+                        <version>2.8.5</version>
                     </dependency>
                 </dependencies>
             </plugin>

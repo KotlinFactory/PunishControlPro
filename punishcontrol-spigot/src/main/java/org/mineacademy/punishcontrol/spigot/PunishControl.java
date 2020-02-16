@@ -10,7 +10,7 @@ import org.mineacademy.punishcontrol.core.CoreModule;
 import org.mineacademy.punishcontrol.core.DaggerCoreModule;
 import org.mineacademy.punishcontrol.core.SimplePunishControlPlugin;
 import org.mineacademy.punishcontrol.core.provider.Providers;
-import org.mineacademy.punishcontrol.core.provider.SettingsProvider;
+import org.mineacademy.punishcontrol.core.provider.providers.SettingsProvider;
 import org.mineacademy.punishcontrol.core.punish.Ban;
 import org.mineacademy.punishcontrol.core.storage.StorageType;
 import org.mineacademy.punishcontrol.spigot.command.*;

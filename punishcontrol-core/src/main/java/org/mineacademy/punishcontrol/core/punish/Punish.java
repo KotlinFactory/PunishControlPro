@@ -20,7 +20,15 @@ public abstract class Punish {
 	@NonNull private long creation;
 	private boolean removed = false;
 
-	protected Punish(final long creation, final Map<String, Object> banRawData, final PunishType punishType) {
+	protected Punish(@NonNull final UUID target, @NonNull final UUID creator, @NonNull final PunishDuration duration, @NonNull final PunishType punishType, final long creation) {
+		this.target = target;
+		this.creator = creator;
+		this.punishDuration = duration;
+		this.punishType = punishType;
+		this.creation = creation;
+	}
+
+	protected Punish(final long creation, @NonNull final Map<String, Object> banRawData, @NonNull final PunishType punishType) {
 		this(UUID.fromString((String) banRawData.get("target")), UUID.fromString((String) banRawData.get("creator")), PunishDuration.of((long) banRawData.get("duration")), punishType, creation);
 		ip((String) banRawData.get("ip"));
 		removed((Boolean) banRawData.get("removed"));

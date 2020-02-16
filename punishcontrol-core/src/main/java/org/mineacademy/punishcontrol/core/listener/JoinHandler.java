@@ -6,6 +6,7 @@ import org.mineacademy.punishcontrol.core.punish.Ban;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 public abstract class JoinHandler {
@@ -28,7 +29,12 @@ public abstract class JoinHandler {
 		setCancelled(true, event);
 		//TODO
 
-		final Ban ban = storageProvider.currentBan(uuid);
+		final Optional<Ban> optionalBan = storageProvider.currentBan(uuid);
+		if (!optionalBan.isPresent()) {
+			return;
+		}
+
+		final Ban ban = optionalBan.get();
 
 		/*
 		 * You have been banned

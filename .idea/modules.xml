@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/PunishControlPro.iml" filepath="$PROJECT_DIR$/PunishControlPro.iml" />
+      <module fileurl="file://$PROJECT_DIR$/punishcontrol-core/punishcontrol-core.iml" filepath="$PROJECT_DIR$/punishcontrol-core/punishcontrol-core.iml" />
+      <module fileurl="file://$PROJECT_DIR$/punishcontrol-plugin/punishcontrol-plugin.iml" filepath="$PROJECT_DIR$/punishcontrol-plugin/punishcontrol-plugin.iml" />
+      <module fileurl="file://$PROJECT_DIR$/punishcontrol-proxy/punishcontrol-proxy.iml" filepath="$PROJECT_DIR$/punishcontrol-proxy/punishcontrol-proxy.iml" />
+      <module fileurl="file://$PROJECT_DIR$/punishcontrol-spigot/punishcontrol-spigot.iml" filepath="$PROJECT_DIR$/punishcontrol-spigot/punishcontrol-spigot.iml" />
+    </modules>
+  </component>
+</project>

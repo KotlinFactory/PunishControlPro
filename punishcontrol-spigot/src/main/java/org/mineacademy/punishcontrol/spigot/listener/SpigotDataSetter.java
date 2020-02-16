@@ -5,9 +5,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.mineacademy.fo.Common;
-import org.mineacademy.punishcontrol.core.provider.PlayerProvider;
 import org.mineacademy.punishcontrol.core.provider.Providers;
-import org.mineacademy.punishcontrol.core.provider.TextureProvider;
+import org.mineacademy.punishcontrol.core.provider.providers.PlayerProvider;
+import org.mineacademy.punishcontrol.core.provider.providers.TextureProvider;
 
 import javax.inject.Inject;
 import java.util.UUID;

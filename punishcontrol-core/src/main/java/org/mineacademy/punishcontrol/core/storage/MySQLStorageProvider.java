@@ -5,7 +5,6 @@ import lombok.NonNull;
 import org.mineacademy.punishcontrol.core.punish.Ban;
 import org.mineacademy.punishcontrol.core.punish.Mute;
 import org.mineacademy.punishcontrol.core.punish.Warn;
-import org.mineacademy.punishcontrol.core.storage.cache.MySQLPlayerCache;
 
 import java.util.List;
 import java.util.UUID;
@@ -29,45 +28,6 @@ public final class MySQLStorageProvider extends SimpleDatabase implements Storag
 		return instance = new MySQLStorageProvider();
 	}
 
-	@Override public PlayerCache getFor(final @NonNull UUID uuid) {
-		return new MySQLPlayerCache(this, uuid);
-	}
-
-	// ----------------------------------------------------------------------------------------------------
-	// Is a player punished?
-	// ----------------------------------------------------------------------------------------------------
-
-	@Override public boolean isBanned(@NonNull final UUID uuid) {
-		return false;
-	}
-
-	@Override public boolean isMuted(@NonNull final UUID uuid) {
-		return false;
-	}
-
-	@Override public boolean isWarned(@NonNull final UUID uuid) {
-		return false;
-	}
-
-	// ----------------------------------------------------------------------------------------------------
-	// Listing all active punishes
-	// ----------------------------------------------------------------------------------------------------
-
-	@Override public List<Ban> listCurrentBans() {
-		return null;
-	}
-
-	@Override public List<Mute> listCurrentMutes() {
-		return null;
-	}
-
-	@Override public List<Warn> listCurrentWarns() {
-		return null;
-	}
-
-	// ----------------------------------------------------------------------------------------------------
-	// Listing all punishes
-	// ----------------------------------------------------------------------------------------------------
 
 	@Override public List<Ban> listBans() {
 		return null;
@@ -78,22 +38,6 @@ public final class MySQLStorageProvider extends SimpleDatabase implements Storag
 	}
 
 	@Override public List<Warn> listWarns() {
-		return null;
-	}
-
-	// ----------------------------------------------------------------------------------------------------
-	// Getting active ban of player if possible
-	// ----------------------------------------------------------------------------------------------------
-
-	@Override public Ban currentBan(@NonNull final UUID uuid) {
-		return null;
-	}
-
-	@Override public Mute currentMute(@NonNull final UUID uuid) {
-		return null;
-	}
-
-	@Override public Warn currentWarn(@NonNull final UUID uuid) {
 		return null;
 	}
 
@@ -109,10 +53,6 @@ public final class MySQLStorageProvider extends SimpleDatabase implements Storag
 		return null;
 	}
 
-	// ----------------------------------------------------------------------------------------------------
-	// Save punishes
-	// ----------------------------------------------------------------------------------------------------
-
 	@Override public void saveBan(@NonNull final Ban ban) {
 
 	}
@@ -125,21 +65,15 @@ public final class MySQLStorageProvider extends SimpleDatabase implements Storag
 
 	}
 
-	// ----------------------------------------------------------------------------------------------------
-	// Removing current ban
-	// ----------------------------------------------------------------------------------------------------
+	@Override public void removeBan(final @NonNull Ban ban) {
 
-	@Override public boolean removeCurrentBan(final @NonNull UUID target) {
-		return false;
 	}
 
-	@Override public boolean removeCurrentMute(final @NonNull UUID target) {
-		return false;
+	@Override public void removeMute(final @NonNull Mute mute) {
+
 	}
 
-	@Override public boolean removeCurrentWarn(final @NonNull UUID target) {
-		return false;
+	@Override public void removeWarn(final @NonNull Warn warn) {
+
 	}
-
-
 }

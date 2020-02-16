@@ -12,6 +12,7 @@ import org.mineacademy.punishcontrol.core.provider.AbstractPlayerProvider;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -52,12 +53,12 @@ public final class ProxyPlayerProvider extends AbstractPlayerProvider implements
 	}
 
 	@Override
-	public String getIpIfOnline(@NonNull final UUID uuid) {
+	public Optional<String> getIpIfOnline(@NonNull final UUID uuid) {
 		final ProxiedPlayer player = ProxyServer.getInstance().getPlayer(uuid);
 		if (player == null || player.getAddress() == null) {
-			return null;
+			return Optional.empty();
 		}
-		return player.getAddress().getHostName();
+		return Optional.of(player.getAddress().getAddress().getHostAddress());
 	}
 
 	@Override

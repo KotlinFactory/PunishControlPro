@@ -1,6 +1,7 @@
 package org.mineacademy.punishcontrol.core.storage;
 
 import de.leonhard.storage.Json;
+import de.leonhard.storage.util.Valid;
 import lombok.NonNull;
 import lombok.val;
 import org.mineacademy.punishcontrol.core.PunishControlManager;
@@ -16,7 +17,6 @@ import java.util.*;
  * for an example how the file looks like, just scrool to
  * the end of this file
  */
-@SuppressWarnings("unchecked")
 public final class JsonStorageProvider extends Json implements StorageProvider {
 
 	private static final String BANS_PATH_PREFIX = "bans";
@@ -30,102 +30,63 @@ public final class JsonStorageProvider extends Json implements StorageProvider {
 	private static final String PATH_TO_WARN = WARN_PATH_PREFIX + ".{uuid}.{creation}";
 
 
+	//
+
+	// ----------------------------------------------------------------------------------------------------
+	// Private methods to handle exceptions
+	// ----------------------------------------------------------------------------------------------------
+
+	private long parseMSFromKey(final String path, final String key) {
+		try {
+			return Long.parseLong(key);
+		} catch (final NumberFormatException ex) {
+			Valid.error(ex,
+				"",
+				"----",
+				"Invalid configuration in your JSON-Punish-Storage",
+				"String to parse is not numeric!",
+				"Dir: " + getFilePath(),
+				"Path in File: " + path + "." + key,
+				"This is not an PunishControlPro error but an configuration mistake!",
+				"----"
+			);
+		}
+
+		return 0;
+	}
+
+	@SuppressWarnings("unchecked")
+	private Map<String, Object> parseMap(final String path, @NonNull final Object rawData) {
+		try {
+			return (Map<String, Object>) rawData;
+		} catch (final ClassCastException ex) {
+			Valid.error(ex,
+				"",
+				"----",
+				"Invalid configuration in your JSON-Punish-Storage",
+				"Expected type: Map<String, Object> found: " + rawData.getClass().getSimpleName(),
+				"Dir: " + getFilePath(),
+				"Path in File: " + path,
+				"This is not an PunishControlPro error but an configuration mistake!",
+				"----"
+
+			);
+		}
+
+		return null;
+	}
+
+	//
+
 	public JsonStorageProvider() {
 		super(PunishControlManager.FILES.JSON_DATA_FILE_NAME, PunishControlManager.FILES.PLUGIN_FOLDER);
 	}
 
-	@Override
-	public boolean isBanned(@NonNull final UUID uuid) {
-		return currentBan(uuid) != null;
-	}
-
-	@Override
-	public boolean isMuted(@NonNull final UUID uuid) {
-		return currentMute(uuid) != null;
-	}
-
-	@Override
-	public boolean isWarned(@NonNull final UUID uuid) {
-		return currentWarn(uuid) != null;
-	}
 
 	// ----------------------------------------------------------------------------------------------------
-	// Listing current punishes
+	// Listing all punishes
 	// ----------------------------------------------------------------------------------------------------
 
-	@Override
-	@SuppressWarnings("unchecked")
-	public List<Ban> listCurrentBans() {
-		final Set<String> keys = singleLayerKeySet(BANS_PATH_PREFIX);
-		final List<Ban> result = new ArrayList<>();
-
-		for (final String key : keys) { //UUIDs
-			final Map<String, Object> bans = getMap(key);
-
-			for (final val entry : bans.entrySet()) { //MS
-				//Actual ban
-
-				final long creation = Long.parseLong(entry.getKey());
-				final Map<String, Object> banRawData = (Map<String, Object>) entry.getValue();
-				final Ban ban = Ban.ofRawData(creation, banRawData);
-
-				if (!ban.isOld()) {
-					result.add(ban);
-				}
-			}
-		}
-
-		return result;
-	}
-
-	@Override
-	public List<Mute> listCurrentMutes() {
-		final Set<String> keys = singleLayerKeySet(MUTES_PATH_PREFIX);
-		final List<Mute> result = new ArrayList<>();
-
-		for (final String key : keys) { //UUIDs
-			final Map<String, Object> bans = getMap(key);
-
-			for (final val entry : bans.entrySet()) { //MS
-				//Actual ban
-
-				final long creation = Long.parseLong(entry.getKey());
-				final Map<String, Object> muteWarnData = (Map<String, Object>) entry.getValue();
-
-				final Mute mute = Mute.ofRawData(creation, muteWarnData);
-
-				if (!mute.isOld()) {
-					result.add(mute);
-				}
-			}
-		}
-
-		return result;
-	}
-
-	@Override
-	public List<Warn> listCurrentWarns() {
-		final Set<String> keys = singleLayerKeySet(WARN_PATH_PREFIX);
-		final List<Warn> result = new ArrayList<>();
-
-		for (final String key : keys) { //UUIDs
-			final Map<String, Object> bans = getMap(key);
-
-			for (final val entry : bans.entrySet()) { //MS
-				//Actual ban
-
-				final long creation = Long.parseLong(entry.getKey());
-				final Map<String, Object> warnRawData = (Map<String, Object>) entry.getValue();
-
-				final Warn warn = Warn.ofRawData(creation, warnRawData);
-
-				if (!warn.isOld()) {
-					result.add(warn);
-				}
-			}
-		}
-		return result;
-	}
 
 	@Override
 	public List<Ban> listBans() {
@@ -138,8 +99,8 @@ public final class JsonStorageProvider extends Json implements StorageProvider {
 			for (final val entry : bans.entrySet()) { //MS
 				//Actual ban
 
-				final long creation = Long.parseLong(entry.getKey());
-				final Map<String, Object> banRawData = (Map<String, Object>) entry.getValue();
+				final long creation = parseMSFromKey(BANS_PATH_PREFIX + "." + key, entry.getKey());
+				final Map<String, Object> banRawData = parseMap(key, entry.getValue());
 
 				final Ban ban = Ban.ofRawData(creation, banRawData);
 
@@ -161,8 +122,8 @@ public final class JsonStorageProvider extends Json implements StorageProvider {
 			for (final val entry : bans.entrySet()) { //MS
 				//Actual ban
 
-				final long creation = Long.parseLong(entry.getKey());
-				final Map<String, Object> muteRawData = (Map<String, Object>) entry.getValue();
+				final long creation = parseMSFromKey(MUTES_PATH_PREFIX + "." + key, entry.getKey());
+				final Map<String, Object> muteRawData = parseMap(key, entry.getValue());
 
 				final Mute mute = Mute.ofRawData(creation, muteRawData);
 
@@ -184,8 +145,8 @@ public final class JsonStorageProvider extends Json implements StorageProvider {
 			for (final val entry : bans.entrySet()) { //MS
 				//Actual ban
 
-				final long creation = Long.parseLong(entry.getKey());
-				final Map<String, Object> warnRawData = (Map<String, Object>) entry.getValue();
+				final long creation = parseMSFromKey(WARN_PATH_PREFIX + "." + key, entry.getKey());
+				final Map<String, Object> warnRawData = parseMap(key, entry.getValue());
 
 
 				final Warn warn = Warn.ofRawData(creation, warnRawData);
@@ -196,6 +157,7 @@ public final class JsonStorageProvider extends Json implements StorageProvider {
 
 		return result;
 	}
+
 
 	// ----------------------------------------------------------------------------------------------------
 	// Listing all punishes of players
@@ -210,8 +172,8 @@ public final class JsonStorageProvider extends Json implements StorageProvider {
 		for (final val entry : bans.entrySet()) { //MS
 			//Actual ban
 
-			final long creation = Long.parseLong(entry.getKey());
-			final Map<String, Object> banRawData = (Map<String, Object>) entry.getValue();
+			final long creation = parseMSFromKey(BANS_PATH_PREFIX + "." + uuid, entry.getKey());
+			final Map<String, Object> banRawData = parseMap(BANS_PATH_PREFIX + "." + uuid, entry.getValue());
 
 			final Ban ban = Ban.ofRawData(creation, banRawData);
 
@@ -230,8 +192,8 @@ public final class JsonStorageProvider extends Json implements StorageProvider {
 		for (final val entry : bans.entrySet()) { //MS
 			//Actual ban
 
-			final long creation = Long.parseLong(entry.getKey());
-			final Map<String, Object> muteRawData = (Map<String, Object>) entry.getValue();
+			final long creation = parseMSFromKey(MUTES_PATH_PREFIX + "." + uuid, entry.getKey());
+			final Map<String, Object> muteRawData = parseMap(MUTES_PATH_PREFIX + "." + uuid, entry.getValue());
 
 			final Mute mute = Mute.ofRawData(creation, muteRawData);
 
@@ -250,8 +212,8 @@ public final class JsonStorageProvider extends Json implements StorageProvider {
 		for (final val entry : bans.entrySet()) { //MS
 			//Actual ban
 
-			final long creation = Long.parseLong(entry.getKey());
-			final Map<String, Object> warnRawData = (Map<String, Object>) entry.getValue();
+			final long creation = parseMSFromKey(WARN_PATH_PREFIX + "." + uuid, entry.getKey());
+			final Map<String, Object> warnRawData = parseMap(WARN_PATH_PREFIX + "." + uuid, entry.getValue());
 
 			final Warn warn = Warn.ofRawData(creation, warnRawData);
 
@@ -259,42 +221,6 @@ public final class JsonStorageProvider extends Json implements StorageProvider {
 		}
 
 		return result;
-	}
-
-	// ----------------------------------------------------------------------------------------------------
-	// Listing current punishes of players
-	// ----------------------------------------------------------------------------------------------------
-
-	@Override
-	public Optional<Ban> currentBan(@NonNull final UUID uuid) {
-		for (final Ban ban : listBans(uuid)) {
-			if (!ban.isOld()) {
-				return Optional.of(ban);
-			}
-		}
-
-		return Optional.empty();
-	}
-
-	@Override
-	public Optional<Mute> currentMute(@NonNull final UUID uuid) {
-		for (final Mute mute : listMutes(uuid)) {
-			if (!mute.isOld()) {
-				return Optional.of(mute);
-			}
-		}
-		return Optional.empty();
-	}
-
-	@Override
-	public Optional<Warn> currentWarn(@NonNull final UUID uuid) {
-		for (final Warn warn : listWarns(uuid)) {
-			if (!warn.isOld()) {
-				return Optional.of(warn);
-			}
-		}
-
-		return Optional.empty();
 	}
 
 
@@ -332,54 +258,30 @@ public final class JsonStorageProvider extends Json implements StorageProvider {
 	// Removing punishes
 	// ----------------------------------------------------------------------------------------------------
 
-	@Override public boolean removeCurrentBan(final @NonNull UUID target) {
-		final Optional<Ban> optionalBan = currentBan(target);
-
-		if (!optionalBan.isPresent()) {
-			return false;
-		}
-
-		final Ban ban = optionalBan.get();
-
+	@Override public void removeBan(final @NonNull Ban ban) {
 		final String path = PATH_TO_BAN
 			.replace("{uuid}", ban.target().toString())
 			.replace("{creation}", ban.creation() + "");
 
 		set(path + ".removed", true);
-		return true;
 	}
 
-	@Override public boolean removeCurrentMute(final @NonNull UUID target) {
-		if (!currentMute(target).isPresent()) {
-			return false;
-		}
-
-		final Mute mute = currentMute(target).get();
-
+	@Override public void removeMute(final @NonNull Mute mute) {
 		final String path = PATH_TO_MUTE
 			.replace("{uuid}", mute.target().toString())
 			.replace("{creation}", mute.creation() + "");
 
 		set(path + ".removed", true);
-		return true;
 	}
 
-	@Override public boolean removeCurrentWarn(final @NonNull UUID target) {
-		final Optional<Warn> optionalWarn = currentWarn(target);
-
-		if (!optionalWarn.isPresent()) {
-			return false;
-		}
-
-		final Warn warn = optionalWarn.get();
-
+	@Override public void removeWarn(final @NonNull Warn warn) {
 		final String path = PATH_TO_WARN
 			.replace("{uuid}", warn.target().toString())
 			.replace("{creation}", warn.creation() + "");
 
 		set(path + ".removed", true);
-		return true;
 	}
+
 
 	// ----------------------------------------------------------------------------------------------------
 	// Example-File

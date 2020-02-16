@@ -2,9 +2,6 @@
 <project version="4">
   <component name="DiscordProjectSettings">
     <option name="show" value="true" />
-    <option name="nameOverrideEnabled" value="true" />
-    <option name="nameOverrideText" value="PunishControl" />
-    <option name="description" value="Remove LiteBans:) Use PunishControlPro. MineAcademy's new flagship." />
   </component>
   <component name="ProjectNotificationSettings">
     <option name="askShowProject" value="false" />
