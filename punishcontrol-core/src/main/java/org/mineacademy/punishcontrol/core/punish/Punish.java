@@ -65,4 +65,5 @@ public abstract class Punish {
 
 		return result;
 	}
+
 }
