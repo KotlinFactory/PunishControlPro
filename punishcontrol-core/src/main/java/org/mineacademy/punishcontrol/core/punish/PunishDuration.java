@@ -26,8 +26,8 @@ public final class PunishDuration {
 	private static String splitHumanToHumanReadable(@NonNull final String humanReadable) {
 		// returns an OptionalInt with the value of the index of the first Letter
 		final OptionalInt firstLetterIndex = IntStream.range(0, humanReadable.length())
-				.filter(i -> Character.isLetter(humanReadable.charAt(i)))
-				.findFirst();
+			.filter(i -> Character.isLetter(humanReadable.charAt(i)))
+			.findFirst();
 
 		// Default if there is no letter, only numbers
 		String numbers = humanReadable;
@@ -53,6 +53,11 @@ public final class PunishDuration {
 		return new PunishDuration(-1);
 	}
 
+
+	// ----------------------------------------------------------------------------------------------------
+	// Convenience methods here
+	// ----------------------------------------------------------------------------------------------------
+
 	public boolean isPermanent() {
 		return ms == -1L;
 	}
@@ -61,7 +66,7 @@ public final class PunishDuration {
 		return System.currentTimeMillis() + ms;
 	}
 
-	public String format() {
+	@Override public String toString() {
 		return TimeUtil.formatTimeGeneric(TimeUnit.MILLISECONDS.toSeconds(ms));
 	}
 

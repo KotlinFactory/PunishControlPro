@@ -2,35 +2,26 @@ package org.mineacademy.punishcontrol.core.group;
 
 import lombok.*;
 import lombok.experimental.Accessors;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import org.mineacademy.punishcontrol.core.provider.Providers;
+import org.mineacademy.punishcontrol.core.provider.providers.PlayerProvider;
 
 
+@Getter
 @Accessors(fluent = true, chain = true)
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class Group {
-	@Getter
+	private static final PlayerProvider provider = Providers.playerProvider();
+
 	@NonNull
-	private final String NAME;
+	private final String name;
 	@NonNull
-	@Getter
 	@Setter
-	private List<String> permissions;
+	private String permission;
+	@Setter
+	private String item = "STONE";
+	private final int priority;
 
-	public static Group of(@NonNull final String name) {
-		return of(name, new ArrayList<>());
+	public static Group of(@NonNull final String name, @NonNull final String permission, final int priority) {
+		return new Group(name, permission, priority);
 	}
-
-	public static Group of(@NonNull final String name, @NonNull final List<String> permissions) {
-		return new Group(name, permissions);
-	}
-
-	public Group permissions(@NonNull final String... permissions) {
-		//Arrays.asList used to make list mutable
-		this.permissions = new ArrayList<>(Arrays.asList(permissions));
-		return this;
-	}
-
 }

@@ -4,7 +4,6 @@ package org.mineacademy.punishcontrol.proxy;
 import lombok.NonNull;
 import org.mineacademy.bfo.Common;
 import org.mineacademy.bfo.bungee.SimpleBungee;
-import org.mineacademy.bfo.collection.StrictList;
 import org.mineacademy.bfo.plugin.SimplePlugin;
 import org.mineacademy.burst.Burst;
 import org.mineacademy.punishcontrol.core.CoreModule;
@@ -18,6 +17,7 @@ import org.mineacademy.punishcontrol.proxy.impl.ProxySettingsProvider;
 import org.mineacademy.punishcontrol.proxy.impl.ProxyTextureProvider;
 import org.mineacademy.punishcontrol.proxy.impl.ProxyWorkingDirectoryProvider;
 import org.mineacademy.punishcontrol.proxy.listener.ProxyDataSetter;
+import org.mineacademy.punishcontrol.proxy.settings.Settings;
 
 public final class PunishControl extends SimplePlugin implements SimplePunishControlPlugin {
 	private final ProxyModule proxyModule = DaggerProxyModule.create();
@@ -50,7 +50,7 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 		registerCommand(CommandUnBan.newInstance());
 		registerCommand(CommandUnMute.newInstance());
 		registerCommand(CommandWarn.newInstance());
-		registerCommand(CommandMain.newInstance(new StrictList<>("punishcontrol", "phc", "pun", "pc")));
+		registerCommand(CommandMain.newInstance(Settings.MAIN_COMMAND_ALIASES));
 	}
 
 	@Override

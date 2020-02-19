@@ -1,6 +1,7 @@
 package org.mineacademy.punishcontrol.spigot.listener;
 
 import lombok.NonNull;
+import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -24,11 +25,13 @@ public final class SpigotDataSetter implements Listener {
 
 	@EventHandler(ignoreCancelled = true)
 	public void onJoin(final PlayerJoinEvent event) {
-		final UUID uuid = event.getPlayer().getUniqueId();
-		final String name = event.getPlayer().getName();
+		final Player player = event.getPlayer();
+		final UUID uuid = player.getUniqueId();
+		final String name = player.getName();
+		final String ip = player.getAddress() == null ? "unknown" : player.getAddress().getHostName();
 		Common.runLaterAsync(() -> {
 			Providers.textureProvider().saveSkinTexture(uuid);
-			Providers.playerProvider().saveUUIDAndName(uuid, name);
+			Providers.playerProvider().saveData(uuid, name, ip);
 		});
 	}
 }

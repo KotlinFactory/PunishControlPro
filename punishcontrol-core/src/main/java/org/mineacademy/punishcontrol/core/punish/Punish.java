@@ -1,5 +1,6 @@
 package org.mineacademy.punishcontrol.core.punish;
 
+import de.leonhard.storage.util.Valid;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
@@ -20,6 +21,59 @@ public abstract class Punish {
 	@NonNull private long creation;
 	private boolean removed = false;
 
+	/**
+	 * Validates our raw-data which
+	 * should contain keys to parse a punish from
+	 * <p>
+	 * Keys which will be validated:
+	 * target, creator, duration, ip, removed
+	 *
+	 * @param rawData Map to validate
+	 * @return False is validation fails
+	 */
+	protected static void validateRaWData(final Map<String, Object> rawData) {
+		if (!(rawData.get("target") instanceof String)) {
+			Valid.error(
+				"PunishRaw-Data is missing an String named 'target'",
+				"Have you altered data?",
+				"Data: '" + rawData.toString() + "'"
+			);
+		}
+
+		if (!(rawData.get("creator") instanceof String)) {
+			Valid.error(
+				"PunishRaw-Data is missing an String named 'creator'",
+				"Have you altered data?",
+				"Data: '" + rawData.toString() + "'"
+			);
+		}
+
+		if (!(rawData.get("ip") instanceof String)) {
+			Valid.error(
+				"PunishRaw-Data is missing an String named 'ip'",
+				"Have you altered data?",
+				"Data: '" + rawData.toString() + "'"
+			);
+		}
+
+		if (!(rawData.containsKey("removed"))) {
+			Valid.error(
+				"PunishRaw-Data is missing an Boolean named 'removed'",
+				"Have you altered data?",
+				"Data: '" + rawData.toString() + "'"
+			);
+		}
+
+		if (!(rawData.containsKey("duration"))) {
+			Valid.error(
+				"PunishRaw-Data is missing an long named 'duration'",
+				"Have you altered data?",
+				"Data: '" + rawData.toString() + "'"
+			);
+
+		}
+	}
+
 	protected Punish(@NonNull final UUID target, @NonNull final UUID creator, @NonNull final PunishDuration duration, @NonNull final PunishType punishType, final long creation) {
 		this.target = target;
 		this.creator = creator;
@@ -30,6 +84,7 @@ public abstract class Punish {
 
 	protected Punish(final long creation, @NonNull final Map<String, Object> banRawData, @NonNull final PunishType punishType) {
 		this(UUID.fromString((String) banRawData.get("target")), UUID.fromString((String) banRawData.get("creator")), PunishDuration.of((long) banRawData.get("duration")), punishType, creation);
+		validateRaWData(banRawData);
 		ip((String) banRawData.get("ip"));
 		removed((Boolean) banRawData.get("removed"));
 	}
@@ -60,7 +115,7 @@ public abstract class Punish {
 		result.put("reason", reason());
 		result.put("duration", punishDuration().toMs());
 		result.put("creation", creation());
-		result.put("ip", ip().isPresent() ? ip().get() : "unknown");
+		result.put("ip", ip().orElse("unknown"));
 		result.put("removed", removed());
 
 		return result;

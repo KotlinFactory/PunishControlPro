@@ -13,6 +13,13 @@ import java.util.stream.Stream;
 
 public interface StorageProvider {
 
+	/**
+	 * @return Was the startup o four data structure successfully?
+	 */
+	default boolean setup() {
+		return true;
+	}
+
 
 	// ----------------------------------------------------------------------------------------------------
 	// Listing all punishes/warns/reports ever made

@@ -1,35 +1,36 @@
 package org.mineacademy.punishcontrol.core.storage;
 
-import de.leonhard.storage.util.Valid;
 import lombok.NonNull;
 import org.mineacademy.punishcontrol.core.punish.Ban;
 import org.mineacademy.punishcontrol.core.punish.Mute;
 import org.mineacademy.punishcontrol.core.punish.Warn;
 
+import javax.inject.Inject;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.List;
 import java.util.UUID;
 
 public final class MySQLStorageProvider extends SimpleDatabase implements StorageProvider {
 
-	public static boolean connected() {
-		return getInstance().isConnected();
+	//
+
+	private final MySQLConfig config;
+
+	//We need the mysql config here
+
+	@Inject
+	public MySQLStorageProvider(final MySQLConfig config) {
+		super();
+		this.config = config;
 	}
-
-	private volatile static MySQLStorageProvider instance;
-
-	private MySQLStorageProvider() {
-		Valid.checkBoolean(instance == null, "We already have an instance of MySQLStorageProvider");
-	}
-
-	public static MySQLStorageProvider getInstance() {
-		if (instance != null) {
-			return instance;
-		}
-		return instance = new MySQLStorageProvider();
-	}
-
 
 	@Override public List<Ban> listBans() {
+		try (final ResultSet resultSet = query("SELECT * FROM {table} WHERE PUNISHTYPE='BAN'")) {
+
+		} catch (final SQLException ex) {
+
+		}
 		return null;
 	}
 
@@ -62,7 +63,6 @@ public final class MySQLStorageProvider extends SimpleDatabase implements Storag
 	}
 
 	@Override public void saveWarn(@NonNull final Warn warn) {
-
 	}
 
 	@Override public void removeBan(final @NonNull Ban ban) {

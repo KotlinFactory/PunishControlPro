@@ -5,12 +5,24 @@ Locale: en
 #JSON/MYSQL
 Storage: JSON
 
-Reports:
-  Allowed_Reasons: []
-
 Command_Aliases: [punishcontrol,phc, pun, pc]
+
+Punishes:
+  Ban:
+    Enabled: true
+  Warn:
+    Enabled: true
+  Mute:
+    Enabled: true
+
+Groups:
+  Admin:
+    Priority: 0
+    Permission: punishcontrol.groups.admin
+
 
 Advanced:
   Cache_Results: true
 
+# Do not change this value, otherwise it will corrupt your plugin installation!
 Version: 1

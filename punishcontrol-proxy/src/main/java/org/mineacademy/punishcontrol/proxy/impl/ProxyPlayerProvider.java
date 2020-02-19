@@ -8,11 +8,10 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import org.mineacademy.bfo.Common;
 import org.mineacademy.bfo.debug.Debugger;
 import org.mineacademy.burst.provider.UUIDNameProvider;
-import org.mineacademy.punishcontrol.core.provider.AbstractPlayerProvider;
+import org.mineacademy.punishcontrol.core.provider.providers.AbstractPlayerProvider;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -52,13 +51,13 @@ public final class ProxyPlayerProvider extends AbstractPlayerProvider implements
 		return ProxyServer.getInstance().getPlayer(uuid) != null;
 	}
 
-	@Override
-	public Optional<String> getIpIfOnline(@NonNull final UUID uuid) {
+	@Override public boolean hasPermission(final @NonNull UUID uuid, final @NonNull String permission) {
 		final ProxiedPlayer player = ProxyServer.getInstance().getPlayer(uuid);
-		if (player == null || player.getAddress() == null) {
-			return Optional.empty();
+		if (player == null) {
+			return false;
 		}
-		return Optional.of(player.getAddress().getAddress().getHostAddress());
+
+		return player.hasPermission(permission);
 	}
 
 	@Override

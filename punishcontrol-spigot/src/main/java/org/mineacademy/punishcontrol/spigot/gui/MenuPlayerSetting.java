@@ -25,7 +25,6 @@ public final class MenuPlayerSetting extends MenuPagged<UUID> {
 
 	@Override
 	protected void onPageClick(final Player player, final UUID uuid, final ClickType clickType) {
-
 	}
 }
     

@@ -3,7 +3,6 @@ package org.mineacademy.punishcontrol.spigot;
 import lombok.NonNull;
 import org.mineacademy.fo.Common;
 import org.mineacademy.fo.Valid;
-import org.mineacademy.fo.collection.StrictList;
 import org.mineacademy.fo.plugin.SimplePlugin;
 import org.mineacademy.fo.settings.YamlStaticConfig;
 import org.mineacademy.punishcontrol.core.CoreModule;
@@ -75,7 +74,7 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 
 	@Override
 	public void registerCommands() {
-		registerCommand(CommandMain.newInstance(new StrictList<>("punishcontrol", "phc", "pun", "pc")));
+		registerCommand(CommandMain.newInstance(Settings.MAIN_COMMAND_ALIASES));
 		registerCommand(CommandBan.newInstance());
 		registerCommand(CommandKick.newInstance());
 		registerCommand(CommandWarn.newInstance());

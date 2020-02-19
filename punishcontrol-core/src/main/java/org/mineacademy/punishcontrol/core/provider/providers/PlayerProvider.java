@@ -11,7 +11,7 @@ import java.util.UUID;
  */
 public interface PlayerProvider {
 
-	void saveUUIDAndName(@NonNull UUID uuid, @NonNull String name);
+	void saveData(@NonNull UUID uuid, @NonNull String name, @NonNull final String ip);
 
 	/**
 	 * @return Players which are on the server & players
@@ -23,11 +23,13 @@ public interface PlayerProvider {
 
 	boolean isOnline(@NonNull UUID uuid);
 
+	boolean hasPermission(@NonNull final UUID uuid, @NonNull final String permission);
+
 	String getName(@NonNull UUID uuid);
 
 	UUID getUUID(@NonNull String name);
 
-	Optional<String> getIpIfOnline(@NonNull UUID uuid);
+	Optional<String> getIp(@NonNull UUID uuid);
 
 	void sendIfOnline(@NonNull UUID uuid, @NonNull String... messages);
 

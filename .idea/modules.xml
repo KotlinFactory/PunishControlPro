@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/PunishControlPro.iml" filepath="$PROJECT_DIR$/PunishControlPro.iml" />
+      <module fileurl="file://$USER_HOME$/TestServer/TestServer.iml" filepath="$USER_HOME$/TestServer/TestServer.iml" />
       <module fileurl="file://$PROJECT_DIR$/punishcontrol-core/punishcontrol-core.iml" filepath="$PROJECT_DIR$/punishcontrol-core/punishcontrol-core.iml" />
       <module fileurl="file://$PROJECT_DIR$/punishcontrol-plugin/punishcontrol-plugin.iml" filepath="$PROJECT_DIR$/punishcontrol-plugin/punishcontrol-plugin.iml" />
       <module fileurl="file://$PROJECT_DIR$/punishcontrol-proxy/punishcontrol-proxy.iml" filepath="$PROJECT_DIR$/punishcontrol-proxy/punishcontrol-proxy.iml" />

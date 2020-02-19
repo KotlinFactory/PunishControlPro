@@ -7,11 +7,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.mineacademy.fo.Common;
-import org.mineacademy.punishcontrol.core.provider.AbstractPlayerProvider;
+import org.mineacademy.punishcontrol.core.provider.providers.AbstractPlayerProvider;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -47,13 +46,13 @@ public final class SpigotPlayerProvider extends AbstractPlayerProvider {
 		return Bukkit.getPlayer(uuid) != null;
 	}
 
-	@Override
-	public Optional<String> getIpIfOnline(@NonNull final UUID uuid) {
+	@Override public boolean hasPermission(final @NonNull UUID uuid, final @NonNull String permission) {
 		final Player player = Bukkit.getPlayer(uuid);
-		if (player == null || player.getAddress() == null) {
-			return Optional.empty();
+		if (player == null) {
+			return false;
 		}
-		return Optional.of(player.getAddress().getHostName());
+
+		return player.hasPermission(permission);
 	}
 
 	@Override
