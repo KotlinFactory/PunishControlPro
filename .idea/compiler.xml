@@ -3,19 +3,27 @@
   <component name="CompilerConfiguration">
     <option name="DEFAULT_COMPILER" value="Eclipse" />
     <option name="BUILD_PROCESS_HEAP_SIZE" value="2000" />
+    <option name="BUILD_PROCESS_ADDITIONAL_VM_OPTIONS" value="-javaagent:/Users/leonhard/Repository/Etc/lombok.jar" />
     <annotationProcessing>
-      <profile default="true" name="Default" enabled="true" />
-      <profile name="Maven default annotation processors profile" enabled="true">
+      <profile default="true" name="Default">
+        <processorPath useClasspath="false">
+          <entry name="$USER_HOME$/Repository/Etc/lombok.jar" />
+        </processorPath>
+      </profile>
+      <profile name="Maven default annotation processors profile">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <processorPath>
           <entry name="$USER_HOME$/Repository/Etc/lombok.jar" />
         </processorPath>
+        <module name="PunishControlPro.punishcontrol-core.test" />
         <module name="punishcontrol-plugin" />
+        <module name="PunishControlPro.punishcontrol-core.main" />
+        <module name="punishcontrol-core" />
         <module name="punishcontrol-proxy" />
       </profile>
-      <profile name="Annotation profile for PunishControlPro" enabled="true">
+      <profile name="Annotation profile for PunishControlPro">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -38,21 +46,11 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.10/lombok-1.18.10.jar" />
         </processorPath>
         <module name="punishcontrol-spigot" />
-        <module name="punishcontrol-core" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="punishcontrol-core" target="1.8" />
-      <module name="punishcontrol-plugin" target="1.8" />
-      <module name="punishcontrol-proxy" target="1.8" />
-      <module name="punishcontrol-spigot" target="1.8" />
-      <module name="PunishControlPro" target="8" />
-    </bytecodeTargetLevel>
+    <bytecodeTargetLevel target="8" />
   </component>
   <component name="EclipseCompilerSettings">
-    <option name="GENERATE_NO_WARNINGS" value="true" />
-  </component>
-  <component name="JavacSettings">
     <option name="GENERATE_NO_WARNINGS" value="true" />
   </component>
 </project>

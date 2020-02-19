@@ -87,6 +87,8 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 
 	@Override
 	public void registerListener() {
+
+
 		registerEvents(spigotModule.spigotDataSetter());
 		registerEvents(spigotModule.spigotJoinHandler());
 	}

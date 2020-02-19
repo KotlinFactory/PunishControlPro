@@ -6,5 +6,6 @@ public class Localization extends SimpleLocalization {
 	@Override
 	protected int getConfigVersion() {
 		return 1;
+
 	}
 }

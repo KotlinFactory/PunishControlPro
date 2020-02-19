@@ -26,6 +26,35 @@ public final class Settings extends SimpleSettings {
 
 
 		//Loading our Groups
+
+		System.out.println("KEYS:");
+		System.out.println(getValuesAndKeys("Groups").toString());
+
+		/*
+		Groups:
+  Admin:
+    Priority: 0
+    Permission: punishcontrol.group.admin
+    #Set to -1 to disable
+    Limits:
+      Ban: -1
+      Mute: -1
+      Warn: -1
+  Moderator:
+    Priority: 1
+    Permission: punishcontrol.group.moderator
+    Limits:
+      Ban: 1 year
+      Mute: 1 year
+      Warn: 2 year
+    Supporter:
+      Priority: 2
+      Permission: punishcontrol.group.supporter
+      Limits:
+        Ban: 1 month
+        Mute: 2 month
+        Warn: 3 month
+		 */
 	}
 
 	@Override
