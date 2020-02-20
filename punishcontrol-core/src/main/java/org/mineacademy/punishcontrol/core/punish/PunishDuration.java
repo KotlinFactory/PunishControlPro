@@ -15,6 +15,10 @@ public final class PunishDuration {
 	private final long ms;
 
 	public static PunishDuration of(@NonNull String humanReadableTime) {
+		if (humanReadableTime.equalsIgnoreCase("-1")) {
+			return permanent();
+		}
+
 		if (!humanReadableTime.contains(" ")) {
 			humanReadableTime = splitHumanToHumanReadable(humanReadableTime);
 		}

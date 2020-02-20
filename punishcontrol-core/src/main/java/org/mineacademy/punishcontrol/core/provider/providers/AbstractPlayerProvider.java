@@ -53,7 +53,7 @@ public abstract class AbstractPlayerProvider extends Json implements PlayerProvi
 			}
 			final Map<String, Object> data = (Map<String, Object>) entry.getValue();
 			if (data.get("name").toString().equalsIgnoreCase(name)) {
-				return UUID.fromString(data.get("uuid").toString());
+				return UUID.fromString(entry.getKey());
 			}
 		}
 

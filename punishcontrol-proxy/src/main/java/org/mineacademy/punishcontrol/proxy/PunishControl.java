@@ -12,10 +12,7 @@ import org.mineacademy.punishcontrol.core.SimplePunishControlPlugin;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.storage.StorageType;
 import org.mineacademy.punishcontrol.proxy.command.punishcontrol.*;
-import org.mineacademy.punishcontrol.proxy.impl.ProxyPlayerProvider;
-import org.mineacademy.punishcontrol.proxy.impl.ProxySettingsProvider;
-import org.mineacademy.punishcontrol.proxy.impl.ProxyTextureProvider;
-import org.mineacademy.punishcontrol.proxy.impl.ProxyWorkingDirectoryProvider;
+import org.mineacademy.punishcontrol.proxy.impl.*;
 import org.mineacademy.punishcontrol.proxy.listener.ProxyDataSetter;
 import org.mineacademy.punishcontrol.proxy.settings.Settings;
 
@@ -26,20 +23,12 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 	@Override
 	protected void onPluginStart() {
 		Burst.setPlugin(this); //Set the plugin for our library
-		setProviders();
 		onPunishControlPluginStart();
 	}
 
-	@Override
-	public SimpleBungee getBungeeCord() {
-		return null;
-	}
-
-	@Override
-	public void log(final @NonNull String... message) {
-		Common.log(message);
-	}
-
+	// ----------------------------------------------------------------------------------------------------
+	// Methods to start our plugin
+	// ----------------------------------------------------------------------------------------------------
 
 	@Override
 	public void registerCommands() {
@@ -58,6 +47,25 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 		registerEvents(ProxyDataSetter.newInstance());
 	}
 
+	@Override public void registerProviders() {
+		//Working directory
+		Providers.workingDirectoryProvider(ProxyWorkingDirectoryProvider.newInstance());
+		//Player providers
+		Providers.playerProvider(ProxyPlayerProvider.newInstance());
+		org.mineacademy.burst.provider.Providers.setUuidNameProvider(ProxyPlayerProvider.newInstance());
+		//Settings
+		Providers.settingsProvider(ProxySettingsProvider.newInstance());
+		//TextureProvider
+		Providers.textureProvider(ProxyTextureProvider.newInstance());
+		//Broadcaster
+		Providers.punishMessageBroadcaster(ProxyPunishMessageBroadcaster.newInstance());
+	}
+
+
+	// ----------------------------------------------------------------------------------------------------
+	// Overridden methods from SimplePunishControl
+	// ----------------------------------------------------------------------------------------------------
+
 	@Override
 	public String chooseLanguage() {
 		return "";
@@ -73,17 +81,19 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 		Common.error(t);
 	}
 
-
-	private void setProviders() {
-		//Working directory
-		Providers.workingDirectoryProvider(ProxyWorkingDirectoryProvider.newInstance());
-		//Player providers
-		Providers.playerProvider(ProxyPlayerProvider.newInstance());
-		org.mineacademy.burst.provider.Providers.setUuidNameProvider(ProxyPlayerProvider.newInstance());
-		//Settings
-		Providers.settingsProvider(ProxySettingsProvider.newInstance());
-		//TextureProvider
-
-		Providers.textureProvider(ProxyTextureProvider.newInstance());
+	@Override
+	public SimpleBungee getBungeeCord() {
+		return null;
 	}
+
+	@Override
+	public void log(final @NonNull String... message) {
+		Common.log(message);
+	}
+
+	@Override public String getWorkingDirectory() {
+		return getData().getAbsolutePath();
+	}
+
+
 }

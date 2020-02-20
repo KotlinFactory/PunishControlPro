@@ -5,10 +5,12 @@ import de.leonhard.storage.util.Valid;
 import lombok.NonNull;
 import lombok.val;
 import org.mineacademy.punishcontrol.core.PunishControlManager;
+import org.mineacademy.punishcontrol.core.provider.providers.WorkingDirectoryProvider;
 import org.mineacademy.punishcontrol.core.punish.Ban;
 import org.mineacademy.punishcontrol.core.punish.Mute;
 import org.mineacademy.punishcontrol.core.punish.Warn;
 
+import javax.inject.Inject;
 import java.util.*;
 
 /**
@@ -28,7 +30,6 @@ public final class JsonStorageProvider extends Json implements StorageProvider {
 	private static final String PATH_TO_BAN = BANS_PATH_PREFIX + ".{uuid}.{creation}";
 	private static final String PATH_TO_MUTE = MUTES_PATH_PREFIX + ".{uuid}.{creation}";
 	private static final String PATH_TO_WARN = WARN_PATH_PREFIX + ".{uuid}.{creation}";
-
 
 	//
 
@@ -79,8 +80,9 @@ public final class JsonStorageProvider extends Json implements StorageProvider {
 
 	//
 
-	public JsonStorageProvider() {
-		super(PunishControlManager.FILES.JSON_DATA_FILE_NAME, PunishControlManager.FILES.PLUGIN_FOLDER);
+	@Inject
+	public JsonStorageProvider(final WorkingDirectoryProvider workingDirectoryProvider) {
+		super(PunishControlManager.FILES.JSON_DATA_FILE_NAME, workingDirectoryProvider.getDataFolder().getAbsolutePath() + "/data");
 	}
 
 

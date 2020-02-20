@@ -11,7 +11,9 @@ import org.mineacademy.punishcontrol.core.provider.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.provider.providers.SettingsProvider;
 import org.mineacademy.punishcontrol.core.provider.providers.TextureProvider;
 import org.mineacademy.punishcontrol.core.provider.providers.WorkingDirectoryProvider;
-import org.mineacademy.punishcontrol.core.storage.*;
+import org.mineacademy.punishcontrol.core.punish.PunishMessageBroadcaster;
+import org.mineacademy.punishcontrol.core.storage.MySQLConfig;
+import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 
 /**
  * Central provider for dependencies
@@ -39,6 +41,10 @@ public final class Providers {
 	@Setter
 	@NonNull
 	private static org.mineacademy.punishcontrol.core.provider.providers.WorkingDirectoryProvider workingDirectoryProvider;
+
+	@Setter
+	@NonNull
+	private static PunishMessageBroadcaster punishMessageBroadcaster;
 
 	//StorageProvider can't be set.
 	public static StorageProvider storageProvider() {
@@ -73,6 +79,13 @@ public final class Providers {
 		return workingDirectoryProvider;
 	}
 
+
+	public static PunishMessageBroadcaster punishMessageBroadcaster() {
+		Valid.notNull(punishMessageBroadcaster, "PunishMessage-BroadCaster not yet set");
+
+		return punishMessageBroadcaster;
+	}
+
 	// ----------------------------------------------------------------------------------------------------
 	// Dagger only
 	// ----------------------------------------------------------------------------------------------------
@@ -89,13 +102,13 @@ public final class Providers {
 		return PunishControlManager.storageType().getStorageProvider();
 	}
 
-	@Provides
-	public static MySQLStorageProvider mySQLStorageProvider() {
-		return (MySQLStorageProvider) StorageType.MYSQL.getStorageProvider();
-	}
-
-	@Provides
-	public static JsonStorageProvider jsonStorageProvider() {
-		return (JsonStorageProvider) StorageType.JSON.getStorageProvider();
-	}
+//	@Provides
+//	public static MySQLStorageProvider mySQLStorageProvider() {
+//		return (MySQLStorageProvider) StorageType.MYSQL.getStorageProvider();
+//	}
+//
+//	@Provides
+//	public static JsonStorageProvider jsonStorageProvider() {
+//		return (JsonStorageProvider) StorageType.JSON.getStorageProvider();
+//	}
 }

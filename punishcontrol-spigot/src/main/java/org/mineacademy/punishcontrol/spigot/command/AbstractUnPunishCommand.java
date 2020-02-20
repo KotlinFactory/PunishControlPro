@@ -8,6 +8,7 @@ import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.punish.PunishType;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 import org.mineacademy.punishcontrol.spigot.gui.MenuPunishBrowser;
+import org.mineacademy.punishcontrol.spigot.settings.Settings;
 
 import java.util.*;
 
@@ -33,6 +34,7 @@ public abstract class AbstractUnPunishCommand extends SimpleCommand {
 		super(new StrictList<>(labels));
 		this.provider = provider;
 		this.punishType = punishType;
+		setTellPrefix(Settings.PLUGIN_PREFIX);
 		addTellPrefix(true);
 		REGISTERED_COMMANDS.add(this);
 	}

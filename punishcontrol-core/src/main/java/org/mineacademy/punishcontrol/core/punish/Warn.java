@@ -55,12 +55,11 @@ public final class Warn extends Punish {
 		return (Warn) super.ip(ip);
 	}
 
-	// ----------------------------------------------------------------------------------------------------
-	// Implemented methods from Punish
-	// ----------------------------------------------------------------------------------------------------
+	@Override public Warn isSilent(final boolean isSilent) {
+		return (Warn) super.isSilent(isSilent);
+	}
 
-	@Override
-	public void create() {
-
+	@Override public Warn isSuperSilent(final boolean isSuperSilent) {
+		return (Warn) super.isSuperSilent(isSuperSilent);
 	}
 }

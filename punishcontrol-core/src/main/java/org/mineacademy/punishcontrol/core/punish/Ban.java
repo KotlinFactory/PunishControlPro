@@ -44,7 +44,6 @@ public final class Ban extends Punish {
 		return (Ban) super.punishDuration(punishDuration);
 	}
 
-
 	@Override public Ban reason(final String reason) {
 		return (Ban) super.reason(reason);
 	}
@@ -57,18 +56,15 @@ public final class Ban extends Punish {
 		return (Ban) super.ip(ip);
 	}
 
-
 	@Override public Ban removed(final boolean removed) {
 		return (Ban) super.removed(removed);
 	}
 
-
-	// ----------------------------------------------------------------------------------------------------
-	// Implemented methods
-	// ----------------------------------------------------------------------------------------------------
-
-	@Override public void create() {
-
+	@Override public Ban isSilent(final boolean isSilent) {
+		return (Ban) super.isSilent(isSilent);
 	}
 
+	@Override public Ban isSuperSilent(final boolean isSuperSilent) {
+		return (Ban) super.isSuperSilent(isSuperSilent);
+	}
 }

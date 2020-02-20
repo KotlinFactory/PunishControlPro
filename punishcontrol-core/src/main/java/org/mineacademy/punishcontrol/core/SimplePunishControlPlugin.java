@@ -1,8 +1,16 @@
 package org.mineacademy.punishcontrol.core;
 
+import de.leonhard.storage.Yaml;
 import lombok.NonNull;
+import lombok.val;
+import org.mineacademy.punishcontrol.core.group.Group;
+import org.mineacademy.punishcontrol.core.group.GroupManager;
+import org.mineacademy.punishcontrol.core.punish.PunishDuration;
+import org.mineacademy.punishcontrol.core.punish.template.PunishTemplateManager;
 import org.mineacademy.punishcontrol.core.storage.StorageType;
 
+import java.io.File;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -23,44 +31,29 @@ public interface SimplePunishControlPlugin {
 	}
 
 
-	// ----------------------------------------------------------------------------------------------------
-	// Methods to be implemented by our two PunishControl classes
-	// ----------------------------------------------------------------------------------------------------
-
 	String PREFIX = "§3Punish§bControl§5+ §7┃ ";
 	String[] LOGO = new String[]{
-			"§3 ____              _     _      ____            _             _ ",
-			"§3|  _ \\ _   _ _ __ (_)___| |__  / ___|___  _ __ | |_ _ __ ___ | |",
-			"§3| |_) | | | | '_ \\| / __| '_ \\| |   / _ \\| '_ \\| __| '__/ _ \\| |",
-			"§5|  __/| |_| | | | | \\__ \\ | | | |__| (_) | | | | |_| | | (_) | |",
-			"§5|_|    \\__,_|_| |_|_|___/_| |_|\\____\\___/|_| |_|\\__|_|  \\___/|_|"
+		"§3 ____              _     _      ____            _             _ ",
+		"§3|  _ \\ _   _ _ __ (_)___| |__  / ___|___  _ __ | |_ _ __ ___ | |",
+		"§3| |_) | | | | '_ \\| / __| '_ \\| |   / _ \\| '_ \\| __| '__/ _ \\| |",
+		"§5|  __/| |_| | | | | \\__ \\ | | | |__| (_) | | | | |_| | | (_) | |",
+		"§5|_|    \\__,_|_| |_|_|___/_| |_|\\____\\___/|_| |_|\\__|_|  \\___/|_|"
 	};
 
-	void log(@NonNull String... message);
-
-	default void log() {
-		log(" ");
-	}
-
-	void registerCommands();
-
-	void registerListener();
-
-	String chooseLanguage();
-
-	StorageType chooseStorageProvider();
-
-	void saveError(@NonNull Throwable t);
+	// ----------------------------------------------------------------------------------------------------
+	// Default methods
+	// ----------------------------------------------------------------------------------------------------
 
 	default void downloadDependencies() {
 	}
 
 	default String[] getStartupFinishedMessages() {
-		return new String[]{"Top notch!", "Ban-hammer is swinging", "We're live!", "MineAcademy rules!"};
+		return new String[]{"Top notch!", "Ban-hammer is swinging", "We're live!", "MineAcademy rules!", "Ready for takeover..."};
 	}
 
 	default void onPunishControlPluginStart() {
-		log("§7*---------------- §3PunishControl-Pro - 2020  §7---------------*");
+		log("§7*------------------- §3PunishControl-Pro - 2020  §7------------------*");
+
 		log(" ");
 
 		log(LOGO);
@@ -103,6 +96,15 @@ public interface SimplePunishControlPlugin {
 			saveError(throwable);
 		}
 
+
+		try {
+			registerProviders();
+			log("Providers §l§a✔");
+		} catch (final Throwable throwable) {
+			log("Providers §l§c✘");
+			saveError(throwable);
+		}
+
 		try {
 			registerCommands();
 			log("Commands §l§a✔");
@@ -119,6 +121,23 @@ public interface SimplePunishControlPlugin {
 			saveError(throwable);
 		}
 
+
+		try {
+			setupGroups();
+			log("Groups §l§a✔");
+		} catch (final Throwable throwable) {
+			log("Groups §l§c✘");
+			saveError(throwable);
+		}
+
+		try {
+			PunishTemplateManager.loadTemplates(new File(getWorkingDirectory() + "/templates"));
+			log("Templates §l§a✔ ");
+		} catch (final Throwable throwable) {
+			log("Templates §l§c✘");
+			saveError(throwable);
+		}
+
 		log();
 
 		//Logging an random message
@@ -126,6 +145,63 @@ public interface SimplePunishControlPlugin {
 
 		log(getStartupFinishedMessages()[index]);
 
-		log("§7*--------------------------------------------------------------*");
+		log("§7*------------------------------------------------------------------*");
+
 	}
+
+
+	default void setupGroups() {
+		final Yaml yaml = new Yaml("settings.yml", getWorkingDirectory());
+
+		@SuppressWarnings("unchecked") final Map<String, Object> rawData = (Map<String, Object>) yaml.getMap("Groups");
+
+		for (final val entry : rawData.entrySet()) { //Group-Names
+			if (!(entry.getValue() instanceof Map)) {
+				continue;
+			}
+
+			@SuppressWarnings("unchecked") final Map<String, Object> groupRawData = (Map<String, Object>) entry.getValue();
+
+			final Group.GroupBuilder builder = Group.builder();
+
+			builder.name(entry.getKey());
+			builder.permission(groupRawData.get("Permission").toString());
+			builder.priority(Integer.parseInt(groupRawData.get("Priority").toString()));
+
+			@SuppressWarnings("unchecked") final Map<String, String> limits = (Map<String, String>) groupRawData.get("Limits");
+
+			builder.banLimit(PunishDuration.of(limits.get("Ban")));
+			builder.muteLimit(PunishDuration.of(limits.get("Mute")));
+			builder.warnLimit(PunishDuration.of(limits.get("Warn")));
+
+			GroupManager.registerGroup(builder.build());
+
+		}
+	}
+
+	void log(@NonNull String... message);
+
+	default void log() {
+		log(" ");
+	}
+
+	String getWorkingDirectory();
+
+
+	// ----------------------------------------------------------------------------------------------------
+	// Abstract methods for startup
+	// ----------------------------------------------------------------------------------------------------
+
+	void registerCommands();
+
+	void registerListener();
+
+	void registerProviders();
+
+	String chooseLanguage();
+
+	StorageType chooseStorageProvider();
+
+	void saveError(@NonNull Throwable t);
+
 }

@@ -8,6 +8,7 @@ import org.mineacademy.punishcontrol.core.punish.Warn;
 import javax.inject.Inject;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -35,11 +36,11 @@ public final class MySQLStorageProvider extends SimpleDatabase implements Storag
 	}
 
 	@Override public List<Mute> listMutes() {
-		return null;
+		return new ArrayList<>();
 	}
 
 	@Override public List<Warn> listWarns() {
-		return null;
+		return new ArrayList<>();
 	}
 
 	@Override public List<Ban> listBans(@NonNull final UUID uuid) {

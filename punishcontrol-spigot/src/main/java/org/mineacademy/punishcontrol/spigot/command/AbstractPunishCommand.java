@@ -9,6 +9,7 @@ import org.mineacademy.fo.command.SimpleCommand;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.punish.PunishDuration;
 import org.mineacademy.punishcontrol.spigot.gui.MenuPlayerBrowser;
+import org.mineacademy.punishcontrol.spigot.settings.Settings;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -33,7 +34,7 @@ public abstract class AbstractPunishCommand extends SimpleCommand {
 	private final int MIN_ARGS_FOR_CONSOLE = 3;
 	public boolean consoleAllowed = true;
 	private final String[] MORE_ARGUMENTS_AS_CONSOLE_MESSAGE = new String[]{
-			"You need to provide more information to run this command from console", "Please provide 3 arguments", "Usage: " + getUsage()
+		"You need to provide more information to run this command from console", "Please provide 3 arguments", "Usage: " + getUsage()
 	};
 
 	private final int maxArgs;
@@ -47,8 +48,10 @@ public abstract class AbstractPunishCommand extends SimpleCommand {
 	protected AbstractPunishCommand(final int maxArgs, @NonNull final String... labels) {
 		super(new StrictList<>(labels));
 		this.maxArgs = maxArgs;
+		setTellPrefix(Settings.PLUGIN_PREFIX);
 		addTellPrefix(true);
 		REGISTERED_COMMANDS.add(this);
+
 	}
 
 // ----------------------------------------------------------------------------------------------------

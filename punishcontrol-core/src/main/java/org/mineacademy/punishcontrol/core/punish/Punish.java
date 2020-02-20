@@ -4,6 +4,7 @@ import de.leonhard.storage.util.Valid;
 import lombok.Data;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
+import org.mineacademy.punishcontrol.core.provider.Providers;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,6 +14,9 @@ import java.util.UUID;
 @Data
 @Accessors(chain = true, fluent = true)
 public abstract class Punish {
+	protected final static PunishMessageBroadcaster punishMessageBroadcaster = Providers.punishMessageBroadcaster();
+
+
 	private String reason;
 	private String ip;
 	private final UUID target, creator;
@@ -20,6 +24,12 @@ public abstract class Punish {
 	private final PunishType punishType;
 	@NonNull private long creation;
 	private boolean removed = false;
+
+	//Silence ^^
+
+	private boolean isSilent;
+	private boolean isSuperSilent;
+
 
 	/**
 	 * Validates our raw-data which
@@ -89,7 +99,6 @@ public abstract class Punish {
 		removed((Boolean) banRawData.get("removed"));
 	}
 
-	public abstract void create();
 
 	public final boolean isOld() {
 		if (removed()) {
@@ -121,4 +130,11 @@ public abstract class Punish {
 		return result;
 	}
 
+	// ----------------------------------------------------------------------------------------------------
+	// Methods that might be overridden
+	// ----------------------------------------------------------------------------------------------------
+
+	public void create() {
+		punishMessageBroadcaster.broadcastMessage(this, isSilent, isSuperSilent);
+	}
 }

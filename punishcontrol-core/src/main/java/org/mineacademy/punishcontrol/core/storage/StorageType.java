@@ -16,7 +16,7 @@ public enum StorageType {
 	JSON {
 		@Override
 		public StorageProvider getStorageProvider() {
-			return new JsonStorageProvider();
+			return DaggerCoreModule.create().jsonStorageProvider();
 		}
 	};
 

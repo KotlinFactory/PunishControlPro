@@ -8,15 +8,27 @@ Storage: JSON
 Command_Aliases: [punishcontrol,phc, pun, pc]
 
 Punishes:
+  #Should punishing only be possible with an template
+  OnlyTemplate: false
   Ban:
     #Should stuff be notified
     #if an punish of this type is created?
-    Notificate: true
-    Enabled: true
-  Warn:
+    Permission: punishcontrol.command.ban
     Enabled: true
   Mute:
+    Permission: punishcontrol.command.mute
     Enabled: true
+  Warn:
+    Permission: punishcontrol.command.warn
+    Enabled: true
+
+Notifications:
+  Punish:
+    Enabled: true
+    Permission: punishcontrol.notifications.punish
+  Silent-Punish:
+    Enabled: true
+    Permission: punishcontrol.notifications.silent-punish
 
 Groups:
   Admin:

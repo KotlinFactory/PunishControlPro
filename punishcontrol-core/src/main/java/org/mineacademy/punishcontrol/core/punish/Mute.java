@@ -55,11 +55,12 @@ public final class Mute extends Punish {
 		return (Mute) super.ip(ip);
 	}
 
-	// ----------------------------------------------------------------------------------------------------
-	// Implemented methods from Punish
-	// ----------------------------------------------------------------------------------------------------
+	@Override public Mute isSilent(final boolean isSilent) {
+		return (Mute) super.isSilent(isSilent);
+	}
 
-	@Override public void create() {
+	@Override public Mute isSuperSilent(final boolean isSuperSilent) {
+		return (Mute) super.isSuperSilent(isSuperSilent);
 	}
 
 }

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <option name="DEFAULT_COMPILER" value="Eclipse" />
     <option name="BUILD_PROCESS_HEAP_SIZE" value="2000" />
     <option name="BUILD_PROCESS_ADDITIONAL_VM_OPTIONS" value="-javaagent:/Users/leonhard/Repository/Etc/lombok.jar" />
     <annotationProcessing>
@@ -10,7 +9,7 @@
           <entry name="$USER_HOME$/Repository/Etc/lombok.jar" />
         </processorPath>
       </profile>
-      <profile name="Maven default annotation processors profile">
+      <profile name="Maven default annotation processors profile" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -20,7 +19,6 @@
         <module name="PunishControlPro.punishcontrol-core.test" />
         <module name="punishcontrol-plugin" />
         <module name="PunishControlPro.punishcontrol-core.main" />
-        <module name="punishcontrol-core" />
         <module name="punishcontrol-proxy" />
       </profile>
       <profile name="Annotation profile for PunishControlPro">
@@ -46,9 +44,16 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.10/lombok-1.18.10.jar" />
         </processorPath>
         <module name="punishcontrol-spigot" />
+        <module name="punishcontrol-core" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel target="8" />
+    <bytecodeTargetLevel target="8">
+      <module name="punishcontrol-core" target="1.8" />
+      <module name="punishcontrol-plugin" target="1.8" />
+      <module name="punishcontrol-proxy" target="1.8" />
+      <module name="punishcontrol-spigot" target="1.8" />
+      <module name="PunishControlPro" target="1.5" />
+    </bytecodeTargetLevel>
   </component>
   <component name="EclipseCompilerSettings">
     <option name="GENERATE_NO_WARNINGS" value="true" />

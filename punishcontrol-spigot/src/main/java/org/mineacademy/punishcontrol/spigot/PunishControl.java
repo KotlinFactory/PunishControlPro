@@ -14,6 +14,7 @@ import org.mineacademy.punishcontrol.core.punish.Ban;
 import org.mineacademy.punishcontrol.core.storage.StorageType;
 import org.mineacademy.punishcontrol.spigot.command.*;
 import org.mineacademy.punishcontrol.spigot.impl.SpigotPlayerProvider;
+import org.mineacademy.punishcontrol.spigot.impl.SpigotPunishMessageBroadcaster;
 import org.mineacademy.punishcontrol.spigot.impl.SpigotTextureProvider;
 import org.mineacademy.punishcontrol.spigot.impl.SpigotWorkingDirectoryProvider;
 import org.mineacademy.punishcontrol.spigot.settings.Localization;
@@ -32,19 +33,41 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 	protected void onPluginStart() {
 		Common.ADD_LOG_PREFIX = false;
 
-		setProviders();
-
 		onPunishControlPluginStart();
 
 		//Bypass UltraPunishments
 		//Common.runLater(40, this::registerCommands);
 	}
 
-	//Setting the implementations of our providers
-	private void setProviders() {
+
+	// ----------------------------------------------------------------------------------------------------
+	// Methods to start our plugin.
+	// ----------------------------------------------------------------------------------------------------
+
+	@Override
+	public void registerCommands() {
+		registerCommand(CommandMain.newInstance(Settings.MAIN_COMMAND_ALIASES));
+		registerCommand(CommandBan.newInstance());
+		registerCommand(CommandKick.newInstance());
+		registerCommand(CommandWarn.newInstance());
+		registerCommand(CommandMute.newInstance());
+
+		registerCommand(spigotModule.commandUnBan());
+		registerCommand(spigotModule.commandUnMute());
+		registerCommand(spigotModule.commandUnWarn());
+	}
+
+	@Override
+	public void registerListener() {
+		registerEvents(spigotModule.spigotDataSetter());
+		registerEvents(spigotModule.spigotJoinHandler());
+	}
+
+	@Override public void registerProviders() {
 		Providers.workingDirectoryProvider(SpigotWorkingDirectoryProvider.newInstance());
 		Providers.playerProvider(SpigotPlayerProvider.newInstance());
 		Providers.textureProvider(SpigotTextureProvider.newInstance());
+		Providers.punishMessageBroadcaster(SpigotPunishMessageBroadcaster.newInstance());
 
 		Providers.settingsProvider(new SettingsProvider() {
 			@Override
@@ -66,31 +89,6 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 			}
 
 		});
-	}
-
-	// ----------------------------------------------------------------------------------------------------
-	// Methods to start our plugin.
-	// ----------------------------------------------------------------------------------------------------
-
-	@Override
-	public void registerCommands() {
-		registerCommand(CommandMain.newInstance(Settings.MAIN_COMMAND_ALIASES));
-		registerCommand(CommandBan.newInstance());
-		registerCommand(CommandKick.newInstance());
-		registerCommand(CommandWarn.newInstance());
-		registerCommand(CommandMute.newInstance());
-
-		registerCommand(spigotModule.commandUnBan());
-		registerCommand(spigotModule.commandUnMute());
-		registerCommand(spigotModule.commandUnWarn());
-	}
-
-	@Override
-	public void registerListener() {
-
-
-		registerEvents(spigotModule.spigotDataSetter());
-		registerEvents(spigotModule.spigotJoinHandler());
 	}
 
 	@Override
@@ -115,6 +113,10 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 	@Override
 	public void log(final @NonNull String... message) {
 		Common.log(message);
+	}
+
+	@Override public String getWorkingDirectory() {
+		return getData().getAbsolutePath();
 	}
 
 	@Override

@@ -24,43 +24,36 @@ public final class Settings extends SimpleSettings {
 		pathPrefix(null);
 		storageType = Enum.valueOf(StorageType.class, getString("Storage"));
 
+	}
 
-		//Loading our Groups
+	public final static class Notifications {
+		public final static class Punish {
 
-		System.out.println("KEYS:");
-		System.out.println(getValuesAndKeys("Groups").toString());
+			public static Boolean enabled;
+			public static String permission;
 
-		/*
-		Groups:
-  Admin:
-    Priority: 0
-    Permission: punishcontrol.group.admin
-    #Set to -1 to disable
-    Limits:
-      Ban: -1
-      Mute: -1
-      Warn: -1
-  Moderator:
-    Priority: 1
-    Permission: punishcontrol.group.moderator
-    Limits:
-      Ban: 1 year
-      Mute: 1 year
-      Warn: 2 year
-    Supporter:
-      Priority: 2
-      Permission: punishcontrol.group.supporter
-      Limits:
-        Ban: 1 month
-        Mute: 2 month
-        Warn: 3 month
-		 */
+
+			private static void init() {
+				pathPrefix("Notifications.Punish");
+				enabled = getBoolean("Enabled");
+				permission = getString("Permission");
+			}
+		}
+
+		public final static class SilentPunish {
+			public static Boolean enabled;
+			public static String permission;
+
+			private static void init() {
+				pathPrefix("Notifications.Silent-Punish");
+				enabled = getBoolean("Enabled");
+				permission = getString("Permission");
+			}
+		}
 	}
 
 	@Override
 	protected int getConfigVersion() {
 		return 1;
 	}
-
-
 }
