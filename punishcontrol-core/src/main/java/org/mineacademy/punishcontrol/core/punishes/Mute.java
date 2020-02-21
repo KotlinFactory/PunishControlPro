@@ -1,6 +1,9 @@
-package org.mineacademy.punishcontrol.core.punish;
+package org.mineacademy.punishcontrol.core.punishes;
 
 import lombok.NonNull;
+import org.mineacademy.punishcontrol.core.punish.Punish;
+import org.mineacademy.punishcontrol.core.punish.PunishDuration;
+import org.mineacademy.punishcontrol.core.punish.PunishType;
 
 import java.util.Map;
 import java.util.UUID;
@@ -27,7 +30,7 @@ public final class Mute extends Punish {
 		super(target, creator, PunishDuration.of(ms), PunishType.MUTE, System.currentTimeMillis());
 	}
 
-	public Mute(final long creation, final Map<String, Object> rawData) {
+	public Mute(final long creation, @NonNull final Map<String, Object> rawData) {
 		super(creation, rawData, PunishType.MUTE);
 	}
 

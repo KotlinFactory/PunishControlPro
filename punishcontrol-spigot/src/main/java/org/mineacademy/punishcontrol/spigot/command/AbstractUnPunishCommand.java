@@ -39,7 +39,6 @@ public abstract class AbstractUnPunishCommand extends SimpleCommand {
 		REGISTERED_COMMANDS.add(this);
 	}
 
-
 	@Override protected final void onCommand() {
 		this.silent = checkSilent();
 		this.superSilent = checkSuperSilent();
@@ -47,7 +46,6 @@ public abstract class AbstractUnPunishCommand extends SimpleCommand {
 		if (isSilent() && isSuperSilent()) {
 			returnTell(INVALID_SILENCE_USAGE);
 		}
-
 
 		final List<String> finalArgs = new ArrayList<>(Arrays.asList(args));
 		//Args without params
@@ -58,7 +56,6 @@ public abstract class AbstractUnPunishCommand extends SimpleCommand {
 				if (!isPlayer()) {
 					returnTell(MORE_ARGUMENTS_AS_CONSOLE_MESSAGE);
 				}
-
 				MenuPunishBrowser.showTo(getPlayer(), punishType);
 				break;
 			case 1:
@@ -82,7 +79,6 @@ public abstract class AbstractUnPunishCommand extends SimpleCommand {
 				break;
 
 		}
-
 	}
 
 	// ----------------------------------------------------------------------------------------------------

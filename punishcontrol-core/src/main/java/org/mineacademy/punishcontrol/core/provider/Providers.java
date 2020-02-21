@@ -11,19 +11,23 @@ import org.mineacademy.punishcontrol.core.provider.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.provider.providers.SettingsProvider;
 import org.mineacademy.punishcontrol.core.provider.providers.TextureProvider;
 import org.mineacademy.punishcontrol.core.provider.providers.WorkingDirectoryProvider;
-import org.mineacademy.punishcontrol.core.punish.PunishMessageBroadcaster;
+import org.mineacademy.punishcontrol.core.punish.PunishProvider;
 import org.mineacademy.punishcontrol.core.storage.MySQLConfig;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 
+import javax.inject.Singleton;
+
 /**
+ * -- Heart of PunishControl --
+ * <p>
  * Central provider for dependencies
  * used in PunishControlPro.
  * <p>
  * It is also used by Dagger
  */
 
-@Accessors(fluent = true)
 @Module
+@Accessors(fluent = true)
 public final class Providers {
 
 	@Setter
@@ -44,13 +48,14 @@ public final class Providers {
 
 	@Setter
 	@NonNull
-	private static PunishMessageBroadcaster punishMessageBroadcaster;
+	private static PunishProvider punishProvider;
 
 	//StorageProvider can't be set.
 	public static StorageProvider storageProvider() {
 		return PunishControlManager.storageType().getStorageProvider();
 	}
 
+	@Singleton
 	@Provides
 	public static PlayerProvider playerProvider() {
 		Valid.notNull(playerProvider, "PlayerProvider not yet set.");
@@ -58,6 +63,7 @@ public final class Providers {
 		return playerProvider;
 	}
 
+	@Singleton
 	@Provides
 	public static TextureProvider textureProvider() {
 		Valid.notNull(textureProvider, "TextureProvider not yet set.");
@@ -79,11 +85,12 @@ public final class Providers {
 		return workingDirectoryProvider;
 	}
 
+	@Singleton
+	@Provides
+	public static PunishProvider punishProvider() {
+		Valid.notNull(punishProvider, "PunishMessage-BroadCaster not yet set");
 
-	public static PunishMessageBroadcaster punishMessageBroadcaster() {
-		Valid.notNull(punishMessageBroadcaster, "PunishMessage-BroadCaster not yet set");
-
-		return punishMessageBroadcaster;
+		return punishProvider;
 	}
 
 	// ----------------------------------------------------------------------------------------------------

@@ -5,10 +5,10 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.mineacademy.punishcontrol.core.PunishControlManager;
-import org.mineacademy.punishcontrol.core.punish.Ban;
-import org.mineacademy.punishcontrol.core.punish.Mute;
 import org.mineacademy.punishcontrol.core.punish.Punish;
-import org.mineacademy.punishcontrol.core.punish.Warn;
+import org.mineacademy.punishcontrol.core.punishes.Ban;
+import org.mineacademy.punishcontrol.core.punishes.Mute;
+import org.mineacademy.punishcontrol.core.punishes.Warn;
 
 import java.util.ArrayList;
 import java.util.List;

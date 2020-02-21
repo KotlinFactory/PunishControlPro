@@ -3,7 +3,7 @@ package org.mineacademy.punishcontrol.proxy.impl;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.mineacademy.punishcontrol.core.provider.providers.SettingsProvider;
-import org.mineacademy.punishcontrol.core.punish.Ban;
+import org.mineacademy.punishcontrol.core.punishes.Ban;
 
 import java.util.List;
 import java.util.Set;

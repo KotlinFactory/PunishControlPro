@@ -2,7 +2,7 @@ package org.mineacademy.punishcontrol.core.listener;
 
 import lombok.NonNull;
 import org.mineacademy.punishcontrol.core.provider.Providers;
-import org.mineacademy.punishcontrol.core.punish.Ban;
+import org.mineacademy.punishcontrol.core.punishes.Ban;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 
 import java.util.List;

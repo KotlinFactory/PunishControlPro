@@ -3,7 +3,6 @@ package org.mineacademy.punishcontrol.core.group;
 import lombok.Builder;
 import org.mineacademy.punishcontrol.core.punish.PunishDuration;
 
-
 @Builder
 public final class Group {
 

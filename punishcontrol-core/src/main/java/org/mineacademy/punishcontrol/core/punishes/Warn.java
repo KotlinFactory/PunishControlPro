@@ -1,8 +1,11 @@
-package org.mineacademy.punishcontrol.core.punish;
+package org.mineacademy.punishcontrol.core.punishes;
 
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.mineacademy.punishcontrol.core.punish.Punish;
+import org.mineacademy.punishcontrol.core.punish.PunishDuration;
+import org.mineacademy.punishcontrol.core.punish.PunishType;
 
 import java.util.Map;
 import java.util.UUID;

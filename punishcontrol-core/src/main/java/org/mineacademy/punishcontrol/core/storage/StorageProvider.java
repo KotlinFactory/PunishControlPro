@@ -1,9 +1,10 @@
 package org.mineacademy.punishcontrol.core.storage;
 
 import lombok.NonNull;
-import org.mineacademy.punishcontrol.core.punish.Ban;
-import org.mineacademy.punishcontrol.core.punish.Mute;
-import org.mineacademy.punishcontrol.core.punish.Warn;
+import org.mineacademy.punishcontrol.core.punish.Punish;
+import org.mineacademy.punishcontrol.core.punishes.Ban;
+import org.mineacademy.punishcontrol.core.punishes.Mute;
+import org.mineacademy.punishcontrol.core.punishes.Warn;
 
 import java.util.List;
 import java.util.Optional;
@@ -91,16 +92,18 @@ public interface StorageProvider {
 	default Optional<Ban> currentBan(@NonNull final UUID uuid) {
 
 		for (final Ban ban : listBans(uuid)) {
-			if (!ban.isOld())
+			if (!ban.isOld()) {
 				return Optional.of(ban);
+			}
 		}
 		return Optional.empty();
 	}
 
 	default Optional<Mute> currentMute(@NonNull final UUID uuid) {
 		for (final Mute mute : listMutes(uuid)) {
-			if (!mute.isOld())
+			if (!mute.isOld()) {
 				return Optional.of(mute);
+			}
 		}
 
 		return Optional.empty();
@@ -108,8 +111,9 @@ public interface StorageProvider {
 
 	default Optional<Warn> currentWarn(@NonNull final UUID uuid) {
 		for (final Warn warn : listWarns(uuid)) {
-			if (!warn.isOld())
+			if (!warn.isOld()) {
 				return Optional.of(warn);
+			}
 		}
 
 		return Optional.empty();
@@ -136,6 +140,19 @@ public interface StorageProvider {
 	// ----------------------------------------------------------------------------------------------------
 	// Saving & Removing our punishes
 	// ----------------------------------------------------------------------------------------------------
+
+	default void savePunish(@NonNull final Punish punish) {
+		switch (punish.punishType()) {
+			case BAN:
+				saveBan((Ban) punish);
+				break;
+			case MUTE:
+				saveMute((Mute) punish);
+				break;
+			case WARN:
+				saveWarn((Warn) punish);
+		}
+	}
 
 	void saveBan(@NonNull Ban ban);
 

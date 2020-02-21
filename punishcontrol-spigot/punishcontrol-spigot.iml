@@ -36,7 +36,7 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.google.errorprone:javac:9-dev-r3297-1-shaded" level="project" />
     <orderEntry type="library" name="Maven: com.google.guava:guava:21.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.squareup:javapoet:1.7.0" level="project" />
-    <orderEntry type="library" name="Maven: org.mineacademy:Foundation:5.2.2" level="project" />
+    <orderEntry type="library" name="Maven: org.mineacademy:Foundation:5.2.7" level="project" />
     <orderEntry type="library" name="Maven: org.spigotmc:spigot-api:1.15.2-R0.1-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.6" level="project" />
     <orderEntry type="library" name="Maven: com.google.code.gson:gson:2.8.0" level="project" />

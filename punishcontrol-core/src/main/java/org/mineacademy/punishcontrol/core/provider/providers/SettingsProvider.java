@@ -1,17 +1,14 @@
 package org.mineacademy.punishcontrol.core.provider.providers;
 
-import org.mineacademy.punishcontrol.core.punish.Ban;
+import org.mineacademy.punishcontrol.core.punishes.Ban;
 
 import java.util.List;
-import java.util.Set;
 
 /**
  * Provides all settings needed
  * by the PunishControl core
  */
 public interface SettingsProvider {
-
-	Set<String> getReportReasons();
 
 	//Should results be cached?
 	boolean cacheResults();

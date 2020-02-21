@@ -34,7 +34,18 @@ public final class MySQLConfig {
 
 	@Inject
 	public MySQLConfig(@NonNull final WorkingDirectoryProvider provider) {
-		this.file = FileUtils.getAndMake(new File(provider.getDataFolder(), "MySQL.cnf"));
+		final File file = new File(provider.getDataFolder(), "MySQL.cnf");
+
+		if (!file.exists()) {
+			//Setting default values
+			host("localhost");
+			port(3305);
+			user("ChangeMe");
+			password("ChangeMe");
+			advancedConnector("jdbc:mysql://{host}:{port}/{database}?autoReconnect=true");
+		}
+
+		this.file = FileUtils.getAndMake(file);
 	}
 
 	@SneakyThrows
@@ -47,45 +58,75 @@ public final class MySQLConfig {
 		lines = Files.readAllLines(file.toPath());
 	}
 
-	public String getHost() {
+	/**
+	 * Returns the values advanced connector
+	 * and replaced all variables
+	 */
+	public String replacedConnector() {
+		return advancedConnector()
+			.replace("{host}", host())
+			.replace("{port}", port() + "")
+			.replace("{database}", dataBase());
+	}
+
+
+	// ----------------------------------------------------------------------------------------------------
+	// Getter
+	// ----------------------------------------------------------------------------------------------------
+
+	public String host() {
 		return get("Host");
 	}
 
-	public String getDataBase() {
+	public String dataBase() {
 		return get("Database");
 	}
 
-	public String getUser() {
+	public String user() {
 		return get("User");
 	}
 
-	public String getPassword() {
+	public String password() {
 		return get("Password");
 	}
 
-	public int getPort() {
+	public int port() {
 		return Integer.parseInt(get("Port"));
 	}
 
-	public void setHost(final String value) {
+	public String advancedConnector() {
+		return get("AdvancedConnector");
+	}
+
+
+	// ----------------------------------------------------------------------------------------------------
+	// Setter
+	// ----------------------------------------------------------------------------------------------------
+
+	public void host(final String value) {
 		set("Host", value);
 	}
 
-	public void setDataBase(final String value) {
+	public void dataBase(final String value) {
 		set("Database", value);
 	}
 
-	public void setUser(final String value) {
+	public void user(final String value) {
 		set("User", value);
 	}
 
-	public void setPassword(final String value) {
+	public void password(final String value) {
 		set("Password", value);
 	}
 
-	public void setPort(final int port) {
+	public void port(final int port) {
 		set("Port", port);
 	}
+
+	public void advancedConnector(final String value) {
+		set("AdvancedConnector", value);
+	}
+
 
 	@SneakyThrows
 	private void set(final String key, final Object value) {

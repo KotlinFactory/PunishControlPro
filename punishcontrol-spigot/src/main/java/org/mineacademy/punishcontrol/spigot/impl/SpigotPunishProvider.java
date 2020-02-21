@@ -5,18 +5,20 @@ import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
+import org.mineacademy.fo.Common;
 import org.mineacademy.punishcontrol.core.punish.Punish;
-import org.mineacademy.punishcontrol.core.punish.PunishMessageBroadcaster;
+import org.mineacademy.punishcontrol.core.punish.PunishProvider;
+import org.mineacademy.punishcontrol.spigot.event.AsyncPunishCreateEvent;
 import org.mineacademy.punishcontrol.spigot.settings.Settings;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class SpigotPunishMessageBroadcaster implements PunishMessageBroadcaster {
+public final class SpigotPunishProvider implements PunishProvider {
 
-	public static SpigotPunishMessageBroadcaster newInstance() {
-		return new SpigotPunishMessageBroadcaster();
+	public static SpigotPunishProvider newInstance() {
+		return new SpigotPunishProvider();
 	}
 
-	@Override public void broadcastMessage(@NonNull final Punish punish, final boolean silent, final boolean superSilent) {
+	@Override public void broadCastPunishMessage(@NonNull final Punish punish, final boolean silent, final boolean superSilent) {
 
 		//No one will be notified
 		if (superSilent) {
@@ -54,5 +56,9 @@ public final class SpigotPunishMessageBroadcaster implements PunishMessageBroadc
 
 			//Sending message
 		}
+	}
+
+	@Override public boolean handlePunishEvent(final @NonNull Punish punish) {
+		return Common.callEvent(AsyncPunishCreateEvent.newInstance(punish));
 	}
 }

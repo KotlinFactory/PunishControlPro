@@ -58,9 +58,16 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 		//TextureProvider
 		Providers.textureProvider(ProxyTextureProvider.newInstance());
 		//Broadcaster
-		Providers.punishMessageBroadcaster(ProxyPunishMessageBroadcaster.newInstance());
+		Providers.punishProvider(ProxyPunishProvider.newInstance());
 	}
 
+	// ----------------------------------------------------------------------------------------------------
+	// Overridden methods from SimplePlugin
+	// ----------------------------------------------------------------------------------------------------
+
+	@Override public int getFoundedYear() {
+		return 2019; //31.12.2019
+	}
 
 	// ----------------------------------------------------------------------------------------------------
 	// Overridden methods from SimplePunishControl

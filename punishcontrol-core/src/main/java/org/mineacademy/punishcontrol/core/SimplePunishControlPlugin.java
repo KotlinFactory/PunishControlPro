@@ -30,7 +30,6 @@ public interface SimplePunishControlPlugin {
 		return r.nextInt((max - min) + 1) + min;
 	}
 
-
 	String PREFIX = "§3Punish§bControl§5+ §7┃ ";
 	String[] LOGO = new String[]{
 		"§3 ____              _     _      ____            _             _ ",
@@ -121,9 +120,8 @@ public interface SimplePunishControlPlugin {
 			saveError(throwable);
 		}
 
-
 		try {
-			setupGroups();
+			loadGroups();
 			log("Groups §l§a✔");
 		} catch (final Throwable throwable) {
 			log("Groups §l§c✘");
@@ -149,8 +147,7 @@ public interface SimplePunishControlPlugin {
 
 	}
 
-
-	default void setupGroups() {
+	default void loadGroups() {
 		final Yaml yaml = new Yaml("settings.yml", getWorkingDirectory());
 
 		@SuppressWarnings("unchecked") final Map<String, Object> rawData = (Map<String, Object>) yaml.getMap("Groups");
@@ -186,7 +183,6 @@ public interface SimplePunishControlPlugin {
 	}
 
 	String getWorkingDirectory();
-
 
 	// ----------------------------------------------------------------------------------------------------
 	// Abstract methods for startup

@@ -45,7 +45,7 @@
     <orderEntry type="library" name="Maven: com.google.guava:guava:20.0" level="project" />
     <orderEntry type="library" name="Maven: org.mineacademy:burst:1.0.0" level="project" />
     <orderEntry type="module" module-name="punishcontrol-spigot" />
-    <orderEntry type="library" name="Maven: org.mineacademy:Foundation:5.2.2" level="project" />
+    <orderEntry type="library" name="Maven: org.mineacademy:Foundation:5.2.7" level="project" />
     <orderEntry type="library" name="Maven: org.spigotmc:spigot-api:1.15.2-R0.1-SNAPSHOT" level="project" />
     <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.6" level="project" />
     <orderEntry type="library" name="Maven: org.mineacademy.server:PaperSpigot:1.15.2-SNAPSHOT-77" level="project" />

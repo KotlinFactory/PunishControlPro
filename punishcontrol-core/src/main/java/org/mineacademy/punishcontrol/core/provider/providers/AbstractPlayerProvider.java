@@ -51,7 +51,7 @@ public abstract class AbstractPlayerProvider extends Json implements PlayerProvi
 			if (!(entry.getValue() instanceof Map)) {
 				continue;
 			}
-			final Map<String, Object> data = (Map<String, Object>) entry.getValue();
+			@SuppressWarnings("unchecked") final Map<String, Object> data = (Map<String, Object>) entry.getValue();
 			if (data.get("name").toString().equalsIgnoreCase(name)) {
 				return UUID.fromString(entry.getKey());
 			}
@@ -59,7 +59,6 @@ public abstract class AbstractPlayerProvider extends Json implements PlayerProvi
 
 		//Not yet set.
 		//Getting from Mojang & Setting it manually.
-
 
 		final UUID uuid = UUIDFetcher.getUUID(name);
 

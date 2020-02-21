@@ -29,6 +29,6 @@ public final class CommandMute extends AbstractPunishCommand {
 	}
 
 	@Override
-	protected void onTargetAndDurationAndReasonProvided(final @NonNull CommandSender player, final @NonNull UUID target, final @NonNull PunishDuration punishDuration, final @NonNull String reason) {
+	protected void onTargetAndDurationAndReasonProvided(@NonNull final CommandSender player, final @NonNull UUID target, final @NonNull PunishDuration punishDuration, final @NonNull String reason) {
 	}
 }

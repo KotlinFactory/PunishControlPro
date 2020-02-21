@@ -10,12 +10,16 @@ import org.mineacademy.punishcontrol.core.punish.Punish;
 import org.mineacademy.punishcontrol.core.punish.PunishType;
 
 @Data
-public class PunishCreateEvent extends Event implements Cancellable {
+public class AsyncPunishCreateEvent extends Event implements Cancellable {
 	private boolean cancelled;
 
 	private final Punish punish;
 
-	public PunishCreateEvent(@NonNull final Punish punish) {
+	public static AsyncPunishCreateEvent newInstance(final Punish punish) {
+		return new AsyncPunishCreateEvent(punish);
+	}
+
+	private AsyncPunishCreateEvent(@NonNull final Punish punish) {
 		super(true);
 		this.punish = punish;
 	}

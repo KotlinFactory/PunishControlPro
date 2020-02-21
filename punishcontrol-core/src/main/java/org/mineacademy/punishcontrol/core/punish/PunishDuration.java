@@ -20,6 +20,7 @@ public final class PunishDuration {
 		}
 
 		if (!humanReadableTime.contains(" ")) {
+			//Input: 10days Output: 10 days
 			humanReadableTime = splitHumanToHumanReadable(humanReadableTime);
 		}
 
@@ -56,7 +57,6 @@ public final class PunishDuration {
 	public static PunishDuration permanent() {
 		return new PunishDuration(-1);
 	}
-
 
 	// ----------------------------------------------------------------------------------------------------
 	// Convenience methods here

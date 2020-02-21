@@ -16,6 +16,7 @@ import java.util.UUID;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ProxyPlayerProvider extends AbstractPlayerProvider implements UUIDNameProvider { //Compatibility
+	private static final ProxyServer proxyServer = ProxyServer.getInstance();
 
 	public static ProxyPlayerProvider newInstance() {
 		return new ProxyPlayerProvider();
@@ -39,7 +40,7 @@ public final class ProxyPlayerProvider extends AbstractPlayerProvider implements
 	public List<UUID> getOnlinePlayers() {
 		final List<UUID> result = new ArrayList<>();
 
-		for (final ProxiedPlayer player : ProxyServer.getInstance().getPlayers()) {
+		for (final ProxiedPlayer player : proxyServer.getPlayers()) {
 			result.add(player.getUniqueId());
 		}
 
@@ -52,7 +53,7 @@ public final class ProxyPlayerProvider extends AbstractPlayerProvider implements
 	}
 
 	@Override public boolean hasPermission(final @NonNull UUID uuid, final @NonNull String permission) {
-		final ProxiedPlayer player = ProxyServer.getInstance().getPlayer(uuid);
+		final ProxiedPlayer player = proxyServer.getPlayer(uuid);
 		if (player == null) {
 			return false;
 		}
@@ -62,7 +63,7 @@ public final class ProxyPlayerProvider extends AbstractPlayerProvider implements
 
 	@Override
 	public void sendIfOnline(@NonNull final UUID uuid, final @NonNull String... messages) {
-		final ProxiedPlayer player = ProxyServer.getInstance().getPlayer(uuid);
+		final ProxiedPlayer player = proxyServer.getPlayer(uuid);
 
 		if (player == null) {
 			return;

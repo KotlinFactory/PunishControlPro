@@ -1,9 +1,9 @@
 package org.mineacademy.punishcontrol.core.storage;
 
 import lombok.NonNull;
-import org.mineacademy.punishcontrol.core.punish.Ban;
-import org.mineacademy.punishcontrol.core.punish.Mute;
-import org.mineacademy.punishcontrol.core.punish.Warn;
+import org.mineacademy.punishcontrol.core.punishes.Ban;
+import org.mineacademy.punishcontrol.core.punishes.Mute;
+import org.mineacademy.punishcontrol.core.punishes.Warn;
 
 import javax.inject.Inject;
 import java.sql.ResultSet;
@@ -20,6 +20,32 @@ public final class MySQLStorageProvider extends SimpleDatabase implements Storag
 
 	//We need the mysql config here
 
+
+	@Override protected void onConnected() {
+		update("CREATE TABLE IF NOT EXISTS Bans(" +
+			"Target varchar(64), " +
+			"Creator varchar(64), " +
+			"Reason varchar(64), " +
+			"IP varchar(64), " +
+			"Duration bigint, " +
+			"Creation bigint, " +
+			"Removed boolean, PRIMARY KEY (Creation))");
+
+	}
+
+	/*
+	 "warns": {
+		    "UUID": {
+		      "MS": {
+		        "creator": "UUID",
+		        "target-name": "NAME",
+		        "reason": "REASON",
+		        "duration": 39393033093393033093039,
+
+
+		        "removed": "false"
+		      }
+	 */
 	@Inject
 	public MySQLStorageProvider(final MySQLConfig config) {
 		super();

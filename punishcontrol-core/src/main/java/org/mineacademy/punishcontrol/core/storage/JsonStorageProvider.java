@@ -6,9 +6,9 @@ import lombok.NonNull;
 import lombok.val;
 import org.mineacademy.punishcontrol.core.PunishControlManager;
 import org.mineacademy.punishcontrol.core.provider.providers.WorkingDirectoryProvider;
-import org.mineacademy.punishcontrol.core.punish.Ban;
-import org.mineacademy.punishcontrol.core.punish.Mute;
-import org.mineacademy.punishcontrol.core.punish.Warn;
+import org.mineacademy.punishcontrol.core.punishes.Ban;
+import org.mineacademy.punishcontrol.core.punishes.Mute;
+import org.mineacademy.punishcontrol.core.punishes.Warn;
 
 import javax.inject.Inject;
 import java.util.*;

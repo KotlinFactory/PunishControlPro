@@ -3,8 +3,11 @@ package org.mineacademy.punishcontrol.core.punish;
 import de.leonhard.storage.util.Valid;
 import lombok.Data;
 import lombok.NonNull;
+import lombok.ToString;
 import lombok.experimental.Accessors;
 import org.mineacademy.punishcontrol.core.provider.Providers;
+import org.mineacademy.punishcontrol.core.provider.providers.PlayerProvider;
+import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,9 +16,11 @@ import java.util.UUID;
 
 @Data
 @Accessors(chain = true, fluent = true)
+@ToString
 public abstract class Punish {
-	protected final static PunishMessageBroadcaster punishMessageBroadcaster = Providers.punishMessageBroadcaster();
-
+	protected static final PunishProvider PUNISH_PROVIDER = Providers.punishProvider();
+	protected static final StorageProvider STORAGE_PROVIDER = Providers.storageProvider();
+	protected static final PlayerProvider PLAYER_PROVIDER = Providers.playerProvider();
 
 	private String reason;
 	private String ip;
@@ -29,7 +34,6 @@ public abstract class Punish {
 
 	private boolean isSilent;
 	private boolean isSuperSilent;
-
 
 	/**
 	 * Validates our raw-data which
@@ -135,6 +139,28 @@ public abstract class Punish {
 	// ----------------------------------------------------------------------------------------------------
 
 	public void create() {
-		punishMessageBroadcaster.broadcastMessage(this, isSilent, isSuperSilent);
+		if (!PUNISH_PROVIDER.handlePunishEvent(this)) {
+			return;
+		}
+
+		try {
+			STORAGE_PROVIDER.savePunish(this);
+
+			PUNISH_PROVIDER.broadCastPunishMessage(this, isSilent, isSuperSilent);
+		} catch (final Throwable throwable) {
+			System.err.println("| -------------------------------------- ");
+			System.err.println("org.mineacademy.core.Punish.create()");
+			System.err.println("Failed to create punish!");
+
+			throwable.printStackTrace();
+
+			System.err.println("Data: " + toString());
+
+			System.err.println("| -------------------------------------- ");
+
+			//Sending messages
+
+			PLAYER_PROVIDER.sendIfOnline(creator, "W");
+		}
 	}
 }

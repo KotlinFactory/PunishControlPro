@@ -1,8 +1,11 @@
-package org.mineacademy.punishcontrol.core.punish;
+package org.mineacademy.punishcontrol.core.punishes;
 
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.mineacademy.punishcontrol.core.punish.Punish;
+import org.mineacademy.punishcontrol.core.punish.PunishDuration;
+import org.mineacademy.punishcontrol.core.punish.PunishType;
 
 import java.util.Map;
 import java.util.UUID;
@@ -39,8 +42,8 @@ public final class Ban extends Punish {
 	// Overridden methods for builder
 	// ----------------------------------------------------------------------------------------------------
 
-	@Override
-	public Ban punishDuration(@NonNull final PunishDuration punishDuration) {
+
+	@Override public Ban punishDuration(@NonNull final PunishDuration punishDuration) {
 		return (Ban) super.punishDuration(punishDuration);
 	}
 

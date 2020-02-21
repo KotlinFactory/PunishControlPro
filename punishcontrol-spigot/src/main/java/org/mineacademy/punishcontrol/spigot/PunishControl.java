@@ -10,11 +10,11 @@ import org.mineacademy.punishcontrol.core.DaggerCoreModule;
 import org.mineacademy.punishcontrol.core.SimplePunishControlPlugin;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.provider.providers.SettingsProvider;
-import org.mineacademy.punishcontrol.core.punish.Ban;
+import org.mineacademy.punishcontrol.core.punishes.Ban;
 import org.mineacademy.punishcontrol.core.storage.StorageType;
 import org.mineacademy.punishcontrol.spigot.command.*;
 import org.mineacademy.punishcontrol.spigot.impl.SpigotPlayerProvider;
-import org.mineacademy.punishcontrol.spigot.impl.SpigotPunishMessageBroadcaster;
+import org.mineacademy.punishcontrol.spigot.impl.SpigotPunishProvider;
 import org.mineacademy.punishcontrol.spigot.impl.SpigotTextureProvider;
 import org.mineacademy.punishcontrol.spigot.impl.SpigotWorkingDirectoryProvider;
 import org.mineacademy.punishcontrol.spigot.settings.Localization;
@@ -22,7 +22,6 @@ import org.mineacademy.punishcontrol.spigot.settings.Settings;
 
 import java.util.Arrays;
 import java.util.List;
-import java.util.Set;
 
 public final class PunishControl extends SimplePlugin implements SimplePunishControlPlugin {
 	private final SpigotModule spigotModule = DaggerSpigotModule.builder().build();
@@ -67,14 +66,9 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 		Providers.workingDirectoryProvider(SpigotWorkingDirectoryProvider.newInstance());
 		Providers.playerProvider(SpigotPlayerProvider.newInstance());
 		Providers.textureProvider(SpigotTextureProvider.newInstance());
-		Providers.punishMessageBroadcaster(SpigotPunishMessageBroadcaster.newInstance());
+		Providers.punishProvider(SpigotPunishProvider.newInstance());
 
 		Providers.settingsProvider(new SettingsProvider() {
-			@Override
-			public Set<String> getReportReasons() {
-				Valid.checkNotNull(Settings.reportReasons, "Report reasons not yet set");
-				return Settings.reportReasons;
-			}
 
 			@Override
 			public boolean cacheResults() {
@@ -85,6 +79,7 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 
 			@Override
 			public List<String> getJoinMessageForBannedPlayer(final Ban ban) {
+				//TODO
 				return null;
 			}
 
@@ -101,14 +96,23 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 		return Settings.storageType;
 	}
 
+
 	// ----------------------------------------------------------------------------------------------------
-	// Overridden methods needed by our superclasses
+	// Methods overridden from SimplePlugin
 	// ----------------------------------------------------------------------------------------------------
 
 	@Override
 	public List<Class<? extends YamlStaticConfig>> getSettings() {
 		return Arrays.asList(Settings.class, Localization.class);
 	}
+
+	@Override public int getFoundedYear() {
+		return 2019; //31.12.2019
+	}
+
+	// ----------------------------------------------------------------------------------------------------
+	// Methods overridden from SimplePunishControlPlugin
+	// ----------------------------------------------------------------------------------------------------
 
 	@Override
 	public void log(final @NonNull String... message) {

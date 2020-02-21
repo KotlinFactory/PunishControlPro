@@ -19,7 +19,7 @@ public class PunishTemplateManager {
 
 	public void loadTemplates(@NonNull final File directory) {
 		for (final File file : FileUtils.listFiles(directory, ".json")) {
-			punishTemplates.add(PunishTemplate.newInstance(file));
+			punishTemplates.add(PunishTemplate.load(file));
 		}
 
 		//No templates created
@@ -41,9 +41,9 @@ public class PunishTemplateManager {
 		FileUtils.writeToFile(FileUtils.getAndMake("default-mute.json", destination.getAbsolutePath()), muteInputStream);
 		FileUtils.writeToFile(FileUtils.getAndMake("default-warn.json", destination.getAbsolutePath()), warnInputStream);
 
-		punishTemplates.add(PunishTemplate.newInstance(new File(destination.getAbsolutePath() + "/templates/", "default-ban.json")));
-		punishTemplates.add(PunishTemplate.newInstance(new File(destination.getAbsolutePath() + "/templates/", "default-mute.json")));
-		punishTemplates.add(PunishTemplate.newInstance(new File(destination.getAbsolutePath() + "/templates/", "default-warn.json")));
+		punishTemplates.add(PunishTemplate.load(new File(destination.getAbsolutePath() + "/templates/", "default-ban.json")));
+		punishTemplates.add(PunishTemplate.load(new File(destination.getAbsolutePath() + "/templates/", "default-mute.json")));
+		punishTemplates.add(PunishTemplate.load(new File(destination.getAbsolutePath() + "/templates/", "default-warn.json")));
 
 	}
 }
