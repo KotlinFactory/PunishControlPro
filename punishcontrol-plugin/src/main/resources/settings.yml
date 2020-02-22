@@ -56,6 +56,10 @@ Groups:
 
 Advanced:
   Cache_Results: true
+  API:
+    #You can disable the API for security reasons
+    Enabled: True
+
 
 # Do not change this value, otherwise it will corrupt your plugin installation!
 Version: 1

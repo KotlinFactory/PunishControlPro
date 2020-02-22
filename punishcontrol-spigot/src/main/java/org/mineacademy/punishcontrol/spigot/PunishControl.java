@@ -2,21 +2,15 @@ package org.mineacademy.punishcontrol.spigot;
 
 import lombok.NonNull;
 import org.mineacademy.fo.Common;
-import org.mineacademy.fo.Valid;
 import org.mineacademy.fo.plugin.SimplePlugin;
 import org.mineacademy.fo.settings.YamlStaticConfig;
 import org.mineacademy.punishcontrol.core.CoreModule;
 import org.mineacademy.punishcontrol.core.DaggerCoreModule;
 import org.mineacademy.punishcontrol.core.SimplePunishControlPlugin;
 import org.mineacademy.punishcontrol.core.provider.Providers;
-import org.mineacademy.punishcontrol.core.provider.providers.SettingsProvider;
-import org.mineacademy.punishcontrol.core.punishes.Ban;
 import org.mineacademy.punishcontrol.core.storage.StorageType;
 import org.mineacademy.punishcontrol.spigot.command.*;
-import org.mineacademy.punishcontrol.spigot.impl.SpigotPlayerProvider;
-import org.mineacademy.punishcontrol.spigot.impl.SpigotPunishProvider;
-import org.mineacademy.punishcontrol.spigot.impl.SpigotTextureProvider;
-import org.mineacademy.punishcontrol.spigot.impl.SpigotWorkingDirectoryProvider;
+import org.mineacademy.punishcontrol.spigot.impl.*;
 import org.mineacademy.punishcontrol.spigot.settings.Localization;
 import org.mineacademy.punishcontrol.spigot.settings.Settings;
 
@@ -68,22 +62,7 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 		Providers.textureProvider(SpigotTextureProvider.newInstance());
 		Providers.punishProvider(SpigotPunishProvider.newInstance());
 
-		Providers.settingsProvider(new SettingsProvider() {
-
-			@Override
-			public boolean cacheResults() {
-				Valid.checkNotNull(Settings.cacheResults, "CacheResults not yet set");
-
-				return Settings.cacheResults;
-			}
-
-			@Override
-			public List<String> getJoinMessageForBannedPlayer(final Ban ban) {
-				//TODO
-				return null;
-			}
-
-		});
+		Providers.settingsProvider(SpigotSettingsProvider.newInstance());
 	}
 
 	@Override
@@ -93,7 +72,7 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 
 	@Override
 	public StorageType chooseStorageProvider() {
-		return Settings.storageType;
+		return Settings.STORAGE_TYPE;
 	}
 
 

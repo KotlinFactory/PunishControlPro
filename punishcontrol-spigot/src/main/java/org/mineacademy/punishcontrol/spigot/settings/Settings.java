@@ -5,49 +5,60 @@ import org.mineacademy.fo.settings.SimpleSettings;
 import org.mineacademy.punishcontrol.core.storage.StorageType;
 
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 public final class Settings extends SimpleSettings {
+
 	public static List<String> COMMAND_ALIASES = new ArrayList<>();
-	public static Set<String> reportReasons;
-	public static Boolean cacheResults;
-	public static StorageType storageType;
+	public static StorageType STORAGE_TYPE;
 
 	private static void init() {
+		STORAGE_TYPE = Enum.valueOf(StorageType.class, getString("Storage"));
 		COMMAND_ALIASES = getStringList("Command_Aliases");
 		pathPrefix("Reports");
-		reportReasons = new HashSet<>(getStringList("Allowed_Reasons"));
-		pathPrefix("Advanced");
-		cacheResults = getBoolean("Cache_Results");
-		pathPrefix(null);
-		storageType = Enum.valueOf(StorageType.class, getString("Storage"));
-
 	}
 
 	public final static class Notifications {
 		public final static class Punish {
 
-			public static Boolean enabled;
-			public static String permission;
+			public static Boolean ENABLED;
+			public static String PERMISSION;
 
 
 			private static void init() {
 				pathPrefix("Notifications.Punish");
-				enabled = getBoolean("Enabled");
-				permission = getString("Permission");
+				ENABLED = getBoolean("Enabled");
+				PERMISSION = getString("Permission");
 			}
 		}
 
 		public final static class SilentPunish {
-			public static Boolean enabled;
-			public static String permission;
+			public static Boolean ENABLED;
+			public static String PERMISSION;
 
 			private static void init() {
 				pathPrefix("Notifications.Silent-Punish");
-				enabled = getBoolean("Enabled");
-				permission = getString("Permission");
+				ENABLED = getBoolean("Enabled");
+				PERMISSION = getString("Permission");
+			}
+		}
+	}
+
+	public static final class Advanced {
+		public static Boolean CACHE_RESULTS;
+
+		private static void init() {
+			pathPrefix("Advanced");
+			CACHE_RESULTS = getBoolean("Cache_Results");
+		}
+
+		public static final class API {
+			public static boolean ENABLED;
+
+			private static void init() {
+
+				pathPrefix("Advanced.API");
+				ENABLED = getBoolean("Enabled");
 			}
 		}
 	}

@@ -31,4 +31,8 @@ public final class ProxyPunishProvider implements PunishProvider {
 		}
 
 	}
+
+	@Override public boolean handlePunishEvent(final @NonNull Punish punish) {
+		return false;
+	}
 }

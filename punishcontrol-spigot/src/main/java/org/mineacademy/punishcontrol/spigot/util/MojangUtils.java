@@ -23,7 +23,7 @@ import java.util.concurrent.TimeUnit;
 @FieldDefaults(makeFinal = true)
 public class MojangUtils {
 	private String SERVICE_URL = "https://sessionserver.mojang.com/session/minecraft/profile/%s?unsigned=false";
-	private ExpiringMap<UUID, String> cache = ExpiringMap.builder().expiration(3L, TimeUnit.DAYS).build();
+	private ExpiringMap<UUID, String> cache = ExpiringMap.builder().expiration(3L, TimeUnit.HOURS).build();
 
 	@SneakyThrows
 	public String getTextureHash(final UUID uuid) {

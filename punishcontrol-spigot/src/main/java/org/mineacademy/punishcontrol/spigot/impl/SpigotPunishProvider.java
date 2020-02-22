@@ -27,14 +27,14 @@ public final class SpigotPunishProvider implements PunishProvider {
 
 		if (silent) {
 
-			if (!Settings.Notifications.SilentPunish.enabled) {
+			if (!Settings.Notifications.SilentPunish.ENABLED) {
 				return;
 			}
 
 			for (final Player player : Bukkit.getOnlinePlayers()) {
 
 				//The player {} has been banned by
-				if (!player.hasPermission(Settings.Notifications.SilentPunish.permission)) {
+				if (!player.hasPermission(Settings.Notifications.SilentPunish.PERMISSION)) {
 					continue;
 				}
 
@@ -44,13 +44,13 @@ public final class SpigotPunishProvider implements PunishProvider {
 			return;
 		}
 
-		if (!Settings.Notifications.Punish.enabled) {
+		if (!Settings.Notifications.Punish.ENABLED) {
 			return;
 		}
 
 		for (final Player player : Bukkit.getOnlinePlayers()) {
 
-			if (!player.hasPermission(Settings.Notifications.Punish.permission)) {
+			if (!player.hasPermission(Settings.Notifications.Punish.PERMISSION)) {
 				continue;
 			}
 

@@ -15,8 +15,6 @@ import org.mineacademy.punishcontrol.core.punish.PunishProvider;
 import org.mineacademy.punishcontrol.core.storage.MySQLConfig;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 
-import javax.inject.Singleton;
-
 /**
  * -- Heart of PunishControl --
  * <p>
@@ -55,7 +53,6 @@ public final class Providers {
 		return PunishControlManager.storageType().getStorageProvider();
 	}
 
-	@Singleton
 	@Provides
 	public static PlayerProvider playerProvider() {
 		Valid.notNull(playerProvider, "PlayerProvider not yet set.");
@@ -63,7 +60,6 @@ public final class Providers {
 		return playerProvider;
 	}
 
-	@Singleton
 	@Provides
 	public static TextureProvider textureProvider() {
 		Valid.notNull(textureProvider, "TextureProvider not yet set.");
@@ -85,7 +81,6 @@ public final class Providers {
 		return workingDirectoryProvider;
 	}
 
-	@Singleton
 	@Provides
 	public static PunishProvider punishProvider() {
 		Valid.notNull(punishProvider, "PunishMessage-BroadCaster not yet set");

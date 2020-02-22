@@ -30,6 +30,7 @@ public class PunishControlManager {
 	 */
 
 	public StorageType storageType() {
+
 		Valid.notNull(storageType, "StorageType not yet set");
 
 		return storageType;

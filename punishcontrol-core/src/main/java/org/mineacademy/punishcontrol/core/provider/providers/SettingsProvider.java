@@ -13,6 +13,8 @@ public interface SettingsProvider {
 	//Should results be cached?
 	boolean cacheResults();
 
+	boolean isAPIEnabled();
+
 	List<String> getJoinMessageForBannedPlayer(Ban ban);
 
 }
