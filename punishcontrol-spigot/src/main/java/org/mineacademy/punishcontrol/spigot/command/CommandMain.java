@@ -30,9 +30,8 @@ public final class CommandMain extends SimpleCommand {
 
 	private void doHelp() {
 
-
 		tell(
-				""
+			""
 
 		);
 

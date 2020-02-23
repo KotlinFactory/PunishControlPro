@@ -21,6 +21,10 @@ public interface StorageProvider {
 		return true;
 	}
 
+	default PlayerCache getCacheFor(@NonNull final UUID uuid) {
+		return new PlayerCache(this, uuid);
+	}
+
 
 	// ----------------------------------------------------------------------------------------------------
 	// Listing all punishes/warns/reports ever made

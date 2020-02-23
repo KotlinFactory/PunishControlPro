@@ -63,6 +63,8 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 		Providers.punishProvider(SpigotPunishProvider.newInstance());
 
 		Providers.settingsProvider(SpigotSettingsProvider.newInstance());
+
+		Providers.exceptionHandler(SpigotExceptionHandler.newInstance());
 	}
 
 	@Override

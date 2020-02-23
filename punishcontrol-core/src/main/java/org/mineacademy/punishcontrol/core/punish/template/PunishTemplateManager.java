@@ -44,6 +44,5 @@ public class PunishTemplateManager {
 		punishTemplates.add(PunishTemplate.load(new File(destination.getAbsolutePath() + "/templates/", "default-ban.json")));
 		punishTemplates.add(PunishTemplate.load(new File(destination.getAbsolutePath() + "/templates/", "default-mute.json")));
 		punishTemplates.add(PunishTemplate.load(new File(destination.getAbsolutePath() + "/templates/", "default-warn.json")));
-
 	}
 }

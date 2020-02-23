@@ -18,14 +18,19 @@ public final class CommandBan extends AbstractPunishCommand {
 	}
 
 	@Override
-	protected void onTargetProvided(final Player player, final @NonNull UUID target) {
+	protected void onTargetProvided(@NonNull final Player player, final @NonNull UUID target) {
 	}
 
 	@Override
-	protected void onTargetAndDurationProvided(final Player player, final @NonNull UUID target, final PunishDuration punishDuration) {
+	protected void onTargetAndDurationProvided(@NonNull final Player player,
+	                                           @NonNull final UUID target,
+	                                           @NonNull final PunishDuration punishDuration) {
 	}
 
 	@Override
-	protected void onTargetAndDurationAndReasonProvided(final @NonNull CommandSender player, final @NonNull UUID target, final @NonNull PunishDuration punishDuration, final @NonNull String reason) {
+	protected void onTargetAndDurationAndReasonProvided(@NonNull final CommandSender player,
+	                                                    @NonNull final UUID target,
+	                                                    @NonNull final PunishDuration punishDuration,
+	                                                    @NonNull final String reason) {
 	}
 }

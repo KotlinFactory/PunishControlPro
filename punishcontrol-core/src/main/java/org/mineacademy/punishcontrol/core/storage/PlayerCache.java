@@ -1,10 +1,8 @@
 package org.mineacademy.punishcontrol.core.storage;
 
-import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import org.mineacademy.punishcontrol.core.PunishControlManager;
 import org.mineacademy.punishcontrol.core.punish.Punish;
 import org.mineacademy.punishcontrol.core.punishes.Ban;
 import org.mineacademy.punishcontrol.core.punishes.Mute;
@@ -16,15 +14,11 @@ import java.util.Optional;
 import java.util.UUID;
 
 @Getter
-@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+@RequiredArgsConstructor()
 public final class PlayerCache {
 
-	public static PlayerCache getFor(@NonNull final UUID uuid) {
-		return new PlayerCache(uuid);
-	}
-
 	//Dagger?
-	private final StorageProvider provider = PunishControlManager.storageType().getStorageProvider();
+	private final StorageProvider provider;
 	private final @NonNull UUID uuid;
 
 	// ----------------------------------------------------------------------------------------------------
@@ -68,19 +62,6 @@ public final class PlayerCache {
 
 	public List<Warn> listWarns() {
 		return provider.listWarns(uuid);
-	}
-
-
-	public void ban(final Ban ban) {
-		provider.saveBan(ban);
-	}
-
-	public void mute(final Mute mute) {
-		provider.saveMute(mute);
-	}
-
-	public void warn(final Warn warn) {
-		provider.saveWarn(warn);
 	}
 
 	public final List<Punish> listPunishes() {

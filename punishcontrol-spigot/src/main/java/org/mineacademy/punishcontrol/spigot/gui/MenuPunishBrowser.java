@@ -48,7 +48,6 @@ public final class MenuPunishBrowser extends MenuPagged<Punish> {
 
 	public MenuPunishBrowser(final int size, final Iterable<Punish> pages) {
 		super(size, MenuMain.create(), pages);
-
 	}
 
 	@Override

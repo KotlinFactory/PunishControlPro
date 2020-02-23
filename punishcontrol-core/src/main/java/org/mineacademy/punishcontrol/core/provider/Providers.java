@@ -7,10 +7,7 @@ import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.mineacademy.punishcontrol.core.PunishControlManager;
-import org.mineacademy.punishcontrol.core.provider.providers.PlayerProvider;
-import org.mineacademy.punishcontrol.core.provider.providers.SettingsProvider;
-import org.mineacademy.punishcontrol.core.provider.providers.TextureProvider;
-import org.mineacademy.punishcontrol.core.provider.providers.WorkingDirectoryProvider;
+import org.mineacademy.punishcontrol.core.provider.providers.*;
 import org.mineacademy.punishcontrol.core.punish.PunishProvider;
 import org.mineacademy.punishcontrol.core.storage.MySQLConfig;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
@@ -48,6 +45,10 @@ public final class Providers {
 	@NonNull
 	private static PunishProvider punishProvider;
 
+	@Setter
+	@NonNull
+	private static ExceptionHandler exceptionHandler;
+
 	//StorageProvider can't be set.
 	public static StorageProvider storageProvider() {
 		return PunishControlManager.storageType().getStorageProvider();
@@ -83,9 +84,17 @@ public final class Providers {
 
 	@Provides
 	public static PunishProvider punishProvider() {
-		Valid.notNull(punishProvider, "PunishMessage-BroadCaster not yet set");
+		Valid.notNull(punishProvider, "PunishProvider not yet set");
 
 		return punishProvider;
+	}
+
+
+	@Provides
+	public static ExceptionHandler exceptionHandler() {
+		Valid.notNull(exceptionHandler, "ExceptionHandler not yet set");
+
+		return exceptionHandler;
 	}
 
 	// ----------------------------------------------------------------------------------------------------

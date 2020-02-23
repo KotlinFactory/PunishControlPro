@@ -77,19 +77,14 @@ public final class JsonStorageProvider extends Json implements StorageProvider {
 		return null;
 	}
 
-
-	//
-
 	@Inject
 	public JsonStorageProvider(final WorkingDirectoryProvider workingDirectoryProvider) {
 		super(PunishControlManager.FILES.JSON_DATA_FILE_NAME, workingDirectoryProvider.getDataFolder().getAbsolutePath() + "/data");
 	}
 
-
 	// ----------------------------------------------------------------------------------------------------
 	// Listing all punishes
 	// ----------------------------------------------------------------------------------------------------
-
 
 	@Override
 	public List<Ban> listBans() {

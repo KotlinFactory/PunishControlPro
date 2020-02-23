@@ -45,6 +45,7 @@ public class GroupManager {
 
 	//Returns the name of the registered groups
 	public List<String> getGroupNames() {
+
 		final List<String> result = new ArrayList<>();
 
 		for (final Group group : registeredGroups) {

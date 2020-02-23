@@ -6,6 +6,7 @@ import lombok.NonNull;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 import org.mineacademy.punishcontrol.core.provider.Providers;
+import org.mineacademy.punishcontrol.core.provider.providers.ExceptionHandler;
 import org.mineacademy.punishcontrol.core.provider.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 
@@ -19,6 +20,7 @@ import java.util.UUID;
 @ToString
 public abstract class Punish {
 	protected static final PunishProvider PUNISH_PROVIDER = Providers.punishProvider();
+	protected static final ExceptionHandler EXCEPTION_HANDLER = Providers.exceptionHandler();
 	protected static final StorageProvider STORAGE_PROVIDER = Providers.storageProvider();
 	protected static final PlayerProvider PLAYER_PROVIDER = Providers.playerProvider();
 
@@ -103,7 +105,6 @@ public abstract class Punish {
 		removed((Boolean) banRawData.get("removed"));
 	}
 
-
 	public final boolean isOld() {
 		if (removed()) {
 			return true;
@@ -148,19 +149,19 @@ public abstract class Punish {
 
 			PUNISH_PROVIDER.broadCastPunishMessage(this, isSilent, isSuperSilent);
 		} catch (final Throwable throwable) {
-			System.err.println("| -------------------------------------- ");
-			System.err.println("org.mineacademy.core.Punish.create()");
-			System.err.println("Failed to create punish!");
 
-			throwable.printStackTrace();
-
-			System.err.println("Data: " + toString());
-
-			System.err.println("| -------------------------------------- ");
+			EXCEPTION_HANDLER.saveError(throwable,
+				"org.mineacademy.core.Punish.create()",
+				"Failed to create punish!",
+				"Data: " + toString()
+			);
 
 			//Sending messages
 
-			PLAYER_PROVIDER.sendIfOnline(creator, "W");
+			PLAYER_PROVIDER.sendIfOnline(creator,
+				"&cException while creating Punish!",
+				"Please check your console."
+			);
 		}
 	}
 }
