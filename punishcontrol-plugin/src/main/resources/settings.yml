@@ -1,3 +1,41 @@
+# !-------------------------------------------------------------------------------------------------!
+#                       Welcome to the main configuration of ChatControl PRO
+# !-------------------------------------------------------------------------------------------------!
+#
+#    For support and documentation, please visit:
+#    - https://github.com/kangarko/ChatControl-Pro/wiki
+#
+# !-------------------------------------------------------------------------------------------------!
+#
+#    1) COLOR CODES are supported with the '&' character. See
+#       - http://minecraftwiki.net/wiki/Formatting_codes
+#       [!] When you use them, omit the message with " " or ' '.
+#
+#    2) TO HIDE a message, set it to 'none'.
+#
+#    3) For UNICODE CHARACTERS (smileys, symbols, ..), save the file in UTF-8 encoding. See
+#       - https://github.com/kangarko/ChatControl-Pro/wiki/Use-Right-Encoding
+#
+#    4) JSON is supported. For usage, see:
+#       - https://github.com/kangarko/ChatControl-Pro/wiki/JSON
+#
+#    5) SOUND NAMES had changed as per Minecraft 1.9, compare:
+#       - 1.9 and newer: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html
+#       - 1.8 and older: https://goo.gl/ArzbZA
+#
+#    PS: The information above applies for all files within the ChatControl folder.
+#
+#    !! Messages (e.g. 'Please wait 2 seconds [...]') are stored in localization, see:
+#       - https://github.com/kangarko/ChatControl-Pro/wiki/Localization
+#
+# !-------------------------------------------------------------------------------------------------!
+
+# -------------------------------------------------------------------------------------------------
+# Reduce impact of spamming bots
+# -------------------------------------------------------------------------------------------------
+
+
+
 Prefix: '&8&lPUNISHCONTROL &8//&7'
 
 Locale: en

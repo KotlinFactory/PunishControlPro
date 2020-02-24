@@ -10,8 +10,7 @@ public class Localization extends SimpleLocalization {
 
 	private static void init() {
 
-
-		PLAYER_DOES_NOT_EXIST = getReplacer("")
+		PLAYER_DOES_NOT_EXIST = getReplacer("Player.Not_Exists");
 
 	}
 

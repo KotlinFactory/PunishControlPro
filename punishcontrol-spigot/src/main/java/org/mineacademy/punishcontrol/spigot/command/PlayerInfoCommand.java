@@ -3,6 +3,7 @@ package org.mineacademy.punishcontrol.spigot.command;
 import org.mineacademy.fo.collection.StrictList;
 import org.mineacademy.fo.command.SimpleCommand;
 import org.mineacademy.punishcontrol.core.provider.providers.PlayerProvider;
+import org.mineacademy.punishcontrol.core.punish.Punish;
 import org.mineacademy.punishcontrol.core.storage.PlayerCache;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 import org.mineacademy.punishcontrol.spigot.settings.Localization;
@@ -31,6 +32,7 @@ public class PlayerInfoCommand extends SimpleCommand {
 		final PlayerCache playerCache = storageProvider.getCacheFor(target);
 
 
+		playerCache.listPunishes().stream().filter(Punish::isOld).onClose(System.out::println);
 		//Send info here
 	}
 

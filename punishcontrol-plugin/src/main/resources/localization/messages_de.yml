@@ -1,1 +1,4 @@
+Player:
+  Not_Exist: "Der Spieler {player} existiert nicht."
+
 Version: 1

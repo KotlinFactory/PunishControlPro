@@ -42,7 +42,6 @@ public final class MySQLStorageProvider extends SimpleDatabase implements Storag
 		        "reason": "REASON",
 		        "duration": 39393033093393033093039,
 
-
 		        "removed": "false"
 		      }
 	 */
