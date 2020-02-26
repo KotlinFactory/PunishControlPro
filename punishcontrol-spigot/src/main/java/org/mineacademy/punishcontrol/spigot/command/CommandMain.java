@@ -32,7 +32,6 @@ public final class CommandMain extends SimpleCommand {
 
 		tell(
 			""
-
 		);
 
 

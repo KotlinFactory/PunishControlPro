@@ -34,6 +34,7 @@ public final class PunishDuration {
 			.filter(i -> Character.isLetter(humanReadable.charAt(i)))
 			.findFirst();
 
+
 		// Default if there is no letter, only numbers
 		String numbers = humanReadable;
 		String letters = "";

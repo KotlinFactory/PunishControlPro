@@ -1,9 +1,9 @@
 # !-------------------------------------------------------------------------------------------------!
-#                       Welcome to the main configuration of ChatControl PRO
+#                       Welcome to the main configuration of PunishControl PRO
 # !-------------------------------------------------------------------------------------------------!
 #
 #    For support and documentation, please visit:
-#    - https://github.com/kangarko/ChatControl-Pro/wiki
+#    - https://github.com/kangarko/PunishControl-Pro/wiki
 #
 # !-------------------------------------------------------------------------------------------------!
 #
@@ -16,34 +16,26 @@
 #    3) For UNICODE CHARACTERS (smileys, symbols, ..), save the file in UTF-8 encoding. See
 #       - https://github.com/kangarko/ChatControl-Pro/wiki/Use-Right-Encoding
 #
-#    4) JSON is supported. For usage, see:
-#       - https://github.com/kangarko/ChatControl-Pro/wiki/JSON
-#
-#    5) SOUND NAMES had changed as per Minecraft 1.9, compare:
+#    4) SOUND NAMES had changed as per Minecraft 1.9, compare:
 #       - 1.9 and newer: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html
 #       - 1.8 and older: https://goo.gl/ArzbZA
 #
-#    PS: The information above applies for all files within the ChatControl folder.
+#    PS: The information above applies for all files within the PunishControl folder.
 #
 #    !! Messages (e.g. 'Please wait 2 seconds [...]') are stored in localization, see:
-#       - https://github.com/kangarko/ChatControl-Pro/wiki/Localization
+#       - https://github.com/kangarko/PunishControl-Pro/wiki/Localization
 #
 # !-------------------------------------------------------------------------------------------------!
-
-# -------------------------------------------------------------------------------------------------
-# Reduce impact of spamming bots
-# -------------------------------------------------------------------------------------------------
-
-
 
 Prefix: '&8&lPUNISHCONTROL &8//&7'
 
 Locale: en
 
+Command_Aliases: [punishcontrol,phc, pun, pc]
+
 #JSON/MYSQL
 Storage: JSON
 
-Command_Aliases: [punishcontrol,phc, pun, pc]
 
 Punishes:
   #Should punishing only be possible with an template
@@ -77,6 +69,10 @@ Groups:
       Ban: -1
       Mute: -1
       Warn: -1
+    # Templates the Group should always be able to use.
+    # Even if the Limits would prohibit the usage. (For example by the duration of the punish)
+    # Set to * to enable all
+    Template_By_Passes: ['*']
   Moderator:
     Priority: 1
     Permission: punishcontrol.group.moderator
@@ -84,13 +80,30 @@ Groups:
       Ban: 1 year
       Mute: 1 year
       Warn: 2 year
-    Supporter:
-      Priority: 2
-      Permission: punishcontrol.group.supporter
-      Limits:
-        Ban: 1 month
-        Mute: 2 month
-        Warn: 3 month
+    # Templates the Group should always be able to use.
+    # Even if the Limits would prohibit the usage. (For example by the duration of the punish)
+    # Set to * to enable all
+    Template_By_Passes:
+      - *
+  Supporter:
+    Priority: 2
+    Permission: punishcontrol.group.supporter
+    Limits:
+      Ban: 1 month
+      Mute: 2 month
+      Warn: 3 month
+    # Templates the Group should always be able to use.
+    # Even if the Limits would prohibit the usage. (For example by the duration of the punish)
+    # Set to * to enable all
+    Template_By_Passes:
+      - '*'
+
+
+
+#
+# Advanced settings for PunishControl PRO
+# -> Don't change them unless you really know, what you are doing.
+#
 
 Advanced:
   Cache_Results: true
@@ -98,6 +111,7 @@ Advanced:
     #You can disable the API for security reasons
     Enabled: True
 
+Debug: []
 
 # Do not change this value, otherwise it will corrupt your plugin installation!
 Version: 1

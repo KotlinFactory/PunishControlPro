@@ -22,7 +22,7 @@ public final class ReflectionUtil {
 
 	public Class<?> getClass(final String classname) throws ClassNotFoundException {
 		final String path = classname.replace("{nms}", "net.minecraft.server." + getVersion()).replace("{obc}", "org.bukkit.craftbukkit." + getVersion())
-				.replace("{nm}", "net.minecraft." + getVersion());
+			.replace("{nm}", "net.minecraft." + getVersion());
 		return Class.forName(path);
 	}
 
@@ -31,30 +31,30 @@ public final class ReflectionUtil {
 	}
 
 	public Object getNMSPlayer(final Player p)
-			throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		final Method getHandle = p.getClass().getMethod("getHandle");
 		return getHandle.invoke(p);
 	}
 
 	public Object getOBCPlayer(final Player p)
-			throws SecurityException, IllegalArgumentException, ClassNotFoundException {
+		throws SecurityException, IllegalArgumentException, ClassNotFoundException {
 		return getClass("{obc}.entity.CraftPlayer").cast(p);
 	}
 
 	public Object getNMSWorld(final World w)
-			throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		final Method getHandle = w.getClass().getMethod("getHandle");
 		return getHandle.invoke(w);
 	}
 
 	public Object getNMSScoreboard(final Scoreboard s)
-			throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+		throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
 		final Method getHandle = s.getClass().getMethod("getHandle");
 		return getHandle.invoke(s);
 	}
 
 	public Object getFieldValue(final Object instance, final String fieldName)
-			throws IllegalArgumentException, IllegalAccessException, SecurityException {
+		throws IllegalArgumentException, IllegalAccessException, SecurityException {
 		final Map.Entry<Class, String> key = new AbstractMap.SimpleEntry<>(instance.getClass(), fieldName);
 		final Field field = CACHED_FIELDS.computeIfAbsent(key, i -> {
 			try {

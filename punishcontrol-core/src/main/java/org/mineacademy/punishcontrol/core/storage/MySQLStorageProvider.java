@@ -81,11 +81,9 @@ public final class MySQLStorageProvider extends SimpleDatabase implements Storag
 	}
 
 	@Override public void saveBan(@NonNull final Ban ban) {
-
 	}
 
 	@Override public void saveMute(@NonNull final Mute mute) {
-
 	}
 
 	@Override public void saveWarn(@NonNull final Warn warn) {

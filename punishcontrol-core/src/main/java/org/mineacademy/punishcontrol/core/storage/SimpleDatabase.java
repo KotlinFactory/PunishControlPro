@@ -335,7 +335,6 @@ public class SimpleDatabase {
 		return input == null || "none".equalsIgnoreCase(input) ? "" : input;
 	}
 
-
 	/**
 	 * Stores last known credentials from the connect() functions
 	 */

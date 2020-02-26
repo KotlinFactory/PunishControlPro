@@ -1,12 +1,15 @@
 package org.mineacademy.punishcontrol.core.punish.template;
 
 import de.leonhard.storage.Json;
+import de.leonhard.storage.util.FileUtils;
 import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
 import org.mineacademy.punishcontrol.core.punish.PunishDuration;
 import org.mineacademy.punishcontrol.core.punish.PunishType;
 
 import java.io.File;
+import java.util.List;
+import java.util.Optional;
 
 public final class PunishTemplate extends Json {
 
@@ -23,6 +26,17 @@ public final class PunishTemplate extends Json {
 		template.permission();
 
 		return template;
+	}
+
+	public static Optional<PunishTemplate> getByName(@NonNull final File folder, @NonNull final String name) {
+		final List<File> files = FileUtils.listFiles(folder, ".json");
+
+		final Optional<File> optionalFile = files.stream().filter((file) -> file.getName().replace(".json", "").equalsIgnoreCase(name)).findFirst();
+
+		//If optionalFile is present -> PunishTemplate of this file else: Optional.empty()
+		return optionalFile.map(PunishTemplate::new);
+
+		//
 	}
 
 	private PunishTemplate(@NonNull final File file) {

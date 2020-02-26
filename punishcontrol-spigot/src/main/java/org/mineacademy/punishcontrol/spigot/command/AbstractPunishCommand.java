@@ -54,10 +54,9 @@ public abstract class AbstractPunishCommand extends SimpleCommand {
 
 	}
 
-// ----------------------------------------------------------------------------------------------------
-// Methods to override
-// ----------------------------------------------------------------------------------------------------
-//
+	// ----------------------------------------------------------------------------------------------------
+	// Methods to override
+	// ----------------------------------------------------------------------------------------------------
 
 	//Ex {command} [player] -> Can only be run as a player
 	protected void onTargetProvided(@NonNull final Player player, @NonNull final UUID target) {

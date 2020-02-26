@@ -1,7 +1,5 @@
 package org.mineacademy.punishcontrol.proxy.settings;
 
-import de.leonhard.storage.Yaml;
-import org.mineacademy.bfo.plugin.SimplePlugin;
 import org.mineacademy.bfo.settings.SimpleSettings;
 import org.mineacademy.punishcontrol.core.storage.StorageType;
 
@@ -68,10 +66,5 @@ public final class Settings extends SimpleSettings {
 	@Override
 	protected int getConfigVersion() {
 		return 1;
-	}
-
-	@Override
-	public Yaml getConfigInstance() {
-		return new Yaml("settings", SimplePlugin.getData().getAbsolutePath());
 	}
 }

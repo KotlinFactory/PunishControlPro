@@ -25,7 +25,6 @@ public interface StorageProvider {
 		return new PlayerCache(this, uuid);
 	}
 
-
 	// ----------------------------------------------------------------------------------------------------
 	// Listing all punishes/warns/reports ever made
 	// ----------------------------------------------------------------------------------------------------
@@ -35,7 +34,6 @@ public interface StorageProvider {
 	List<Mute> listMutes();
 
 	List<Warn> listWarns();
-
 
 	// ----------------------------------------------------------------------------------------------------
 	// Listing all current punishes/warns/reports

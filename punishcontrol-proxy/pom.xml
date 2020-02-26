@@ -21,6 +21,10 @@
             <id>bungeecord-repo</id>
             <url>https://oss.sonatype.org/content/repositories/snapshots</url>
         </repository>
+        <repository>
+            <id>Exceptionflug</id>
+            <url>http://mvn.exceptionflug.de/repository/exceptionflug-public/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -57,9 +61,8 @@
         <dependency>
             <groupId>org.mineacademy</groupId>
             <artifactId>burst</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.7</version>
         </dependency>
-
 
         <dependency>
             <groupId>com.google.dagger</groupId>

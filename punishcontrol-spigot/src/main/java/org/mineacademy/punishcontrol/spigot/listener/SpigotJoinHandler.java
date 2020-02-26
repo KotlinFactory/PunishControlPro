@@ -14,7 +14,6 @@ import java.util.UUID;
 
 public final class SpigotJoinHandler extends JoinHandler implements Listener {
 
-
 	@Inject
 	public SpigotJoinHandler(@NonNull final StorageProvider storageProvider) {
 		super(storageProvider);

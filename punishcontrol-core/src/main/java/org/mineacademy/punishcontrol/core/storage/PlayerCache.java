@@ -1,7 +1,6 @@
 package org.mineacademy.punishcontrol.core.storage;
 
 import lombok.Getter;
-import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.mineacademy.punishcontrol.core.punish.Punish;
 import org.mineacademy.punishcontrol.core.punishes.Ban;
@@ -19,7 +18,7 @@ public final class PlayerCache {
 
 	//Dagger?
 	private final StorageProvider provider;
-	private final @NonNull UUID uuid;
+	private final UUID uuid;
 
 	// ----------------------------------------------------------------------------------------------------
 	// Is the player banned/warned/muted?

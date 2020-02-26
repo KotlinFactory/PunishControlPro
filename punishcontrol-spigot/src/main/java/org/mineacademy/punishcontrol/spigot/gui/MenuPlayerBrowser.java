@@ -10,12 +10,19 @@ import org.mineacademy.fo.menu.MenuPagged;
 import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.fo.remain.CompMaterial;
 import org.mineacademy.punishcontrol.core.provider.Providers;
+import org.mineacademy.punishcontrol.core.provider.providers.PlayerProvider;
+import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 import org.mineacademy.punishcontrol.spigot.util.ItemUtils;
 
 import java.util.List;
 import java.util.UUID;
 
 public final class MenuPlayerBrowser extends MenuPagged<UUID> {
+
+	//Providers (Can't be injected here:I)
+
+	private static final PlayerProvider PLAYER_PROVIDER = Providers.playerProvider();
+	private static final StorageProvider STORAGE_PROVIDER = Providers.storageProvider();
 
 	public static void showTo(@NonNull final Player player) {
 		showTo(player, true);
@@ -56,9 +63,9 @@ public final class MenuPlayerBrowser extends MenuPagged<UUID> {
 	protected ItemStack convertToItemStack(final UUID uuid) {
 		final String name = Providers.playerProvider().getName(uuid);
 		final val builder = ItemCreator
-				.of(CompMaterial.PLAYER_HEAD)
-				.name("§3" + name)
-				.lore("Click here for more info //Change-me");
+			.of(CompMaterial.PLAYER_HEAD)
+			.name("§3" + name)
+			.lore("");
 
 
 //		if (uuid.equals(getViewer().getUniqueId())) {
