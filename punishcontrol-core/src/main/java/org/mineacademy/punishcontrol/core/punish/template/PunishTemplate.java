@@ -13,77 +13,80 @@ import java.util.Optional;
 
 public final class PunishTemplate extends Json {
 
-	public static PunishTemplate load(@NotNull final File file) {
-		return new PunishTemplate(file);
-	}
+  private PunishTemplate(@NonNull final File file) {
+    super(file);
+  }
 
-	public static PunishTemplate createWithDefaults(@NotNull final File file) {
-		final PunishTemplate template = new PunishTemplate(file);
+  public static PunishTemplate load(@NotNull final File file) {
+    return new PunishTemplate(file);
+  }
 
-		//Setting defaults
-		template.permission();
-		template.reason();
-		template.permission();
+  public static PunishTemplate createWithDefaults(@NotNull final File file) {
+    final PunishTemplate template = new PunishTemplate(file);
 
-		return template;
-	}
+    // Setting defaults
+    template.permission();
+    template.reason();
+    template.permission();
 
-	public static Optional<PunishTemplate> getByName(@NonNull final File folder, @NonNull final String name) {
-		final List<File> files = FileUtils.listFiles(folder, ".json");
+    return template;
+  }
 
-		final Optional<File> optionalFile = files.stream().filter((file) -> file.getName().replace(".json", "").equalsIgnoreCase(name)).findFirst();
+  public static Optional<PunishTemplate> getByName(
+      @NonNull final File folder, @NonNull final String name) {
+    final List<File> files = FileUtils.listFiles(folder, ".json");
 
-		//If optionalFile is present -> PunishTemplate of this file else: Optional.empty()
-		return optionalFile.map(PunishTemplate::new);
+    final Optional<File> optionalFile =
+        files.stream()
+            .filter((file) -> file.getName().replace(".json", "").equalsIgnoreCase(name))
+            .findFirst();
 
-		//
-	}
+    // If optionalFile is present -> PunishTemplate of this file else: Optional.empty()
+    return optionalFile.map(PunishTemplate::new);
 
-	private PunishTemplate(@NonNull final File file) {
-		super(file);
-	}
+    //
+  }
 
-	// ----------------------------------------------------------------------------------------------------
-	//
-	// Methods for convenience
-	//
-	// ----------------------------------------------------------------------------------------------------
+  // ----------------------------------------------------------------------------------------------------
+  //
+  // Methods for convenience
+  //
+  // ----------------------------------------------------------------------------------------------------
 
-	// ----------------------------------------------------------------------------------------------------
-	// Getters
-	// ----------------------------------------------------------------------------------------------------
+  // ----------------------------------------------------------------------------------------------------
+  // Getters
+  // ----------------------------------------------------------------------------------------------------
 
-	public PunishType punishType() {
-		return PunishType.valueOf(getOrDefault("Type", "Ban").toUpperCase());
-	}
+  public PunishType punishType() {
+    return PunishType.valueOf(getOrDefault("Type", "Ban").toUpperCase());
+  }
 
-	public PunishDuration duration() {
-		return PunishDuration.of(getOrSetDefault("Duration", "2 days"));
-	}
+  public PunishDuration duration() {
+    return PunishDuration.of(getOrSetDefault("Duration", "2 days"));
+  }
 
-	public String reason() {
-		return getOrSetDefault("Reason", "Reason-Here");
-	}
+  public String reason() {
+    return getOrSetDefault("Reason", "Reason-Here");
+  }
 
-	public String permission() {
-		return getOrSetDefault("Permission", "punishcontrol.template." + file.getName().replace(".json", ""));
-	}
+  public String permission() {
+    return getOrSetDefault(
+        "Permission", "punishcontrol.template." + file.getName().replace(".json", ""));
+  }
 
-	// ----------------------------------------------------------------------------------------------------
-	// Setters
-	// ----------------------------------------------------------------------------------------------------
+  // ----------------------------------------------------------------------------------------------------
+  // Setters
+  // ----------------------------------------------------------------------------------------------------
 
-	public void punishType(@NonNull final PunishType punishType) {
-		set("PunishType", punishType);
-	}
+  public void punishType(@NonNull final PunishType punishType) {
+    set("PunishType", punishType);
+  }
 
+  public void reason(@NonNull final String reason) {
+    set("Reason", reason);
+  }
 
-	public void reason(@NonNull final String reason) {
-		set("Reason", reason);
-	}
-
-	public void duration(@NonNull final PunishDuration punishDuration) {
-		set("Duration", punishDuration.toString());
-	}
-
+  public void duration(@NonNull final PunishDuration punishDuration) {
+    set("Duration", punishDuration.toString());
+  }
 }

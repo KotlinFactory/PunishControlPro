@@ -7,10 +7,10 @@ import javax.inject.Inject;
 
 public final class CommandUnBan extends AbstractUnPunishCommand {
 
-	@Inject
-	public CommandUnBan(final StorageProvider storageProvider) {
-		super(storageProvider, PunishType.BAN, "unban");
-		setUsage("[player]");
-		setDescription("Unban a player");
-	}
+  @Inject
+  public CommandUnBan(final StorageProvider storageProvider) {
+    super(storageProvider, PunishType.BAN, "unban");
+    setUsage("[player]");
+    setDescription("Unban a player");
+  }
 }

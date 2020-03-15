@@ -3,45 +3,40 @@ package org.mineacademy.punishcontrol.core.storage;
 import org.mineacademy.punishcontrol.core.DaggerCoreModule;
 
 public enum StorageType {
+  MYSQL {
+    // TODO Cache results
 
-	MYSQL {
-		//TODO Cache results
+    @Override
+    public StorageProvider getStorageProvider() {
+      return DaggerCoreModule.create().mySQLStorageProvider();
+    }
+  },
+  JSON {
+    @Override
+    public StorageProvider getStorageProvider() {
+      return DaggerCoreModule.create().jsonStorageProvider();
+    }
+  };
 
+  // ----------------------------------------------------------------------------------------------------
+  // Static methods to get an instance of StorageType
+  // ----------------------------------------------------------------------------------------------------
 
-		@Override
-		public StorageProvider getStorageProvider() {
-			return DaggerCoreModule.create().mySQLStorageProvider();
-		}
-	},
-	JSON {
-		@Override
-		public StorageProvider getStorageProvider() {
-			return DaggerCoreModule.create().jsonStorageProvider();
-		}
-	};
+  public static StorageType find(final String name) {
+    for (final StorageType value : values()) {
+      if (value.name().equalsIgnoreCase(name)) {
+        return value;
+      }
+    }
 
-	// ----------------------------------------------------------------------------------------------------
-	// Static methods to get an instance of StorageType
-	// ----------------------------------------------------------------------------------------------------
+    return null;
+  }
 
-	public static StorageType find(final String name) {
-		for (final StorageType value : values()) {
-			if (value.name().equalsIgnoreCase(name)) {
-				return value;
-			}
-		}
+  // ----------------------------------------------------------------------------------------------------
+  // Methods to override
+  // ----------------------------------------------------------------------------------------------------
 
-		return null;
-	}
-
-
-	// ----------------------------------------------------------------------------------------------------
-	// Methods to override
-	// ----------------------------------------------------------------------------------------------------
-
-
-	public StorageProvider getStorageProvider() {
-		throw new AbstractMethodError("Not implemented");
-	}
-
+  public StorageProvider getStorageProvider() {
+    throw new AbstractMethodError("Not implemented");
+  }
 }

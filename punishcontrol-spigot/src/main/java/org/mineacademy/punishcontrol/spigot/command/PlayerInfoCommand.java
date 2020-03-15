@@ -13,43 +13,44 @@ import java.util.UUID;
 
 public class PlayerInfoCommand extends SimpleCommand {
 
-	private final PlayerProvider playerProvider;
-	private final StorageProvider storageProvider;
+  private final PlayerProvider playerProvider;
+  private final StorageProvider storageProvider;
 
-	@Inject
-	public PlayerInfoCommand(final PlayerProvider playerProvider, final StorageProvider storageProvider) {
-		super(new StrictList<>("pi", "playerinfo"));
-		this.playerProvider = playerProvider;
-		this.storageProvider = storageProvider;
-		setMinArguments(1);
-		setUsage("[player]");
-	}
+  @Inject
+  public PlayerInfoCommand(
+      final PlayerProvider playerProvider, final StorageProvider storageProvider) {
+    super(new StrictList<>("pi", "playerinfo"));
+    this.playerProvider = playerProvider;
+    this.storageProvider = storageProvider;
+    setMinArguments(1);
+    setUsage("[player]");
+  }
 
-	@Override protected void onCommand() {
+  @Override
+  protected void onCommand() {
 
-		final UUID target = parseUUID(args[0]);
+    final UUID target = parseUUID(args[0]);
 
-		final PlayerCache playerCache = storageProvider.getCacheFor(target);
+    final PlayerCache playerCache = storageProvider.getCacheFor(target);
 
+    playerCache.listPunishes().stream().filter(Punish::isOld).onClose(System.out::println);
+    // Send info here
+  }
 
-		playerCache.listPunishes().stream().filter(Punish::isOld).onClose(System.out::println);
-		//Send info here
-	}
+  private UUID parseUUID(final String nameOrUUID) {
 
-	private UUID parseUUID(final String nameOrUUID) {
+    if (nameOrUUID.length() == 36) {
+      return UUID.fromString(nameOrUUID);
+    }
 
-		if (nameOrUUID.length() == 36) {
-			return UUID.fromString(nameOrUUID);
-		}
+    if (nameOrUUID.length() <= 16) {
+      return playerProvider.getUUID(nameOrUUID);
+    }
 
-		if (nameOrUUID.length() <= 16) {
-			return playerProvider.getUUID(nameOrUUID);
-		}
-
-		//Invalid String
-		returnTell(Localization.DATA_MISSING);
-		//Will actually never be called;
-		//The Java compiler just can't infer the exception thrown in returnTell()
-		return UUID.randomUUID();
-	}
+    // Invalid String
+    returnTell(Localization.DATA_MISSING);
+    // Will actually never be called;
+    // The Java compiler just can't infer the exception thrown in returnTell()
+    return UUID.randomUUID();
+  }
 }

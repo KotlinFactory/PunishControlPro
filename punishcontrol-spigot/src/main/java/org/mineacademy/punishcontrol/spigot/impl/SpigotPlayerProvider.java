@@ -16,53 +16,53 @@ import java.util.UUID;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class SpigotPlayerProvider extends AbstractPlayerProvider {
 
-	public static SpigotPlayerProvider newInstance() {
-		return new SpigotPlayerProvider();
-	}
+  public static SpigotPlayerProvider newInstance() {
+    return new SpigotPlayerProvider();
+  }
 
+  @Override
+  public List<UUID> getOfflinePlayers() {
+    final List<UUID> result = new ArrayList<>();
 
-	@Override
-	public List<UUID> getOfflinePlayers() {
-		final List<UUID> result = new ArrayList<>();
+    for (final OfflinePlayer player : Bukkit.getOfflinePlayers()) {
+      result.add(player.getUniqueId());
+    }
 
-		for (final OfflinePlayer player : Bukkit.getOfflinePlayers()) {
-			result.add(player.getUniqueId());
-		}
+    return result;
+  }
 
-		return result;
-	}
+  @Override
+  public List<UUID> getOnlinePlayers() {
+    final List<UUID> result = new ArrayList<>();
+    for (final Player player : Bukkit.getOnlinePlayers()) {
+      result.add(player.getUniqueId());
+    }
+    return result;
+  }
 
-	@Override
-	public List<UUID> getOnlinePlayers() {
-		final List<UUID> result = new ArrayList<>();
-		for (final Player player : Bukkit.getOnlinePlayers()) {
-			result.add(player.getUniqueId());
-		}
-		return result;
-	}
+  @Override
+  public boolean isOnline(@NonNull final UUID uuid) {
+    return Bukkit.getPlayer(uuid) != null;
+  }
 
-	@Override
-	public boolean isOnline(@NonNull final UUID uuid) {
-		return Bukkit.getPlayer(uuid) != null;
-	}
+  @Override
+  public boolean hasPermission(final @NonNull UUID uuid, final @NonNull String permission) {
+    final Player player = Bukkit.getPlayer(uuid);
+    if (player == null) {
+      return false;
+    }
 
-	@Override public boolean hasPermission(final @NonNull UUID uuid, final @NonNull String permission) {
-		final Player player = Bukkit.getPlayer(uuid);
-		if (player == null) {
-			return false;
-		}
+    return player.hasPermission(permission);
+  }
 
-		return player.hasPermission(permission);
-	}
+  @Override
+  public void sendIfOnline(@NonNull final UUID uuid, final @NonNull String... messages) {
+    final Player player = Bukkit.getPlayer(uuid);
 
-	@Override
-	public void sendIfOnline(@NonNull final UUID uuid, final @NonNull String... messages) {
-		final Player player = Bukkit.getPlayer(uuid);
+    if (player == null) {
+      return;
+    }
 
-		if (player == null) {
-			return;
-		}
-
-		Common.tell(player, messages);
-	}
+    Common.tell(player, messages);
+  }
 }

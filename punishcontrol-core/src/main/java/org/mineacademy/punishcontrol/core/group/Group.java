@@ -6,28 +6,28 @@ import org.mineacademy.punishcontrol.core.punish.PunishDuration;
 @Builder
 public final class Group {
 
-	private final String name;
-	private final String permission;
-	private final String item = "STONE";
-	private final int priority;
+  private final String name;
+  private final String permission;
+  private final String item = "STONE";
+  private final int priority;
 
-	private final PunishDuration banLimit;
-	private final PunishDuration muteLimit;
-	private final PunishDuration warnLimit;
+  private final PunishDuration banLimit;
+  private final PunishDuration muteLimit;
+  private final PunishDuration warnLimit;
 
-	public String name() {
-		return name;
-	}
+  public String name() {
+    return name;
+  }
 
-	public String permission() {
-		return permission;
-	}
+  public String permission() {
+    return permission;
+  }
 
-	public String item() {
-		return item;
-	}
+  public String item() {
+    return item;
+  }
 
-	public int priority() {
-		return priority;
-	}
+  public int priority() {
+    return priority;
+  }
 }

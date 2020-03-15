@@ -8,11 +8,12 @@ import org.mineacademy.punishcontrol.core.provider.providers.ExceptionHandler;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class ProxyExceptionHandler implements ExceptionHandler {
 
-	public static ProxyExceptionHandler newInstance() {
-		return new ProxyExceptionHandler();
-	}
+  public static ProxyExceptionHandler newInstance() {
+    return new ProxyExceptionHandler();
+  }
 
-	@Override public void saveError(final Throwable throwable, final String... messages) {
-		Common.error(throwable, messages);
-	}
+  @Override
+  public void saveError(final Throwable throwable, final String... messages) {
+    Common.error(throwable, messages);
+  }
 }

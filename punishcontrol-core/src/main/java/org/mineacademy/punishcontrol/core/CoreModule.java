@@ -8,16 +8,15 @@ import org.mineacademy.punishcontrol.core.storage.MySQLStorageProvider;
 
 import javax.inject.Singleton;
 
-/**
- * Interface implemented by dagger
- */
+/** Interface implemented by dagger */
 @Component(modules = Providers.class)
 public interface CoreModule {
 
-	MySQLConfig buildConfig();
+  MySQLConfig buildConfig();
 
-	@Singleton
-	MySQLStorageProvider mySQLStorageProvider();
+  @Singleton
+  MySQLStorageProvider mySQLStorageProvider();
 
-	@Singleton JsonStorageProvider jsonStorageProvider();
+  @Singleton
+  JsonStorageProvider jsonStorageProvider();
 }

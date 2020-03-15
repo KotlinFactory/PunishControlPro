@@ -6,34 +6,29 @@ import org.mineacademy.bfo.command.SimpleCommand;
 
 public final class CommandMain extends SimpleCommand {
 
-	public static CommandMain newInstance(@NonNull final StrictList<String> labels) {
-		return new CommandMain(labels);
-	}
+  private CommandMain(@NonNull final StrictList<String> labels) {
+    super(labels);
+  }
 
-	private CommandMain(@NonNull final StrictList<String> labels) {
-		super(labels);
-	}
+  public static CommandMain newInstance(@NonNull final StrictList<String> labels) {
+    return new CommandMain(labels);
+  }
 
-	@Override
-	protected void onCommand() {
-		checkConsole();
+  @Override
+  protected void onCommand() {
+    checkConsole();
 
-		if (args.length != 0) {
-			doHelp();
-			return;
-		}
+    if (args.length != 0) {
+      doHelp();
+      return;
+    }
 
-		checkConsole();
-		//Open GUI
-//		new PunishControlGUI().displayTo(getPlayer());
-	}
+    checkConsole();
+    // Open GUI
+    //		new PunishControlGUI().displayTo(getPlayer());
+  }
 
-	private void doHelp() {
-		tell(
-			"{label}",
-			"",
-			""
-		);
-
-	}
+  private void doHelp() {
+    tell("{label}", "", "");
+  }
 }

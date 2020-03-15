@@ -6,22 +6,22 @@ import org.mineacademy.fo.menu.Menu;
 
 public final class MenuPunishmentChooser extends Menu {
 
-	public static void showTo(@NonNull final Player player) {
-		create().displayTo(player);
-	}
+  private MenuPunishmentChooser() {
+    super(MenuPlayerBrowser.of(true));
+    setSize(9 * 4);
+    setTitle("§3Choose an action");
+  }
 
-	public static MenuPunishmentChooser create() {
-		return new MenuPunishmentChooser();
-	}
+  public static void showTo(@NonNull final Player player) {
+    create().displayTo(player);
+  }
 
-	private MenuPunishmentChooser() {
-		super(MenuPlayerBrowser.of(true));
-		setSize(9 * 4);
-		setTitle("§3Choose an action");
-	}
+  public static MenuPunishmentChooser create() {
+    return new MenuPunishmentChooser();
+  }
 
-	@Override
-	protected String[] getInfo() {
-		return new String[0];
-	}
+  @Override
+  protected String[] getInfo() {
+    return new String[0];
+  }
 }

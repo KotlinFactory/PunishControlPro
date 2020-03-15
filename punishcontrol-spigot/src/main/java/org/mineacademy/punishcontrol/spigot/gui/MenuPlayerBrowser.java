@@ -19,75 +19,73 @@ import java.util.UUID;
 
 public final class MenuPlayerBrowser extends MenuPagged<UUID> {
 
-	//Providers (Can't be injected here:I)
+  // Providers (Can't be injected here:I)
 
-	private static final PlayerProvider PLAYER_PROVIDER = Providers.playerProvider();
-	private static final StorageProvider STORAGE_PROVIDER = Providers.storageProvider();
+  private static final PlayerProvider PLAYER_PROVIDER = Providers.playerProvider();
+  private static final StorageProvider STORAGE_PROVIDER = Providers.storageProvider();
 
-	public static void showTo(@NonNull final Player player) {
-		showTo(player, true);
-	}
+  private MenuPlayerBrowser(final int pageSize, final Menu parent, final Iterable<UUID> pages) {
+    super(pageSize, parent, pages);
+    setTitle("§3Player-Browser");
+  }
 
-	public static void showTo(@NonNull final Player player, final boolean offlinePlayer) {
-		//Handling stuff
-		of(offlinePlayer).displayTo(player);
-	}
+  public static void showTo(@NonNull final Player player) {
+    showTo(player, true);
+  }
 
-	static MenuPagged<UUID> of(final boolean offlinePlayer) {
-		//Handling stuff
-		if (offlinePlayer) {
-			final List<UUID> offlinePlayers = Providers.playerProvider().getOfflinePlayers();
-			return new MenuPlayerBrowser(getSizeForPlayers(offlinePlayers.size()), MenuMain.create(), offlinePlayers);
-		} else {
-			final List<UUID> onlinePlayers = Providers.playerProvider().getOnlinePlayers();
-			return new MenuPlayerBrowser(getSizeForPlayers(onlinePlayers.size()), MenuMain.create(), onlinePlayers);
-		}
-	}
+  public static void showTo(@NonNull final Player player, final boolean offlinePlayer) {
+    // Handling stuff
+    of(offlinePlayer).displayTo(player);
+  }
 
-	protected static int getSizeForPlayers(final int playersOnline) {
-		//TODO Rework
-		return playersOnline / 9 == 0 ? 9 : (playersOnline / 9) * 9;
-	}
+  static MenuPagged<UUID> of(final boolean offlinePlayer) {
+    // Handling stuff
+    if (offlinePlayer) {
+      final List<UUID> offlinePlayers = Providers.playerProvider().getOfflinePlayers();
+      return new MenuPlayerBrowser(
+          getSizeForPlayers(offlinePlayers.size()), MenuMain.create(), offlinePlayers);
+    } else {
+      final List<UUID> onlinePlayers = Providers.playerProvider().getOnlinePlayers();
+      return new MenuPlayerBrowser(
+          getSizeForPlayers(onlinePlayers.size()), MenuMain.create(), onlinePlayers);
+    }
+  }
 
-	private MenuPlayerBrowser(final int pageSize, final Menu parent, final Iterable<UUID> pages) {
-		super(pageSize, parent, pages);
-		setTitle("§3Player-Browser");
-	}
+  protected static int getSizeForPlayers(final int playersOnline) {
+    // TODO Rework
+    return playersOnline / 9 == 0 ? 9 : (playersOnline / 9) * 9;
+  }
 
-	@Override
-	protected boolean addPageNumbers() {
-		return true;
-	}
+  @Override
+  protected boolean addPageNumbers() {
+    return true;
+  }
 
-	@Override
-	protected ItemStack convertToItemStack(final UUID uuid) {
-		final String name = Providers.playerProvider().getName(uuid);
-		final val builder = ItemCreator
-			.of(CompMaterial.PLAYER_HEAD)
-			.name("§3" + name)
-			.lore("");
+  @Override
+  protected ItemStack convertToItemStack(final UUID uuid) {
+    final String name = Providers.playerProvider().getName(uuid);
+    final val builder = ItemCreator.of(CompMaterial.PLAYER_HEAD).name("§3" + name).lore("");
 
+    //		if (uuid.equals(getViewer().getUniqueId())) {
+    //			System.out.println("glow added");
+    //			ItemUtils.addGlow(stack);
+    //		}
 
-//		if (uuid.equals(getViewer().getUniqueId())) {
-//			System.out.println("glow added");
-//			ItemUtils.addGlow(stack);
-//		}
+    final String hash = Providers.textureProvider().getSkinTexture(uuid);
+    if (hash != null && !hash.isEmpty()) {
+      return ItemUtils.setSkullTexture(builder.build().make(), hash);
+    }
+    return builder.build().make();
+  }
 
-		final String hash = Providers.textureProvider().getSkinTexture(uuid);
-		if (hash != null && !hash.isEmpty()) {
-			return ItemUtils.setSkullTexture(builder.build().make(), hash);
-		}
-		return builder.build().make();
-	}
+  @Override
+  protected void onPageClick(final Player player, final UUID uuid, final ClickType clickType) {
+    player.closeInventory();
+    MenuPunishmentChooser.showTo(player);
+  }
 
-	@Override
-	protected void onPageClick(final Player player, final UUID uuid, final ClickType clickType) {
-		player.closeInventory();
-		MenuPunishmentChooser.showTo(player);
-	}
-
-	@Override
-	protected String[] getInfo() {
-		return new String[0];
-	}
+  @Override
+  protected String[] getInfo() {
+    return new String[0];
+  }
 }

@@ -14,99 +14,103 @@ import java.util.*;
 
 @Getter
 public abstract class AbstractUnPunishCommand extends SimpleCommand {
-	public static final Set<AbstractUnPunishCommand> REGISTERED_COMMANDS = new HashSet<>();
+  public static final Set<AbstractUnPunishCommand> REGISTERED_COMMANDS = new HashSet<>();
 
-	public static final String INVALID_SILENCE_USAGE = "§cCan't be silent and super-silent simultaneously";
-	public static final String UNKNOWN_PLAYER = "§cThis player is not known";
+  public static final String INVALID_SILENCE_USAGE =
+      "§cCan't be silent and super-silent simultaneously";
+  public static final String UNKNOWN_PLAYER = "§cThis player is not known";
 
+  private final StorageProvider provider;
+  private final PunishType punishType;
+  private final String[] MORE_ARGUMENTS_AS_CONSOLE_MESSAGE =
+      new String[] {
+        "You need to provide more information to run this command from console",
+        "Please provide 3 arguments",
+        "Usage: " + getUsage()
+      };
+  private boolean silent;
+  private boolean superSilent;
 
-	private final StorageProvider provider;
-	private final PunishType punishType;
+  protected AbstractUnPunishCommand(
+      final StorageProvider provider,
+      final PunishType punishType,
+      @NonNull final String... labels) {
+    super(new StrictList<>(labels));
+    this.provider = provider;
+    this.punishType = punishType;
+    setTellPrefix(Settings.PLUGIN_PREFIX);
+    addTellPrefix(true);
+    REGISTERED_COMMANDS.add(this);
+  }
 
-	private boolean silent;
-	private boolean superSilent;
+  @Override
+  protected final void onCommand() {
+    this.silent = checkSilent();
+    this.superSilent = checkSuperSilent();
 
-	private final String[] MORE_ARGUMENTS_AS_CONSOLE_MESSAGE = new String[]{
-		"You need to provide more information to run this command from console", "Please provide 3 arguments", "Usage: " + getUsage()
-	};
+    if (isSilent() && isSuperSilent()) {
+      returnTell(INVALID_SILENCE_USAGE);
+    }
 
-	protected AbstractUnPunishCommand(final StorageProvider provider, final PunishType punishType, @NonNull final String... labels) {
-		super(new StrictList<>(labels));
-		this.provider = provider;
-		this.punishType = punishType;
-		setTellPrefix(Settings.PLUGIN_PREFIX);
-		addTellPrefix(true);
-		REGISTERED_COMMANDS.add(this);
-	}
+    final List<String> finalArgs = new ArrayList<>(Arrays.asList(args));
+    // Args without params
+    finalArgs.removeAll(Arrays.asList("-S", "-s", "-silent", "-super-slient"));
 
-	@Override protected final void onCommand() {
-		this.silent = checkSilent();
-		this.superSilent = checkSuperSilent();
+    switch (finalArgs.size()) {
+      case 0:
+        if (!isPlayer()) {
+          returnTell(MORE_ARGUMENTS_AS_CONSOLE_MESSAGE);
+        }
+        MenuPunishBrowser.showTo(getPlayer(), punishType);
+        break;
+      case 1:
+        final UUID target = findTarget(finalArgs);
 
-		if (isSilent() && isSuperSilent()) {
-			returnTell(INVALID_SILENCE_USAGE);
-		}
+        switch (punishType) {
+          case BAN:
+            checkBoolean(provider.removeBanFor(target), "Player is not banned");
+            break;
+          case MUTE:
+            checkBoolean(provider.removeMuteFor(target), "Player is not muted");
+            break;
+          case WARN:
+            checkBoolean(provider.removeWarnFor(target), "Player is not warned");
+            break;
+        }
 
-		final List<String> finalArgs = new ArrayList<>(Arrays.asList(args));
-		//Args without params
-		finalArgs.removeAll(Arrays.asList("-S", "-s", "-silent", "-super-slient"));
+        break;
+      default:
+        returnInvalidArgs();
+        break;
+    }
+  }
 
-		switch (finalArgs.size()) {
-			case 0:
-				if (!isPlayer()) {
-					returnTell(MORE_ARGUMENTS_AS_CONSOLE_MESSAGE);
-				}
-				MenuPunishBrowser.showTo(getPlayer(), punishType);
-				break;
-			case 1:
-				final UUID target = findTarget(finalArgs);
+  // ----------------------------------------------------------------------------------------------------
+  // Internal  helper-methods
+  // ----------------------------------------------------------------------------------------------------
 
-				switch (punishType) {
-					case BAN:
-						checkBoolean(provider.removeBanFor(target), "Player is not banned");
-						break;
-					case MUTE:
-						checkBoolean(provider.removeMuteFor(target), "Player is not muted");
-						break;
-					case WARN:
-						checkBoolean(provider.removeWarnFor(target), "Player is not warned");
-						break;
-				}
+  private boolean checkSilent() {
+    for (final String arg : args) {
+      if (arg.equals("-s") || arg.equals("-silent")) {
+        return true;
+      }
+    }
+    return false;
+  }
 
-				break;
-			default:
-				returnInvalidArgs();
-				break;
+  private boolean checkSuperSilent() {
+    for (final String arg : args) {
+      // TODO Rework
+      if (arg.equals("-S") || arg.equals("-Super-Silent")) {
+        return true;
+      }
+    }
+    return false;
+  }
 
-		}
-	}
-
-	// ----------------------------------------------------------------------------------------------------
-	// Internal  helper-methods
-	// ----------------------------------------------------------------------------------------------------
-
-	private boolean checkSilent() {
-		for (final String arg : args) {
-			if (arg.equals("-s") || arg.equals("-silent")) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private boolean checkSuperSilent() {
-		for (final String arg : args) {
-			//TODO Rework
-			if (arg.equals("-S") || arg.equals("-Super-Silent")) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private UUID findTarget(final List<String> args) {
-		final UUID target = Providers.playerProvider().getUUID(args.get(0));
-		checkNotNull(target, UNKNOWN_PLAYER);
-		return target;
-	}
+  private UUID findTarget(final List<String> args) {
+    final UUID target = Providers.playerProvider().getUUID(args.get(0));
+    checkNotNull(target, UNKNOWN_PLAYER);
+    return target;
+  }
 }

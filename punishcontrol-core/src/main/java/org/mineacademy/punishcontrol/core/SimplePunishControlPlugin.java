@@ -13,191 +13,192 @@ import java.io.File;
 import java.util.Map;
 import java.util.Random;
 
-/**
- * Class for a unified startup of
- * our Main-Plugin classes
- */
-
+/** Class for a unified startup of our Main-Plugin classes */
 public interface SimplePunishControlPlugin {
 
-	static int getRandomNumberInRange(final int min, final int max) {
+  String PREFIX = "§3Punish§bControl§5+ §7┃ ";
+  String[] LOGO =
+      new String[] {
+        "§3 ____              _     _      ____            _             _ ",
+        "§3|  _ \\ _   _ _ __ (_)___| |__  / ___|___  _ __ | |_ _ __ ___ | |",
+        "§3| |_) | | | | '_ \\| / __| '_ \\| |   / _ \\| '_ \\| __| '__/ _ \\| |",
+        "§5|  __/| |_| | | | | \\__ \\ | | | |__| (_) | | | | |_| | | (_) | |",
+        "§5|_|    \\__,_|_| |_|_|___/_| |_|\\____\\___/|_| |_|\\__|_|  \\___/|_|"
+      };
 
-		if (min >= max) {
-			throw new IllegalArgumentException("max must be greater than min");
-		}
+  static int getRandomNumberInRange(final int min, final int max) {
 
-		final Random r = new Random();
-		return r.nextInt((max - min) + 1) + min;
-	}
+    if (min >= max) {
+      throw new IllegalArgumentException("max must be greater than min");
+    }
 
-	String PREFIX = "§3Punish§bControl§5+ §7┃ ";
-	String[] LOGO = new String[]{
-		"§3 ____              _     _      ____            _             _ ",
-		"§3|  _ \\ _   _ _ __ (_)___| |__  / ___|___  _ __ | |_ _ __ ___ | |",
-		"§3| |_) | | | | '_ \\| / __| '_ \\| |   / _ \\| '_ \\| __| '__/ _ \\| |",
-		"§5|  __/| |_| | | | | \\__ \\ | | | |__| (_) | | | | |_| | | (_) | |",
-		"§5|_|    \\__,_|_| |_|_|___/_| |_|\\____\\___/|_| |_|\\__|_|  \\___/|_|"
-	};
+    final Random r = new Random();
+    return r.nextInt((max - min) + 1) + min;
+  }
 
-	// ----------------------------------------------------------------------------------------------------
-	// Default methods
-	// ----------------------------------------------------------------------------------------------------
+  // ----------------------------------------------------------------------------------------------------
+  // Default methods
+  // ----------------------------------------------------------------------------------------------------
 
-	default void downloadDependencies() {
-	}
+  default void downloadDependencies() {}
 
-	default String[] getStartupFinishedMessages() {
-		return new String[]{"Top notch!", "Ban-hammer is swinging", "We're live!", "MineAcademy rules!", "Ready for takeover..."};
-	}
+  default String[] getStartupFinishedMessages() {
+    return new String[] {
+      "Top notch!",
+      "Ban-hammer is swinging",
+      "We're live!",
+      "MineAcademy rules!",
+      "Ready for takeover..."
+    };
+  }
 
-	default void onPunishControlPluginStart() {
-		log("§7*------------------- §3PunishControl-Pro - 2020  §7------------------*");
+  default void onPunishControlPluginStart() {
+    log("§7*------------------- §3PunishControl-Pro - 2020  §7------------------*");
 
-		log(" ");
+    log(" ");
 
-		log(LOGO);
+    log(LOGO);
 
-		log(" ");
+    log(" ");
 
-		//Settings
+    // Settings
 
-		try {
-			final String language = chooseLanguage();
+    try {
+      final String language = chooseLanguage();
 
-			PunishControlManager.setLanguage(language);
+      PunishControlManager.setLanguage(language);
 
-			log("Language: " + language);
+      log("Language: " + language);
 
-		} catch (final Throwable throwable) {
-			log("Couldn't choose language StorageProvider");
-			saveError(throwable);
-		}
+    } catch (final Throwable throwable) {
+      log("Couldn't choose language StorageProvider");
+      saveError(throwable);
+    }
 
-		try {
-			final StorageType storageType = chooseStorageProvider();
+    try {
+      final StorageType storageType = chooseStorageProvider();
 
-			PunishControlManager.setStorageType(storageType);
+      PunishControlManager.setStorageType(storageType);
 
-			log("Storage: " + storageType.name());
-		} catch (final Throwable throwable) {
-			log("Couldn't choose StorageProvider");
-			saveError(throwable);
-		}
+      log("Storage: " + storageType.name());
+    } catch (final Throwable throwable) {
+      log("Couldn't choose StorageProvider");
+      saveError(throwable);
+    }
 
-		log(" ");
+    log(" ");
 
-		//Startup
-		try {
-			downloadDependencies();
-			log("Dependencies §l§a✔");
-		} catch (final Throwable throwable) {
-			log("Dependencies §l§c✘");
-			saveError(throwable);
-		}
+    // Startup
+    try {
+      downloadDependencies();
+      log("Dependencies §l§a✔");
+    } catch (final Throwable throwable) {
+      log("Dependencies §l§c✘");
+      saveError(throwable);
+    }
 
+    try {
+      registerProviders();
+      log("Providers §l§a✔");
+    } catch (final Throwable throwable) {
+      log("Providers §l§c✘");
+      saveError(throwable);
+    }
 
-		try {
-			registerProviders();
-			log("Providers §l§a✔");
-		} catch (final Throwable throwable) {
-			log("Providers §l§c✘");
-			saveError(throwable);
-		}
+    try {
+      registerCommands();
+      log("Commands §l§a✔");
+    } catch (final Throwable throwable) {
+      log("Commands §l§c✘");
+      saveError(throwable);
+    }
 
-		try {
-			registerCommands();
-			log("Commands §l§a✔");
-		} catch (final Throwable throwable) {
-			log("Commands §l§c✘");
-			saveError(throwable);
-		}
+    try {
+      registerListener();
+      log("Listener §l§a✔");
+    } catch (final Throwable throwable) {
+      log("Commands §l§c✘");
+      saveError(throwable);
+    }
 
-		try {
-			registerListener();
-			log("Listener §l§a✔");
-		} catch (final Throwable throwable) {
-			log("Commands §l§c✘");
-			saveError(throwable);
-		}
+    try {
+      loadGroups();
+      log("Groups §l§a✔");
+    } catch (final Throwable throwable) {
+      log("Groups §l§c✘");
+      saveError(throwable);
+    }
 
-		try {
-			loadGroups();
-			log("Groups §l§a✔");
-		} catch (final Throwable throwable) {
-			log("Groups §l§c✘");
-			saveError(throwable);
-		}
+    try {
+      PunishTemplateManager.loadTemplates(new File(getWorkingDirectory() + "/templates"));
+      log("Templates §l§a✔ ");
+    } catch (final Throwable throwable) {
+      log("Templates §l§c✘");
+      saveError(throwable);
+    }
 
-		try {
-			PunishTemplateManager.loadTemplates(new File(getWorkingDirectory() + "/templates"));
-			log("Templates §l§a✔ ");
-		} catch (final Throwable throwable) {
-			log("Templates §l§c✘");
-			saveError(throwable);
-		}
+    log();
 
-		log();
+    // Logging an random message
+    final int index = getRandomNumberInRange(0, getStartupFinishedMessages().length - 1);
 
-		//Logging an random message
-		final int index = getRandomNumberInRange(0, getStartupFinishedMessages().length - 1);
+    log(getStartupFinishedMessages()[index]);
 
-		log(getStartupFinishedMessages()[index]);
+    log("§7*------------------------------------------------------------------*");
+  }
 
-		log("§7*------------------------------------------------------------------*");
+  default void loadGroups() {
+    final Yaml yaml = new Yaml("settings.yml", getWorkingDirectory());
 
-	}
+    @SuppressWarnings("unchecked")
+    final Map<String, Object> rawData = (Map<String, Object>) yaml.getMap("Groups");
 
-	default void loadGroups() {
-		final Yaml yaml = new Yaml("settings.yml", getWorkingDirectory());
+    for (final val entry : rawData.entrySet()) { // Group-Names
+      if (!(entry.getValue() instanceof Map)) {
+        continue;
+      }
 
-		@SuppressWarnings("unchecked") final Map<String, Object> rawData = (Map<String, Object>) yaml.getMap("Groups");
+      @SuppressWarnings("unchecked")
+      final Map<String, Object> groupRawData = (Map<String, Object>) entry.getValue();
 
-		for (final val entry : rawData.entrySet()) { //Group-Names
-			if (!(entry.getValue() instanceof Map)) {
-				continue;
-			}
+      final Group.GroupBuilder builder = Group.builder();
 
-			@SuppressWarnings("unchecked") final Map<String, Object> groupRawData = (Map<String, Object>) entry.getValue();
+      builder.name(entry.getKey());
+      builder.permission(groupRawData.get("Permission").toString());
+      builder.priority(Integer.parseInt(groupRawData.get("Priority").toString()));
 
-			final Group.GroupBuilder builder = Group.builder();
+      @SuppressWarnings("unchecked")
+      final Map<String, String> limits = (Map<String, String>) groupRawData.get("Limits");
 
-			builder.name(entry.getKey());
-			builder.permission(groupRawData.get("Permission").toString());
-			builder.priority(Integer.parseInt(groupRawData.get("Priority").toString()));
+      builder.banLimit(PunishDuration.of(limits.get("Ban")));
+      builder.muteLimit(PunishDuration.of(limits.get("Mute")));
+      builder.warnLimit(PunishDuration.of(limits.get("Warn")));
 
-			@SuppressWarnings("unchecked") final Map<String, String> limits = (Map<String, String>) groupRawData.get("Limits");
+      GroupManager.registerGroup(builder.build());
+    }
+  }
 
-			builder.banLimit(PunishDuration.of(limits.get("Ban")));
-			builder.muteLimit(PunishDuration.of(limits.get("Mute")));
-			builder.warnLimit(PunishDuration.of(limits.get("Warn")));
+  void log(@NonNull String... message);
 
-			GroupManager.registerGroup(builder.build());
+  default void log() {
+    log(" ");
+  }
 
-		}
-	}
+  String getWorkingDirectory();
 
-	void log(@NonNull String... message);
+  // ----------------------------------------------------------------------------------------------------
+  // Abstract methods for startup
+  // ----------------------------------------------------------------------------------------------------
 
-	default void log() {
-		log(" ");
-	}
+  void registerCommands();
 
-	String getWorkingDirectory();
+  void registerListener();
 
-	// ----------------------------------------------------------------------------------------------------
-	// Abstract methods for startup
-	// ----------------------------------------------------------------------------------------------------
+  void registerProviders();
 
-	void registerCommands();
+  String chooseLanguage();
 
-	void registerListener();
+  StorageType chooseStorageProvider();
 
-	void registerProviders();
-
-	String chooseLanguage();
-
-	StorageType chooseStorageProvider();
-
-	void saveError(@NonNull Throwable t);
-
+  void saveError(@NonNull Throwable t);
 }

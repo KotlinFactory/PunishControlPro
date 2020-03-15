@@ -18,94 +18,94 @@ import java.util.Arrays;
 import java.util.List;
 
 public final class PunishControl extends SimplePlugin implements SimplePunishControlPlugin {
-	private final SpigotModule spigotModule = DaggerSpigotModule.builder().build();
-	private final CoreModule coreModule = DaggerCoreModule.builder().build();
+  private final SpigotModule spigotModule = DaggerSpigotModule.builder().build();
+  private final CoreModule coreModule = DaggerCoreModule.builder().build();
 
+  @Override
+  protected void onPluginStart() {
+    Common.ADD_LOG_PREFIX = false;
 
-	@Override
-	protected void onPluginStart() {
-		Common.ADD_LOG_PREFIX = false;
+    onPunishControlPluginStart();
 
-		onPunishControlPluginStart();
+    // Bypass UltraPunishments
+    // Common.runLater(40, this::registerCommands);
+  }
 
-		//Bypass UltraPunishments
-		//Common.runLater(40, this::registerCommands);
-	}
+  // ----------------------------------------------------------------------------------------------------
+  // Methods to start our plugin.
+  // ----------------------------------------------------------------------------------------------------
 
+  @Override
+  public void registerCommands() {
+    registerCommand(CommandMain.newInstance(Settings.MAIN_COMMAND_ALIASES));
+    registerCommand(CommandBan.newInstance());
+    registerCommand(CommandKick.newInstance());
+    registerCommand(CommandWarn.newInstance());
+    registerCommand(CommandMute.newInstance());
 
-	// ----------------------------------------------------------------------------------------------------
-	// Methods to start our plugin.
-	// ----------------------------------------------------------------------------------------------------
+    registerCommand(spigotModule.commandUnBan());
+    registerCommand(spigotModule.commandUnMute());
+    registerCommand(spigotModule.commandUnWarn());
+  }
 
-	@Override
-	public void registerCommands() {
-		registerCommand(CommandMain.newInstance(Settings.MAIN_COMMAND_ALIASES));
-		registerCommand(CommandBan.newInstance());
-		registerCommand(CommandKick.newInstance());
-		registerCommand(CommandWarn.newInstance());
-		registerCommand(CommandMute.newInstance());
+  @Override
+  public void registerListener() {
+    registerEvents(spigotModule.spigotDataSetter());
+    registerEvents(spigotModule.spigotJoinHandler());
+  }
 
-		registerCommand(spigotModule.commandUnBan());
-		registerCommand(spigotModule.commandUnMute());
-		registerCommand(spigotModule.commandUnWarn());
-	}
+  @Override
+  public void registerProviders() {
+    Providers.workingDirectoryProvider(SpigotWorkingDirectoryProvider.newInstance());
+    Providers.playerProvider(SpigotPlayerProvider.newInstance());
+    Providers.textureProvider(SpigotTextureProvider.newInstance());
+    Providers.punishProvider(SpigotPunishProvider.newInstance());
 
-	@Override
-	public void registerListener() {
-		registerEvents(spigotModule.spigotDataSetter());
-		registerEvents(spigotModule.spigotJoinHandler());
-	}
+    Providers.settingsProvider(SpigotSettingsProvider.newInstance());
 
-	@Override public void registerProviders() {
-		Providers.workingDirectoryProvider(SpigotWorkingDirectoryProvider.newInstance());
-		Providers.playerProvider(SpigotPlayerProvider.newInstance());
-		Providers.textureProvider(SpigotTextureProvider.newInstance());
-		Providers.punishProvider(SpigotPunishProvider.newInstance());
+    Providers.exceptionHandler(SpigotExceptionHandler.newInstance());
+  }
 
-		Providers.settingsProvider(SpigotSettingsProvider.newInstance());
+  @Override
+  public String chooseLanguage() {
+    return "ENG";
+  }
 
-		Providers.exceptionHandler(SpigotExceptionHandler.newInstance());
-	}
+  @Override
+  public StorageType chooseStorageProvider() {
+    return Settings.STORAGE_TYPE;
+  }
 
-	@Override
-	public String chooseLanguage() {
-		return "ENG";
-	}
+  // ----------------------------------------------------------------------------------------------------
+  // Methods overridden from SimplePlugin
+  // ----------------------------------------------------------------------------------------------------
 
-	@Override
-	public StorageType chooseStorageProvider() {
-		return Settings.STORAGE_TYPE;
-	}
+  @Override
+  public List<Class<? extends YamlStaticConfig>> getSettings() {
+    return Arrays.asList(Settings.class, Localization.class);
+  }
 
+  @Override
+  public int getFoundedYear() {
+    return 2019; // 31.12.2019
+  }
 
-	// ----------------------------------------------------------------------------------------------------
-	// Methods overridden from SimplePlugin
-	// ----------------------------------------------------------------------------------------------------
+  // ----------------------------------------------------------------------------------------------------
+  // Methods overridden from SimplePunishControlPlugin
+  // ----------------------------------------------------------------------------------------------------
 
-	@Override
-	public List<Class<? extends YamlStaticConfig>> getSettings() {
-		return Arrays.asList(Settings.class, Localization.class);
-	}
+  @Override
+  public void log(final @NonNull String... message) {
+    Common.log(message);
+  }
 
-	@Override public int getFoundedYear() {
-		return 2019; //31.12.2019
-	}
+  @Override
+  public String getWorkingDirectory() {
+    return getData().getAbsolutePath();
+  }
 
-	// ----------------------------------------------------------------------------------------------------
-	// Methods overridden from SimplePunishControlPlugin
-	// ----------------------------------------------------------------------------------------------------
-
-	@Override
-	public void log(final @NonNull String... message) {
-		Common.log(message);
-	}
-
-	@Override public String getWorkingDirectory() {
-		return getData().getAbsolutePath();
-	}
-
-	@Override
-	public void saveError(@NonNull final Throwable t) {
-		Common.error(t);
-	}
+  @Override
+  public void saveError(@NonNull final Throwable t) {
+    Common.error(t);
+  }
 }

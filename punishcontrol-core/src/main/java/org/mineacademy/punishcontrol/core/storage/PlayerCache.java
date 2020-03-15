@@ -16,57 +16,57 @@ import java.util.UUID;
 @RequiredArgsConstructor()
 public final class PlayerCache {
 
-	//Dagger?
-	private final StorageProvider provider;
-	private final UUID uuid;
+  // Dagger?
+  private final StorageProvider provider;
+  private final UUID uuid;
 
-	// ----------------------------------------------------------------------------------------------------
-	// Is the player banned/warned/muted?
-	// ----------------------------------------------------------------------------------------------------
+  // ----------------------------------------------------------------------------------------------------
+  // Is the player banned/warned/muted?
+  // ----------------------------------------------------------------------------------------------------
 
-	public boolean isBanned() {
-		return provider.isBanned(uuid);
-	}
+  public boolean isBanned() {
+    return provider.isBanned(uuid);
+  }
 
-	public boolean isMuted() {
-		return provider.isMuted(uuid);
-	}
+  public boolean isMuted() {
+    return provider.isMuted(uuid);
+  }
 
-	public boolean isWarned() {
-		return provider.isWarned(uuid);
-	}
+  public boolean isWarned() {
+    return provider.isWarned(uuid);
+  }
 
-	// Methods to get current Punishes/Warns/Reports. Will return null if there is no punish
+  // Methods to get current Punishes/Warns/Reports. Will return null if there is no punish
 
-	public Optional<Ban> currentBan() {
-		return provider.currentBan(uuid);
-	}
+  public Optional<Ban> currentBan() {
+    return provider.currentBan(uuid);
+  }
 
-	public Optional<Mute> currentMute() {
-		return provider.currentMute(uuid);
-	}
+  public Optional<Mute> currentMute() {
+    return provider.currentMute(uuid);
+  }
 
-	public Optional<Warn> currentWarn() {
-		return provider.currentWarn(uuid);
-	}
+  public Optional<Warn> currentWarn() {
+    return provider.currentWarn(uuid);
+  }
 
-	//Methods to list all old punishes/warns/reports
-	public List<Ban> listBans() {
-		return provider.listBans(uuid);
-	}
+  // Methods to list all old punishes/warns/reports
+  public List<Ban> listBans() {
+    return provider.listBans(uuid);
+  }
 
-	public List<Mute> listMutes() {
-		return provider.listMutes(uuid);
-	}
+  public List<Mute> listMutes() {
+    return provider.listMutes(uuid);
+  }
 
-	public List<Warn> listWarns() {
-		return provider.listWarns(uuid);
-	}
+  public List<Warn> listWarns() {
+    return provider.listWarns(uuid);
+  }
 
-	public final List<Punish> listPunishes() {
-		final List<Punish> result = new ArrayList<>();
-		result.addAll(listBans());
-		result.addAll(listMutes());
-		return result;
-	}
+  public final List<Punish> listPunishes() {
+    final List<Punish> result = new ArrayList<>();
+    result.addAll(listBans());
+    result.addAll(listMutes());
+    return result;
+  }
 }

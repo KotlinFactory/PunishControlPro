@@ -16,188 +16,186 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * Command to handle (Un) banning, muting, warning, reporting & kicking players
- */
+/** Command to handle (Un) banning, muting, warning, reporting & kicking players */
 /*
 TODO: Put in core & work with type parameters
  */
 
 @Getter
 public abstract class AbstractPunishCommand extends SimpleCommand {
-	public static final List<AbstractPunishCommand> REGISTERED_COMMANDS = new ArrayList<>();
+  public static final List<AbstractPunishCommand> REGISTERED_COMMANDS = new ArrayList<>();
 
-	public static final String INVALID_SILENCE_USAGE = "§cCan't be silent and super-silent simultaneously";
-	public static final String UNKNOWN_PLAYER = "§cThis player is not known";
+  public static final String INVALID_SILENCE_USAGE =
+      "§cCan't be silent and super-silent simultaneously";
+  public static final String UNKNOWN_PLAYER = "§cThis player is not known";
 
+  private final int MIN_ARGS_FOR_CONSOLE = 3;
+  private final String[] MORE_ARGUMENTS_AS_CONSOLE_MESSAGE =
+      new String[] {
+        "You need to provide more information to run this command from console",
+        "Please provide 3 arguments",
+        "Usage: " + getUsage()
+      };
+  private final int maxArgs;
+  public boolean consoleAllowed = true;
+  private boolean silent;
+  private boolean superSilent;
 
-	private final int MIN_ARGS_FOR_CONSOLE = 3;
-	public boolean consoleAllowed = true;
-	private final String[] MORE_ARGUMENTS_AS_CONSOLE_MESSAGE = new String[]{
-		"You need to provide more information to run this command from console", "Please provide 3 arguments", "Usage: " + getUsage()
-	};
+  protected AbstractPunishCommand(@NonNull final String... labels) {
+    this(3, labels);
+  }
 
-	private final int maxArgs;
-	private boolean silent;
-	private boolean superSilent;
+  protected AbstractPunishCommand(final int maxArgs, @NonNull final String... labels) {
+    super(new StrictList<>(labels));
+    this.maxArgs = maxArgs;
+    setTellPrefix(Settings.PLUGIN_PREFIX);
+    addTellPrefix(true);
+    REGISTERED_COMMANDS.add(this);
+  }
 
-	protected AbstractPunishCommand(@NonNull final String... labels) {
-		this(3, labels);
-	}
+  // ----------------------------------------------------------------------------------------------------
+  // Methods to override
+  // ----------------------------------------------------------------------------------------------------
 
-	protected AbstractPunishCommand(final int maxArgs, @NonNull final String... labels) {
-		super(new StrictList<>(labels));
-		this.maxArgs = maxArgs;
-		setTellPrefix(Settings.PLUGIN_PREFIX);
-		addTellPrefix(true);
-		REGISTERED_COMMANDS.add(this);
+  // Ex {command} [player] -> Can only be run as a player
+  protected void onTargetProvided(@NonNull final Player player, @NonNull final UUID target) {}
 
-	}
+  // Ex {command} [player] [] -> Can only be run as a player
+  protected void onTargetAndDurationProvided(
+      @NonNull final Player player,
+      @NonNull final UUID target,
+      @NonNull final PunishDuration punishDuration) {}
 
-	// ----------------------------------------------------------------------------------------------------
-	// Methods to override
-	// ----------------------------------------------------------------------------------------------------
+  // Ex {command} [player] [] -> Can only be run as a player
+  protected void onTargetAndDurationAndReasonProvided(
+      @NonNull final CommandSender player,
+      @NonNull final UUID target,
+      @NonNull final PunishDuration punishDuration,
+      @NonNull final String reason) {}
 
-	//Ex {command} [player] -> Can only be run as a player
-	protected void onTargetProvided(@NonNull final Player player, @NonNull final UUID target) {
+  // Is the reason provided valid (For reports for example)? If not, use returnTell to break up the
+  // command
+  protected void handleReasonInput(@NonNull final String reason) {}
 
-	}
+  /*
+  ban linkskeinemitte 10d Hacking  //3
+  report [-PARAM] linkskeinemitte test reason with spaces //
+  kick [-PARAM] linkskeinemitte
+  kick [-PARAM] linkskeinemitte hacking
+  warn [-PARAM] linkskeinemitte 10d hacking
 
-	//Ex {command} [player] [] -> Can only be run as a player
-	protected void onTargetAndDurationProvided(@NonNull final Player player, @NonNull final UUID target, @NonNull final PunishDuration punishDuration) {
+  unban linkskeinemitte //1
+  unmute linkskeinemitte //1
+  unwarn linkskeinemitte //1
+   */
 
-	}
+  @Override
+  protected final void onCommand() {
 
+    // Checking the console if needed.
+    if (!isConsoleAllowed()) {
+      checkConsole();
+    }
 
-	//Ex {command} [player] [] -> Can only be run as a player
-	protected void onTargetAndDurationAndReasonProvided(@NonNull final CommandSender player,
-	                                                    @NonNull final UUID target,
-	                                                    @NonNull final PunishDuration punishDuration,
-	                                                    @NonNull final String reason) {
-	}
+    this.silent = checkSilent();
+    this.superSilent = checkSuperSilent();
 
-	//Is the reason provided valid (For reports for example)? If not, use returnTell to break up the command
-	protected void handleReasonInput(@NonNull final String reason) {
+    if (isSilent() && isSuperSilent()) {
+      returnTell(INVALID_SILENCE_USAGE);
+    }
 
-	}
+    // Getting our arguments (skipping flags like '-S') & Setting up our reason/punishduration if
+    // found.
+    final StringBuilder reason = new StringBuilder();
+    PunishDuration punishDuration = null;
 
-	/*
-	ban linkskeinemitte 10d Hacking  //3
-	report [-PARAM] linkskeinemitte test reason with spaces //
-	kick [-PARAM] linkskeinemitte
-	kick [-PARAM] linkskeinemitte hacking
-	warn [-PARAM] linkskeinemitte 10d hacking
+    final List<String> finalArgs = new ArrayList<>(Arrays.asList(args));
+    // Args without params
+    finalArgs.removeAll(Arrays.asList("-S", "-s", "-silent", "-super-slient"));
 
-	unban linkskeinemitte //1
-	unmute linkskeinemitte //1
-	unwarn linkskeinemitte //1
-	 */
+    for (final String arg : finalArgs) {
+      if (finalArgs.indexOf(arg) == 0) {
+        continue;
+      }
 
-	@Override protected final void onCommand() {
+      if (finalArgs.indexOf(arg) == 1) {
+        punishDuration = PunishDuration.of(arg);
+      } else {
+        reason.append(arg).append(" ");
+      }
+    }
 
-		//Checking the console if needed.
-		if (!isConsoleAllowed()) {
-			checkConsole();
-		}
+    final int size = Math.min(finalArgs.size(), 3);
 
-		this.silent = checkSilent();
-		this.superSilent = checkSuperSilent();
+    switch (size) {
+      case 0: // Noting
+        if (!isPlayer()) {
+          returnTell(MORE_ARGUMENTS_AS_CONSOLE_MESSAGE);
+        }
+        MenuPlayerBrowser.showTo(getPlayer());
+        break;
+      case 1: // Target
+        if (!isPlayer()) {
+          returnTell(MORE_ARGUMENTS_AS_CONSOLE_MESSAGE);
+        }
+        onTargetProvided(getPlayer(), findTarget(finalArgs));
+        break;
+      case 2: // Target, Duration
+        // ban NAME DURATION
+        if (getMaxArgs() < 2) {
+          returnInvalidArgs();
+        }
 
-		if (isSilent() && isSuperSilent()) {
-			returnTell(INVALID_SILENCE_USAGE);
-		}
+        if (!isPlayer()) {
+          returnTell(MORE_ARGUMENTS_AS_CONSOLE_MESSAGE);
+        }
 
-		//Getting our arguments (skipping flags like '-S') & Setting up our reason/punishduration if found.
-		final StringBuilder reason = new StringBuilder();
-		PunishDuration punishDuration = null;
+        onTargetAndDurationProvided(getPlayer(), findTarget(finalArgs), punishDuration);
+        break;
+      case 3: // Target, Duration, Reason
+        if (getMaxArgs() < 3) {
+          returnInvalidArgs();
+        }
 
-		final List<String> finalArgs = new ArrayList<>(Arrays.asList(args));
-		//Args without params
-		finalArgs.removeAll(Arrays.asList("-S", "-s", "-silent", "-super-slient"));
+        // Validating the reason
+        handleReasonInput(reason.toString());
 
-		for (final String arg : finalArgs) {
-			if (finalArgs.indexOf(arg) == 0) {
-				continue;
-			}
+        // ban NAME REASON, DURATION
+        onTargetAndDurationAndReasonProvided(
+            getSender(), findTarget(finalArgs), punishDuration, reason.toString());
+        break;
+    }
 
-			if (finalArgs.indexOf(arg) == 1) {
-				punishDuration = PunishDuration.of(arg);
-			} else {
-				reason.append(arg).append(" ");
-			}
-		}
+    // Declaring the reason. Instantiation below
 
-		final int size = Math.min(finalArgs.size(), 3);
+  }
 
-		switch (size) {
-			case 0: //Noting
-				if (!isPlayer()) {
-					returnTell(MORE_ARGUMENTS_AS_CONSOLE_MESSAGE);
-				}
-				MenuPlayerBrowser.showTo(getPlayer());
-				break;
-			case 1: //Target
+  // ----------------------------------------------------------------------------------------------------
+  // Internal  helper-methods
+  // ----------------------------------------------------------------------------------------------------
 
-				if (!isPlayer()) {
-					returnTell(MORE_ARGUMENTS_AS_CONSOLE_MESSAGE);
-				}
-				onTargetProvided(getPlayer(), findTarget(finalArgs));
-				break;
-			case 2: //Target, Duration
-				//ban NAME DURATION
-				if (getMaxArgs() < 2) {
-					returnInvalidArgs();
-				}
+  private boolean checkSilent() {
+    for (final String arg : args) {
+      if (arg.equals("-s") || arg.equals("-silent")) {
+        return true;
+      }
+    }
+    return false;
+  }
 
-				if (!isPlayer()) {
-					returnTell(MORE_ARGUMENTS_AS_CONSOLE_MESSAGE);
-				}
+  private boolean checkSuperSilent() {
+    for (final String arg : args) {
+      // TODO Rework
+      if (arg.equals("-S") || arg.equals("-Super-Silent")) {
+        return true;
+      }
+    }
+    return false;
+  }
 
-				onTargetAndDurationProvided(getPlayer(), findTarget(finalArgs), punishDuration);
-				break;
-			case 3:  //Target, Duration, Reason
-				if (getMaxArgs() < 3) {
-					returnInvalidArgs();
-				}
-
-				//Validating the reason
-				handleReasonInput(reason.toString());
-
-				//ban NAME REASON, DURATION
-				onTargetAndDurationAndReasonProvided(getSender(), findTarget(finalArgs), punishDuration, reason.toString());
-				break;
-		}
-
-		//Declaring the reason. Instantiation below
-
-	}
-
-	// ----------------------------------------------------------------------------------------------------
-	// Internal  helper-methods
-	// ----------------------------------------------------------------------------------------------------
-
-	private boolean checkSilent() {
-		for (final String arg : args) {
-			if (arg.equals("-s") || arg.equals("-silent")) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private boolean checkSuperSilent() {
-		for (final String arg : args) {
-			//TODO Rework
-			if (arg.equals("-S") || arg.equals("-Super-Silent")) {
-				return true;
-			}
-		}
-		return false;
-	}
-
-	private UUID findTarget(final List<String> args) {
-		final UUID target = Providers.playerProvider().getUUID(args.get(0));
-		checkNotNull(target, UNKNOWN_PLAYER);
-		return target;
-	}
+  private UUID findTarget(final List<String> args) {
+    final UUID target = Providers.playerProvider().getUUID(args.get(0));
+    checkNotNull(target, UNKNOWN_PLAYER);
+    return target;
+  }
 }

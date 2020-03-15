@@ -14,202 +14,194 @@ import java.util.stream.Stream;
 
 public interface StorageProvider {
 
-	/**
-	 * @return Was the startup o four data structure successfully?
-	 */
-	default boolean setup() {
-		return true;
-	}
+  /** @return Was the startup o four data structure successfully? */
+  default boolean setup() {
+    return true;
+  }
 
-	default PlayerCache getCacheFor(@NonNull final UUID uuid) {
-		return new PlayerCache(this, uuid);
-	}
+  default PlayerCache getCacheFor(@NonNull final UUID uuid) {
+    return new PlayerCache(this, uuid);
+  }
 
-	// ----------------------------------------------------------------------------------------------------
-	// Listing all punishes/warns/reports ever made
-	// ----------------------------------------------------------------------------------------------------
+  // ----------------------------------------------------------------------------------------------------
+  // Listing all punishes/warns/reports ever made
+  // ----------------------------------------------------------------------------------------------------
 
-	List<Ban> listBans();
+  List<Ban> listBans();
 
-	List<Mute> listMutes();
+  List<Mute> listMutes();
 
-	List<Warn> listWarns();
+  List<Warn> listWarns();
 
-	// ----------------------------------------------------------------------------------------------------
-	// Listing all current punishes/warns/reports
-	// ----------------------------------------------------------------------------------------------------
+  // ----------------------------------------------------------------------------------------------------
+  // Listing all current punishes/warns/reports
+  // ----------------------------------------------------------------------------------------------------
 
-	default List<Ban> listCurrentBans() {
+  default List<Ban> listCurrentBans() {
 
-		final List<Ban> bans = listBans();
+    final List<Ban> bans = listBans();
 
-		//Making our stream parallel on large collections
-		final Stream<Ban> banStream = bans.size() > 40 ? bans.stream().parallel() : bans.stream();
+    // Making our stream parallel on large collections
+    final Stream<Ban> banStream = bans.size() > 40 ? bans.stream().parallel() : bans.stream();
 
-		return banStream.filter((ban) -> !ban.isOld()).collect(Collectors.toList());
-	}
+    return banStream.filter((ban) -> !ban.isOld()).collect(Collectors.toList());
+  }
 
-	default List<Mute> listCurrentMutes() {
+  default List<Mute> listCurrentMutes() {
 
-		final List<Mute> mutes = listMutes();
+    final List<Mute> mutes = listMutes();
 
-		//Making our stream parallel on large collections
-		final Stream<Mute> warnStream = mutes.size() > 40 ? mutes.stream().parallel() : mutes.stream();
+    // Making our stream parallel on large collections
+    final Stream<Mute> warnStream = mutes.size() > 40 ? mutes.stream().parallel() : mutes.stream();
 
-		return warnStream.filter((mute) -> !mute.isOld()).collect(Collectors.toList());
-	}
+    return warnStream.filter((mute) -> !mute.isOld()).collect(Collectors.toList());
+  }
 
-	default List<Warn> listCurrentWarns() {
-		final List<Warn> warns = listWarns();
+  default List<Warn> listCurrentWarns() {
+    final List<Warn> warns = listWarns();
 
-		//Making our stream parallel on large collections
-		final Stream<Warn> warnStream = warns.size() > 40 ? warns.stream().parallel() : warns.stream();
+    // Making our stream parallel on large collections
+    final Stream<Warn> warnStream = warns.size() > 40 ? warns.stream().parallel() : warns.stream();
 
-		return warnStream.filter((mute) -> !mute.isOld()).collect(Collectors.toList());
-	}
+    return warnStream.filter((mute) -> !mute.isOld()).collect(Collectors.toList());
+  }
 
+  // ----------------------------------------------------------------------------------------------------
+  //
+  // Methods which needs UUID's/Punishes as argument
+  //
+  // ----------------------------------------------------------------------------------------------------
 
-	// ----------------------------------------------------------------------------------------------------
-	//
-	// Methods which needs UUID's/Punishes as argument
-	//
-	// ----------------------------------------------------------------------------------------------------
+  // ----------------------------------------------------------------------------------------------------
+  // List all punishes/warns/reports the player ever had
+  // ----------------------------------------------------------------------------------------------------
 
+  List<Ban> listBans(@NonNull UUID uuid);
 
-	// ----------------------------------------------------------------------------------------------------
-	// List all punishes/warns/reports the player ever had
-	// ----------------------------------------------------------------------------------------------------
+  List<Mute> listMutes(@NonNull UUID uuid);
 
-	List<Ban> listBans(@NonNull UUID uuid);
+  List<Warn> listWarns(@NonNull UUID uuid);
 
-	List<Mute> listMutes(@NonNull UUID uuid);
+  // ----------------------------------------------------------------------------------------------------
+  // Methods to handle the data of specific players
+  // ----------------------------------------------------------------------------------------------------
 
-	List<Warn> listWarns(@NonNull UUID uuid);
+  default Optional<Ban> currentBan(@NonNull final UUID uuid) {
 
+    for (final Ban ban : listBans(uuid)) {
+      if (!ban.isOld()) {
+        return Optional.of(ban);
+      }
+    }
+    return Optional.empty();
+  }
 
-	// ----------------------------------------------------------------------------------------------------
-	// Methods to handle the data of specific players
-	// ----------------------------------------------------------------------------------------------------
+  default Optional<Mute> currentMute(@NonNull final UUID uuid) {
+    for (final Mute mute : listMutes(uuid)) {
+      if (!mute.isOld()) {
+        return Optional.of(mute);
+      }
+    }
 
-	default Optional<Ban> currentBan(@NonNull final UUID uuid) {
+    return Optional.empty();
+  }
 
-		for (final Ban ban : listBans(uuid)) {
-			if (!ban.isOld()) {
-				return Optional.of(ban);
-			}
-		}
-		return Optional.empty();
-	}
+  default Optional<Warn> currentWarn(@NonNull final UUID uuid) {
+    for (final Warn warn : listWarns(uuid)) {
+      if (!warn.isOld()) {
+        return Optional.of(warn);
+      }
+    }
 
-	default Optional<Mute> currentMute(@NonNull final UUID uuid) {
-		for (final Mute mute : listMutes(uuid)) {
-			if (!mute.isOld()) {
-				return Optional.of(mute);
-			}
-		}
+    return Optional.empty();
+  }
 
-		return Optional.empty();
-	}
+  // ----------------------------------------------------------------------------------------------------
+  // Methods to check whether a player is banned
+  // ----------------------------------------------------------------------------------------------------
 
-	default Optional<Warn> currentWarn(@NonNull final UUID uuid) {
-		for (final Warn warn : listWarns(uuid)) {
-			if (!warn.isOld()) {
-				return Optional.of(warn);
-			}
-		}
+  default boolean isBanned(@NonNull final UUID uuid) {
+    return currentBan(uuid).isPresent();
+  }
 
-		return Optional.empty();
-	}
+  default boolean isMuted(@NonNull final UUID uuid) {
+    return currentMute(uuid).isPresent();
+  }
 
+  default boolean isWarned(@NonNull final UUID uuid) {
+    return currentWarn(uuid).isPresent();
+  }
 
-	// ----------------------------------------------------------------------------------------------------
-	// Methods to check whether a player is banned
-	// ----------------------------------------------------------------------------------------------------
+  // ----------------------------------------------------------------------------------------------------
+  // Saving & Removing our punishes
+  // ----------------------------------------------------------------------------------------------------
 
-	default boolean isBanned(@NonNull final UUID uuid) {
-		return currentBan(uuid).isPresent();
-	}
+  default void savePunish(@NonNull final Punish punish) {
+    switch (punish.punishType()) {
+      case BAN:
+        saveBan((Ban) punish);
+        break;
+      case MUTE:
+        saveMute((Mute) punish);
+        break;
+      case WARN:
+        saveWarn((Warn) punish);
+    }
+  }
 
-	default boolean isMuted(@NonNull final UUID uuid) {
-		return currentMute(uuid).isPresent();
-	}
+  void saveBan(@NonNull Ban ban);
 
-	default boolean isWarned(@NonNull final UUID uuid) {
-		return currentWarn(uuid).isPresent();
-	}
+  void saveMute(@NonNull Mute mute);
 
+  void saveWarn(@NonNull Warn warn);
 
-	// ----------------------------------------------------------------------------------------------------
-	// Saving & Removing our punishes
-	// ----------------------------------------------------------------------------------------------------
+  // Returns false if not punished
 
-	default void savePunish(@NonNull final Punish punish) {
-		switch (punish.punishType()) {
-			case BAN:
-				saveBan((Ban) punish);
-				break;
-			case MUTE:
-				saveMute((Mute) punish);
-				break;
-			case WARN:
-				saveWarn((Warn) punish);
-		}
-	}
+  void removeBan(@NonNull final Ban ban);
 
-	void saveBan(@NonNull Ban ban);
+  void removeMute(@NonNull final Mute mute);
 
-	void saveMute(@NonNull Mute mute);
+  void removeWarn(@NonNull final Warn warn);
 
-	void saveWarn(@NonNull Warn warn);
+  default boolean removeBanFor(@NonNull final UUID target) {
+    final Optional<Ban> optionalBan = currentBan(target);
 
+    if (!optionalBan.isPresent()) {
+      return false;
+    }
 
-	//Returns false if not punished
+    final Ban ban = optionalBan.get();
 
-	void removeBan(@NonNull final Ban ban);
+    removeBan(ban);
 
-	void removeMute(@NonNull final Mute mute);
+    return true;
+  }
 
-	void removeWarn(@NonNull final Warn warn);
+  default boolean removeMuteFor(@NonNull final UUID target) {
+    final Optional<Mute> optionalMute = currentMute(target);
 
-	default boolean removeBanFor(@NonNull final UUID target) {
-		final Optional<Ban> optionalBan = currentBan(target);
+    if (!optionalMute.isPresent()) {
+      return false;
+    }
 
-		if (!optionalBan.isPresent()) {
-			return false;
-		}
+    final Mute mute = optionalMute.get();
 
-		final Ban ban = optionalBan.get();
+    removeMute(mute);
 
-		removeBan(ban);
+    return true;
+  }
 
-		return true;
-	}
+  default boolean removeWarnFor(@NonNull final UUID target) {
+    final Optional<Warn> optionalWarn = currentWarn(target);
 
-	default boolean removeMuteFor(@NonNull final UUID target) {
-		final Optional<Mute> optionalMute = currentMute(target);
+    if (!optionalWarn.isPresent()) {
+      return false;
+    }
 
-		if (!optionalMute.isPresent()) {
-			return false;
-		}
+    final Warn warn = optionalWarn.get();
 
-		final Mute mute = optionalMute.get();
+    removeWarn(warn);
 
-		removeMute(mute);
-
-		return true;
-	}
-
-	default boolean removeWarnFor(@NonNull final UUID target) {
-		final Optional<Warn> optionalWarn = currentWarn(target);
-
-		if (!optionalWarn.isPresent()) {
-			return false;
-		}
-
-		final Warn warn = optionalWarn.get();
-
-		removeWarn(warn);
-
-		return true;
-	}
+    return true;
+  }
 }

@@ -14,37 +14,40 @@ import java.util.UUID;
 
 public final class SpigotJoinHandler extends JoinHandler implements Listener {
 
-	@Inject
-	public SpigotJoinHandler(@NonNull final StorageProvider storageProvider) {
-		super(storageProvider);
-	}
+  @Inject
+  public SpigotJoinHandler(@NonNull final StorageProvider storageProvider) {
+    super(storageProvider);
+  }
 
-	@Override
-	protected void setCancelReason(final List<String> list, @NonNull final Object rawEvent) {
-		Valid.checkBoolean(rawEvent instanceof AsyncPlayerPreLoginEvent, "Event must be instance of AsyncPlayerPreLoginEvent");
+  @Override
+  protected void setCancelReason(final List<String> list, @NonNull final Object rawEvent) {
+    Valid.checkBoolean(
+        rawEvent instanceof AsyncPlayerPreLoginEvent,
+        "Event must be instance of AsyncPlayerPreLoginEvent");
 
-		final AsyncPlayerPreLoginEvent event = (AsyncPlayerPreLoginEvent) rawEvent;
+    final AsyncPlayerPreLoginEvent event = (AsyncPlayerPreLoginEvent) rawEvent;
 
-		event.setKickMessage(String.join("\n", list));
-	}
+    event.setKickMessage(String.join("\n", list));
+  }
 
-	@Override
-	protected void setCancelled(final boolean canceled, final Object rawEvent) {
-		Valid.checkBoolean(rawEvent instanceof AsyncPlayerPreLoginEvent, "Event must be instance of AsyncPlayerPreLoginEvent");
+  @Override
+  protected void setCancelled(final boolean canceled, final Object rawEvent) {
+    Valid.checkBoolean(
+        rawEvent instanceof AsyncPlayerPreLoginEvent,
+        "Event must be instance of AsyncPlayerPreLoginEvent");
 
-		final AsyncPlayerPreLoginEvent event = (AsyncPlayerPreLoginEvent) rawEvent;
+    final AsyncPlayerPreLoginEvent event = (AsyncPlayerPreLoginEvent) rawEvent;
 
-		if (canceled) {
-			event.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_BANNED);
-		} else {
-			event.setLoginResult(AsyncPlayerPreLoginEvent.Result.ALLOWED);
-		}
-	}
+    if (canceled) {
+      event.setLoginResult(AsyncPlayerPreLoginEvent.Result.KICK_BANNED);
+    } else {
+      event.setLoginResult(AsyncPlayerPreLoginEvent.Result.ALLOWED);
+    }
+  }
 
-	@EventHandler
-	public final void onJoin(final AsyncPlayerPreLoginEvent event) {
-		final UUID uuid = event.getUniqueId();
-		handlePlayerJoin(uuid, event);
-
-	}
+  @EventHandler
+  public final void onJoin(final AsyncPlayerPreLoginEvent event) {
+    final UUID uuid = event.getUniqueId();
+    handlePlayerJoin(uuid, event);
+  }
 }

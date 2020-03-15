@@ -36,7 +36,6 @@ Command_Aliases: [punishcontrol,phc, pun, pc]
 #JSON/MYSQL
 Storage: JSON
 
-
 Punishes:
   #Should punishing only be possible with an template
   OnlyTemplate: false
@@ -83,8 +82,7 @@ Groups:
     # Templates the Group should always be able to use.
     # Even if the Limits would prohibit the usage. (For example by the duration of the punish)
     # Set to * to enable all
-    Template_By_Passes:
-      - *
+    Template_By_Passes: ['*']
   Supporter:
     Priority: 2
     Permission: punishcontrol.group.supporter
@@ -95,8 +93,8 @@ Groups:
     # Templates the Group should always be able to use.
     # Even if the Limits would prohibit the usage. (For example by the duration of the punish)
     # Set to * to enable all
-    Template_By_Passes:
-      - '*'
+
+    Template_By_Passes: ['*']
 
 
 

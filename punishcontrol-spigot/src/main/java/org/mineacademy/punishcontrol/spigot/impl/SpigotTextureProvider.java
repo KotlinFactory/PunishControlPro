@@ -10,28 +10,28 @@ import org.mineacademy.punishcontrol.spigot.util.MojangUtils;
 import java.util.UUID;
 
 public final class SpigotTextureProvider extends Json implements TextureProvider {
-	public static SpigotTextureProvider newInstance() {
-		return new SpigotTextureProvider();
-	}
+  private SpigotTextureProvider() {
+    super(
+        PunishControlManager.FILES.SKIN_STORAGE,
+        SimplePlugin.getData().getAbsolutePath() + "/data/");
+  }
 
-	private SpigotTextureProvider() {
-		super(PunishControlManager.FILES.SKIN_STORAGE, SimplePlugin.getData().getAbsolutePath() + "/data/");
-	}
+  public static SpigotTextureProvider newInstance() {
+    return new SpigotTextureProvider();
+  }
 
-	@Override
-	public void saveSkinTexture(final UUID uuid) {
-		final String textureHash = MojangUtils.getTextureHash(uuid);
-		Debugger.debug("hash", textureHash);
+  @Override
+  public void saveSkinTexture(final UUID uuid) {
+    final String textureHash = MojangUtils.getTextureHash(uuid);
+    Debugger.debug("hash", textureHash);
 
-		if (textureHash != null) {
-			set(uuid.toString(), textureHash);
-		}
-	}
+    if (textureHash != null) {
+      set(uuid.toString(), textureHash);
+    }
+  }
 
-	@Override
-	public String getSkinTexture(final UUID uuid) {
-		return getString(uuid.toString());
-	}
-
-
+  @Override
+  public String getSkinTexture(final UUID uuid) {
+    return getString(uuid.toString());
+  }
 }

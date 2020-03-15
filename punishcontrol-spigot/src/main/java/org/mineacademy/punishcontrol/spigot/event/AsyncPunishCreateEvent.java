@@ -11,25 +11,24 @@ import org.mineacademy.punishcontrol.core.punish.PunishType;
 
 @Data
 public class AsyncPunishCreateEvent extends Event implements Cancellable {
-	private boolean cancelled;
+  private final Punish punish;
+  private boolean cancelled;
 
-	private final Punish punish;
+  private AsyncPunishCreateEvent(@NonNull final Punish punish) {
+    super(true);
+    this.punish = punish;
+  }
 
-	public static AsyncPunishCreateEvent newInstance(final Punish punish) {
-		return new AsyncPunishCreateEvent(punish);
-	}
+  public static AsyncPunishCreateEvent newInstance(final Punish punish) {
+    return new AsyncPunishCreateEvent(punish);
+  }
 
-	private AsyncPunishCreateEvent(@NonNull final Punish punish) {
-		super(true);
-		this.punish = punish;
-	}
+  public PunishType punishType() {
+    return punish.punishType();
+  }
 
-	public PunishType punishType() {
-		return punish.punishType();
-	}
-
-
-	@Override public @NotNull HandlerList getHandlers() {
-		return new HandlerList();
-	}
+  @Override
+  public @NotNull HandlerList getHandlers() {
+    return new HandlerList();
+  }
 }

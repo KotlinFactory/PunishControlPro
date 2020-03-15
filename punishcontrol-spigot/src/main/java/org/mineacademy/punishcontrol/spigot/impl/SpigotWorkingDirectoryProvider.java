@@ -10,17 +10,17 @@ import java.io.File;
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class SpigotWorkingDirectoryProvider implements WorkingDirectoryProvider {
 
-	public static SpigotWorkingDirectoryProvider newInstance() {
-		return new SpigotWorkingDirectoryProvider();
-	}
+  public static SpigotWorkingDirectoryProvider newInstance() {
+    return new SpigotWorkingDirectoryProvider();
+  }
 
-	@Override
-	public File getDataFolder() {
-		return SimplePlugin.getData();
-	}
+  @Override
+  public File getDataFolder() {
+    return SimplePlugin.getData();
+  }
 
-	@Override
-	public File getSource() {
-		return SimplePlugin.getSource();
-	}
+  @Override
+  public File getSource() {
+    return SimplePlugin.getSource();
+  }
 }

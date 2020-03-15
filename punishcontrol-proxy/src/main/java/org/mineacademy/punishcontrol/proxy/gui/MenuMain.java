@@ -7,15 +7,12 @@ import org.mineacademy.burst.menu.OnePageMenu;
 
 public final class MenuMain extends OnePageMenu {
 
+  private MenuMain(final ProxiedPlayer player) {
+    super(player, "MenuMain", InventoryType.GENERIC_9X5);
+    setTitle("§3Punish§5ffControl");
+  }
 
-	public static void showTo(@NonNull final ProxiedPlayer player) {
-		new MenuMain(player).showUp();
-	}
-
-	private MenuMain(final ProxiedPlayer player) {
-		super(player, "MenuMain", InventoryType.GENERIC_9X5);
-		setTitle("§3Punish§5ffControl");
-	}
-
-
+  public static void showTo(@NonNull final ProxiedPlayer player) {
+    new MenuMain(player).showUp();
+  }
 }

@@ -8,5 +8,5 @@ import java.io.File;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public abstract class AbstractSettingsManager {
-	@NonNull private final File file;
+  @NonNull private final File file;
 }

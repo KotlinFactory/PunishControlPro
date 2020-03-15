@@ -4,15 +4,14 @@ import org.mineacademy.fo.command.SimpleCommand;
 
 public final class CommandKick extends SimpleCommand {
 
-	public static CommandKick newInstance() {
-		return new CommandKick();
-	}
+  private CommandKick() {
+    super("kick");
+  }
 
-	private CommandKick() {
-		super("kick");
-	}
+  public static CommandKick newInstance() {
+    return new CommandKick();
+  }
 
-	@Override protected void onCommand() {
-
-	}
+  @Override
+  protected void onCommand() {}
 }

@@ -14,51 +14,54 @@ import org.mineacademy.punishcontrol.spigot.settings.Settings;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class SpigotPunishProvider implements PunishProvider {
 
-	public static SpigotPunishProvider newInstance() {
-		return new SpigotPunishProvider();
-	}
+  public static SpigotPunishProvider newInstance() {
+    return new SpigotPunishProvider();
+  }
 
-	@Override public void broadCastPunishMessage(@NonNull final Punish punish, final boolean silent, final boolean superSilent) {
+  @Override
+  public void broadCastPunishMessage(
+      @NonNull final Punish punish, final boolean silent, final boolean superSilent) {
 
-		//No one will be notified
-		if (superSilent) {
-			return;
-		}
+    // No one will be notified
+    if (superSilent) {
+      return;
+    }
 
-		if (silent) {
+    if (silent) {
 
-			if (!Settings.Notifications.SilentPunish.ENABLED) {
-				return;
-			}
+      if (!Settings.Notifications.SilentPunish.ENABLED) {
+        return;
+      }
 
-			for (final Player player : Bukkit.getOnlinePlayers()) {
+      for (final Player player : Bukkit.getOnlinePlayers()) {
 
-				//The player {} has been banned by
-				if (!player.hasPermission(Settings.Notifications.SilentPunish.PERMISSION)) {
-					continue;
-				}
+        // The player {} has been banned by
+        if (!player.hasPermission(Settings.Notifications.SilentPunish.PERMISSION)) {
+          continue;
+        }
 
-				//Sending message
-			}
+        // Sending message
+      }
 
-			return;
-		}
+      return;
+    }
 
-		if (!Settings.Notifications.Punish.ENABLED) {
-			return;
-		}
+    if (!Settings.Notifications.Punish.ENABLED) {
+      return;
+    }
 
-		for (final Player player : Bukkit.getOnlinePlayers()) {
+    for (final Player player : Bukkit.getOnlinePlayers()) {
 
-			if (!player.hasPermission(Settings.Notifications.Punish.PERMISSION)) {
-				continue;
-			}
+      if (!player.hasPermission(Settings.Notifications.Punish.PERMISSION)) {
+        continue;
+      }
 
-			//Sending message
-		}
-	}
+      // Sending message
+    }
+  }
 
-	@Override public boolean handlePunishEvent(final @NonNull Punish punish) {
-		return Common.callEvent(AsyncPunishCreateEvent.newInstance(punish));
-	}
+  @Override
+  public boolean handlePunishEvent(final @NonNull Punish punish) {
+    return Common.callEvent(AsyncPunishCreateEvent.newInstance(punish));
+  }
 }

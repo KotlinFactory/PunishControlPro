@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public interface TextureProvider {
 
-	void saveSkinTexture(UUID uuid);
+  void saveSkinTexture(UUID uuid);
 
-	String getSkinTexture(UUID uuid);
+  String getSkinTexture(UUID uuid);
 }

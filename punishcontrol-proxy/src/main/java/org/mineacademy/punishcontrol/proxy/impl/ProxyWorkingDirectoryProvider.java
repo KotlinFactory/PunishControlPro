@@ -10,17 +10,17 @@ import java.io.File;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ProxyWorkingDirectoryProvider implements WorkingDirectoryProvider {
 
-	public static ProxyWorkingDirectoryProvider newInstance() {
-		return new ProxyWorkingDirectoryProvider();
-	}
+  public static ProxyWorkingDirectoryProvider newInstance() {
+    return new ProxyWorkingDirectoryProvider();
+  }
 
-	@Override
-	public File getDataFolder() {
-		return SimplePlugin.getData();
-	}
+  @Override
+  public File getDataFolder() {
+    return SimplePlugin.getData();
+  }
 
-	@Override
-	public File getSource() {
-		return SimplePlugin.getSource();
-	}
+  @Override
+  public File getSource() {
+    return SimplePlugin.getSource();
+  }
 }

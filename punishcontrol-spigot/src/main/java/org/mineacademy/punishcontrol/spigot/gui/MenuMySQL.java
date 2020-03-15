@@ -10,23 +10,21 @@ import javax.inject.Inject;
 
 public final class MenuMySQL extends Menu {
 
-	private final MySQLStorageProvider mySQLStorageProvider;
+  private final MySQLStorageProvider mySQLStorageProvider;
 
-	@Inject
-	public MenuMySQL(@NonNull final MySQLStorageProvider mySQLStorageProvider) {
-		this.mySQLStorageProvider = mySQLStorageProvider;
-	}
+  @Inject
+  public MenuMySQL(@NonNull final MySQLStorageProvider mySQLStorageProvider) {
+    this.mySQLStorageProvider = mySQLStorageProvider;
+  }
 
-	public static void showTo(@NonNull final Player player) {
-		DaggerSpigotModule.create().mysqlModule().displayTo(player);
+  public static void showTo(@NonNull final Player player) {
+    DaggerSpigotModule.create().mysqlModule().displayTo(player);
 
-//		return MySQLStorageProvider.getInstance (Providers.workingDirectoryProvider());
-	}
+    //		return MySQLStorageProvider.getInstance (Providers.workingDirectoryProvider());
+  }
 
-	@Override
-	protected String[] getInfo() {
-		return new String[0];
-	}
-
+  @Override
+  protected String[] getInfo() {
+    return new String[0];
+  }
 }
-    

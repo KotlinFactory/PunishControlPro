@@ -6,203 +6,210 @@ import lombok.experimental.UtilityClass;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
-/**
- * Utility class for calculating time from ticks and back.
- */
+/** Utility class for calculating time from ticks and back. */
 @UtilityClass
 public class TimeUtil {
 
-	/**
-	 * The date format in dd.MM.yyy HH:mm:ss
-	 */
-	private final DateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
+  /** The date format in dd.MM.yyy HH:mm:ss */
+  private final DateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
 
-	/**
-	 * The date format in dd.MM.yyy HH:mm
-	 */
-	private final DateFormat DATE_FORMAT_SHORT = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+  /** The date format in dd.MM.yyy HH:mm */
+  private final DateFormat DATE_FORMAT_SHORT = new SimpleDateFormat("dd.MM.yyyy HH:mm");
 
-	// ------------------------------------------------------------------------------------------------------------
-	// Current time
-	// ------------------------------------------------------------------------------------------------------------
+  // ------------------------------------------------------------------------------------------------------------
+  // Current time
+  // ------------------------------------------------------------------------------------------------------------
 
-	/**
-	 * Seconds elapsed since January the 1st, 1970
-	 *
-	 * @return System.currentTimeMillis / 1000
-	 */
-	public long currentTimeSeconds() {
-		return System.currentTimeMillis() / 1000;
-	}
+  /**
+   * Seconds elapsed since January the 1st, 1970
+   *
+   * @return System.currentTimeMillis / 1000
+   */
+  public long currentTimeSeconds() {
+    return System.currentTimeMillis() / 1000;
+  }
 
-	/**
-	 * Ticks elapsed since January the 1st, 1970
-	 *
-	 * @return System.currentTimeMillis / 50
-	 */
-	public long currentTimeTicks() {
-		return System.currentTimeMillis() / 50;
-	}
+  /**
+   * Ticks elapsed since January the 1st, 1970
+   *
+   * @return System.currentTimeMillis / 50
+   */
+  public long currentTimeTicks() {
+    return System.currentTimeMillis() / 50;
+  }
 
-	// ------------------------------------------------------------------------------------------------------------
-	// Formatting
-	// ------------------------------------------------------------------------------------------------------------
+  // ------------------------------------------------------------------------------------------------------------
+  // Formatting
+  // ------------------------------------------------------------------------------------------------------------
 
-	/**
-	 * Return the current date formatted as DAY.MONTH.YEAR HOUR:MINUTES:SECONDS
-	 *
-	 * @return
-	 */
-	public String getFormattedDate() {
-		return getFormattedDate(System.currentTimeMillis());
-	}
+  /**
+   * Return the current date formatted as DAY.MONTH.YEAR HOUR:MINUTES:SECONDS
+   *
+   * @return
+   */
+  public String getFormattedDate() {
+    return getFormattedDate(System.currentTimeMillis());
+  }
 
-	/**
-	 * Return the given date in millis formatted as
-	 * DAY.MONTH.YEAR HOUR:MINUTES:SECONDS
-	 *
-	 * @param time
-	 * @return
-	 */
-	public String getFormattedDate(final long time) {
-		return DATE_FORMAT.format(time);
-	}
+  /**
+   * Return the given date in millis formatted as DAY.MONTH.YEAR HOUR:MINUTES:SECONDS
+   *
+   * @param time
+   * @return
+   */
+  public String getFormattedDate(final long time) {
+    return DATE_FORMAT.format(time);
+  }
 
-	/**
-	 * Return the current date formatted as DAY.MONTH.YEAR HOUR:MINUTES
-	 *
-	 * @return
-	 */
-	public String getFormattedDateShort() {
-		return DATE_FORMAT_SHORT.format(System.currentTimeMillis());
-	}
+  /**
+   * Return the current date formatted as DAY.MONTH.YEAR HOUR:MINUTES
+   *
+   * @return
+   */
+  public String getFormattedDateShort() {
+    return DATE_FORMAT_SHORT.format(System.currentTimeMillis());
+  }
 
-	/**
-	 * Return the given date in millis formatted as
-	 * DAY.MONTH.YEAR HOUR:MINUTES
-	 *
-	 * @param time
-	 * @return
-	 */
-	public String getFormattedDateShort(final long time) {
-		return DATE_FORMAT_SHORT.format(time);
-	}
+  /**
+   * Return the given date in millis formatted as DAY.MONTH.YEAR HOUR:MINUTES
+   *
+   * @param time
+   * @return
+   */
+  public String getFormattedDateShort(final long time) {
+    return DATE_FORMAT_SHORT.format(time);
+  }
 
-	// ------------------------------------------------------------------------------------------------------------
-	// Converting
-	// ------------------------------------------------------------------------------------------------------------
+  // ------------------------------------------------------------------------------------------------------------
+  // Converting
+  // ------------------------------------------------------------------------------------------------------------
 
-	/**
-	 * Converts the time from a human readable format like "10 minutes"
-	 * to seconds.
-	 *
-	 * @param humanReadableTime the human readable time format: {time} {period}
-	 *                          example: 5 seconds, 10 ticks, 7 minutes, 12 hours etc..
-	 * @return the converted human time to seconds
-	 */
-	public long toTicks(final String humanReadableTime) {
-		Valid.notNull(humanReadableTime, "Time is null");
+  /**
+   * Converts the time from a human readable format like "10 minutes" to seconds.
+   *
+   * @param humanReadableTime the human readable time format: {time} {period} example: 5 seconds, 10
+   *     ticks, 7 minutes, 12 hours etc..
+   * @return the converted human time to seconds
+   */
+  public long toTicks(final String humanReadableTime) {
+    Valid.notNull(humanReadableTime, "Time is null");
 
-		long seconds = 0L;
+    long seconds = 0L;
 
-		final String[] split = humanReadableTime.split(" ");
+    final String[] split = humanReadableTime.split(" ");
 
-		for (int i = 1; i < split.length; i++) {
-			final String sub = split[i].toLowerCase();
-			int multiplier = 0; // e.g 2 hours = 2
-			long unit = 0; // e.g hours = 3600
-			boolean isTicks = false;
+    for (int i = 1; i < split.length; i++) {
+      final String sub = split[i].toLowerCase();
+      int multiplier = 0; // e.g 2 hours = 2
+      long unit = 0; // e.g hours = 3600
+      boolean isTicks = false;
 
-			try {
-				multiplier = Integer.parseInt(split[i - 1]);
-			} catch (final NumberFormatException e) {
-				continue;
-			}
+      try {
+        multiplier = Integer.parseInt(split[i - 1]);
+      } catch (final NumberFormatException e) {
+        continue;
+      }
 
-			// attempt to match the unit time
-			if (sub.startsWith("tick")) {
-				isTicks = true;
-			} else if (sub.startsWith("second")) {
-				unit = 1;
-			} else if (sub.startsWith("minute")) {
-				unit = 60;
-			} else if (sub.startsWith("hour")) {
-				unit = 3600;
-			} else if (sub.startsWith("day")) {
-				unit = 86400;
-			} else if (sub.startsWith("week")) {
-				unit = 604800;
-			} else if (sub.startsWith("month")) {
-				unit = 2629743;
-			} else if (sub.startsWith("year")) {
-				unit = 31556926;
-			} else {
-				throw new IllegalStateException("Must define date type! Example: '1 second' (Got '" + sub + "')");
-			}
+      // attempt to match the unit time
+      if (sub.startsWith("tick")) {
+        isTicks = true;
+      } else if (sub.startsWith("second")) {
+        unit = 1;
+      } else if (sub.startsWith("minute")) {
+        unit = 60;
+      } else if (sub.startsWith("hour")) {
+        unit = 3600;
+      } else if (sub.startsWith("day")) {
+        unit = 86400;
+      } else if (sub.startsWith("week")) {
+        unit = 604800;
+      } else if (sub.startsWith("month")) {
+        unit = 2629743;
+      } else if (sub.startsWith("year")) {
+        unit = 31556926;
+      } else {
+        throw new IllegalStateException(
+            "Must define date type! Example: '1 second' (Got '" + sub + "')");
+      }
 
-			seconds += multiplier * (isTicks ? 1 : unit * 20);
-		}
+      seconds += multiplier * (isTicks ? 1 : unit * 20);
+    }
 
-		return seconds;
-	}
+    return seconds;
+  }
 
-	public long toMS(final String humanReadableTime) {
-		return toTicks(humanReadableTime) * 50;
-	}
+  public long toMS(final String humanReadableTime) {
+    return toTicks(humanReadableTime) * 50;
+  }
 
-	/**
-	 * Formats the given time from seconds into the following format:
-	 * <p>
-	 * "1 hour 50 minutes 10 seconds" or similar, or less
-	 *
-	 * @param seconds
-	 * @return
-	 */
-	public String formatTimeGeneric(final long seconds) {
-		final long second = seconds % 60;
-		long minute = seconds / 60;
-		String hourMsg = "";
+  /**
+   * Formats the given time from seconds into the following format:
+   *
+   * <p>"1 hour 50 minutes 10 seconds" or similar, or less
+   *
+   * @param seconds
+   * @return
+   */
+  public String formatTimeGeneric(final long seconds) {
+    final long second = seconds % 60;
+    long minute = seconds / 60;
+    String hourMsg = "";
 
-		if (minute >= 60) {
-			final long hour = seconds / 60;
-			minute %= 60;
+    if (minute >= 60) {
+      final long hour = seconds / 60;
+      minute %= 60;
 
-			hourMsg = (hour == 1 ? "hour" : "hours") + " ";
-		}
+      hourMsg = (hour == 1 ? "hour" : "hours") + " ";
+    }
 
-		return hourMsg + minute + (minute > 0 ? (minute == 1 ? " minute" : " minutes") + " " : "") + second + (second == 1 ? " second" : " seconds");
-	}
+    return hourMsg
+        + minute
+        + (minute > 0 ? (minute == 1 ? " minute" : " minutes") + " " : "")
+        + second
+        + (second == 1 ? " second" : " seconds");
+  }
 
-	/**
-	 * Format time in "X days Y hours Z minutes Å seconds"
-	 *
-	 * @param seconds
-	 * @return
-	 */
-	public String formatTimeDays(final long seconds) {
-		final long minutes = seconds / 60;
-		final long hours = minutes / 60;
-		final long days = hours / 24;
+  /**
+   * Format time in "X days Y hours Z minutes Å seconds"
+   *
+   * @param seconds
+   * @return
+   */
+  public String formatTimeDays(final long seconds) {
+    final long minutes = seconds / 60;
+    final long hours = minutes / 60;
+    final long days = hours / 24;
 
-		return days + " days " + hours % 24 + " hours " + minutes % 60 + " minutes " + seconds % 60 + " seconds";
-	}
+    return days
+        + " days "
+        + hours % 24
+        + " hours "
+        + minutes % 60
+        + " minutes "
+        + seconds % 60
+        + " seconds";
+  }
 
-	/**
-	 * Format the time in seconds, for example: 10d 5h 10m 20s or just 5m 10s
-	 * If the seconds are zero, an output 0s is given
-	 *
-	 * @param seconds
-	 * @return
-	 */
-	public String formatTimeShort(long seconds) {
-		long minutes = seconds / 60;
-		long hours = minutes / 60;
-		final long days = hours / 24;
+  /**
+   * Format the time in seconds, for example: 10d 5h 10m 20s or just 5m 10s If the seconds are zero,
+   * an output 0s is given
+   *
+   * @param seconds
+   * @return
+   */
+  public String formatTimeShort(long seconds) {
+    long minutes = seconds / 60;
+    long hours = minutes / 60;
+    final long days = hours / 24;
 
-		hours = hours % 24;
-		minutes = minutes % 60;
-		seconds = seconds % 60;
+    hours = hours % 24;
+    minutes = minutes % 60;
+    seconds = seconds % 60;
 
-		return (days > 0 ? days + "d " : "") + (hours > 0 ? hours + "h " : "") + (minutes > 0 ? minutes + "m " : "") + seconds + "s";
-	}
+    return (days > 0 ? days + "d " : "")
+        + (hours > 0 ? hours + "h " : "")
+        + (minutes > 0 ? minutes + "m " : "")
+        + seconds
+        + "s";
+  }
 }

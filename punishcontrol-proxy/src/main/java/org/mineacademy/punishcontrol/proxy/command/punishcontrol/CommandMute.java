@@ -8,24 +8,28 @@ import java.util.UUID;
 
 public final class CommandMute extends AbstractPunishCommand {
 
-	public static CommandMute newInstance() {
-		return new CommandMute();
-	}
+  private CommandMute() {
+    super("mute");
+    setUsage("[player] [time] [reason]");
+  }
 
-	private CommandMute() {
-		super("mute");
-		setUsage("[player] [time] [reason]");
-	}
+  public static CommandMute newInstance() {
+    return new CommandMute();
+  }
 
-	@Override
-	protected void onCase2(final @NonNull CommandSender sender, final @NonNull UUID target) {
-	}
+  @Override
+  protected void onCase2(final @NonNull CommandSender sender, final @NonNull UUID target) {}
 
-	@Override
-	protected void onCase3(final @NonNull CommandSender sender, final @NonNull UUID target, final @NonNull PunishDuration punishDuration) {
-	}
+  @Override
+  protected void onCase3(
+      final @NonNull CommandSender sender,
+      final @NonNull UUID target,
+      final @NonNull PunishDuration punishDuration) {}
 
-	@Override
-	protected void onCase4(final @NonNull CommandSender player, final @NonNull UUID target, final @NonNull PunishDuration punishDuration, final @NonNull String reason) {
-	}
+  @Override
+  protected void onCase4(
+      final @NonNull CommandSender player,
+      final @NonNull UUID target,
+      final @NonNull PunishDuration punishDuration,
+      final @NonNull String reason) {}
 }

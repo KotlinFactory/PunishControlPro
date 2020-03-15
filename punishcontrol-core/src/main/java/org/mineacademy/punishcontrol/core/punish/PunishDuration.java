@@ -1,6 +1,5 @@
 package org.mineacademy.punishcontrol.core.punish;
 
-
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -12,70 +11,72 @@ import java.util.stream.IntStream;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class PunishDuration {
-	private final long ms;
+  private final long ms;
 
-	public static PunishDuration of(@NonNull String humanReadableTime) {
-		if (humanReadableTime.equalsIgnoreCase("-1")) {
-			return permanent();
-		}
+  public static PunishDuration of(@NonNull String humanReadableTime) {
+    if (humanReadableTime.equalsIgnoreCase("-1")) {
+      return permanent();
+    }
 
-		if (!humanReadableTime.contains(" ")) {
-			//Input: 10days Output: 10 days
-			humanReadableTime = splitHumanToHumanReadable(humanReadableTime);
-		}
+    if (!humanReadableTime.contains(" ")) {
+      // Input: 10days Output: 10 days
+      humanReadableTime = splitHumanToHumanReadable(humanReadableTime);
+    }
 
-		return new PunishDuration(TimeUtil.toTicks(humanReadableTime) * 50); //Converting to ms (1tick = 50ms)
-	}
+    return new PunishDuration(
+        TimeUtil.toTicks(humanReadableTime) * 50); // Converting to ms (1tick = 50ms)
+  }
 
-	//10days becomes 10 days
-	private static String splitHumanToHumanReadable(@NonNull final String humanReadable) {
-		// returns an OptionalInt with the value of the index of the first Letter
-		final OptionalInt firstLetterIndex = IntStream.range(0, humanReadable.length())
-			.filter(i -> Character.isLetter(humanReadable.charAt(i)))
-			.findFirst();
+  // 10days becomes 10 days
+  private static String splitHumanToHumanReadable(@NonNull final String humanReadable) {
+    // returns an OptionalInt with the value of the index of the first Letter
+    final OptionalInt firstLetterIndex =
+        IntStream.range(0, humanReadable.length())
+            .filter(i -> Character.isLetter(humanReadable.charAt(i)))
+            .findFirst();
 
+    // Default if there is no letter, only numbers
+    String numbers = humanReadable;
+    String letters = "";
+    // if there are letters, split the string at the first letter
+    if (firstLetterIndex.isPresent()) {
+      numbers = humanReadable.substring(0, firstLetterIndex.getAsInt());
+      letters = humanReadable.substring(firstLetterIndex.getAsInt());
+    }
 
-		// Default if there is no letter, only numbers
-		String numbers = humanReadable;
-		String letters = "";
-		// if there are letters, split the string at the first letter
-		if (firstLetterIndex.isPresent()) {
-			numbers = humanReadable.substring(0, firstLetterIndex.getAsInt());
-			letters = humanReadable.substring(firstLetterIndex.getAsInt());
-		}
+    return numbers + " " + letters;
+  }
 
-		return numbers + " " + letters;
-	}
+  public static PunishDuration of(final long ms) {
+    return new PunishDuration(ms);
+  }
 
-	public static PunishDuration of(final long ms) {
-		return new PunishDuration(ms);
-	}
+  public static PunishDuration of(final long time, final TimeUnit unit) {
+    return new PunishDuration(unit.toMillis(time));
+  }
 
-	public static PunishDuration of(final long time, final TimeUnit unit) {
-		return new PunishDuration(unit.toMillis(time));
-	}
+  public static PunishDuration permanent() {
+    return new PunishDuration(-1);
+  }
 
-	public static PunishDuration permanent() {
-		return new PunishDuration(-1);
-	}
+  // ----------------------------------------------------------------------------------------------------
+  // Convenience methods here
+  // ----------------------------------------------------------------------------------------------------
 
-	// ----------------------------------------------------------------------------------------------------
-	// Convenience methods here
-	// ----------------------------------------------------------------------------------------------------
+  public boolean isPermanent() {
+    return ms == -1L;
+  }
 
-	public boolean isPermanent() {
-		return ms == -1L;
-	}
+  public long createBanTime() {
+    return System.currentTimeMillis() + ms;
+  }
 
-	public long createBanTime() {
-		return System.currentTimeMillis() + ms;
-	}
+  @Override
+  public String toString() {
+    return TimeUtil.formatTimeGeneric(TimeUnit.MILLISECONDS.toSeconds(ms));
+  }
 
-	@Override public String toString() {
-		return TimeUtil.formatTimeGeneric(TimeUnit.MILLISECONDS.toSeconds(ms));
-	}
-
-	public long toMs() {
-		return ms;
-	}
+  public long toMs() {
+    return ms;
+  }
 }

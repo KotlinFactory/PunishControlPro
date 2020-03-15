@@ -8,26 +8,27 @@ import org.mineacademy.punishcontrol.proxy.settings.Settings;
 
 import java.util.List;
 
-//TODO
+// TODO
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ProxySettingsProvider implements SettingsProvider {
 
-	public static ProxySettingsProvider newInstance() {
-		return new ProxySettingsProvider();
-	}
+  public static ProxySettingsProvider newInstance() {
+    return new ProxySettingsProvider();
+  }
 
-	@Override
-	public boolean cacheResults() {
-		return Settings.Advanced.CACHE_RESULTS;
-	}
+  @Override
+  public boolean cacheResults() {
+    return Settings.Advanced.CACHE_RESULTS;
+  }
 
-	@Override public boolean isAPIEnabled() {
-		return Settings.Advanced.API.ENABLED;
-	}
+  @Override
+  public boolean isAPIEnabled() {
+    return Settings.Advanced.API.ENABLED;
+  }
 
-	@Override
-	public List<String> getJoinMessageForBannedPlayer(final Ban ban) {
-		return null;
-	}
+  @Override
+  public List<String> getJoinMessageForBannedPlayer(final Ban ban) {
+    return null;
+  }
 }

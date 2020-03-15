@@ -14,39 +14,44 @@ import java.util.Arrays;
 
 public final class MenuMain extends Menu {
 
-	public static void showTo(@NonNull final Player player) {
-		new MenuMain().displayTo(player);
-	}
+  // TODO See boss for design.
+  private MenuMain() {
+    setSize(9 * 5);
+    setTitle("§3Punish§bControl");
+  }
 
-	//You can't change anything here by clicking so we only need this gui once:)
-	//And createNewInstance is already used:I
-	public static MenuMain create() {
-		return new MenuMain();
-	}
+  public static void showTo(@NonNull final Player player) {
+    new MenuMain().displayTo(player);
+  }
 
-	//TODO See boss for design.
-	private MenuMain() {
-		setSize(9 * 5);
-		setTitle("§3Punish§bControl");
-	}
+  // You can't change anything here by clicking so we only need this gui once:)
+  // And createNewInstance is already used:I
+  public static MenuMain create() {
+    return new MenuMain();
+  }
 
-	@Override
-	public ItemStack getItemAt(final int slot) {
+  @Override
+  public ItemStack getItemAt(final int slot) {
 
-		if (Arrays.asList(0, 9, 18, 27, 36, 8, 17, 26, 35, 44, 1, 7, 37, 43).contains(slot)) {
-			return ItemCreator.of(CompMaterial.LIGHT_BLUE_STAINED_GLASS_PANE, "").build().make();
-		}
+    if (Arrays.asList(0, 9, 18, 27, 36, 8, 17, 26, 35, 44, 1, 7, 37, 43).contains(slot)) {
+      return ItemCreator.of(CompMaterial.LIGHT_BLUE_STAINED_GLASS_PANE, "").build().make();
+    }
 
-		return super.getItemAt(slot);
-	}
+    return super.getItemAt(slot);
+  }
 
-	@Override
-	protected void onButtonClick(final Player player, final int slot, final InventoryAction action, final ClickType click, final Button button) {
-		super.onButtonClick(player, slot, action, click, button);
-	}
+  @Override
+  protected void onButtonClick(
+      final Player player,
+      final int slot,
+      final InventoryAction action,
+      final ClickType click,
+      final Button button) {
+    super.onButtonClick(player, slot, action, click, button);
+  }
 
-	@Override
-	protected String[] getInfo() {
-		return null;
-	}
+  @Override
+  protected String[] getInfo() {
+    return null;
+  }
 }

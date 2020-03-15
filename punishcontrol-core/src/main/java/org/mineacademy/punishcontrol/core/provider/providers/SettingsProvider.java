@@ -4,17 +4,13 @@ import org.mineacademy.punishcontrol.core.punishes.Ban;
 
 import java.util.List;
 
-/**
- * Provides all settings needed
- * by the PunishControl core
- */
+/** Provides all settings needed by the PunishControl core */
 public interface SettingsProvider {
 
-	//Should results be cached?
-	boolean cacheResults();
+  // Should results be cached?
+  boolean cacheResults();
 
-	boolean isAPIEnabled();
+  boolean isAPIEnabled();
 
-	List<String> getJoinMessageForBannedPlayer(Ban ban);
-
+  List<String> getJoinMessageForBannedPlayer(Ban ban);
 }

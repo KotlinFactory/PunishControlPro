@@ -11,24 +11,25 @@ import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class SpigotSettingsProvider implements SettingsProvider {
-	public static SpigotSettingsProvider newInstance() {
-		return new SpigotSettingsProvider();
-	}
+  public static SpigotSettingsProvider newInstance() {
+    return new SpigotSettingsProvider();
+  }
 
-	@Override
-	public boolean cacheResults() {
-		Valid.checkNotNull(Settings.Advanced.CACHE_RESULTS, "CacheResults not yet set");
+  @Override
+  public boolean cacheResults() {
+    Valid.checkNotNull(Settings.Advanced.CACHE_RESULTS, "CacheResults not yet set");
 
-		return Settings.Advanced.CACHE_RESULTS;
-	}
+    return Settings.Advanced.CACHE_RESULTS;
+  }
 
-	@Override public boolean isAPIEnabled() {
-		return Settings.Advanced.API.ENABLED;
-	}
+  @Override
+  public boolean isAPIEnabled() {
+    return Settings.Advanced.API.ENABLED;
+  }
 
-	@Override
-	public List<String> getJoinMessageForBannedPlayer(final Ban ban) {
-		//TODO
-		return null;
-	}
+  @Override
+  public List<String> getJoinMessageForBannedPlayer(final Ban ban) {
+    // TODO
+    return null;
+  }
 }

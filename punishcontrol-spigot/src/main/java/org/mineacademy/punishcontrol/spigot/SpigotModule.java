@@ -9,32 +9,27 @@ import org.mineacademy.punishcontrol.spigot.gui.MenuMySQL;
 import org.mineacademy.punishcontrol.spigot.listener.SpigotDataSetter;
 import org.mineacademy.punishcontrol.spigot.listener.SpigotJoinHandler;
 
-/**
- * Interface implemented by dagger
- */
-
+/** Interface implemented by dagger */
 @Component(modules = Providers.class)
 public interface SpigotModule {
 
+  MenuMySQL mysqlModule();
 
-	MenuMySQL mysqlModule();
+  // ----------------------------------------------------------------------------------------------------
+  // Listener
+  // ----------------------------------------------------------------------------------------------------
 
-	// ----------------------------------------------------------------------------------------------------
-	// Listener
-	// ----------------------------------------------------------------------------------------------------
+  SpigotDataSetter spigotDataSetter();
 
-	SpigotDataSetter spigotDataSetter();
+  SpigotJoinHandler spigotJoinHandler();
 
-	SpigotJoinHandler spigotJoinHandler();
+  // ----------------------------------------------------------------------------------------------------
+  // Commands
+  // ----------------------------------------------------------------------------------------------------
 
-	// ----------------------------------------------------------------------------------------------------
-	// Commands
-	// ----------------------------------------------------------------------------------------------------
+  CommandUnWarn commandUnWarn();
 
-	CommandUnWarn commandUnWarn();
+  CommandUnBan commandUnBan();
 
-	CommandUnBan commandUnBan();
-
-	CommandUnMute commandUnMute();
-
+  CommandUnMute commandUnMute();
 }

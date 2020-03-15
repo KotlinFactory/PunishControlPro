@@ -7,9 +7,9 @@ import javax.inject.Inject;
 
 public final class CommandUnMute extends AbstractUnPunishCommand {
 
-	@Inject
-	public CommandUnMute(final StorageProvider storageProvider) {
-		super(storageProvider, PunishType.MUTE, "unmute");
-		setUsage("[player]");
-	}
+  @Inject
+  public CommandUnMute(final StorageProvider storageProvider) {
+    super(storageProvider, PunishType.MUTE, "unmute");
+    setUsage("[player]");
+  }
 }

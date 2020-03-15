@@ -14,35 +14,47 @@ import java.util.List;
 
 @UtilityClass
 public class PunishTemplateManager {
-	private final List<PunishTemplate> punishTemplates = new ArrayList<>();
-	private final InputStreamProvider inputStreamProvider = LightningProviders.inputStreamProvider();
+  private final List<PunishTemplate> punishTemplates = new ArrayList<>();
+  private final InputStreamProvider inputStreamProvider = LightningProviders.inputStreamProvider();
 
-	public void loadTemplates(@NonNull final File directory) {
-		for (final File file : FileUtils.listFiles(directory, ".json")) {
-			punishTemplates.add(PunishTemplate.load(file));
-		}
+  public void loadTemplates(@NonNull final File directory) {
+    for (final File file : FileUtils.listFiles(directory, ".json")) {
+      punishTemplates.add(PunishTemplate.load(file));
+    }
 
-		//No templates created
-		if (punishTemplates.size() == 0) {
-			extractAndAddDefaults(directory);
-		}
-	}
+    // No templates created
+    if (punishTemplates.size() == 0) {
+      extractAndAddDefaults(directory);
+    }
+  }
 
-	public List<PunishTemplate> punishTemplates() {
-		return Collections.unmodifiableList(punishTemplates);
-	}
+  public List<PunishTemplate> punishTemplates() {
+    return Collections.unmodifiableList(punishTemplates);
+  }
 
-	private void extractAndAddDefaults(@NonNull final File destination) {
-		final InputStream banInputStream = inputStreamProvider.createInputStreamFromInnerResource("templates/default-ban.json");
-		final InputStream muteInputStream = inputStreamProvider.createInputStreamFromInnerResource("templates/default-mute.json");
-		final InputStream warnInputStream = inputStreamProvider.createInputStreamFromInnerResource("templates/default-warn.json");
+  private void extractAndAddDefaults(@NonNull final File destination) {
+    final InputStream banInputStream =
+        inputStreamProvider.createInputStreamFromInnerResource("templates/default-ban.json");
+    final InputStream muteInputStream =
+        inputStreamProvider.createInputStreamFromInnerResource("templates/default-mute.json");
+    final InputStream warnInputStream =
+        inputStreamProvider.createInputStreamFromInnerResource("templates/default-warn.json");
 
-		FileUtils.writeToFile(FileUtils.getAndMake("default-ban.json", destination.getAbsolutePath()), banInputStream);
-		FileUtils.writeToFile(FileUtils.getAndMake("default-mute.json", destination.getAbsolutePath()), muteInputStream);
-		FileUtils.writeToFile(FileUtils.getAndMake("default-warn.json", destination.getAbsolutePath()), warnInputStream);
+    FileUtils.writeToFile(
+        FileUtils.getAndMake("default-ban.json", destination.getAbsolutePath()), banInputStream);
+    FileUtils.writeToFile(
+        FileUtils.getAndMake("default-mute.json", destination.getAbsolutePath()), muteInputStream);
+    FileUtils.writeToFile(
+        FileUtils.getAndMake("default-warn.json", destination.getAbsolutePath()), warnInputStream);
 
-		punishTemplates.add(PunishTemplate.load(new File(destination.getAbsolutePath() + "/templates/", "default-ban.json")));
-		punishTemplates.add(PunishTemplate.load(new File(destination.getAbsolutePath() + "/templates/", "default-mute.json")));
-		punishTemplates.add(PunishTemplate.load(new File(destination.getAbsolutePath() + "/templates/", "default-warn.json")));
-	}
+    punishTemplates.add(
+        PunishTemplate.load(
+            new File(destination.getAbsolutePath() + "/templates/", "default-ban.json")));
+    punishTemplates.add(
+        PunishTemplate.load(
+            new File(destination.getAbsolutePath() + "/templates/", "default-mute.json")));
+    punishTemplates.add(
+        PunishTemplate.load(
+            new File(destination.getAbsolutePath() + "/templates/", "default-warn.json")));
+  }
 }
