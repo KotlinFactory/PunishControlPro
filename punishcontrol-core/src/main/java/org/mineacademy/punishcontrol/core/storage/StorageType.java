@@ -4,8 +4,6 @@ import org.mineacademy.punishcontrol.core.DaggerCoreModule;
 
 public enum StorageType {
   MYSQL {
-    // TODO Cache results
-
     @Override
     public StorageProvider getStorageProvider() {
       return DaggerCoreModule.create().mySQLStorageProvider();

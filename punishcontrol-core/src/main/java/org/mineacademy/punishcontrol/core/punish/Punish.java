@@ -32,7 +32,6 @@ public abstract class Punish {
   private boolean removed = false;
 
   // Silence ^^
-
   private boolean isSilent;
   private boolean isSuperSilent;
 
@@ -63,6 +62,8 @@ public abstract class Punish {
     ip((String) banRawData.get("ip"));
     removed((Boolean) banRawData.get("removed"));
   }
+
+
 
   /**
    * Validates our raw-data which should contain keys to parse a punish from
