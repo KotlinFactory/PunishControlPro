@@ -1,5 +1,6 @@
 package org.mineacademy.punishcontrol.core.storage;
 
+
 import org.mineacademy.punishcontrol.core.DaggerCoreComponent;
 
 public enum StorageType {

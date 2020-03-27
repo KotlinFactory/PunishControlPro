@@ -1,4 +1,6 @@
-Player:
-  Never_Played: "&cPlayer {player} has never played on the server."
-  Not_Online: "&cPlayer {player} &cis not online on this server."
+Commands:
+  Player:
+    Never_Played: "&cPlayer {player} has never played on the server."
+    Not_Online: "&cPlayer {player} &cis not online on this server."
+
 Version: 1

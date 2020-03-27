@@ -23,21 +23,13 @@ import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 @Accessors(fluent = true)
 public final class Providers {
 
-  @Setter @NonNull
-  private static PlayerProvider
-      playerProvider;
+  @Setter @NonNull private static PlayerProvider playerProvider;
 
-  @Setter @NonNull
-  private static TextureProvider
-      textureProvider;
+  @Setter @NonNull private static TextureProvider textureProvider;
 
-  @Setter @NonNull
-  private static SettingsProvider
-      settingsProvider;
+  @Setter @NonNull private static SettingsProvider settingsProvider;
 
-  @Setter @NonNull
-  private static WorkingDirectoryProvider
-      workingDirectoryProvider;
+  @Setter @NonNull private static WorkingDirectoryProvider workingDirectoryProvider;
 
   @Setter @NonNull private static PunishProvider punishProvider;
 
@@ -70,8 +62,7 @@ public final class Providers {
   }
 
   @Provides
-  public static WorkingDirectoryProvider
-  workingDirectoryProvider() {
+  public static WorkingDirectoryProvider workingDirectoryProvider() {
     Valid.notNull(workingDirectoryProvider, "WorkingDirectoryProvider not yet set");
 
     return workingDirectoryProvider;
@@ -107,7 +98,6 @@ public final class Providers {
   public static StorageProvider provider() {
     return PunishControlManager.storageType().getStorageProvider();
   }
-
 
   //	@Provides
   //	public static MySQLStorageProvider mySQLStorageProvider() {
