@@ -22,9 +22,8 @@ public class PunishControlManager {
   /*
   	TODO:
   	 - AutoBackuper /phc backup
-
-
   */
+
   public StorageType storageType() {
     Valid.notNull(storageType, "StorageType not yet set");
 

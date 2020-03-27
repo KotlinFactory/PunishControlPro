@@ -2,7 +2,7 @@ package org.mineacademy.punishcontrol.proxy.impl;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
-import org.mineacademy.punishcontrol.core.provider.providers.TextureProvider;
+import org.mineacademy.punishcontrol.core.providers.TextureProvider;
 
 import java.util.UUID;
 

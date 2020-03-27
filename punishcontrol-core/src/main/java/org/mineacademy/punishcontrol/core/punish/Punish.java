@@ -6,8 +6,8 @@ import lombok.NonNull;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 import org.mineacademy.punishcontrol.core.provider.Providers;
-import org.mineacademy.punishcontrol.core.provider.providers.ExceptionHandler;
-import org.mineacademy.punishcontrol.core.provider.providers.PlayerProvider;
+import org.mineacademy.punishcontrol.core.providers.ExceptionHandler;
+import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 
 import java.util.HashMap;

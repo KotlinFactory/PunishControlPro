@@ -3,7 +3,7 @@ package org.mineacademy.punishcontrol.proxy.impl;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.mineacademy.bfo.plugin.SimplePlugin;
-import org.mineacademy.punishcontrol.core.provider.providers.WorkingDirectoryProvider;
+import org.mineacademy.punishcontrol.core.providers.WorkingDirectoryProvider;
 
 import java.io.File;
 

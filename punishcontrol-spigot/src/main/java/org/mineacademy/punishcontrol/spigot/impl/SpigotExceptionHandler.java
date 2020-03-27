@@ -3,7 +3,7 @@ package org.mineacademy.punishcontrol.spigot.impl;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.mineacademy.fo.Common;
-import org.mineacademy.punishcontrol.core.provider.providers.ExceptionHandler;
+import org.mineacademy.punishcontrol.core.providers.ExceptionHandler;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class SpigotExceptionHandler implements ExceptionHandler {

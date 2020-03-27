@@ -3,33 +3,21 @@ package org.mineacademy.punishcontrol.spigot.command;
 import lombok.Getter;
 import lombok.NonNull;
 import org.mineacademy.fo.collection.StrictList;
-import org.mineacademy.fo.command.SimpleCommand;
-import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.punish.PunishType;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
-import org.mineacademy.punishcontrol.spigot.gui.MenuPunishBrowser;
+import org.mineacademy.punishcontrol.spigot.menus.MenuPunishBrowser;
 import org.mineacademy.punishcontrol.spigot.settings.Settings;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
 
 @Getter
-public abstract class AbstractUnPunishCommand extends SimpleCommand {
-  public static final Set<AbstractUnPunishCommand> REGISTERED_COMMANDS = new HashSet<>();
+public abstract class AbstractUnPunishCommand extends AbstractSimplePunishControlCommand {
 
-  public static final String INVALID_SILENCE_USAGE =
-      "§cCan't be silent and super-silent simultaneously";
-  public static final String UNKNOWN_PLAYER = "§cThis player is not known";
-
-  private final StorageProvider provider;
-  private final PunishType punishType;
-  private final String[] MORE_ARGUMENTS_AS_CONSOLE_MESSAGE =
-      new String[] {
-        "You need to provide more information to run this command from console",
-        "Please provide 3 arguments",
-        "Usage: " + getUsage()
-      };
-  private boolean silent;
-  private boolean superSilent;
+  protected final StorageProvider provider;
+  protected final PunishType punishType;
 
   protected AbstractUnPunishCommand(
       final StorageProvider provider,
@@ -45,10 +33,10 @@ public abstract class AbstractUnPunishCommand extends SimpleCommand {
 
   @Override
   protected final void onCommand() {
-    this.silent = checkSilent();
-    this.superSilent = checkSuperSilent();
+    silent = checkSilent();
+    superSilent = checkSuperSilent();
 
-    if (isSilent() && isSuperSilent()) {
+    if (silent && superSilent) {
       returnTell(INVALID_SILENCE_USAGE);
     }
 
@@ -77,40 +65,10 @@ public abstract class AbstractUnPunishCommand extends SimpleCommand {
             checkBoolean(provider.removeWarnFor(target), "Player is not warned");
             break;
         }
-
         break;
       default:
         returnInvalidArgs();
         break;
     }
-  }
-
-  // ----------------------------------------------------------------------------------------------------
-  // Internal  helper-methods
-  // ----------------------------------------------------------------------------------------------------
-
-  private boolean checkSilent() {
-    for (final String arg : args) {
-      if (arg.equals("-s") || arg.equals("-silent")) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  private boolean checkSuperSilent() {
-    for (final String arg : args) {
-      // TODO Rework
-      if (arg.equals("-S") || arg.equals("-Super-Silent")) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  private UUID findTarget(final List<String> args) {
-    final UUID target = Providers.playerProvider().getUUID(args.get(0));
-    checkNotNull(target, UNKNOWN_PLAYER);
-    return target;
   }
 }

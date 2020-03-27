@@ -5,19 +5,19 @@ import org.mineacademy.bfo.Common;
 import org.mineacademy.bfo.bungee.SimpleBungee;
 import org.mineacademy.bfo.plugin.SimplePlugin;
 import org.mineacademy.burst.Burst;
-import org.mineacademy.punishcontrol.core.CoreModule;
-import org.mineacademy.punishcontrol.core.DaggerCoreModule;
+import org.mineacademy.punishcontrol.core.CoreComponent;
+import org.mineacademy.punishcontrol.core.DaggerCoreComponent;
 import org.mineacademy.punishcontrol.core.SimplePunishControlPlugin;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.storage.StorageType;
-import org.mineacademy.punishcontrol.proxy.command.punishcontrol.*;
+import org.mineacademy.punishcontrol.proxy.commands.*;
 import org.mineacademy.punishcontrol.proxy.impl.*;
-import org.mineacademy.punishcontrol.proxy.listener.ProxyDataSetter;
+import org.mineacademy.punishcontrol.proxy.listeners.ProxyDataSetter;
 import org.mineacademy.punishcontrol.proxy.settings.Settings;
 
 public final class PunishControl extends SimplePlugin implements SimplePunishControlPlugin {
-  private final ProxyModule proxyModule = DaggerProxyModule.create();
-  private final CoreModule coreModule = DaggerCoreModule.create();
+  private final ProxyComponent proxyModule = DaggerProxyComponent.create();
+  private final CoreComponent coreModule = DaggerCoreComponent.create();
 
   @Override
   protected void onPluginStart() {

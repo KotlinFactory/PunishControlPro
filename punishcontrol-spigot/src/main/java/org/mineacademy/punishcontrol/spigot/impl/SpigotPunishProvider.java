@@ -8,7 +8,7 @@ import org.bukkit.entity.Player;
 import org.mineacademy.fo.Common;
 import org.mineacademy.punishcontrol.core.punish.Punish;
 import org.mineacademy.punishcontrol.core.punish.PunishProvider;
-import org.mineacademy.punishcontrol.spigot.event.AsyncPunishCreateEvent;
+import org.mineacademy.punishcontrol.spigot.events.AsyncPunishCreateEvent;
 import org.mineacademy.punishcontrol.spigot.settings.Settings;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

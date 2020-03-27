@@ -1,8 +1,21 @@
 package org.mineacademy.punishcontrol.proxy;
 
-import dagger.Component;
-import org.mineacademy.punishcontrol.core.provider.Providers;
+import dagger.Module;
+import dagger.Provides;
+import net.md_5.bungee.api.ProxyServer;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
 
-/** Interface implemented by dagger */
-@Component(modules = Providers.class)
-public interface ProxyModule {}
+import java.util.ArrayList;
+import java.util.List;
+
+@Module
+public class ProxyModule {
+  @Provides
+  public ProxyServer proxyServer() {return ProxyServer.getInstance();}
+
+  @Provides
+  public List<ProxiedPlayer> onlinePlayers() {
+    return new ArrayList<>(proxyServer().getPlayers());
+  }
+}
+

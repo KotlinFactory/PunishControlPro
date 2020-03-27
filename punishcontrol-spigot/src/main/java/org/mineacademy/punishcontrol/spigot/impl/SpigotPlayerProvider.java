@@ -7,7 +7,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.mineacademy.fo.Common;
-import org.mineacademy.punishcontrol.core.provider.providers.AbstractPlayerProvider;
+import org.mineacademy.punishcontrol.core.providers.AbstractPlayerProvider;
 
 import java.util.ArrayList;
 import java.util.List;

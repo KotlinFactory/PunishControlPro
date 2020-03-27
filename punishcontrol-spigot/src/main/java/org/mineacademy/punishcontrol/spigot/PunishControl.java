@@ -4,12 +4,12 @@ import lombok.NonNull;
 import org.mineacademy.fo.Common;
 import org.mineacademy.fo.plugin.SimplePlugin;
 import org.mineacademy.fo.settings.YamlStaticConfig;
-import org.mineacademy.punishcontrol.core.CoreModule;
-import org.mineacademy.punishcontrol.core.DaggerCoreModule;
+import org.mineacademy.punishcontrol.core.CoreComponent;
+import org.mineacademy.punishcontrol.core.DaggerCoreComponent;
 import org.mineacademy.punishcontrol.core.SimplePunishControlPlugin;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.storage.StorageType;
-import org.mineacademy.punishcontrol.spigot.command.*;
+import org.mineacademy.punishcontrol.spigot.commands.*;
 import org.mineacademy.punishcontrol.spigot.impl.*;
 import org.mineacademy.punishcontrol.spigot.settings.Localization;
 import org.mineacademy.punishcontrol.spigot.settings.Settings;
@@ -18,8 +18,8 @@ import java.util.Arrays;
 import java.util.List;
 
 public final class PunishControl extends SimplePlugin implements SimplePunishControlPlugin {
-  private final SpigotModule spigotModule = DaggerSpigotModule.builder().build();
-  private final CoreModule coreModule = DaggerCoreModule.builder().build();
+  private final SpigotComponent spigotModule = DaggerSpigotComponent.builder().build();
+  private final CoreComponent coreModule = DaggerCoreComponent.builder().build();
 
   @Override
   protected void onPluginStart() {

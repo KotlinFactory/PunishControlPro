@@ -3,7 +3,7 @@ package org.mineacademy.punishcontrol.core.group;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 import org.mineacademy.punishcontrol.core.provider.Providers;
-import org.mineacademy.punishcontrol.core.provider.providers.PlayerProvider;
+import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 
 import java.util.*;
 

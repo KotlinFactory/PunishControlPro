@@ -5,10 +5,8 @@ import lombok.NonNull;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.mineacademy.fo.collection.StrictList;
-import org.mineacademy.fo.command.SimpleCommand;
-import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.punish.PunishDuration;
-import org.mineacademy.punishcontrol.spigot.gui.MenuPlayerBrowser;
+import org.mineacademy.punishcontrol.spigot.menus.MenuPlayerBrowser;
 import org.mineacademy.punishcontrol.spigot.settings.Settings;
 
 import java.util.ArrayList;
@@ -22,24 +20,8 @@ TODO: Put in core & work with type parameters
  */
 
 @Getter
-public abstract class AbstractPunishCommand extends SimpleCommand {
-  public static final List<AbstractPunishCommand> REGISTERED_COMMANDS = new ArrayList<>();
-
-  public static final String INVALID_SILENCE_USAGE =
-      "§cCan't be silent and super-silent simultaneously";
-  public static final String UNKNOWN_PLAYER = "§cThis player is not known";
-
-  private final int MIN_ARGS_FOR_CONSOLE = 3;
-  private final String[] MORE_ARGUMENTS_AS_CONSOLE_MESSAGE =
-      new String[] {
-        "You need to provide more information to run this command from console",
-        "Please provide 3 arguments",
-        "Usage: " + getUsage()
-      };
+public abstract class AbstractPunishCommand extends AbstractSimplePunishControlCommand {
   private final int maxArgs;
-  public boolean consoleAllowed = true;
-  private boolean silent;
-  private boolean superSilent;
 
   protected AbstractPunishCommand(@NonNull final String... labels) {
     this(3, labels);
@@ -93,14 +75,14 @@ public abstract class AbstractPunishCommand extends SimpleCommand {
   protected final void onCommand() {
 
     // Checking the console if needed.
-    if (!isConsoleAllowed()) {
+    if (!consoleAllowed) {
       checkConsole();
     }
 
-    this.silent = checkSilent();
-    this.superSilent = checkSuperSilent();
+    silent = checkSilent();
+    superSilent = checkSuperSilent();
 
-    if (isSilent() && isSuperSilent()) {
+    if (silent && superSilent) {
       returnTell(INVALID_SILENCE_USAGE);
     }
 
@@ -168,34 +150,5 @@ public abstract class AbstractPunishCommand extends SimpleCommand {
 
     // Declaring the reason. Instantiation below
 
-  }
-
-  // ----------------------------------------------------------------------------------------------------
-  // Internal  helper-methods
-  // ----------------------------------------------------------------------------------------------------
-
-  private boolean checkSilent() {
-    for (final String arg : args) {
-      if (arg.equals("-s") || arg.equals("-silent")) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  private boolean checkSuperSilent() {
-    for (final String arg : args) {
-      // TODO Rework
-      if (arg.equals("-S") || arg.equals("-Super-Silent")) {
-        return true;
-      }
-    }
-    return false;
-  }
-
-  private UUID findTarget(final List<String> args) {
-    final UUID target = Providers.playerProvider().getUUID(args.get(0));
-    checkNotNull(target, UNKNOWN_PLAYER);
-    return target;
   }
 }

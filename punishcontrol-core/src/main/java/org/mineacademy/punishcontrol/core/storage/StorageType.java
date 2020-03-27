@@ -1,18 +1,18 @@
 package org.mineacademy.punishcontrol.core.storage;
 
-import org.mineacademy.punishcontrol.core.DaggerCoreModule;
+import org.mineacademy.punishcontrol.core.DaggerCoreComponent;
 
 public enum StorageType {
   MYSQL {
     @Override
     public StorageProvider getStorageProvider() {
-      return DaggerCoreModule.create().mySQLStorageProvider();
+      return DaggerCoreComponent.create().mySQLStorageProvider();
     }
   },
   JSON {
     @Override
     public StorageProvider getStorageProvider() {
-      return DaggerCoreModule.create().jsonStorageProvider();
+      return DaggerCoreComponent.create().jsonStorageProvider();
     }
   };
 

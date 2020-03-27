@@ -1,35 +1,20 @@
 package org.mineacademy.punishcontrol.spigot;
 
-import dagger.Component;
-import org.mineacademy.punishcontrol.core.provider.Providers;
-import org.mineacademy.punishcontrol.spigot.command.CommandUnBan;
-import org.mineacademy.punishcontrol.spigot.command.CommandUnMute;
-import org.mineacademy.punishcontrol.spigot.command.CommandUnWarn;
-import org.mineacademy.punishcontrol.spigot.gui.MenuMySQL;
-import org.mineacademy.punishcontrol.spigot.listener.SpigotDataSetter;
-import org.mineacademy.punishcontrol.spigot.listener.SpigotJoinHandler;
+import dagger.Module;
+import dagger.Provides;
+import org.bukkit.Bukkit;
+import org.bukkit.Server;
+import org.bukkit.scheduler.BukkitScheduler;
 
-/** Interface implemented by dagger */
-@Component(modules = Providers.class)
-public interface SpigotModule {
+@Module
+public class SpigotModule {
+  @Provides
+  public Server server() {
+    return Bukkit.getServer();
+  }
 
-  MenuMySQL mysqlModule();
-
-  // ----------------------------------------------------------------------------------------------------
-  // Listener
-  // ----------------------------------------------------------------------------------------------------
-
-  SpigotDataSetter spigotDataSetter();
-
-  SpigotJoinHandler spigotJoinHandler();
-
-  // ----------------------------------------------------------------------------------------------------
-  // Commands
-  // ----------------------------------------------------------------------------------------------------
-
-  CommandUnWarn commandUnWarn();
-
-  CommandUnBan commandUnBan();
-
-  CommandUnMute commandUnMute();
+  @Provides
+  public BukkitScheduler scheduler() {
+    return server().getScheduler();
+  }
 }

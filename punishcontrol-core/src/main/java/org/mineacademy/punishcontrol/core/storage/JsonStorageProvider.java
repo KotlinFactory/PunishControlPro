@@ -5,7 +5,7 @@ import de.leonhard.storage.util.Valid;
 import lombok.NonNull;
 import lombok.val;
 import org.mineacademy.punishcontrol.core.PunishControlManager;
-import org.mineacademy.punishcontrol.core.provider.providers.WorkingDirectoryProvider;
+import org.mineacademy.punishcontrol.core.providers.WorkingDirectoryProvider;
 import org.mineacademy.punishcontrol.core.punishes.Ban;
 import org.mineacademy.punishcontrol.core.punishes.Mute;
 import org.mineacademy.punishcontrol.core.punishes.Warn;
@@ -17,6 +17,7 @@ import java.util.*;
  * Class to save our data in a JSON for an example how the file looks like, just scrool to the end
  * of this file
  */
+
 public final class JsonStorageProvider extends Json implements StorageProvider {
 
   private static final String BANS_PATH_PREFIX = "bans";
@@ -101,10 +102,10 @@ public final class JsonStorageProvider extends Json implements StorageProvider {
 
         final Ban ban = Ban.ofRawData(creation, banRawData);
 
+
         result.add(ban);
       }
     }
-
     return result;
   }
 

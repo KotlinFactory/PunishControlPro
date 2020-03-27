@@ -1,7 +1,7 @@
 package org.mineacademy.punishcontrol.core.storage;
 
 import lombok.NonNull;
-import org.mineacademy.punishcontrol.core.provider.providers.ExceptionHandler;
+import org.mineacademy.punishcontrol.core.providers.ExceptionHandler;
 import org.mineacademy.punishcontrol.core.punish.Punish;
 import org.mineacademy.punishcontrol.core.punish.PunishType;
 import org.mineacademy.punishcontrol.core.punishes.Ban;

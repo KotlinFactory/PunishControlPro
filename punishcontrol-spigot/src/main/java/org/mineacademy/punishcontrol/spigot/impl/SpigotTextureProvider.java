@@ -4,7 +4,7 @@ import de.leonhard.storage.Json;
 import org.mineacademy.fo.debug.Debugger;
 import org.mineacademy.fo.plugin.SimplePlugin;
 import org.mineacademy.punishcontrol.core.PunishControlManager;
-import org.mineacademy.punishcontrol.core.provider.providers.TextureProvider;
+import org.mineacademy.punishcontrol.core.providers.TextureProvider;
 import org.mineacademy.punishcontrol.spigot.util.MojangUtils;
 
 import java.util.UUID;

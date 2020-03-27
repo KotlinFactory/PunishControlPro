@@ -1,4 +1,4 @@
 Player:
-  Not_Exist: "The player {player} does not exist"
-
+  Never_Played: "&cPlayer {player} has never played on the server."
+  Not_Online: "&cPlayer {player} &cis not online on this server."
 Version: 1
