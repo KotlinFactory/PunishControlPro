@@ -37,7 +37,7 @@ Command_Aliases: [punishcontrol,phc, pun, pc]
 Storage: JSON
 
 Punishes:
-  #Should punishing only be possible with an template
+  # Should punishing only be possible with an template
   OnlyTemplate: false
   Ban:
     #Should stuff be notified
@@ -63,6 +63,9 @@ Groups:
   Admin:
     Priority: 0
     Permission: punishcontrol.group.admin
+    # May the class override an existing punishment?
+    # For example ban a already banned player again?
+    Override_Punishes: false
     #Set to -1 to disable
     Limits:
       Ban: -1
@@ -72,37 +75,31 @@ Groups:
     # Even if the Limits would prohibit the usage. (For example by the duration of the punish)
     # Set to * to enable all
     Template_By_Passes: ['*']
+
   Moderator:
     Priority: 1
     Permission: punishcontrol.group.moderator
+    Override_Punishes: false
     Limits:
       Ban: 1 year
       Mute: 1 year
       Warn: 2 year
-    # Templates the Group should always be able to use.
-    # Even if the Limits would prohibit the usage. (For example by the duration of the punish)
-    # Set to * to enable all
     Template_By_Passes: ['*']
+
   Supporter:
     Priority: 2
     Permission: punishcontrol.group.supporter
+    Override_Punishes: false
     Limits:
       Ban: 1 month
       Mute: 2 month
       Warn: 3 month
-    # Templates the Group should always be able to use.
-    # Even if the Limits would prohibit the usage. (For example by the duration of the punish)
-    # Set to * to enable all
-
     Template_By_Passes: ['*']
-
-
 
 #
 # Advanced settings for PunishControl PRO
 # -> Don't change them unless you really know, what you are doing.
 #
-
 Advanced:
   Cache_Results: true
   API:

@@ -4,6 +4,7 @@ version: ${project.version}
 name: PunishControlPro
 author: ${author}
 
+api-version: 1.13
 softdepend:
   - Essentials
   - UltraPunishments
