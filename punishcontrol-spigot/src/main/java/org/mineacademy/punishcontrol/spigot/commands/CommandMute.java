@@ -1,36 +1,19 @@
 package org.mineacademy.punishcontrol.spigot.commands;
 
 import lombok.NonNull;
-import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
-import org.mineacademy.punishcontrol.core.punish.PunishDuration;
+import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
+import org.mineacademy.punishcontrol.core.punish.PunishType;
+import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 import org.mineacademy.punishcontrol.spigot.command.AbstractPunishCommand;
 
-import java.util.UUID;
+import javax.inject.Inject;
 
 public final class CommandMute extends AbstractPunishCommand {
 
-  private CommandMute() {
-    super("mute");
-    setUsage("[player] [time] [reason]");
-    setDescription("Mute a player using a sleek gui");
+  @Inject
+  public CommandMute(
+      final @NonNull StorageProvider storageProvider,
+      final @NonNull PlayerProvider playerProvider) {
+    super(storageProvider, playerProvider, PunishType.MUTE, "mute");
   }
-
-  public static CommandMute newInstance() {
-    return new CommandMute();
-  }
-
-  @Override
-  protected void onTargetProvided(final Player player, final @NonNull UUID target) {}
-
-  @Override
-  protected void onTargetAndDurationProvided(
-      final Player player, final @NonNull UUID target, final PunishDuration punishDuration) {}
-
-  @Override
-  protected void onTargetAndDurationAndReasonProvided(
-      @NonNull final CommandSender player,
-      final @NonNull UUID target,
-      final @NonNull PunishDuration punishDuration,
-      final @NonNull String reason) {}
 }

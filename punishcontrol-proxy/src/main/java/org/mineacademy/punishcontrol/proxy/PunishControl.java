@@ -10,12 +10,25 @@ import org.mineacademy.punishcontrol.core.DaggerCoreComponent;
 import org.mineacademy.punishcontrol.core.SimplePunishControlPlugin;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.storage.StorageType;
-import org.mineacademy.punishcontrol.proxy.commands.*;
-import org.mineacademy.punishcontrol.proxy.impl.*;
-import org.mineacademy.punishcontrol.proxy.listeners.ProxyDataSetter;
+import org.mineacademy.punishcontrol.proxy.commands.CommandBan;
+import org.mineacademy.punishcontrol.proxy.commands.CommandKick;
+import org.mineacademy.punishcontrol.proxy.commands.CommandMain;
+import org.mineacademy.punishcontrol.proxy.commands.CommandMute;
+import org.mineacademy.punishcontrol.proxy.commands.CommandReport;
+import org.mineacademy.punishcontrol.proxy.commands.CommandUnBan;
+import org.mineacademy.punishcontrol.proxy.commands.CommandUnMute;
+import org.mineacademy.punishcontrol.proxy.commands.CommandWarn;
+import org.mineacademy.punishcontrol.proxy.impl.ProxyExceptionHandler;
+import org.mineacademy.punishcontrol.proxy.impl.ProxyPlayerProvider;
+import org.mineacademy.punishcontrol.proxy.impl.ProxyPluginDataProvider;
+import org.mineacademy.punishcontrol.proxy.impl.ProxyPunishProvider;
+import org.mineacademy.punishcontrol.proxy.impl.ProxySettingsProvider;
+import org.mineacademy.punishcontrol.proxy.impl.ProxyTextureProvider;
+import org.mineacademy.punishcontrol.proxy.listeners.ProxyListenerImpl;
 import org.mineacademy.punishcontrol.proxy.settings.Settings;
 
 public final class PunishControl extends SimplePlugin implements SimplePunishControlPlugin {
+
   private final ProxyComponent proxyModule = DaggerProxyComponent.create();
   private final CoreComponent coreModule = DaggerCoreComponent.create();
 
@@ -43,13 +56,14 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 
   @Override
   public void registerListener() {
-    registerEvents(ProxyDataSetter.newInstance());
+    registerEvents(ProxyListenerImpl.create());
+    registerEvents(proxyModule.proxyDataSetter());
   }
 
   @Override
   public void registerProviders() {
     // Working directory
-    Providers.workingDirectoryProvider(ProxyWorkingDirectoryProvider.newInstance());
+    Providers.pluginDataProvider(ProxyPluginDataProvider.create());
     // Player providers
     Providers.playerProvider(ProxyPlayerProvider.newInstance());
     org.mineacademy.burst.provider.Providers.setUuidNameProvider(ProxyPlayerProvider.newInstance());

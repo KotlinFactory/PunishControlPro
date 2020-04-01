@@ -1,19 +1,16 @@
 package org.mineacademy.punishcontrol.spigot.listeners;
 
+import java.util.UUID;
+import javax.inject.Inject;
 import lombok.NonNull;
-import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerJoinEvent;
 import org.mineacademy.fo.Common;
+import org.mineacademy.punishcontrol.core.events.JoinEvent;
+import org.mineacademy.punishcontrol.core.listener.Listener;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.providers.TextureProvider;
 
-import javax.inject.Inject;
-import java.util.UUID;
-
-public final class SpigotDataSetter implements Listener {
+public final class SpigotDataSetter implements Listener<JoinEvent> {
   private final TextureProvider textureProvider;
   private final PlayerProvider playerProvider;
 
@@ -25,12 +22,16 @@ public final class SpigotDataSetter implements Listener {
     this.playerProvider = playerProvider;
   }
 
-  @EventHandler(ignoreCancelled = true)
-  public void onJoin(final PlayerJoinEvent event) {
-    final Player player = event.getPlayer();
-    final UUID uuid = player.getUniqueId();
-    final String name = player.getName();
-    final String ip = player.getAddress() == null ? "unknown" : player.getAddress().getHostName();
+  @Override
+  public Class<JoinEvent> getClazz() {
+    return JoinEvent.class;
+  }
+
+  @Override
+  public void handleEvent(final JoinEvent event) {
+    final UUID uuid = event.targetUUID();
+    final String name = playerProvider.getName(uuid);
+    final String ip = event.targetInetAddress() == null ? "unknown" : event.targetInetAddress().getHostName();
     Common.runLaterAsync(
         () -> {
           Providers.textureProvider().saveSkinTexture(uuid);

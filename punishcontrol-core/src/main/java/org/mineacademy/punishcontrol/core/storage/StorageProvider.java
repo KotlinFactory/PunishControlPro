@@ -1,41 +1,36 @@
 package org.mineacademy.punishcontrol.core.storage;
 
+import java.net.InetAddress;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 import lombok.NonNull;
 import org.mineacademy.punishcontrol.core.punish.Punish;
 import org.mineacademy.punishcontrol.core.punishes.Ban;
 import org.mineacademy.punishcontrol.core.punishes.Mute;
 import org.mineacademy.punishcontrol.core.punishes.Warn;
 
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
-
 public interface StorageProvider {
-
-  /** @return Was the startup o four data structure successfully? */
-  default boolean setup() {
-    return true;
-  }
-
-  default PlayerCache getCacheFor(@NonNull final UUID uuid) {
-    return new PlayerCache(this, uuid);
-  }
 
   // ----------------------------------------------------------------------------------------------------
   // Listing all punishes/warns/reports ever made
   // ----------------------------------------------------------------------------------------------------
 
+  default PlayerCache getCacheFor(@NonNull final UUID uuid) {
+    return new PlayerCache(this, uuid);
+  }
+
   List<Ban> listBans();
 
   List<Mute> listMutes();
 
-  List<Warn> listWarns();
-
   // ----------------------------------------------------------------------------------------------------
   // Listing all current punishes/warns/reports
   // ----------------------------------------------------------------------------------------------------
+
+  List<Warn> listWarns();
 
   default List<Ban> listCurrentBans() {
 
@@ -57,15 +52,6 @@ public interface StorageProvider {
     return warnStream.filter((mute) -> !mute.isOld()).collect(Collectors.toList());
   }
 
-  default List<Warn> listCurrentWarns() {
-    final List<Warn> warns = listWarns();
-
-    // Making our stream parallel on large collections
-    final Stream<Warn> warnStream = warns.size() > 40 ? warns.stream().parallel() : warns.stream();
-
-    return warnStream.filter((mute) -> !mute.isOld()).collect(Collectors.toList());
-  }
-
   // ----------------------------------------------------------------------------------------------------
   //
   // Methods which needs UUID's/Punishes as argument
@@ -76,15 +62,24 @@ public interface StorageProvider {
   // List all punishes/warns/reports the player ever had
   // ----------------------------------------------------------------------------------------------------
 
+  default List<Warn> listCurrentWarns() {
+    final List<Warn> warns = listWarns();
+
+    // Making our stream parallel on large collections
+    final Stream<Warn> warnStream = warns.size() > 40 ? warns.stream().parallel() : warns.stream();
+
+    return warnStream.filter((mute) -> !mute.isOld()).collect(Collectors.toList());
+  }
+
   List<Ban> listBans(@NonNull UUID uuid);
 
   List<Mute> listMutes(@NonNull UUID uuid);
 
-  List<Warn> listWarns(@NonNull UUID uuid);
-
   // ----------------------------------------------------------------------------------------------------
   // Methods to handle the data of specific players
   // ----------------------------------------------------------------------------------------------------
+
+  List<Warn> listWarns(@NonNull UUID uuid);
 
   default Optional<Ban> currentBan(@NonNull final UUID uuid) {
 
@@ -106,6 +101,10 @@ public interface StorageProvider {
     return Optional.empty();
   }
 
+  // ----------------------------------------------------------------------------------------------------
+  // Methods to check whether a player is banned
+  // ----------------------------------------------------------------------------------------------------
+
   default Optional<Warn> currentWarn(@NonNull final UUID uuid) {
     for (final Warn warn : listWarns(uuid)) {
       if (!warn.isOld()) {
@@ -115,10 +114,6 @@ public interface StorageProvider {
 
     return Optional.empty();
   }
-
-  // ----------------------------------------------------------------------------------------------------
-  // Methods to check whether a player is banned
-  // ----------------------------------------------------------------------------------------------------
 
   default boolean isBanned(@NonNull final UUID uuid) {
     return currentBan(uuid).isPresent();
@@ -130,6 +125,48 @@ public interface StorageProvider {
 
   default boolean isWarned(@NonNull final UUID uuid) {
     return currentWarn(uuid).isPresent();
+  }
+
+  default boolean isBanned(@NonNull final InetAddress inetAddress) {
+    for (final Ban ban : listCurrentBans()) {
+      final String toCompare = ban.ip().orElse("unknown");
+      if ("unknown".equalsIgnoreCase(toCompare)) {
+        continue;
+      }
+      //toCompare is never null
+      if (toCompare.equalsIgnoreCase(inetAddress.getHostAddress())) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  default boolean isMuted(@NonNull final InetAddress inetAddress) {
+    for (final Mute ban : listCurrentMutes()) {
+      final String toCompare = ban.ip().orElse("unknown");
+      if ("unknown".equalsIgnoreCase(toCompare)) {
+        continue;
+      }
+      //toCompare is never null
+      if (toCompare.equalsIgnoreCase(inetAddress.getHostAddress())) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  default boolean isWarned(@NonNull final InetAddress inetAddress) {
+    for (final Warn ban : listCurrentWarns()) {
+      final String toCompare = ban.ip().orElse("unknown");
+      if ("unknown".equalsIgnoreCase(toCompare)) {
+        continue;
+      }
+      //toCompare is never null
+      if (toCompare.equalsIgnoreCase(inetAddress.getHostAddress())) {
+        return true;
+      }
+    }
+    return false;
   }
 
   // ----------------------------------------------------------------------------------------------------

@@ -7,6 +7,7 @@ import org.mineacademy.punishcontrol.core.providers.SettingsProvider;
 import org.mineacademy.punishcontrol.core.punishes.Ban;
 import org.mineacademy.punishcontrol.spigot.settings.Settings;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
@@ -30,6 +31,6 @@ public final class SpigotSettingsProvider implements SettingsProvider {
   @Override
   public List<String> getJoinMessageForBannedPlayer(final Ban ban) {
     // TODO
-    return null;
+    return new ArrayList<>();
   }
 }

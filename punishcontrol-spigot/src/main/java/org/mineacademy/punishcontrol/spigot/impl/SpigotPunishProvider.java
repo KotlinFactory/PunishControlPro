@@ -6,8 +6,8 @@ import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.mineacademy.fo.Common;
+import org.mineacademy.punishcontrol.core.providers.PunishProvider;
 import org.mineacademy.punishcontrol.core.punish.Punish;
-import org.mineacademy.punishcontrol.core.punish.PunishProvider;
 import org.mineacademy.punishcontrol.spigot.events.AsyncPunishCreateEvent;
 import org.mineacademy.punishcontrol.spigot.settings.Settings;
 
@@ -62,6 +62,6 @@ public final class SpigotPunishProvider implements PunishProvider {
 
   @Override
   public boolean handlePunishEvent(final @NonNull Punish punish) {
-    return Common.callEvent(AsyncPunishCreateEvent.newInstance(punish));
+    return Common.callEvent(AsyncPunishCreateEvent.create(punish));
   }
 }

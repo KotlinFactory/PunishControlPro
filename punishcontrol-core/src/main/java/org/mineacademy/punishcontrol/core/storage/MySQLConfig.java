@@ -3,15 +3,14 @@ package org.mineacademy.punishcontrol.core.storage;
 import de.leonhard.storage.internal.exception.LightningValidationException;
 import de.leonhard.storage.util.FileUtils;
 import de.leonhard.storage.util.Valid;
-import lombok.NonNull;
-import lombok.SneakyThrows;
-import org.mineacademy.punishcontrol.core.providers.WorkingDirectoryProvider;
-
-import javax.inject.Inject;
 import java.io.File;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.List;
+import javax.inject.Inject;
+import lombok.NonNull;
+import lombok.SneakyThrows;
+import org.mineacademy.punishcontrol.core.providers.PluginDataProvider;
 
 /*
 
@@ -29,7 +28,7 @@ public final class MySQLConfig {
   private long lastReloaded;
 
   @Inject
-  public MySQLConfig(@NonNull final WorkingDirectoryProvider provider) {
+  public MySQLConfig(@NonNull final PluginDataProvider provider) {
     final File file = new File(provider.getDataFolder(), "MySQL.cnf");
 
     if (!file.exists()) {
@@ -44,7 +43,7 @@ public final class MySQLConfig {
     this.file = FileUtils.getAndMake(file);
   }
 
-  public static MySQLConfig newInstance(@NonNull final WorkingDirectoryProvider provider) {
+  public static MySQLConfig newInstance(@NonNull final PluginDataProvider provider) {
     return new MySQLConfig(provider);
   }
 

@@ -1,18 +1,42 @@
 package org.mineacademy.punishcontrol.proxy.listeners;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-import net.md_5.bungee.api.plugin.Listener;
+import de.exceptionflug.mccommons.inventories.proxy.utils.Schedulable;
+import java.util.UUID;
+import javax.inject.Inject;
+import org.mineacademy.burst.provider.TextureProvider;
+import org.mineacademy.burst.provider.UUIDNameProvider;
+import org.mineacademy.punishcontrol.core.events.JoinEvent;
+import org.mineacademy.punishcontrol.core.listener.Listener;
+import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
-public final class ProxyDataSetter implements Listener {
+public final class ProxyDataSetter implements Listener<JoinEvent>, Schedulable {
 
-  public static ProxyDataSetter newInstance() {
-    return new ProxyDataSetter();
+  private final UUIDNameProvider uuidNameProvider;
+  private final TextureProvider textureProvider;
+  private final PlayerProvider playerProvider;
+
+  @Inject
+  public ProxyDataSetter(final UUIDNameProvider uuidNameProvider,
+      final TextureProvider textureProvider, final
+  PlayerProvider playerProvider) {
+    this.uuidNameProvider = uuidNameProvider;
+    this.textureProvider = textureProvider;
+    this.playerProvider = playerProvider;
   }
 
-  //	@EventHandler
-  //	public void onJoin(net.md_5.bungee.)
-  // TODO import events
+  @Override
+  public Class<JoinEvent> getClazz() {
+    return JoinEvent.class;
+  }
 
+  @Override
+  public void handleEvent(final JoinEvent event) {
+    final UUID uuid = event.targetUUID();
+    final String name = playerProvider.getName(uuid);
+
+    async(() -> {
+      uuidNameProvider.saveUUIDAndName(uuid, name);
+      textureProvider.saveSkinTexture(uuid, name);
+    });
+  }
 }

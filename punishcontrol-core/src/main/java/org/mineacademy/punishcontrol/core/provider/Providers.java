@@ -7,8 +7,12 @@ import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.mineacademy.punishcontrol.core.PunishControlManager;
-import org.mineacademy.punishcontrol.core.providers.*;
-import org.mineacademy.punishcontrol.core.punish.PunishProvider;
+import org.mineacademy.punishcontrol.core.providers.ExceptionHandler;
+import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
+import org.mineacademy.punishcontrol.core.providers.PluginDataProvider;
+import org.mineacademy.punishcontrol.core.providers.PunishProvider;
+import org.mineacademy.punishcontrol.core.providers.SettingsProvider;
+import org.mineacademy.punishcontrol.core.providers.TextureProvider;
 import org.mineacademy.punishcontrol.core.storage.MySQLConfig;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 
@@ -29,7 +33,7 @@ public final class Providers {
 
   @Setter @NonNull private static SettingsProvider settingsProvider;
 
-  @Setter @NonNull private static WorkingDirectoryProvider workingDirectoryProvider;
+  @Setter @NonNull private static PluginDataProvider pluginDataProvider;
 
   @Setter @NonNull private static PunishProvider punishProvider;
 
@@ -62,10 +66,10 @@ public final class Providers {
   }
 
   @Provides
-  public static WorkingDirectoryProvider workingDirectoryProvider() {
-    Valid.notNull(workingDirectoryProvider, "WorkingDirectoryProvider not yet set");
+  public static PluginDataProvider pluginDataProvider() {
+    Valid.notNull(pluginDataProvider, "WorkingDirectoryProvider not yet set");
 
-    return workingDirectoryProvider;
+    return pluginDataProvider;
   }
 
   @Provides
@@ -88,7 +92,7 @@ public final class Providers {
 
   @Provides
   public static MySQLConfig config(
-      @NonNull final WorkingDirectoryProvider workingDirectoryProvider) {
+      @NonNull final PluginDataProvider workingDirectoryProvider) {
     Valid.notNull(workingDirectoryProvider, "Working directoryProvider is null");
 
     return MySQLConfig.newInstance(workingDirectoryProvider);

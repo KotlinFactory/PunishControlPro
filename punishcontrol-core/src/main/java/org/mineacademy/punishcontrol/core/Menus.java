@@ -27,7 +27,9 @@ public class Menus {
   }
 
   private String[] replace(
-      final String[] array, final CharSequence target, final CharSequence replacement) {
+      @NonNull final String[] array,
+      @NonNull final CharSequence target,
+      @NonNull final CharSequence replacement) {
     final String[] result = new String[array.length];
 
     for (int i = 0; i < result.length; i++) {

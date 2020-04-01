@@ -1,19 +1,20 @@
 package org.mineacademy.punishcontrol.core.punish;
 
 import de.leonhard.storage.util.Valid;
-import lombok.Data;
-import lombok.NonNull;
-import lombok.ToString;
-import lombok.experimental.Accessors;
-import org.mineacademy.punishcontrol.core.provider.Providers;
-import org.mineacademy.punishcontrol.core.providers.ExceptionHandler;
-import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
-import org.mineacademy.punishcontrol.core.storage.StorageProvider;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import lombok.Data;
+import lombok.NonNull;
+import lombok.ToString;
+import lombok.experimental.Accessors;
+import org.jetbrains.annotations.Nullable;
+import org.mineacademy.punishcontrol.core.provider.Providers;
+import org.mineacademy.punishcontrol.core.providers.ExceptionHandler;
+import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
+import org.mineacademy.punishcontrol.core.providers.PunishProvider;
+import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 
 @Data
 @Accessors(chain = true, fluent = true)
@@ -43,7 +44,7 @@ public abstract class Punish {
       final long creation) {
     this.target = target;
     this.creator = creator;
-      punishDuration = duration;
+    punishDuration = duration;
     this.punishType = punishType;
     this.creation = creation;
   }
@@ -63,17 +64,14 @@ public abstract class Punish {
     removed((Boolean) banRawData.get("removed"));
   }
 
-
-
   /**
    * Validates our raw-data which should contain keys to parse a punish from
    *
    * <p>Keys which will be validated: target, creator, duration, ip, removed
    *
    * @param rawData Map to validate
-   * @return False is validation fails
    */
-  protected static void validateRaWData(final Map<String, Object> rawData) {
+  private static void validateRaWData(final Map<String, Object> rawData) {
     if (!(rawData.get("target") instanceof String)) {
       Valid.error(
           "PunishRaw-Data is missing an String named 'target'",
@@ -122,7 +120,15 @@ public abstract class Punish {
   }
 
   public final Optional<String> ip() {
+    if ("unknown".equalsIgnoreCase(ip)) {
+      return Optional.empty();
+    }
     return Optional.ofNullable(ip);
+  }
+
+  public Punish ip(@Nullable final String ip) {
+    this.ip = ip == null ? "unknown" : ip;
+    return this;
   }
 
   // target, creator, reason, duration, ip, removed

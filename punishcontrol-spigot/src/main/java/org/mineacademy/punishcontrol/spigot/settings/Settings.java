@@ -21,6 +21,29 @@ public final class Settings extends SimpleSettings {
     return 1;
   }
 
+  public static final class Punish {
+    public static final class Ban{
+
+      private static void init() {
+
+      }
+    }
+
+    public static final class Mute{
+
+      private static void init() {
+
+      }
+    }
+
+    public static final class Warn{
+
+      private static void init() {
+
+      }
+    }
+  }
+
   public static final class Notifications {
     public static final class Punish {
 

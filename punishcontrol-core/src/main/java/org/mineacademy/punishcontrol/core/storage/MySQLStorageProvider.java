@@ -232,12 +232,14 @@ public final class MySQLStorageProvider extends SimpleDatabase implements Storag
 
   @Override
   public void removeMute(final @NonNull Mute mute) {
-    update("UPDATE {table} SET removed=true WHERE Creation=" + mute.creation() + " AND Type='MUTE'");
+    update(
+        "UPDATE {table} SET removed=true WHERE Creation=" + mute.creation() + " AND Type='MUTE'");
   }
 
   @Override
   public void removeWarn(final @NonNull Warn warn) {
-    update("UPDATE {table} SET removed=true WHERE Creation=" + warn.creation() + " AND Type='WARN'");
+    update(
+        "UPDATE {table} SET removed=true WHERE Creation=" + warn.creation() + " AND Type='WARN'");
   }
 
   private void saveData(

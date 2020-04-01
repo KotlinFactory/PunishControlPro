@@ -44,12 +44,16 @@ Punishes:
     #if an punish of this type is created?
     Permission: punishcontrol.command.ban
     Enabled: true
+
+    Apply_On_IP: true
   Mute:
     Permission: punishcontrol.command.mute
     Enabled: true
+    Apply_On_IP: true
   Warn:
     Permission: punishcontrol.command.warn
     Enabled: true
+    Apply_On_IP: true
 
 Notifications:
   Punish:

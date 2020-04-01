@@ -9,6 +9,11 @@ import java.util.OptionalInt;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 
+/**
+ * Class to be able
+ *
+ * TODO: do not obfuscate!
+ */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class PunishDuration {
   private final long ms;

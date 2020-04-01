@@ -1,29 +1,37 @@
 package org.mineacademy.punishcontrol.core;
 
 import de.leonhard.storage.Yaml;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Random;
 import lombok.NonNull;
 import lombok.val;
 import org.mineacademy.punishcontrol.core.group.Group;
 import org.mineacademy.punishcontrol.core.group.GroupManager;
+import org.mineacademy.punishcontrol.core.listener.Listener;
+import org.mineacademy.punishcontrol.core.listeners.PunishQueue;
 import org.mineacademy.punishcontrol.core.punish.PunishDuration;
 import org.mineacademy.punishcontrol.core.punish.template.PunishTemplateManager;
 import org.mineacademy.punishcontrol.core.storage.StorageType;
 
-import java.io.File;
-import java.util.Map;
-import java.util.Random;
-
-/** Class for a unified startup of our Main-Plugin classes */
+/**
+ * Class for a unified startup of our Main-Plugin classes
+ */
 public interface SimplePunishControlPlugin {
+
+  CoreComponent coreModule = DaggerCoreComponent.builder().build();
+  List<Listener<?>> listeners = new ArrayList<>();
 
   String PREFIX = "§3Punish§bControl§5+ §7┃ ";
   String[] LOGO =
-      new String[] {
-        "§3 ____              _     _      ____            _             _ ",
-        "§3|  _ \\ _   _ _ __ (_)___| |__  / ___|___  _ __ | |_ _ __ ___ | |",
-        "§3| |_) | | | | '_ \\| / __| '_ \\| |   / _ \\| '_ \\| __| '__/ _ \\| |",
-        "§5|  __/| |_| | | | | \\__ \\ | | | |__| (_) | | | | |_| | | (_) | |",
-        "§5|_|    \\__,_|_| |_|_|___/_| |_|\\____\\___/|_| |_|\\__|_|  \\___/|_|"
+      new String[]{
+          "§3 ____              _     _      ____            _             _ ",
+          "§3|  _ \\ _   _ _ __ (_)___| |__  / ___|___  _ __ | |_ _ __ ___ | |",
+          "§3| |_) | | | | '_ \\| / __| '_ \\| |   / _ \\| '_ \\| __| '__/ _ \\| |",
+          "§5|  __/| |_| | | | | \\__ \\ | | | |__| (_) | | | | |_| | | (_) | |",
+          "§5|_|    \\__,_|_| |_|_|___/_| |_|\\____\\___/|_| |_|\\__|_|  \\___/|_|"
       };
 
   static int getRandomNumberInRange(final int min, final int max) {
@@ -40,15 +48,16 @@ public interface SimplePunishControlPlugin {
   // Default methods
   // ----------------------------------------------------------------------------------------------------
 
-  default void downloadDependencies() {}
+  default void downloadDependencies() {
+  }
 
   default String[] getStartupFinishedMessages() {
-    return new String[] {
-      "Top notch!",
-      "Ban-hammer is swinging",
-      "We're live!",
-      "MineAcademy rules!",
-      "Ready for takeover..."
+    return new String[]{
+        "Top notch!",
+        "Ban-hammer is swinging",
+        "We're live!",
+        "MineAcademy rules!",
+        "Ready for takeover..."
     };
   }
 
@@ -114,6 +123,9 @@ public interface SimplePunishControlPlugin {
     }
 
     try {
+      registerEvents(PunishQueue.create());
+      registerEvents(coreModule.banListener());
+      registerEvents(coreModule.muteListener());
       registerListener();
       log("Listener §l§a✔");
     } catch (final Throwable throwable) {
@@ -150,16 +162,16 @@ public interface SimplePunishControlPlugin {
   default void loadGroups() {
     final Yaml yaml = new Yaml("settings.yml", getWorkingDirectory());
 
-    @SuppressWarnings("unchecked")
-    final Map<String, Object> rawData = (Map<String, Object>) yaml.getMap("Groups");
+    @SuppressWarnings("unchecked") final Map<String, Object> rawData = (Map<String, Object>) yaml
+        .getMap("Groups");
 
     for (final val entry : rawData.entrySet()) { // Group-Names
       if (!(entry.getValue() instanceof Map)) {
         continue;
       }
 
-      @SuppressWarnings("unchecked")
-      final Map<String, Object> groupRawData = (Map<String, Object>) entry.getValue();
+      @SuppressWarnings("unchecked") final Map<String, Object> groupRawData = (Map<String, Object>) entry
+          .getValue();
 
       final Group.GroupBuilder builder = Group.builder();
 
@@ -167,8 +179,8 @@ public interface SimplePunishControlPlugin {
       builder.permission(groupRawData.get("Permission").toString());
       builder.priority(Integer.parseInt(groupRawData.get("Priority").toString()));
 
-      @SuppressWarnings("unchecked")
-      final Map<String, String> limits = (Map<String, String>) groupRawData.get("Limits");
+      @SuppressWarnings("unchecked") final Map<String, String> limits = (Map<String, String>) groupRawData
+          .get("Limits");
 
       builder.banLimit(PunishDuration.of(limits.get("Ban")));
       builder.muteLimit(PunishDuration.of(limits.get("Mute")));
@@ -176,6 +188,10 @@ public interface SimplePunishControlPlugin {
 
       GroupManager.registerGroup(builder.build());
     }
+  }
+
+  default void registerEvents(final Listener<?> listener) {
+    SimplePunishControlPlugin.listeners.add(listener);
   }
 
   void log(@NonNull String... message);

@@ -23,7 +23,8 @@ public class Commands {
   }
 
   public void removeCommands(final String... cmds) {
-    Arrays.stream(cmds)
+    Arrays
+        .stream(cmds)
         .map(Commands::getCommand)
         .filter(Objects::nonNull)
         .forEach(

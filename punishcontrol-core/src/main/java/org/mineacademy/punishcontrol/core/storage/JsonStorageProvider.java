@@ -2,16 +2,19 @@ package org.mineacademy.punishcontrol.core.storage;
 
 import de.leonhard.storage.Json;
 import de.leonhard.storage.util.Valid;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.UUID;
+import javax.inject.Inject;
 import lombok.NonNull;
 import lombok.val;
 import org.mineacademy.punishcontrol.core.PunishControlManager;
-import org.mineacademy.punishcontrol.core.providers.WorkingDirectoryProvider;
+import org.mineacademy.punishcontrol.core.providers.PluginDataProvider;
 import org.mineacademy.punishcontrol.core.punishes.Ban;
 import org.mineacademy.punishcontrol.core.punishes.Mute;
 import org.mineacademy.punishcontrol.core.punishes.Warn;
-
-import javax.inject.Inject;
-import java.util.*;
 
 /**
  * Class to save our data in a JSON for an example how the file looks like, just scrool to the end
@@ -37,7 +40,7 @@ public final class JsonStorageProvider extends Json implements StorageProvider {
   // ----------------------------------------------------------------------------------------------------
 
   @Inject
-  public JsonStorageProvider(final WorkingDirectoryProvider workingDirectoryProvider) {
+  public JsonStorageProvider(final PluginDataProvider workingDirectoryProvider) {
     super(
         PunishControlManager.FILES.JSON_DATA_FILE_NAME,
         workingDirectoryProvider.getDataFolder().getAbsolutePath() + "/data");

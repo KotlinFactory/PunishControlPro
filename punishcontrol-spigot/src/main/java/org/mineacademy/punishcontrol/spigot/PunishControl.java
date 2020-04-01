@@ -1,25 +1,28 @@
 package org.mineacademy.punishcontrol.spigot;
 
+import java.util.Arrays;
+import java.util.List;
 import lombok.NonNull;
 import org.mineacademy.fo.Common;
 import org.mineacademy.fo.plugin.SimplePlugin;
 import org.mineacademy.fo.settings.YamlStaticConfig;
-import org.mineacademy.punishcontrol.core.CoreComponent;
-import org.mineacademy.punishcontrol.core.DaggerCoreComponent;
 import org.mineacademy.punishcontrol.core.SimplePunishControlPlugin;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.storage.StorageType;
-import org.mineacademy.punishcontrol.spigot.commands.*;
-import org.mineacademy.punishcontrol.spigot.impl.*;
+import org.mineacademy.punishcontrol.spigot.commands.CommandKick;
+import org.mineacademy.punishcontrol.spigot.commands.CommandMain;
+import org.mineacademy.punishcontrol.spigot.impl.SpigotExceptionHandler;
+import org.mineacademy.punishcontrol.spigot.impl.SpigotPlayerProvider;
+import org.mineacademy.punishcontrol.spigot.impl.SpigotPluginDataProvider;
+import org.mineacademy.punishcontrol.spigot.impl.SpigotPunishProvider;
+import org.mineacademy.punishcontrol.spigot.impl.SpigotSettingsProvider;
+import org.mineacademy.punishcontrol.spigot.impl.SpigotTextureProvider;
+import org.mineacademy.punishcontrol.spigot.listeners.SpigotListenerImpl;
 import org.mineacademy.punishcontrol.spigot.settings.Localization;
 import org.mineacademy.punishcontrol.spigot.settings.Settings;
 
-import java.util.Arrays;
-import java.util.List;
-
 public final class PunishControl extends SimplePlugin implements SimplePunishControlPlugin {
   private final SpigotComponent spigotModule = DaggerSpigotComponent.builder().build();
-  private final CoreComponent coreModule = DaggerCoreComponent.builder().build();
 
   @Override
   protected void onPluginStart() {
@@ -38,10 +41,10 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
   @Override
   public void registerCommands() {
     registerCommand(CommandMain.newInstance(Settings.MAIN_COMMAND_ALIASES));
-    registerCommand(CommandBan.newInstance());
     registerCommand(CommandKick.newInstance());
-    registerCommand(CommandWarn.newInstance());
-    registerCommand(CommandMute.newInstance());
+    registerCommand(spigotModule.commandBan());
+    registerCommand(spigotModule.commandMute());
+    registerCommand(spigotModule.commandWarn());
 
     registerCommand(spigotModule.commandUnBan());
     registerCommand(spigotModule.commandUnMute());
@@ -51,12 +54,12 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
   @Override
   public void registerListener() {
     registerEvents(spigotModule.spigotDataSetter());
-    registerEvents(spigotModule.spigotJoinHandler());
+    registerEvents(SpigotListenerImpl.create());
   }
 
   @Override
   public void registerProviders() {
-    Providers.workingDirectoryProvider(SpigotWorkingDirectoryProvider.newInstance());
+    Providers.pluginDataProvider(SpigotPluginDataProvider.create());
     Providers.playerProvider(SpigotPlayerProvider.newInstance());
     Providers.textureProvider(SpigotTextureProvider.newInstance());
     Providers.punishProvider(SpigotPunishProvider.newInstance());
@@ -68,7 +71,7 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 
   @Override
   public String chooseLanguage() {
-    return "ENG";
+    return Settings.LOCALE_PREFIX;
   }
 
   @Override

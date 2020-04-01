@@ -7,8 +7,8 @@ import lombok.SneakyThrows;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Cancellable;
+import org.mineacademy.punishcontrol.core.providers.PunishProvider;
 import org.mineacademy.punishcontrol.core.punish.Punish;
-import org.mineacademy.punishcontrol.core.punish.PunishProvider;
 import org.mineacademy.punishcontrol.proxy.events.PunishCreateEvent;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)

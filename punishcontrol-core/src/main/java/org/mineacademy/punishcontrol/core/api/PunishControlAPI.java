@@ -27,7 +27,10 @@ public abstract class PunishControlAPI {
     if (!Providers.settingsProvider().isAPIEnabled()) {
       Valid.error("The API was disabled in the settings.", "You can enable it in the settings.yml");
     }
-
     return instance;
   }
+  
+
+
+
 }

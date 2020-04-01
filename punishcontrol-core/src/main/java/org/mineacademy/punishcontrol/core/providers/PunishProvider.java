@@ -1,6 +1,7 @@
-package org.mineacademy.punishcontrol.core.punish;
+package org.mineacademy.punishcontrol.core.providers;
 
 import lombok.NonNull;
+import org.mineacademy.punishcontrol.core.punish.Punish;
 
 public interface PunishProvider {
   void broadCastPunishMessage(

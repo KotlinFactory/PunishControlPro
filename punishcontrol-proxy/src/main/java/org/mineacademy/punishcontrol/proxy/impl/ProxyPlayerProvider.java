@@ -1,5 +1,8 @@
 package org.mineacademy.punishcontrol.proxy.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -11,13 +14,10 @@ import org.mineacademy.bfo.debug.Debugger;
 import org.mineacademy.burst.provider.UUIDNameProvider;
 import org.mineacademy.punishcontrol.core.providers.AbstractPlayerProvider;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ProxyPlayerProvider extends AbstractPlayerProvider
     implements UUIDNameProvider { // Compatibility
+
   private static final ProxyServer proxyServer = ProxyServer.getInstance();
 
   public static ProxyPlayerProvider newInstance() {

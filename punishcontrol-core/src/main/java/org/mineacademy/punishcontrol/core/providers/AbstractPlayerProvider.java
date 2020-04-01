@@ -2,22 +2,21 @@ package org.mineacademy.punishcontrol.core.providers;
 
 import de.leonhard.storage.Json;
 import de.leonhard.storage.internal.exception.LightningValidationException;
+import java.util.Map;
+import java.util.Optional;
+import java.util.UUID;
 import lombok.NonNull;
 import lombok.val;
 import org.mineacademy.punishcontrol.core.PunishControlManager;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.util.UUIDFetcher;
 
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
-
 public abstract class AbstractPlayerProvider extends Json implements PlayerProvider {
 
   public AbstractPlayerProvider() {
     super(
         PunishControlManager.FILES.UUID_STORAGE,
-        Providers.workingDirectoryProvider().getDataFolder().getAbsolutePath() + "/data/");
+        Providers.pluginDataProvider().getDataFolder().getAbsolutePath() + "/data/");
   }
 
   @Override

@@ -1,6 +1,7 @@
 package org.mineacademy.punishcontrol.spigot.events;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NonNull;
 import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
@@ -10,6 +11,7 @@ import org.mineacademy.punishcontrol.core.punish.Punish;
 import org.mineacademy.punishcontrol.core.punish.PunishType;
 
 @Data
+@EqualsAndHashCode(callSuper = true)
 public class AsyncPunishCreateEvent extends Event implements Cancellable {
   private final Punish punish;
   private boolean cancelled;
@@ -19,7 +21,7 @@ public class AsyncPunishCreateEvent extends Event implements Cancellable {
     this.punish = punish;
   }
 
-  public static AsyncPunishCreateEvent newInstance(final Punish punish) {
+  public static AsyncPunishCreateEvent create(final Punish punish) {
     return new AsyncPunishCreateEvent(punish);
   }
 

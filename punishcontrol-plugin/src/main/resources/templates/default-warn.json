@@ -1,7 +1,9 @@
 {
-  "_comment": "Do not edit, all changes will be overridden",
-  "Type": "Warn",
+  "_comment": "Do not edit, all changes may be overridden. Create another file instead. You can use PunishControlPro for that",
+  "Type": "WARN",
   "Duration": "10 days",
   "Reason": "Example",
-  "Item": "Stone"
+  "Item": "Stone",
+  "Silent": false,
+  "SuperSilent": false
 }
