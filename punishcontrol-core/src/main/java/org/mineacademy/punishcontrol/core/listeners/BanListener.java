@@ -1,11 +1,9 @@
 package org.mineacademy.punishcontrol.core.listeners;
 
-import java.util.Optional;
 import java.util.UUID;
 import javax.inject.Inject;
 import org.mineacademy.punishcontrol.core.events.JoinEvent;
 import org.mineacademy.punishcontrol.core.listener.Listener;
-import org.mineacademy.punishcontrol.core.punishes.Ban;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 
 public final class BanListener implements Listener<JoinEvent> {
@@ -30,12 +28,13 @@ public final class BanListener implements Listener<JoinEvent> {
 
     event.canceled(true);
 
-    final Optional<Ban> optionalBan = storageProvider.currentBan(target);
-    if (!optionalBan.isPresent()) {
-      return;
-    }
+    storageProvider.currentBan(target).ifPresent((ban -> {
+      //TODO: Format
+      event.canceled(true);
+      event.cancelReason(ban.reason());
+    }));
 
-    final Ban ban = optionalBan.get();
+
 
     /*
      * You have been banned

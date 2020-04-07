@@ -1,29 +1,32 @@
 package org.mineacademy.punishcontrol.core.providers;
 
-import de.leonhard.storage.Json;
-import de.leonhard.storage.internal.exception.LightningValidationException;
+import de.leonhard.storage.util.Valid;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 import lombok.NonNull;
 import lombok.val;
 import org.mineacademy.punishcontrol.core.PunishControlManager;
+import org.mineacademy.punishcontrol.core.flatfiles.SecureJson;
 import org.mineacademy.punishcontrol.core.provider.Providers;
-import org.mineacademy.punishcontrol.core.util.UUIDFetcher;
+import org.mineacademy.punishcontrol.core.uuid.UUIDS;
 
-public abstract class AbstractPlayerProvider extends Json implements PlayerProvider {
+public abstract class AbstractPlayerProvider extends SecureJson implements
+    PlayerProvider {
 
   public AbstractPlayerProvider() {
     super(
         PunishControlManager.FILES.UUID_STORAGE,
-        Providers.pluginDataProvider().getDataFolder().getAbsolutePath() + "/data/");
+        Providers.pluginDataProvider().getDataFolder().getAbsolutePath()
+            + "/data/");
   }
 
   @Override
   public final void saveData(
       @NonNull final UUID uuid, @NonNull final String name, final String ip) {
     fileData.insert(
-        uuid.toString() + ".ip", ip); // Increasing performance -> Only writing to file 1x time.
+        uuid.toString() + ".ip",
+        ip); // Increasing performance -> Only writing to file 1x time.
     set(uuid.toString() + ".name", name);
   }
 
@@ -39,15 +42,12 @@ public abstract class AbstractPlayerProvider extends Json implements PlayerProvi
   @Override
   public final String getName(@NonNull final UUID uuid) {
     if (contains(uuid.toString())) {
-      return getString(uuid.toString());
+      return getString(uuid + ".name");
     } else {
-      final String name = UUIDFetcher.getName(uuid);
-      if (name == null) {
-        throw new LightningValidationException("No player with UUID '" + uuid + "' found");
-      } else {
-        set(uuid.toString() + ".name", name);
-        return name;
-      }
+      final String name = UUIDS.toName(uuid).orElse(null);
+      Valid.notNull(name, "No player with UUID '" + uuid + "' found on Mojang-Side");
+      set(uuid.toString() + ".name", name);
+      return name;
     }
   }
 
@@ -57,8 +57,8 @@ public abstract class AbstractPlayerProvider extends Json implements PlayerProvi
       if (!(entry.getValue() instanceof Map)) {
         continue;
       }
-      @SuppressWarnings("unchecked")
-      final Map<String, Object> data = (Map<String, Object>) entry.getValue();
+      @SuppressWarnings("unchecked") final Map<String, Object> data = (Map<String, Object>) entry
+          .getValue();
       if (data.get("name").toString().equalsIgnoreCase(name)) {
         return UUID.fromString(entry.getKey());
       }
@@ -67,13 +67,15 @@ public abstract class AbstractPlayerProvider extends Json implements PlayerProvi
     // Not yet set.
     // Getting from Mojang & Setting it manually.
 
-    final UUID uuid = UUIDFetcher.getUUID(name);
+    final UUID uuid = UUIDS.find(name).orElse(null);
 
-    if (uuid == null) {
-      throw new LightningValidationException("No player named '" + name + "' found");
-    }
+    Valid.notNull(uuid, "No player named '" + name + "' found on the mojang side");
 
     set(uuid.toString() + ".name", name);
     return uuid;
   }
+
+  // ----------------------------------------------------------------------------------------------------
+  // Overridden methods for usability & security
+  // ----------------------------------------------------------------------------------------------------
 }

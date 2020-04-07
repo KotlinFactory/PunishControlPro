@@ -1,13 +1,12 @@
 package org.mineacademy.punishcontrol.core.punish;
 
+import java.util.OptionalInt;
+import java.util.concurrent.TimeUnit;
+import java.util.stream.IntStream;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.mineacademy.punishcontrol.core.util.TimeUtil;
-
-import java.util.OptionalInt;
-import java.util.concurrent.TimeUnit;
-import java.util.stream.IntStream;
 
 /**
  * Class to be able
@@ -78,7 +77,7 @@ public final class PunishDuration {
 
   @Override
   public String toString() {
-    return TimeUtil.formatTimeGeneric(TimeUnit.MILLISECONDS.toSeconds(ms));
+    return TimeUtil.formatTimeDays(TimeUnit.MILLISECONDS.toSeconds(ms));
   }
 
   public long toMs() {

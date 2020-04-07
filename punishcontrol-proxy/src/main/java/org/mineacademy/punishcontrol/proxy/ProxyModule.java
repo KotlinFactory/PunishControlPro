@@ -11,9 +11,12 @@ import org.mineacademy.burst.provider.TextureProvider;
 import org.mineacademy.burst.provider.UUIDNameProvider;
 
 @Module
-public class ProxyModule {
+public final class ProxyModule {
+
   @Provides
-  public ProxyServer proxyServer() {return ProxyServer.getInstance();}
+  public ProxyServer proxyServer() {
+    return ProxyServer.getInstance();
+  }
 
   @Provides
   public List<ProxiedPlayer> onlinePlayers() {
@@ -21,7 +24,7 @@ public class ProxyModule {
   }
 
   @Provides
-  public UUIDNameProvider uuidNameProvider(){
+  public UUIDNameProvider uuidNameProvider() {
     return Providers.getUuidNameProvider();
   }
 

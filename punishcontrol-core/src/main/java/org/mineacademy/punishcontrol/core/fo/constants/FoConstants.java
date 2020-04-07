@@ -106,7 +106,7 @@ public class FoConstants {
         " Your file has been automatically updated at " + TimeUtil.getFormattedDate(),
         " to " + DATA.getNamed() + " " + DATA.getVersion(),
         "",
-        " Due to the improvements LightningStorage brought most comments",
+        " Due to the improvements LightningStorage (Library we use) brought most comments",
         " should have been preserved.",
         "",
         " If you'd like to view the default file, you can either:",

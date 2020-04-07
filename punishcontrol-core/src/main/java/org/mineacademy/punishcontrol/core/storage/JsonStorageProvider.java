@@ -1,6 +1,5 @@
 package org.mineacademy.punishcontrol.core.storage;
 
-import de.leonhard.storage.Json;
 import de.leonhard.storage.util.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,17 +10,19 @@ import javax.inject.Inject;
 import lombok.NonNull;
 import lombok.val;
 import org.mineacademy.punishcontrol.core.PunishControlManager;
+import org.mineacademy.punishcontrol.core.flatfiles.SecureJson;
+import org.mineacademy.punishcontrol.core.providers.ExceptionHandler;
 import org.mineacademy.punishcontrol.core.providers.PluginDataProvider;
 import org.mineacademy.punishcontrol.core.punishes.Ban;
 import org.mineacademy.punishcontrol.core.punishes.Mute;
 import org.mineacademy.punishcontrol.core.punishes.Warn;
 
 /**
- * Class to save our data in a JSON for an example how the file looks like, just scrool to the end
- * of this file
+ * Class to save our data in a JSON for an example how the file looks like, just
+ * scrool to the end of this file
  */
 
-public final class JsonStorageProvider extends Json implements StorageProvider {
+public final class JsonStorageProvider extends SecureJson implements StorageProvider {
 
   private static final String BANS_PATH_PREFIX = "bans";
   private static final String MUTES_PATH_PREFIX = "mutes";
@@ -29,21 +30,30 @@ public final class JsonStorageProvider extends Json implements StorageProvider {
 
   //
 
-  private static final String PATH_TO_BAN = BANS_PATH_PREFIX + ".{uuid}.{creation}";
-  private static final String PATH_TO_MUTE = MUTES_PATH_PREFIX + ".{uuid}.{creation}";
-  private static final String PATH_TO_WARN = WARN_PATH_PREFIX + ".{uuid}.{creation}";
+  private static final String PATH_TO_BAN =
+      BANS_PATH_PREFIX + ".{uuid}.{creation}";
+  private static final String PATH_TO_MUTE =
+      MUTES_PATH_PREFIX + ".{uuid}.{creation}";
+  private static final String PATH_TO_WARN =
+      WARN_PATH_PREFIX + ".{uuid}.{creation}";
+  private final ExceptionHandler exceptionHandler;
+  private final boolean canWrite;
 
   //
 
-  // ----------------------------------------------------------------------------------------------------
-  // Private methods to handle exceptions
-  // ----------------------------------------------------------------------------------------------------
-
   @Inject
-  public JsonStorageProvider(final PluginDataProvider workingDirectoryProvider) {
+  public JsonStorageProvider(final ExceptionHandler exceptionHandler,
+      final PluginDataProvider workingDirectoryProvider) {
     super(
         PunishControlManager.FILES.JSON_DATA_FILE_NAME,
         workingDirectoryProvider.getDataFolder().getAbsolutePath() + "/data");
+    this.exceptionHandler = exceptionHandler;
+    canWrite = file.canWrite();
+  }
+
+  @Override
+  public ExceptionHandler exceptionHandler() {
+    return exceptionHandler;
   }
 
   private long parseMSFromKey(final String path, final String key) {
@@ -66,7 +76,8 @@ public final class JsonStorageProvider extends Json implements StorageProvider {
   }
 
   @SuppressWarnings("unchecked")
-  private Map<String, Object> parseMap(final String path, @NonNull final Object rawData) {
+  private Map<String, Object> parseMap(final String path,
+      @NonNull final Object rawData) {
     try {
       return (Map<String, Object>) rawData;
     } catch (final ClassCastException ex) {
@@ -75,7 +86,8 @@ public final class JsonStorageProvider extends Json implements StorageProvider {
           "",
           "----",
           "Invalid configuration in your JSON-Punish-Storage",
-          "Expected type: Map<String, Object> found: " + rawData.getClass().getSimpleName(),
+          "Expected type: Map<String, Object> found: " + rawData.getClass()
+              .getSimpleName(),
           "Dir: " + getFilePath(),
           "Path in File: " + path,
           "This is not an PunishControlPro error but an configuration mistake!",
@@ -100,11 +112,11 @@ public final class JsonStorageProvider extends Json implements StorageProvider {
       for (final val entry : bans.entrySet()) { // MS
         // Actual ban
 
-        final long creation = parseMSFromKey(BANS_PATH_PREFIX + "." + key, entry.getKey());
+        final long creation = parseMSFromKey(BANS_PATH_PREFIX + "." + key,
+            entry.getKey());
         final Map<String, Object> banRawData = parseMap(key, entry.getValue());
 
         final Ban ban = Ban.ofRawData(creation, banRawData);
-
 
         result.add(ban);
       }
@@ -123,7 +135,8 @@ public final class JsonStorageProvider extends Json implements StorageProvider {
       for (final val entry : bans.entrySet()) { // MS
         // Actual ban
 
-        final long creation = parseMSFromKey(MUTES_PATH_PREFIX + "." + key, entry.getKey());
+        final long creation = parseMSFromKey(MUTES_PATH_PREFIX + "." + key,
+            entry.getKey());
         final Map<String, Object> muteRawData = parseMap(key, entry.getValue());
 
         final Mute mute = Mute.ofRawData(creation, muteRawData);
@@ -146,7 +159,8 @@ public final class JsonStorageProvider extends Json implements StorageProvider {
       for (final val entry : bans.entrySet()) { // MS
         // Actual ban
 
-        final long creation = parseMSFromKey(WARN_PATH_PREFIX + "." + key, entry.getKey());
+        final long creation = parseMSFromKey(WARN_PATH_PREFIX + "." + key,
+            entry.getKey());
         final Map<String, Object> warnRawData = parseMap(key, entry.getValue());
 
         final Warn warn = Warn.ofRawData(creation, warnRawData);
@@ -171,7 +185,8 @@ public final class JsonStorageProvider extends Json implements StorageProvider {
     for (final val entry : bans.entrySet()) { // MS
       // Actual ban
 
-      final long creation = parseMSFromKey(BANS_PATH_PREFIX + "." + uuid, entry.getKey());
+      final long creation = parseMSFromKey(BANS_PATH_PREFIX + "." + uuid,
+          entry.getKey());
       final Map<String, Object> banRawData =
           parseMap(BANS_PATH_PREFIX + "." + uuid, entry.getValue());
 
@@ -192,7 +207,8 @@ public final class JsonStorageProvider extends Json implements StorageProvider {
     for (final val entry : bans.entrySet()) { // MS
       // Actual ban
 
-      final long creation = parseMSFromKey(MUTES_PATH_PREFIX + "." + uuid, entry.getKey());
+      final long creation = parseMSFromKey(MUTES_PATH_PREFIX + "." + uuid,
+          entry.getKey());
       final Map<String, Object> muteRawData =
           parseMap(MUTES_PATH_PREFIX + "." + uuid, entry.getValue());
 
@@ -213,7 +229,8 @@ public final class JsonStorageProvider extends Json implements StorageProvider {
     for (final val entry : bans.entrySet()) { // MS
       // Actual ban
 
-      final long creation = parseMSFromKey(WARN_PATH_PREFIX + "." + uuid, entry.getKey());
+      final long creation = parseMSFromKey(WARN_PATH_PREFIX + "." + uuid,
+          entry.getKey());
       final Map<String, Object> warnRawData =
           parseMap(WARN_PATH_PREFIX + "." + uuid, entry.getValue());
 
@@ -235,7 +252,6 @@ public final class JsonStorageProvider extends Json implements StorageProvider {
         PATH_TO_BAN
             .replace("{uuid}", ban.target().toString())
             .replace("{creation}", ban.creation() + "");
-
     set(path, ban.toMap());
   }
 
@@ -245,7 +261,6 @@ public final class JsonStorageProvider extends Json implements StorageProvider {
         PATH_TO_MUTE
             .replace("{uuid}", mute.target().toString())
             .replace("{creation}", mute.creation() + "");
-
     set(path, mute.toMap());
   }
 
@@ -292,10 +307,11 @@ public final class JsonStorageProvider extends Json implements StorageProvider {
 
     set(path + ".removed", true);
   }
+}
 
-  // ----------------------------------------------------------------------------------------------------
-  // Example-File
-  // ----------------------------------------------------------------------------------------------------
+// ----------------------------------------------------------------------------------------------------
+// Example-File
+// ----------------------------------------------------------------------------------------------------
 
   /*
   {
@@ -334,4 +350,4 @@ public final class JsonStorageProvider extends Json implements StorageProvider {
     }
   }
     */
-}
+

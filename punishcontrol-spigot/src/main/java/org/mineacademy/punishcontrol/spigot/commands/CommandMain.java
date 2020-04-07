@@ -11,7 +11,7 @@ public final class CommandMain extends SimpleCommand {
     super(labels);
   }
 
-  public static CommandMain newInstance(@NonNull final StrictList<String> labels) {
+  public static CommandMain create(@NonNull final StrictList<String> labels) {
     return new CommandMain(labels);
   }
 

@@ -12,7 +12,7 @@ import org.mineacademy.punishcontrol.core.punish.PunishType;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class AsyncPunishCreateEvent extends Event implements Cancellable {
+public final class AsyncPunishCreateEvent extends Event implements Cancellable {
   private final Punish punish;
   private boolean cancelled;
 

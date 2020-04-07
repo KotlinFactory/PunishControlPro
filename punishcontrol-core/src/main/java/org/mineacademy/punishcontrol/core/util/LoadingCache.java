@@ -1,15 +1,15 @@
 package org.mineacademy.punishcontrol.core.util;
 
-import lombok.RequiredArgsConstructor;
-
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
+import lombok.RequiredArgsConstructor;
 
-@RequiredArgsConstructor
+@RequiredArgsConstructor //Must be public
 public abstract class LoadingCache<K, V> {
+
   private final Map<K, V> map = new HashMap<>();
   private final long duration;
   private final TimeUnit timeUnit;

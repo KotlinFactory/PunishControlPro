@@ -1,14 +1,14 @@
 package org.mineacademy.punishcontrol.core.punishes;
 
+import java.util.Map;
+import java.util.UUID;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.jetbrains.annotations.Nullable;
 import org.mineacademy.punishcontrol.core.punish.Punish;
 import org.mineacademy.punishcontrol.core.punish.PunishDuration;
 import org.mineacademy.punishcontrol.core.punish.PunishType;
-
-import java.util.Map;
-import java.util.UUID;
 
 @Setter
 @Accessors(chain = true, fluent = true)
@@ -72,7 +72,7 @@ public final class Ban extends Punish {
   }
 
   @Override
-  public Ban ip(@NonNull final String ip) {
+  public Ban ip(@Nullable final String ip) {
     return (Ban) super.ip(ip);
   }
 

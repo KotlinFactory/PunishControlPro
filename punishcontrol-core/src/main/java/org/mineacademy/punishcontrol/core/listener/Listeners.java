@@ -16,7 +16,7 @@ public class Listeners {
 
   private final List<Listener> registeredListeners = new ArrayList<>();
 
-  public void registerListener(final Listener listener) {
+  public void register(final Listener listener) {
     registeredListeners.add(listener);
   }
 

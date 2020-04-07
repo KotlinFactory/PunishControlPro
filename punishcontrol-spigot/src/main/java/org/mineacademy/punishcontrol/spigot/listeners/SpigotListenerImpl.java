@@ -33,7 +33,6 @@ public final class SpigotListenerImpl implements Listener {
   public void chat(final AsyncPlayerChatEvent asyncPlayerChatEvent) {
     final ChatEvent chatEvent = Events.call(ChatEvent
         .create(asyncPlayerChatEvent.getPlayer().getUniqueId(), asyncPlayerChatEvent.getMessage()));
-
     asyncPlayerChatEvent.setCancelled(chatEvent.canceled());
     asyncPlayerChatEvent.setMessage(chatEvent.getMessage());
   }

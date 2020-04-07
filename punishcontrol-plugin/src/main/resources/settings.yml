@@ -78,7 +78,7 @@ Groups:
     # Templates the Group should always be able to use.
     # Even if the Limits would prohibit the usage. (For example by the duration of the punish)
     # Set to * to enable all
-    Template_By_Passes: ['*']
+    Template_Bypasses: ['*']
 
   Moderator:
     Priority: 1
@@ -88,7 +88,7 @@ Groups:
       Ban: 1 year
       Mute: 1 year
       Warn: 2 year
-    Template_By_Passes: ['*']
+    Template_Bypasses: ['*']
 
   Supporter:
     Priority: 2
@@ -98,7 +98,7 @@ Groups:
       Ban: 1 month
       Mute: 2 month
       Warn: 3 month
-    Template_By_Passes: ['*']
+    Template_Bypasses: ['*']
 
 #
 # Advanced settings for PunishControl PRO

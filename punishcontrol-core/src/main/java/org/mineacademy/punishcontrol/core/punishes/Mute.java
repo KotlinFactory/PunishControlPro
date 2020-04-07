@@ -1,12 +1,12 @@
 package org.mineacademy.punishcontrol.core.punishes;
 
+import java.util.Map;
+import java.util.UUID;
 import lombok.NonNull;
+import org.jetbrains.annotations.Nullable;
 import org.mineacademy.punishcontrol.core.punish.Punish;
 import org.mineacademy.punishcontrol.core.punish.PunishDuration;
 import org.mineacademy.punishcontrol.core.punish.PunishType;
-
-import java.util.Map;
-import java.util.UUID;
 
 public final class Mute extends Punish {
 
@@ -74,7 +74,7 @@ public final class Mute extends Punish {
   }
 
   @Override
-  public Mute ip(@NonNull final String ip) {
+  public Mute ip(@Nullable final String ip) {
     return (Mute) super.ip(ip);
   }
 

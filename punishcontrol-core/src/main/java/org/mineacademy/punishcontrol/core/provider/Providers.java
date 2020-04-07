@@ -27,17 +27,29 @@ import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 @Accessors(fluent = true)
 public final class Providers {
 
-  @Setter @NonNull private static PlayerProvider playerProvider;
+  @Setter
+  @NonNull
+  private static PlayerProvider playerProvider;
 
-  @Setter @NonNull private static TextureProvider textureProvider;
+  @Setter
+  @NonNull
+  private static TextureProvider textureProvider;
 
-  @Setter @NonNull private static SettingsProvider settingsProvider;
+  @Setter
+  @NonNull
+  private static SettingsProvider settingsProvider;
 
-  @Setter @NonNull private static PluginDataProvider pluginDataProvider;
+  @Setter
+  @NonNull
+  private static PluginDataProvider pluginDataProvider;
 
-  @Setter @NonNull private static PunishProvider punishProvider;
+  @Setter
+  @NonNull
+  private static PunishProvider punishProvider;
 
-  @Setter @NonNull private static ExceptionHandler exceptionHandler;
+  @Setter
+  @NonNull
+  private static ExceptionHandler exceptionHandler;
 
   // StorageProvider can't be set.
   public static StorageProvider storageProvider() {
@@ -93,7 +105,8 @@ public final class Providers {
   @Provides
   public static MySQLConfig config(
       @NonNull final PluginDataProvider workingDirectoryProvider) {
-    Valid.notNull(workingDirectoryProvider, "Working directoryProvider is null");
+    Valid
+        .notNull(workingDirectoryProvider, "Working directoryProvider is null");
 
     return MySQLConfig.newInstance(workingDirectoryProvider);
   }

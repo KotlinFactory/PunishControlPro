@@ -6,9 +6,11 @@ import java.util.List;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.NonNull;
-import org.mineacademy.fo.Common;
+import org.bukkit.Bukkit;
+import org.mineacademy.fo.Players;
 import org.mineacademy.fo.collection.StrictList;
 import org.mineacademy.fo.model.Replacer;
+import org.mineacademy.fo.plugin.SimplePlugin;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.punish.Punish;
 import org.mineacademy.punishcontrol.core.punish.PunishBuilder;
@@ -17,27 +19,30 @@ import org.mineacademy.punishcontrol.core.punish.PunishType;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 import org.mineacademy.punishcontrol.spigot.menus.MenuPlayerBrowser;
 
-/** Command to handle (Un) banning, muting, warning, reporting & kicking players */
+/**
+ * Command to handle (Un) banning, muting, warning, reporting & kicking players
+ */
 /*
 TODO: Put in core & work with type parameters
  */
 
 @Getter
-public abstract class AbstractPunishCommand extends AbstractSimplePunishControlCommand {
-  private static final UUID CONSOLE = UUID.fromString("f78a4d8d-d51b-4b39-98a3-230f2de0c670");
+public abstract class AbstractPunishCommand extends
+    AbstractSimplePunishControlCommand {
+
+  private static final UUID CONSOLE = UUID
+      .fromString("f78a4d8d-d51b-4b39-98a3-230f2de0c670");
 
   private final StorageProvider storageProvider;
   private final PunishType punishType;
-  private final PlayerProvider playerProvider;
 
   protected AbstractPunishCommand(
       @NonNull final StorageProvider storageProvider,
       @NonNull final PlayerProvider playerProvider,
       @NonNull final PunishType punishType,
       @NonNull final String... labels) {
-    super(new StrictList<>());
+    super(playerProvider, new StrictList<>(labels));
     this.storageProvider = storageProvider;
-    this.playerProvider = playerProvider;
     this.punishType = punishType;
   }
 
@@ -47,7 +52,8 @@ public abstract class AbstractPunishCommand extends AbstractSimplePunishControlC
 
   // Is the reason provided valid? If not, use returnTell to break up the
   // command
-  protected void handleReasonInput(@NonNull final String reason) {}
+  protected void handleReasonInput(@NonNull final String reason) {
+  }
 
   /*
   ban linkskeinemitte 10d Hacking  //3
@@ -124,7 +130,8 @@ public abstract class AbstractPunishCommand extends AbstractSimplePunishControlC
         final Punish punish =
             PunishBuilder.of(punishType)
                 .target(target)
-                .creator(isPlayer() ? getPlayer().getUniqueId() : CONSOLE) //The uuid of the player called "Console"
+                .creator(isPlayer() ? getPlayer().getUniqueId()
+                    : CONSOLE) //The uuid of the player called "Console"
                 .duration(punishDuration)
                 .creation(System.currentTimeMillis())
                 .reason(reason.toString())
@@ -132,7 +139,9 @@ public abstract class AbstractPunishCommand extends AbstractSimplePunishControlC
                 .superSilent(superSilent)
                 .build();
 
-        Common.runLaterAsync(punish::create);
+        Bukkit.getScheduler().runTaskAsynchronously(SimplePlugin.getInstance(),
+            punish::create);
+//        Common.runLaterAsync(punish::create);
 
         final Replacer punishMessage =
             Replacer.of(
@@ -149,46 +158,16 @@ public abstract class AbstractPunishCommand extends AbstractSimplePunishControlC
 
         tell(punishMessage.getReplacedMessage());
 
+        if (!punishType.shouldKick()) {
+          return;
+        }
+
+        Players.find(target).ifPresent((player -> {
+          //TODO: Format Reason!
+          player.kickPlayer(reason.toString());
+        }));
+
         break;
     }
-
-    //    switch (size) {
-    //      case 0: // Noting
-    //        if (!isPlayer()) {
-    //          returnTell(MORE_ARGUMENTS_AS_CONSOLE_MESSAGE);
-    //        }
-    //        MenuPlayerBrowser.showTo(getPlayer());
-    //        break;
-    //      case 1: // Target
-    //        if (!isPlayer()) {
-    //          returnTell(MORE_ARGUMENTS_AS_CONSOLE_MESSAGE);
-    //        }
-    //        onTargetProvided(getPlayer(), findTarget(finalArgs));
-    //        break;
-    //      case 2: // Target, Duration
-    //        // ban NAME DURATION
-    //        if (getMaxArgs() < 2) {
-    //          returnInvalidArgs();
-    //        }
-    //
-    //        if (!isPlayer()) {
-    //          returnTell(MORE_ARGUMENTS_AS_CONSOLE_MESSAGE);
-    //        }
-    //
-    //        onTargetAndDurationProvided(getPlayer(), findTarget(finalArgs), punishDuration);
-    //        break;
-    //      case 3: // Target, Duration, Reason
-    //
-    //        // Validating the reason
-    //        handleReasonInput(reason.toString());
-    //
-    //        // ban NAME REASON, DURATION
-    //        onTargetAndDurationAndReasonProvided(
-    //            getSender(), findTarget(finalArgs), punishDuration, reason.toString());
-    //        break;
-    //    }
-
-    // Declaring the reason. Instantiation below
-
   }
 }

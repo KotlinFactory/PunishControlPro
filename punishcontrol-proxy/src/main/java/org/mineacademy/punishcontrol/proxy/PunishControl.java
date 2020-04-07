@@ -62,11 +62,12 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 
   @Override
   public void registerProviders() {
+    Providers.playerProvider(ProxyPlayerProvider.newInstance());
+    org.mineacademy.burst.provider.Providers.setUuidNameProvider(ProxyPlayerProvider.newInstance());
     // Working directory
     Providers.pluginDataProvider(ProxyPluginDataProvider.create());
     // Player providers
-    Providers.playerProvider(ProxyPlayerProvider.newInstance());
-    org.mineacademy.burst.provider.Providers.setUuidNameProvider(ProxyPlayerProvider.newInstance());
+
     // Settings
     Providers.settingsProvider(ProxySettingsProvider.newInstance());
     // TextureProvider

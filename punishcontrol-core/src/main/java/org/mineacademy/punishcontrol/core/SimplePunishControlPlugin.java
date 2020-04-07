@@ -2,8 +2,6 @@ package org.mineacademy.punishcontrol.core;
 
 import de.leonhard.storage.Yaml;
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import lombok.NonNull;
@@ -11,6 +9,7 @@ import lombok.val;
 import org.mineacademy.punishcontrol.core.group.Group;
 import org.mineacademy.punishcontrol.core.group.GroupManager;
 import org.mineacademy.punishcontrol.core.listener.Listener;
+import org.mineacademy.punishcontrol.core.listener.Listeners;
 import org.mineacademy.punishcontrol.core.listeners.PunishQueue;
 import org.mineacademy.punishcontrol.core.punish.PunishDuration;
 import org.mineacademy.punishcontrol.core.punish.template.PunishTemplateManager;
@@ -22,8 +21,6 @@ import org.mineacademy.punishcontrol.core.storage.StorageType;
 public interface SimplePunishControlPlugin {
 
   CoreComponent coreModule = DaggerCoreComponent.builder().build();
-  List<Listener<?>> listeners = new ArrayList<>();
-
   String PREFIX = "§3Punish§bControl§5+ §7┃ ";
   String[] LOGO =
       new String[]{
@@ -123,9 +120,11 @@ public interface SimplePunishControlPlugin {
     }
 
     try {
+      //Our core-listeners
       registerEvents(PunishQueue.create());
       registerEvents(coreModule.banListener());
       registerEvents(coreModule.muteListener());
+      //Spigot-Listeners
       registerListener();
       log("Listener §l§a✔");
     } catch (final Throwable throwable) {
@@ -191,7 +190,7 @@ public interface SimplePunishControlPlugin {
   }
 
   default void registerEvents(final Listener<?> listener) {
-    SimplePunishControlPlugin.listeners.add(listener);
+    Listeners.register(listener);
   }
 
   void log(@NonNull String... message);

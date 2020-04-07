@@ -22,6 +22,7 @@ public interface StorageProvider {
     return new PlayerCache(this, uuid);
   }
 
+
   List<Ban> listBans();
 
   List<Mute> listMutes();

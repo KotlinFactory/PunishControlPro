@@ -4,17 +4,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
 import lombok.NonNull;
+import lombok.RequiredArgsConstructor;
 import lombok.val;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import org.mineacademy.bfo.Common;
 import org.mineacademy.bfo.debug.Debugger;
 import org.mineacademy.burst.provider.UUIDNameProvider;
+import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.AbstractPlayerProvider;
+import org.mineacademy.punishcontrol.core.providers.ExceptionHandler;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ProxyPlayerProvider extends AbstractPlayerProvider
     implements UUIDNameProvider { // Compatibility
 
@@ -55,7 +57,8 @@ public final class ProxyPlayerProvider extends AbstractPlayerProvider
   }
 
   @Override
-  public boolean hasPermission(final @NonNull UUID uuid, final @NonNull String permission) {
+  public boolean hasPermission(final @NonNull UUID uuid,
+      final @NonNull String permission) {
     final ProxiedPlayer player = proxyServer.getPlayer(uuid);
     if (player == null) {
       return false;
@@ -65,7 +68,8 @@ public final class ProxyPlayerProvider extends AbstractPlayerProvider
   }
 
   @Override
-  public void sendIfOnline(@NonNull final UUID uuid, final @NonNull String... messages) {
+  public void sendIfOnline(@NonNull final UUID uuid,
+      final @NonNull String... messages) {
     final ProxiedPlayer player = proxyServer.getPlayer(uuid);
 
     if (player == null) {
@@ -73,5 +77,10 @@ public final class ProxyPlayerProvider extends AbstractPlayerProvider
     }
 
     Common.tell(player, messages);
+  }
+
+  @Override
+  public ExceptionHandler exceptionHandler() {
+    return Providers.exceptionHandler();
   }
 }

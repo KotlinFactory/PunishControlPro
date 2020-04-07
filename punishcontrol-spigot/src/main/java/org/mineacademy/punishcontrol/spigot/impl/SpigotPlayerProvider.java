@@ -1,5 +1,8 @@
 package org.mineacademy.punishcontrol.spigot.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -7,11 +10,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.mineacademy.fo.Common;
+import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.AbstractPlayerProvider;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import org.mineacademy.punishcontrol.core.providers.ExceptionHandler;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class SpigotPlayerProvider extends AbstractPlayerProvider {
@@ -46,7 +47,8 @@ public final class SpigotPlayerProvider extends AbstractPlayerProvider {
   }
 
   @Override
-  public boolean hasPermission(final @NonNull UUID uuid, final @NonNull String permission) {
+  public boolean hasPermission(final @NonNull UUID uuid,
+      final @NonNull String permission) {
     final Player player = Bukkit.getPlayer(uuid);
     if (player == null) {
       return false;
@@ -56,7 +58,8 @@ public final class SpigotPlayerProvider extends AbstractPlayerProvider {
   }
 
   @Override
-  public void sendIfOnline(@NonNull final UUID uuid, final @NonNull String... messages) {
+  public void sendIfOnline(@NonNull final UUID uuid,
+      final @NonNull String... messages) {
     final Player player = Bukkit.getPlayer(uuid);
 
     if (player == null) {
@@ -64,5 +67,10 @@ public final class SpigotPlayerProvider extends AbstractPlayerProvider {
     }
 
     Common.tell(player, messages);
+  }
+
+  @Override
+  public ExceptionHandler exceptionHandler() {
+    return Providers.exceptionHandler();
   }
 }

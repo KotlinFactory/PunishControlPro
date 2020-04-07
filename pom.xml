@@ -21,7 +21,7 @@
             org.mineacademy.punishcontrol.proxy.PunishControl
         </proxy.main>
         <spigot.main>
-            org.mineacademy.punishcontrol.spigot.PunishControl
+            PunishControl
         </spigot.main>
         <mainClass>${project.groupId}.${plugin.name}.${project.artifactId}</mainClass>
     </properties>

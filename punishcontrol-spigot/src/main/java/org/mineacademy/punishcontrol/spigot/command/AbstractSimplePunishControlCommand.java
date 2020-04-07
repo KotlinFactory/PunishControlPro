@@ -1,41 +1,49 @@
 package org.mineacademy.punishcontrol.spigot.command;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
+import lombok.NonNull;
 import org.mineacademy.fo.collection.StrictList;
 import org.mineacademy.fo.command.SimpleCommand;
 import org.mineacademy.punishcontrol.core.provider.Providers;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
+import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 
 public abstract class AbstractSimplePunishControlCommand extends SimpleCommand {
-    public static final List<AbstractSimplePunishControlCommand> REGISTERED_COMMANDS = new ArrayList<>();
 
-    public static final String INVALID_SILENCE_USAGE =
-        "§cCan't be silent and super-silent simultaneously";
-    public static final String UNKNOWN_PLAYER = "§cThis player is not known";
+  public static final List<AbstractSimplePunishControlCommand> REGISTERED_COMMANDS = new ArrayList<>();
 
-    protected final String[] MORE_ARGUMENTS_AS_CONSOLE_MESSAGE =
-        new String[] {
-            "You need to provide more information to run this command from console",
-            "Please provide 3 arguments",
-            "Usage: " + getUsage()
-        };
+  public static final String INVALID_SILENCE_USAGE =
+      "§cCan't be silent and super-silent simultaneously";
+  public static final String UNKNOWN_PLAYER = "§cThis player is not known";
 
-    public boolean consoleAllowed = true;
-    protected boolean silent;
-    protected boolean superSilent;
+  protected final String[] MORE_ARGUMENTS_AS_CONSOLE_MESSAGE =
+      new String[]{
+          "You need to provide more information to run this command from console",
+          "Please provide 3 arguments",
+          "Usage: " + getLabel() + " [duration] [reason]",
+          "Or: " + getLabel() + " <punish-template>"
+      };
 
-  protected AbstractSimplePunishControlCommand(final String label) {
+  protected final PlayerProvider playerProvider;
+
+  public boolean consoleAllowed = true;
+  protected boolean silent;
+  protected boolean superSilent;
+
+  protected AbstractSimplePunishControlCommand(
+      @NonNull final PlayerProvider playerProvider,
+      @NonNull final String label) {
     super(label);
+    this.playerProvider = playerProvider;
   }
 
-  protected AbstractSimplePunishControlCommand(final StrictList<String> labels) {
+  protected AbstractSimplePunishControlCommand(
+      @NonNull final PlayerProvider playerProvider,
+      @NonNull final StrictList<String> labels) {
     super(labels);
-  }
-
-  protected AbstractSimplePunishControlCommand(final String label, final List<String> aliases) {
-    super(label, aliases);
+    this.playerProvider = playerProvider;
   }
 
   // ----------------------------------------------------------------------------------------------------
@@ -59,6 +67,10 @@ public abstract class AbstractSimplePunishControlCommand extends SimpleCommand {
       }
     }
     return false;
+  }
+
+  protected UUID findTarget() {
+    return findTarget(Arrays.asList(args));
   }
 
   protected UUID findTarget(final List<String> args) {

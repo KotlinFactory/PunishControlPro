@@ -1,29 +1,31 @@
 package org.mineacademy.punishcontrol.spigot.command;
 
-import lombok.Getter;
-import lombok.NonNull;
-import org.mineacademy.fo.collection.StrictList;
-import org.mineacademy.punishcontrol.core.punish.PunishType;
-import org.mineacademy.punishcontrol.core.storage.StorageProvider;
-import org.mineacademy.punishcontrol.spigot.menus.MenuPunishBrowser;
-import org.mineacademy.punishcontrol.spigot.settings.Settings;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
+import lombok.Getter;
+import lombok.NonNull;
+import org.mineacademy.fo.collection.StrictList;
+import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
+import org.mineacademy.punishcontrol.core.punish.PunishType;
+import org.mineacademy.punishcontrol.core.storage.StorageProvider;
+import org.mineacademy.punishcontrol.spigot.settings.Settings;
+import org.mineacademy.punishcontrol.spigot.menus.MenuPunishBrowser;
 
 @Getter
-public abstract class AbstractUnPunishCommand extends AbstractSimplePunishControlCommand {
+public abstract class AbstractUnPunishCommand extends
+    AbstractSimplePunishControlCommand {
 
   protected final StorageProvider provider;
   protected final PunishType punishType;
 
   protected AbstractUnPunishCommand(
-      final StorageProvider provider,
-      final PunishType punishType,
+      @NonNull final StorageProvider provider,
+      @NonNull final PlayerProvider playerProvider,
+      @NonNull final PunishType punishType,
       @NonNull final String... labels) {
-    super(new StrictList<>(labels));
+    super(playerProvider, new StrictList<>(labels));
     this.provider = provider;
     this.punishType = punishType;
     setTellPrefix(Settings.PLUGIN_PREFIX);
@@ -54,6 +56,7 @@ public abstract class AbstractUnPunishCommand extends AbstractSimplePunishContro
       case 1:
         final UUID target = findTarget(finalArgs);
 
+        //TODO: Async
         switch (punishType) {
           case BAN:
             checkBoolean(provider.removeBanFor(target), "Player is not banned");
@@ -62,7 +65,8 @@ public abstract class AbstractUnPunishCommand extends AbstractSimplePunishContro
             checkBoolean(provider.removeMuteFor(target), "Player is not muted");
             break;
           case WARN:
-            checkBoolean(provider.removeWarnFor(target), "Player is not warned");
+            checkBoolean(provider.removeWarnFor(target),
+                "Player is not warned");
             break;
         }
         break;
