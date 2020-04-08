@@ -2,21 +2,32 @@ package org.mineacademy.punishcontrol.spigot;
 
 import dagger.Component;
 import org.mineacademy.punishcontrol.core.provider.Providers;
-import org.mineacademy.punishcontrol.spigot.commands.CommandMute;
-import org.mineacademy.punishcontrol.spigot.commands.CommandUnBan;
-import org.mineacademy.punishcontrol.spigot.commands.CommandUnMute;
-import org.mineacademy.punishcontrol.spigot.commands.CommandUnWarn;
+import org.mineacademy.punishcontrol.spigot.commands.BanCommand;
+import org.mineacademy.punishcontrol.spigot.commands.KickCommand;
+import org.mineacademy.punishcontrol.spigot.commands.MuteCommand;
+import org.mineacademy.punishcontrol.spigot.commands.PlayerInfoCommand;
+import org.mineacademy.punishcontrol.spigot.commands.UnBanCommand;
+import org.mineacademy.punishcontrol.spigot.commands.UnMuteCommand;
+import org.mineacademy.punishcontrol.spigot.commands.UnWarnCommand;
+import org.mineacademy.punishcontrol.spigot.commands.WarnCommand;
 import org.mineacademy.punishcontrol.spigot.listeners.SpigotDataSetter;
-import org.mineacademy.punishcontrol.spigot.menus.MenuMySQL;
-import org.mineacademy.punishcontrol.spigot.commands.CommandBan;
-import org.mineacademy.punishcontrol.spigot.commands.CommandKick;
-import org.mineacademy.punishcontrol.spigot.commands.CommandWarn;
+import org.mineacademy.punishcontrol.spigot.menus.DurationChooserMenu;
+import org.mineacademy.punishcontrol.spigot.menus.MainMenu;
+import org.mineacademy.punishcontrol.spigot.menus.PlayerBrowserMenu;
+import org.mineacademy.punishcontrol.spigot.menus.PlayerSettingsMenu;
+import org.mineacademy.punishcontrol.spigot.menus.PunishBrowserMenu;
+import org.mineacademy.punishcontrol.spigot.menus.PunishChooserMenu;
+import org.mineacademy.punishcontrol.spigot.menus.PunishCreatorMenu;
+import org.mineacademy.punishcontrol.spigot.menus.settings.LanguageSettingsMenu;
+import org.mineacademy.punishcontrol.spigot.menus.settings.StorageSettingsMenu;
 
-/** Interface implemented by dagger */
+/**
+ * Interface implemented by dagger
+ */
 @Component(modules = {Providers.class, SpigotModule.class})
 public interface SpigotComponent {
 
-  MenuMySQL mysqlModule();
+  StorageSettingsMenu mysqlModule();
 
   // ----------------------------------------------------------------------------------------------------
   // Listener
@@ -28,17 +39,43 @@ public interface SpigotComponent {
   // Commands
   // ----------------------------------------------------------------------------------------------------
 
-  CommandKick commandKick();
+  KickCommand commandKick();
 
-  CommandBan commandBan();
+  BanCommand commandBan();
 
-  CommandMute commandMute();
+  MuteCommand commandMute();
 
-  CommandWarn commandWarn();
+  WarnCommand commandWarn();
 
-  CommandUnBan commandUnBan();
+  UnBanCommand commandUnBan();
 
-  CommandUnMute commandUnMute();
+  UnMuteCommand commandUnMute();
 
-  CommandUnWarn commandUnWarn();
+  UnWarnCommand commandUnWarn();
+
+  PlayerInfoCommand commandPlayerInfo();
+
+  // ----------------------------------------------------------------------------------------------------
+  // Menus
+  // ----------------------------------------------------------------------------------------------------
+
+  DurationChooserMenu durationChooserMenu();
+
+  PunishChooserMenu punishChooserMenu();
+
+  MainMenu menuMain();
+
+  PlayerBrowserMenu playerBrowserMenu();
+
+  PunishBrowserMenu punishBrowserMenu();
+
+  PunishCreatorMenu punishCreatorMenu();
+
+ //Settings - Menus
+
+  StorageSettingsMenu mySqlSettingsMenu();
+
+  PlayerSettingsMenu playerSettingsMenu();
+
+  LanguageSettingsMenu languageSettingsMenu();
 }

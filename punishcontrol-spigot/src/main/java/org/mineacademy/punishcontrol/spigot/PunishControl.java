@@ -4,12 +4,13 @@ import java.util.Arrays;
 import java.util.List;
 import lombok.NonNull;
 import org.mineacademy.fo.Common;
+import org.mineacademy.fo.MinecraftVersion.V;
 import org.mineacademy.fo.plugin.SimplePlugin;
 import org.mineacademy.fo.settings.YamlStaticConfig;
 import org.mineacademy.punishcontrol.core.SimplePunishControlPlugin;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.storage.StorageType;
-import org.mineacademy.punishcontrol.spigot.commands.CommandMain;
+import org.mineacademy.punishcontrol.spigot.commands.MainCommand;
 import org.mineacademy.punishcontrol.spigot.impl.SpigotExceptionHandler;
 import org.mineacademy.punishcontrol.spigot.impl.SpigotPlayerProvider;
 import org.mineacademy.punishcontrol.spigot.impl.SpigotPluginDataProvider;
@@ -39,7 +40,7 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 
   @Override
   public void registerCommands() {
-    registerCommand(CommandMain.create(Settings.MAIN_COMMAND_ALIASES));
+    registerCommand(MainCommand.create(Settings.MAIN_COMMAND_ALIASES));
     registerCommand(spigotModule.commandKick());
     registerCommand(spigotModule.commandBan());
     registerCommand(spigotModule.commandMute());
@@ -48,6 +49,7 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
     registerCommand(spigotModule.commandUnBan());
     registerCommand(spigotModule.commandUnMute());
     registerCommand(spigotModule.commandUnWarn());
+    registerCommand(spigotModule.commandPlayerInfo());
   }
 
   @Override
@@ -109,5 +111,10 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
   @Override
   public void saveError(@NonNull final Throwable t) {
     Common.error(t);
+  }
+
+  @Override
+  public V getMinimumVersion() {
+    return V.v1_8;
   }
 }

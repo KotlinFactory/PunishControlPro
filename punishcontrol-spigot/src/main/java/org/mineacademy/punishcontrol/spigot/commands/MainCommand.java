@@ -3,16 +3,16 @@ package org.mineacademy.punishcontrol.spigot.commands;
 import lombok.NonNull;
 import org.mineacademy.fo.collection.StrictList;
 import org.mineacademy.fo.command.SimpleCommand;
-import org.mineacademy.punishcontrol.spigot.menus.MenuMain;
+import org.mineacademy.punishcontrol.spigot.menus.MainMenu;
 
-public final class CommandMain extends SimpleCommand {
+public final class MainCommand extends SimpleCommand {
 
-  private CommandMain(@NonNull final StrictList<String> labels) {
+  private MainCommand(@NonNull final StrictList<String> labels) {
     super(labels);
   }
 
-  public static CommandMain create(@NonNull final StrictList<String> labels) {
-    return new CommandMain(labels);
+  public static MainCommand create(@NonNull final StrictList<String> labels) {
+    return new MainCommand(labels);
   }
 
   @Override
@@ -24,8 +24,7 @@ public final class CommandMain extends SimpleCommand {
       return;
     }
 
-    // Open GUI
-    MenuMain.showTo(getPlayer());
+    MainMenu.showTo(getPlayer());
   }
 
   private void doHelp() {

@@ -1,8 +1,7 @@
 package org.mineacademy.punishcontrol.core.providers;
 
-import org.mineacademy.punishcontrol.core.punishes.Ban;
-
 import java.util.List;
+import org.mineacademy.punishcontrol.core.punishes.Ban;
 
 /** Provides all settings needed by the PunishControl core */
 public interface SettingsProvider {
@@ -13,4 +12,6 @@ public interface SettingsProvider {
   boolean isAPIEnabled();
 
   List<String> getJoinMessageForBannedPlayer(Ban ban);
+
+  List<String> allowedCommands();
 }

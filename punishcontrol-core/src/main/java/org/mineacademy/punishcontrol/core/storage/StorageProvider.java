@@ -1,6 +1,7 @@
 package org.mineacademy.punishcontrol.core.storage;
 
 import java.net.InetAddress;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -14,31 +15,42 @@ import org.mineacademy.punishcontrol.core.punishes.Warn;
 
 public interface StorageProvider {
 
-  // ----------------------------------------------------------------------------------------------------
-  // Listing all punishes/warns/reports ever made
-  // ----------------------------------------------------------------------------------------------------
-
   default PlayerCache getCacheFor(@NonNull final UUID uuid) {
     return new PlayerCache(this, uuid);
   }
 
+  // ----------------------------------------------------------------------------------------------------
+  // Listing all punishes/warns/reports ever made
+  // ----------------------------------------------------------------------------------------------------
+
+  default List<Punish> listPunishes() {
+    final List<Punish> result = new ArrayList<>();
+
+    result.addAll(listBans());
+    result.addAll(listMutes());
+    result.addAll(listWarns());
+
+    return result;
+  }
 
   List<Ban> listBans();
 
   List<Mute> listMutes();
 
+  List<Warn> listWarns();
+
   // ----------------------------------------------------------------------------------------------------
   // Listing all current punishes/warns/reports
   // ----------------------------------------------------------------------------------------------------
 
-  List<Warn> listWarns();
 
   default List<Ban> listCurrentBans() {
 
     final List<Ban> bans = listBans();
 
     // Making our stream parallel on large collections
-    final Stream<Ban> banStream = bans.size() > 40 ? bans.stream().parallel() : bans.stream();
+    final Stream<Ban> banStream =
+        bans.size() > 40 ? bans.stream().parallel() : bans.stream();
 
     return banStream.filter((ban) -> !ban.isOld()).collect(Collectors.toList());
   }
@@ -48,9 +60,23 @@ public interface StorageProvider {
     final List<Mute> mutes = listMutes();
 
     // Making our stream parallel on large collections
-    final Stream<Mute> warnStream = mutes.size() > 40 ? mutes.stream().parallel() : mutes.stream();
+    final Stream<Mute> warnStream =
+        mutes.size() > 40 ? mutes.stream().parallel() : mutes.stream();
 
-    return warnStream.filter((mute) -> !mute.isOld()).collect(Collectors.toList());
+    return warnStream.filter((mute) -> !mute.isOld())
+        .collect(Collectors.toList());
+  }
+
+
+  default List<Warn> listCurrentWarns() {
+    final List<Warn> warns = listWarns();
+
+    // Making our stream parallel on large collections
+    final Stream<Warn> warnStream =
+        warns.size() > 40 ? warns.stream().parallel() : warns.stream();
+
+    return warnStream.filter((mute) -> !mute.isOld())
+        .collect(Collectors.toList());
   }
 
   // ----------------------------------------------------------------------------------------------------
@@ -63,24 +89,26 @@ public interface StorageProvider {
   // List all punishes/warns/reports the player ever had
   // ----------------------------------------------------------------------------------------------------
 
-  default List<Warn> listCurrentWarns() {
-    final List<Warn> warns = listWarns();
+  default List<Punish> listPunishes(final UUID uuid) {
+    final List<Punish> result = new ArrayList<>();
 
-    // Making our stream parallel on large collections
-    final Stream<Warn> warnStream = warns.size() > 40 ? warns.stream().parallel() : warns.stream();
+    result.addAll(listBans(uuid));
+    result.addAll(listMutes(uuid));
+    result.addAll(listWarns(uuid));
 
-    return warnStream.filter((mute) -> !mute.isOld()).collect(Collectors.toList());
+    return result;
   }
 
   List<Ban> listBans(@NonNull UUID uuid);
 
   List<Mute> listMutes(@NonNull UUID uuid);
 
+  List<Warn> listWarns(@NonNull UUID uuid);
+
   // ----------------------------------------------------------------------------------------------------
   // Methods to handle the data of specific players
   // ----------------------------------------------------------------------------------------------------
 
-  List<Warn> listWarns(@NonNull UUID uuid);
 
   default Optional<Ban> currentBan(@NonNull final UUID uuid) {
 
@@ -102,10 +130,6 @@ public interface StorageProvider {
     return Optional.empty();
   }
 
-  // ----------------------------------------------------------------------------------------------------
-  // Methods to check whether a player is banned
-  // ----------------------------------------------------------------------------------------------------
-
   default Optional<Warn> currentWarn(@NonNull final UUID uuid) {
     for (final Warn warn : listWarns(uuid)) {
       if (!warn.isOld()) {
@@ -115,6 +139,10 @@ public interface StorageProvider {
 
     return Optional.empty();
   }
+
+  // ----------------------------------------------------------------------------------------------------
+  // Methods to check whether a player is punished
+  // ----------------------------------------------------------------------------------------------------
 
   default boolean isBanned(@NonNull final UUID uuid) {
     return currentBan(uuid).isPresent();

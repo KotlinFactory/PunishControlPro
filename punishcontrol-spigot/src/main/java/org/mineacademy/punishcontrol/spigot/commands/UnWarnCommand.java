@@ -6,12 +6,12 @@ import org.mineacademy.punishcontrol.core.punish.PunishType;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 import org.mineacademy.punishcontrol.spigot.command.AbstractUnPunishCommand;
 
-public final class CommandUnWarn extends AbstractUnPunishCommand {
+public final class UnWarnCommand extends AbstractUnPunishCommand {
 
   private final StorageProvider storageProvider;
 
   @Inject
-  public CommandUnWarn(
+  public UnWarnCommand(
       final PlayerProvider playerProvider,
       final StorageProvider storageProvider) {
     super(storageProvider, playerProvider, PunishType.WARN, "unwarn");

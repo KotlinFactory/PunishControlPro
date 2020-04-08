@@ -45,4 +45,16 @@ public class Punishes {
         "Invalid class provided: " + target.getSimpleName(), "Package: " + target.getPackage());
     return null;
   }
+
+  /**
+   * Form message to send to a player when the player was punished
+   */
+  public String formOnPunishMessage(final Punish punish){
+    return punish.reason();
+  }
+
+  public String formPunishedMessage(final Punish punish){
+    return punish.reason();
+  }
+
 }

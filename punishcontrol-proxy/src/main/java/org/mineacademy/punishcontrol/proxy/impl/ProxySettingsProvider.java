@@ -1,12 +1,11 @@
 package org.mineacademy.punishcontrol.proxy.impl;
 
+import java.util.List;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.mineacademy.punishcontrol.core.providers.SettingsProvider;
 import org.mineacademy.punishcontrol.core.punishes.Ban;
 import org.mineacademy.punishcontrol.proxy.settings.Settings;
-
-import java.util.List;
 
 // TODO
 
@@ -29,6 +28,11 @@ public final class ProxySettingsProvider implements SettingsProvider {
 
   @Override
   public List<String> getJoinMessageForBannedPlayer(final Ban ban) {
+    return null;
+  }
+
+  @Override
+  public List<String> allowedCommands() {
     return null;
   }
 }

@@ -37,7 +37,7 @@ public class ProxyListenerImpl implements Listener {
         .create(sender.getUniqueId(), playerChatEvent.getMessage()));
 
     playerChatEvent.setCancelled(chatEvent.canceled());
-    playerChatEvent.setMessage(chatEvent.getMessage());
+    playerChatEvent.setMessage(chatEvent.message());
   }
 
   @EventHandler

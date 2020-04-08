@@ -69,12 +69,25 @@ public abstract class AbstractSimplePunishControlCommand extends SimpleCommand {
     return false;
   }
 
+
+
   protected UUID findTarget() {
     return findTarget(Arrays.asList(args));
   }
 
   protected UUID findTarget(final List<String> args) {
-    final UUID target = Providers.playerProvider().getUUID(args.get(0));
+    final String name = args.get(0);
+
+    //UUID!
+    if (name.length() == 36) {
+      try {
+        return UUID.fromString(name);
+      } catch (final Throwable throwable) {
+        returnTell("UUID-String is invalidly formatted!");
+      }
+    }
+
+    final UUID target = Providers.playerProvider().getUUID(name);
     checkNotNull(target, UNKNOWN_PLAYER);
     return target;
   }

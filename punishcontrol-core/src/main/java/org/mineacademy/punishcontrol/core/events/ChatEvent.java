@@ -6,10 +6,12 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.mineacademy.punishcontrol.core.event.AbstractEvent;
 
 @Getter
 @Setter
+@Accessors(fluent = true)
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ChatEvent extends AbstractEvent {
 

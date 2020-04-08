@@ -1,42 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <dependencies>
-        <dependency>
-            <groupId>com.google.dagger</groupId>
-            <artifactId>dagger</artifactId>
-            <version>2.26</version>
-        </dependency>
-    </dependencies>
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <dependencies>
+    <dependency>
+      <groupId>com.google.dagger</groupId>
+      <artifactId>dagger</artifactId>
+      <version>2.26</version>
+    </dependency>
+  </dependencies>
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <author>leonhard</author>
-        <plugin.name>punishcontrol-pro</plugin.name>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <author>leonhard</author>
+    <plugin.name>punishcontrol-pro</plugin.name>
 
-        <!-- Our main-classes-->
-        <proxy.main>
-            org.mineacademy.punishcontrol.proxy.PunishControl
-        </proxy.main>
-        <spigot.main>
-            PunishControl
-        </spigot.main>
-        <mainClass>${project.groupId}.${plugin.name}.${project.artifactId}</mainClass>
-    </properties>
+    <!-- Our main-classes-->
+    <proxy.main>
+      org.mineacademy.punishcontrol.proxy.PunishControl
+    </proxy.main>
+    <spigot.main>
+      PunishControl
+    </spigot.main>
+    <mainClass>${project.groupId}.${plugin.name}.${project.artifactId}</mainClass>
+    <maven.compiler.target>1.8</maven.compiler.target>
+    <maven.compiler.source>1.8</maven.compiler.source>
+  </properties>
 
 
-    <groupId>org.mineacademy</groupId>
-    <artifactId>PunishControlPro</artifactId>
-    <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
-    <modules>
-        <module>punishcontrol-core</module>
-        <module>punishcontrol-spigot</module>
-        <module>punishcontrol-proxy</module>
-        <module>punishcontrol-plugin</module>
-    </modules>
+  <groupId>org.mineacademy</groupId>
+  <artifactId>PunishControlPro</artifactId>
+  <packaging>pom</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <modules>
+    <module>punishcontrol-core</module>
+    <module>punishcontrol-spigot</module>
+    <module>punishcontrol-proxy</module>
+    <module>punishcontrol-plugin</module>
+  </modules>
 
 
 </project>

@@ -37,7 +37,6 @@ public final class JsonStorageProvider extends SecureJson implements StorageProv
   private static final String PATH_TO_WARN =
       WARN_PATH_PREFIX + ".{uuid}.{creation}";
   private final ExceptionHandler exceptionHandler;
-  private final boolean canWrite;
 
   //
 
@@ -48,7 +47,6 @@ public final class JsonStorageProvider extends SecureJson implements StorageProv
         PunishControlManager.FILES.JSON_DATA_FILE_NAME,
         workingDirectoryProvider.getDataFolder().getAbsolutePath() + "/data");
     this.exceptionHandler = exceptionHandler;
-    canWrite = file.canWrite();
   }
 
   @Override
@@ -103,11 +101,12 @@ public final class JsonStorageProvider extends SecureJson implements StorageProv
 
   @Override
   public List<Ban> listBans() {
+    reloadIfNeeded();
     final Set<String> keys = singleLayerKeySet(BANS_PATH_PREFIX);
     final List<Ban> result = new ArrayList<>();
 
     for (final String key : keys) { // UUIDs
-      final Map<String, Object> bans = getMap(key);
+      final Map<String, Object> bans = getMap(BANS_PATH_PREFIX + "." + key);
 
       for (final val entry : bans.entrySet()) { // MS
         // Actual ban
@@ -126,11 +125,13 @@ public final class JsonStorageProvider extends SecureJson implements StorageProv
 
   @Override
   public List<Mute> listMutes() {
+    reloadIfNeeded();
+
     final Set<String> keys = singleLayerKeySet(MUTES_PATH_PREFIX);
     final List<Mute> result = new ArrayList<>();
 
     for (final String key : keys) { // UUIDs
-      final Map<String, Object> bans = getMap(key);
+      final Map<String, Object> bans = getMap(MUTES_PATH_PREFIX + "." + key);
 
       for (final val entry : bans.entrySet()) { // MS
         // Actual ban
@@ -150,6 +151,8 @@ public final class JsonStorageProvider extends SecureJson implements StorageProv
 
   @Override
   public List<Warn> listWarns() {
+    reloadIfNeeded();
+
     final Set<String> keys = singleLayerKeySet(WARN_PATH_PREFIX);
     final List<Warn> result = new ArrayList<>();
 
@@ -178,6 +181,8 @@ public final class JsonStorageProvider extends SecureJson implements StorageProv
 
   @Override
   public List<Ban> listBans(@NonNull final UUID uuid) {
+    reloadIfNeeded();
+
     final List<Ban> result = new ArrayList<>();
 
     final Map<String, Object> bans = getMap(BANS_PATH_PREFIX + "." + uuid);
@@ -200,6 +205,8 @@ public final class JsonStorageProvider extends SecureJson implements StorageProv
 
   @Override
   public List<Mute> listMutes(@NonNull final UUID uuid) {
+    reloadIfNeeded();
+
     final List<Mute> result = new ArrayList<>();
 
     final Map<String, Object> bans = getMap(MUTES_PATH_PREFIX + "." + uuid);
@@ -222,6 +229,8 @@ public final class JsonStorageProvider extends SecureJson implements StorageProv
 
   @Override
   public List<Warn> listWarns(@NonNull final UUID uuid) {
+    reloadIfNeeded();
+
     final List<Warn> result = new ArrayList<>();
 
     final Map<String, Object> bans = getMap(WARN_PATH_PREFIX + "." + uuid);

@@ -6,15 +6,15 @@ import org.mineacademy.fo.command.SimpleCommand;
 /**
  * Command to test stuff
  */
-public final class CommandDev extends SimpleCommand {
+public final class DevCommand extends SimpleCommand {
 
 
-  protected CommandDev() {
+  protected DevCommand() {
     super("dev");
   }
 
-  public static CommandDev create() {
-    return new CommandDev();
+  public static DevCommand create() {
+    return new DevCommand();
   }
 
   /**

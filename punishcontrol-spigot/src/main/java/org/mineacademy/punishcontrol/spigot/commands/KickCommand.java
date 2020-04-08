@@ -6,10 +6,10 @@ import org.mineacademy.fo.settings.SimpleLocalization.Player;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.spigot.command.AbstractSimplePunishControlCommand;
 
-public final class CommandKick extends AbstractSimplePunishControlCommand {
+public final class KickCommand extends AbstractSimplePunishControlCommand {
 
   @Inject
-  public CommandKick(final PlayerProvider playerProvider) {
+  public KickCommand(final PlayerProvider playerProvider) {
     super(playerProvider, "kick");
     setUsage("kick <player>");
   }
@@ -17,7 +17,7 @@ public final class CommandKick extends AbstractSimplePunishControlCommand {
   @Override
   protected void onCommand() {
     if(args.length == 1 && "?".equalsIgnoreCase(args[0])){
-      returnTell("Usage /kick <player>");
+      returnTell("Usage /<player>");
     }
 
     if (args.length < 1) {

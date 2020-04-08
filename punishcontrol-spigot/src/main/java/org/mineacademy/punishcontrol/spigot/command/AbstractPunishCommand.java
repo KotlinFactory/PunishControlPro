@@ -6,18 +6,18 @@ import java.util.List;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.NonNull;
-import org.bukkit.Bukkit;
 import org.mineacademy.fo.Players;
 import org.mineacademy.fo.collection.StrictList;
+import org.mineacademy.fo.debug.LagCatcher;
 import org.mineacademy.fo.model.Replacer;
-import org.mineacademy.fo.plugin.SimplePlugin;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.punish.Punish;
 import org.mineacademy.punishcontrol.core.punish.PunishBuilder;
 import org.mineacademy.punishcontrol.core.punish.PunishDuration;
 import org.mineacademy.punishcontrol.core.punish.PunishType;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
-import org.mineacademy.punishcontrol.spigot.menus.MenuPlayerBrowser;
+import org.mineacademy.punishcontrol.spigot.Scheduler;
+import org.mineacademy.punishcontrol.spigot.menus.PlayerBrowserMenu;
 
 /**
  * Command to handle (Un) banning, muting, warning, reporting & kicking players
@@ -44,6 +44,20 @@ public abstract class AbstractPunishCommand extends
     super(playerProvider, new StrictList<>(labels));
     this.storageProvider = storageProvider;
     this.punishType = punishType;
+  }
+
+  @Override
+  protected final String[] getMultilineUsageMessage() {
+    return new String[]{
+        " ",
+        "&2[] &7= Optional arguments (use only 1 at once)",
+        "&6<> &7= Required arguments",
+        "&7/" + getLabel() + " &8* &7See a list of players",
+        "&7/" + getLabel() + " &6<player> &8* &7View options for player",
+        "&7/" + getLabel() + " &2[-s] [-S] &6<player> <duration> <reason>",
+        "&7/" + getLabel() + " &2[-s] [-S] &6<player> &6<punish-template>",
+        " ",
+    };
   }
 
   // ----------------------------------------------------------------------------------------------------
@@ -99,14 +113,19 @@ public abstract class AbstractPunishCommand extends
           returnTell(MORE_ARGUMENTS_AS_CONSOLE_MESSAGE);
         }
 
-        MenuPlayerBrowser.showTo(getPlayer());
+        PlayerBrowserMenu.showTo(getPlayer());
         break;
       case 1:
+
+        if ("?".equalsIgnoreCase(args[0]) || "help".equalsIgnoreCase(args[0])) {
+          returnTell(getMultilineUsageMessage());
+        }
+
         if (!isPlayer()) {
           returnTell(MORE_ARGUMENTS_AS_CONSOLE_MESSAGE);
         }
         // Choose action (PUNISH)
-        // For player
+        PlayerBrowserMenu.showTo(getPlayer());
         break;
       case 2:
         if (!isPlayer()) {
@@ -120,10 +139,11 @@ public abstract class AbstractPunishCommand extends
         punishDuration = PunishDuration.of(finalArgs.get(1));
 
         for (int i = 0; i < finalArgs.size(); i++) {
-          if (i == 0 || i == 1) // Ignoring first & second argument
+          if (i == 0 || i == 1) // Ignoring first & second argument//
           {
             continue;
           }
+
           reason.append(finalArgs.get(i)).append(" ");
         }
 
@@ -139,8 +159,11 @@ public abstract class AbstractPunishCommand extends
                 .superSilent(superSilent)
                 .build();
 
-        Bukkit.getScheduler().runTaskAsynchronously(SimplePlugin.getInstance(),
-            punish::create);
+        Scheduler.runAsync(() -> {
+          LagCatcher.start("spigot-cmd-save-async");
+          punish.create();
+          LagCatcher.end("spigot-cmd-save-async");
+        });
 //        Common.runLaterAsync(punish::create);
 
         final Replacer punishMessage =
@@ -163,7 +186,7 @@ public abstract class AbstractPunishCommand extends
         }
 
         Players.find(target).ifPresent((player -> {
-          //TODO: Format Reason!
+//          TODO: Format Reason!
           player.kickPlayer(reason.toString());
         }));
 

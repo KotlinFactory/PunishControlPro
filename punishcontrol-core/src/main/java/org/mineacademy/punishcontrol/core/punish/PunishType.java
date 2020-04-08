@@ -8,9 +8,11 @@ import lombok.experimental.Accessors;
 @Accessors(fluent = true)
 @RequiredArgsConstructor
 public enum PunishType {
-  BAN(true),
-  MUTE(true),
-  WARN(true);
+  BAN(true, "Ban"),
+  MUTE(false , "Mute"),
+  WARN(true, "Warn");
+
 
   private final boolean shouldKick;
+  private final String localized;
 }

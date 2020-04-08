@@ -9,7 +9,7 @@ import lombok.val;
 import org.mineacademy.punishcontrol.core.PunishControlManager;
 import org.mineacademy.punishcontrol.core.flatfiles.SecureJson;
 import org.mineacademy.punishcontrol.core.provider.Providers;
-import org.mineacademy.punishcontrol.core.uuid.UUIDS;
+import org.mineacademy.punishcontrol.core.uuid.UUIDs;
 
 public abstract class AbstractPlayerProvider extends SecureJson implements
     PlayerProvider {
@@ -33,7 +33,7 @@ public abstract class AbstractPlayerProvider extends SecureJson implements
   @Override
   public final Optional<String> getIp(@NonNull final UUID uuid) {
     if (contains(uuid + ".ip")) {
-      return Optional.of(uuid + ".ip");
+      return Optional.of(getString(uuid + ".ip"));
     }
 
     return Optional.empty();
@@ -44,7 +44,7 @@ public abstract class AbstractPlayerProvider extends SecureJson implements
     if (contains(uuid.toString())) {
       return getString(uuid + ".name");
     } else {
-      final String name = UUIDS.toName(uuid).orElse(null);
+      final String name = UUIDs.toName(uuid).orElse(null);
       Valid.notNull(name, "No player with UUID '" + uuid + "' found on Mojang-Side");
       set(uuid.toString() + ".name", name);
       return name;
@@ -52,7 +52,7 @@ public abstract class AbstractPlayerProvider extends SecureJson implements
   }
 
   @Override
-  public UUID getUUID(@NonNull final String name) {
+  public final UUID getUUID(@NonNull final String name) {
     for (final val entry : getFileData().toMap().entrySet()) {
       if (!(entry.getValue() instanceof Map)) {
         continue;
@@ -67,7 +67,7 @@ public abstract class AbstractPlayerProvider extends SecureJson implements
     // Not yet set.
     // Getting from Mojang & Setting it manually.
 
-    final UUID uuid = UUIDS.find(name).orElse(null);
+    final UUID uuid = UUIDs.find(name).orElse(null);
 
     Valid.notNull(uuid, "No player named '" + name + "' found on the mojang side");
 

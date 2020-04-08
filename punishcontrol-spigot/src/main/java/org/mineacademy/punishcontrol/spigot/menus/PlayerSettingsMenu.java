@@ -1,16 +1,24 @@
 package org.mineacademy.punishcontrol.spigot.menus;
 
+import java.util.ArrayList;
+import java.util.UUID;
+import javax.inject.Inject;
+import lombok.NonNull;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.mineacademy.fo.menu.MenuPagged;
+import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
 
-import java.util.UUID;
+public final class PlayerSettingsMenu extends MenuPagged<UUID> {
 
-public final class MenuPlayerSetting extends MenuPagged<UUID> {
+  @Inject
+  public PlayerSettingsMenu() {
+    super(new ArrayList<>());
+  }
 
-  protected MenuPlayerSetting(final Iterable<UUID> pages) {
-    super(pages);
+  public static void showTo(@NonNull final Player player){
+    DaggerSpigotComponent.create().playerSettingsMenu().displayTo(player);
   }
 
   @Override

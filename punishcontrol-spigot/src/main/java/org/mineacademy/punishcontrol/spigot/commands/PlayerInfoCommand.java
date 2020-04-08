@@ -1,26 +1,27 @@
 package org.mineacademy.punishcontrol.spigot.commands;
 
+import java.util.List;
+import java.util.UUID;
+import javax.inject.Inject;
+import org.mineacademy.fo.Common;
 import org.mineacademy.fo.collection.StrictList;
-import org.mineacademy.fo.command.SimpleCommand;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.punish.Punish;
-import org.mineacademy.punishcontrol.core.storage.PlayerCache;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
-import org.mineacademy.punishcontrol.spigot.settings.Localization;
+import org.mineacademy.punishcontrol.spigot.Scheduler;
+import org.mineacademy.punishcontrol.spigot.command.AbstractSimplePunishControlCommand;
+import org.mineacademy.punishcontrol.spigot.menus.PlayerBrowserMenu;
+import org.mineacademy.punishcontrol.spigot.settings.Settings;
 
-import javax.inject.Inject;
-import java.util.UUID;
+public class PlayerInfoCommand extends AbstractSimplePunishControlCommand {
 
-public class PlayerInfoCommand extends SimpleCommand {
-
-  private final PlayerProvider playerProvider;
   private final StorageProvider storageProvider;
 
   @Inject
   public PlayerInfoCommand(
-      final PlayerProvider playerProvider, final StorageProvider storageProvider) {
-    super(new StrictList<>("pi", "playerinfo"));
-    this.playerProvider = playerProvider;
+      final PlayerProvider playerProvider,
+      final StorageProvider storageProvider) {
+    super(playerProvider, new StrictList<>("playerinfo", "pi", "pli"));
     this.storageProvider = storageProvider;
     setMinArguments(1);
     setUsage("[player]");
@@ -29,28 +30,56 @@ public class PlayerInfoCommand extends SimpleCommand {
   @Override
   protected void onCommand() {
 
-    final UUID target = parseUUID(args[0]);
+    if (args.length == 0) {
+      if (!isPlayer()) {
+        returnTell(MORE_ARGUMENTS_AS_CONSOLE_MESSAGE);
+      }
 
-    final PlayerCache playerCache = storageProvider.getCacheFor(target);
+      PlayerBrowserMenu.showTo(getPlayer());
+      return;
+    }
 
-    playerCache.listPunishes().stream().filter(Punish::isOld).onClose(System.out::println);
+    if (args.length != 1) {
+      returnInvalidArgs();
+    }
+
+    if ("?".equalsIgnoreCase(args[0]) || "help".equalsIgnoreCase(args[0])) {
+      tell(getUsage());
+    }
+
+    final UUID target = findTarget();
+
+    //Formatting & so
+
+    //Async --> final variable
+
+    Scheduler.runAsync(() -> {
+      final List<Punish> punishes = storageProvider.listPunishes(target);
+      //Sorting by creation
+
+      punishes.sort((o1, o2) -> o1.creation() > o2.creation() ? 1 : -1);
+
+      tell("&7" + Common.chatLineSmooth());
+      tell("&7Data for: &6" + playerProvider.getName(target));
+      tell("&7IP: " + playerProvider.getIp(target).orElse("unknown"));
+      tell(" ");
+      for (final Punish punish : punishes) {
+        final String isActive = punish.isOld() ? "&7[&cI&7]" : "&7[&2A&7]";
+        final String end =
+            punish.removed() ? "&cRemoved" : Settings.Advanced.formatDate(punish.getEndTime());
+        tell("&7[&8" + punish.punishType() + "&7] " + isActive + " " + punish
+            .reason() + "§7┃ Creation: "
+            + Settings.Advanced.formatDate(punish.creation())
+            + " - End: " + end
+
+        );
+      }
+
+      tell(" ");
+      tell("&7" + Common.chatLineSmooth());
+    });
+
+
     // Send info here
-  }
-
-  private UUID parseUUID(final String nameOrUUID) {
-
-    if (nameOrUUID.length() == 36) {
-      return UUID.fromString(nameOrUUID);
-    }
-
-    if (nameOrUUID.length() <= 16) {
-      return playerProvider.getUUID(nameOrUUID);
-    }
-
-    // Invalid String
-    returnTell(Localization.DATA_MISSING);
-    // Will actually never be called;
-    // The Java compiler just can't infer the exception thrown in returnTell()
-    return UUID.randomUUID();
   }
 }

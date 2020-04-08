@@ -1,5 +1,6 @@
 package org.mineacademy.punishcontrol.core.punish;
 
+import de.leonhard.storage.util.ClassWrapper;
 import de.leonhard.storage.util.Valid;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,15 +21,23 @@ import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 @Accessors(chain = true, fluent = true)
 @ToString
 public abstract class Punish {
-  protected static final PunishProvider PUNISH_PROVIDER = Providers.punishProvider();
-  protected static final ExceptionHandler EXCEPTION_HANDLER = Providers.exceptionHandler();
-  protected static final StorageProvider STORAGE_PROVIDER = Providers.storageProvider();
-  protected static final PlayerProvider PLAYER_PROVIDER = Providers.playerProvider();
+
+  protected static final PunishProvider PUNISH_PROVIDER = Providers
+      .punishProvider();
+  protected static final ExceptionHandler EXCEPTION_HANDLER = Providers
+      .exceptionHandler();
+  protected static final StorageProvider STORAGE_PROVIDER = Providers
+      .storageProvider();
+  protected static final PlayerProvider PLAYER_PROVIDER = Providers
+      .playerProvider();
+  @NonNull
   private final UUID target, creator;
   private final PunishType punishType;
+  @NonNull
   private String reason;
   private String ip;
-  @NonNull private PunishDuration punishDuration;
+  @NonNull
+  private PunishDuration punishDuration;
   private long creation;
   private boolean removed = false;
 
@@ -56,12 +65,14 @@ public abstract class Punish {
     this(
         UUID.fromString((String) banRawData.get("target")),
         UUID.fromString((String) banRawData.get("creator")),
-        PunishDuration.of((long) banRawData.get("duration")),
+        PunishDuration
+            .of(ClassWrapper.LONG.getLong(banRawData.get("duration"))),
         punishType,
         creation);
     validateRaWData(banRawData);
     ip((String) banRawData.get("ip"));
     removed((Boolean) banRawData.get("removed"));
+    reason((String) banRawData.get("reason"));
   }
 
   /**
@@ -82,6 +93,13 @@ public abstract class Punish {
     if (!(rawData.get("creator") instanceof String)) {
       Valid.error(
           "PunishRaw-Data is missing an String named 'creator'",
+          "Have you altered data?",
+          "Data: '" + rawData.toString() + "'");
+    }
+
+    if (!(rawData.get("reason") instanceof String)) {
+      Valid.error(
+          "PunishRaw-Data is missing an String named 'reason'",
           "Have you altered data?",
           "Data: '" + rawData.toString() + "'");
     }
@@ -112,7 +130,7 @@ public abstract class Punish {
     if (removed()) {
       return true;
     }
-    return getEndTime() > System.currentTimeMillis();
+    return getEndTime() < System.currentTimeMillis();
   }
 
   public final long getEndTime() {
@@ -170,7 +188,8 @@ public abstract class Punish {
       // Sending messages
 
       PLAYER_PROVIDER.sendIfOnline(
-          creator, "&cException while creating Punish!", "Please check your console.");
+          creator, "&cException while creating Punish!",
+          "Please check your console.");
     }
   }
 }
