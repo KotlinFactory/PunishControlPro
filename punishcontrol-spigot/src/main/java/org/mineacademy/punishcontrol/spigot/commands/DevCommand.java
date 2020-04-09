@@ -8,7 +8,6 @@ import org.mineacademy.fo.command.SimpleCommand;
  */
 public final class DevCommand extends SimpleCommand {
 
-
   protected DevCommand() {
     super("dev");
   }

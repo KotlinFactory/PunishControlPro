@@ -9,8 +9,12 @@ import org.bukkit.inventory.ItemStack;
 import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.fo.menu.button.Button;
 import org.mineacademy.fo.menu.model.ItemCreator;
+import org.mineacademy.fo.plugin.SimplePlugin;
 import org.mineacademy.fo.remain.CompMaterial;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
+import org.mineacademy.punishcontrol.spigot.menus.browser.PlayerBrowser;
+import org.mineacademy.punishcontrol.spigot.menus.browser.PunishBrowser;
+import org.mineacademy.punishcontrol.spigot.menus.setting.ChooseSettingsMenu;
 import org.mineacademy.punishcontrol.spigot.util.ItemStacks;
 
 public final class MainMenu extends Menu {
@@ -30,13 +34,13 @@ public final class MainMenu extends Menu {
       @Override
       public void onClickedInMenu(
           final Player player, final Menu menu, final ClickType click) {
-        PlayerBrowserMenu.showTo(player);
+        PlayerBrowser.showTo(player);
       }
 
       @Override
       public ItemStack getItem() {
-        return ItemCreator.of(CompMaterial.PLAYER_WALL_HEAD, "&6Players",
-            "", "Browse players", "and select an action for them")
+        return ItemCreator.of(CompMaterial.PLAYER_HEAD, "&6Players",
+            "", "Browse players", "and select an", "action for them")
             .build()
             .make();
       }
@@ -47,7 +51,7 @@ public final class MainMenu extends Menu {
       public void onClickedInMenu(
           final Player player, final Menu menu, final ClickType click) {
 
-        PunishBrowserMenu.showTo(player);
+        PunishBrowser.showTo(player);
       }
 
       @Override
@@ -85,6 +89,7 @@ public final class MainMenu extends Menu {
       @Override
       public void onClickedInMenu(final Player pl, final Menu menu,
           final ClickType click) {
+        ChooseSettingsMenu.showTo(pl);
       }
 
       @Override
@@ -92,7 +97,8 @@ public final class MainMenu extends Menu {
         return ItemCreator
             .of(CompMaterial.COMPARATOR,
                 "&6Settings",
-                "&7View Settings for PunishControl",
+                "&7View Settings for",
+                SimplePlugin.getNamed(),
                 ""
             )
             .build().make();
@@ -110,7 +116,7 @@ public final class MainMenu extends Menu {
     if (Arrays.asList(0, 9, 18, 27, 36, 8, 17, 26, 35, 44, 1, 7, 37, 43)
         .contains(slot)) {
       return ItemCreator.of(ItemStacks.cyanGlassPane())
-          .name("")
+          .name(" ")
           .build()
           .make();
     }
@@ -137,6 +143,5 @@ public final class MainMenu extends Menu {
   @Override
   protected String[] getInfo() {
     return null;
-    //    return new String[]{"&aWelcome to PunishControl:)", "&7This is the main-menu", "&7where you can", "&7manage everything"};
   }
 }

@@ -1,4 +1,4 @@
-package org.mineacademy.punishcontrol.spigot.menus;
+package org.mineacademy.punishcontrol.spigot.menus.browser;
 
 import java.util.Arrays;
 import javax.inject.Inject;
@@ -8,7 +8,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.mineacademy.fo.debug.LagCatcher;
-import org.mineacademy.fo.menu.MenuPagged;
 import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.fo.model.Replacer;
 import org.mineacademy.fo.remain.CompMaterial;
@@ -17,21 +16,23 @@ import org.mineacademy.punishcontrol.core.punish.Punish;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
 import org.mineacademy.punishcontrol.spigot.Scheduler;
+import org.mineacademy.punishcontrol.spigot.menu.AbstractBrowser;
+import org.mineacademy.punishcontrol.spigot.menus.MainMenu;
 import org.mineacademy.punishcontrol.spigot.settings.Settings;
 import org.mineacademy.punishcontrol.spigot.util.ItemStacks;
 
 // TODO Punishes from Type/Player/This/That
-public final class PunishBrowserMenu extends MenuPagged<Punish> {
+public final class PunishBrowser extends AbstractBrowser<Punish> {
 
   private final StorageProvider storageProvider;
   private final PlayerProvider playerProvider;
 
   @Inject
-  public PunishBrowserMenu
-      (final MainMenu parent,
+  public PunishBrowser(
+      final MainMenu parent,
       final PlayerProvider playerProvider,
       final StorageProvider storageProvider) {
-    super(9 * 5, parent, storageProvider.listPunishes());
+    super(parent, storageProvider.listPunishes());
     this.storageProvider = storageProvider;
     this.playerProvider = playerProvider;
     setTitle("&7Browse Punishes");
@@ -68,14 +69,16 @@ public final class PunishBrowserMenu extends MenuPagged<Punish> {
         break;
     }
 
-    final val builder = ItemCreator.of(material, "&8"+ punish.punishType().localized());
+    final val builder = ItemCreator
+        .of(material, "&8" + punish.punishType().localized());
     //Due to the, we have to set the item for the Warn manually.
     if (material == CompMaterial.ORANGE_DYE) {
       builder.item(ItemStacks.yellowDye());
     }
 
     final String end =
-        punish.removed() ? "&cRemoved" : Settings.Advanced.formatDate(punish.getEndTime());
+        punish.removed() ? "&cRemoved"
+            : Settings.Advanced.formatDate(punish.getEndTime());
     final Replacer lore = Replacer.of(
         "",
         "&6Target: &7{target}",

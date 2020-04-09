@@ -12,6 +12,7 @@ public final class DurationChooserMenu extends Menu {
   public DurationChooserMenu() {
 
   }
+
   public static void showTo(@NonNull final Player player) {
     DaggerSpigotComponent.create().durationChooserMenu().displayTo(player);
   }

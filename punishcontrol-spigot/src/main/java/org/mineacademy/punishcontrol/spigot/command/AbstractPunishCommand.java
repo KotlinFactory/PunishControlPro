@@ -17,7 +17,7 @@ import org.mineacademy.punishcontrol.core.punish.PunishDuration;
 import org.mineacademy.punishcontrol.core.punish.PunishType;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 import org.mineacademy.punishcontrol.spigot.Scheduler;
-import org.mineacademy.punishcontrol.spigot.menus.PlayerBrowserMenu;
+import org.mineacademy.punishcontrol.spigot.menus.browser.PlayerBrowser;
 
 /**
  * Command to handle (Un) banning, muting, warning, reporting & kicking players
@@ -113,7 +113,7 @@ public abstract class AbstractPunishCommand extends
           returnTell(MORE_ARGUMENTS_AS_CONSOLE_MESSAGE);
         }
 
-        PlayerBrowserMenu.showTo(getPlayer());
+        PlayerBrowser.showTo(getPlayer());
         break;
       case 1:
 
@@ -125,7 +125,7 @@ public abstract class AbstractPunishCommand extends
           returnTell(MORE_ARGUMENTS_AS_CONSOLE_MESSAGE);
         }
         // Choose action (PUNISH)
-        PlayerBrowserMenu.showTo(getPlayer());
+        PlayerBrowser.showTo(getPlayer());
         break;
       case 2:
         if (!isPlayer()) {

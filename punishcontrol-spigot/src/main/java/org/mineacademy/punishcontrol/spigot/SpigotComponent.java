@@ -13,11 +13,11 @@ import org.mineacademy.punishcontrol.spigot.commands.WarnCommand;
 import org.mineacademy.punishcontrol.spigot.listeners.SpigotDataSetter;
 import org.mineacademy.punishcontrol.spigot.menus.DurationChooserMenu;
 import org.mineacademy.punishcontrol.spigot.menus.MainMenu;
-import org.mineacademy.punishcontrol.spigot.menus.PlayerBrowserMenu;
-import org.mineacademy.punishcontrol.spigot.menus.PlayerSettingsMenu;
-import org.mineacademy.punishcontrol.spigot.menus.PunishBrowserMenu;
 import org.mineacademy.punishcontrol.spigot.menus.PunishChooserMenu;
 import org.mineacademy.punishcontrol.spigot.menus.PunishCreatorMenu;
+import org.mineacademy.punishcontrol.spigot.menus.browser.PlayerBrowser;
+import org.mineacademy.punishcontrol.spigot.menus.browser.PunishBrowser;
+import org.mineacademy.punishcontrol.spigot.menus.setting.ChooseSettingsMenu;
 import org.mineacademy.punishcontrol.spigot.menus.settings.LanguageSettingsMenu;
 import org.mineacademy.punishcontrol.spigot.menus.settings.StorageSettingsMenu;
 
@@ -65,17 +65,17 @@ public interface SpigotComponent {
 
   MainMenu menuMain();
 
-  PlayerBrowserMenu playerBrowserMenu();
+  PlayerBrowser playerBrowserMenu();
 
-  PunishBrowserMenu punishBrowserMenu();
+  PunishBrowser punishBrowserMenu();
 
   PunishCreatorMenu punishCreatorMenu();
 
  //Settings - Menus
 
-  StorageSettingsMenu mySqlSettingsMenu();
+  ChooseSettingsMenu chooseSettingsMenu();
 
-  PlayerSettingsMenu playerSettingsMenu();
+  StorageSettingsMenu mySqlSettingsMenu();
 
   LanguageSettingsMenu languageSettingsMenu();
 }

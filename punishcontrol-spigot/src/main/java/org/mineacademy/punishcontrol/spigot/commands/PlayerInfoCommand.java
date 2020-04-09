@@ -10,7 +10,7 @@ import org.mineacademy.punishcontrol.core.punish.Punish;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 import org.mineacademy.punishcontrol.spigot.Scheduler;
 import org.mineacademy.punishcontrol.spigot.command.AbstractSimplePunishControlCommand;
-import org.mineacademy.punishcontrol.spigot.menus.PlayerBrowserMenu;
+import org.mineacademy.punishcontrol.spigot.menus.browser.PlayerBrowser;
 import org.mineacademy.punishcontrol.spigot.settings.Settings;
 
 public class PlayerInfoCommand extends AbstractSimplePunishControlCommand {
@@ -35,13 +35,15 @@ public class PlayerInfoCommand extends AbstractSimplePunishControlCommand {
         returnTell(MORE_ARGUMENTS_AS_CONSOLE_MESSAGE);
       }
 
-      PlayerBrowserMenu.showTo(getPlayer());
+      PlayerBrowser.showTo(getPlayer());
       return;
     }
 
     if (args.length != 1) {
       returnInvalidArgs();
     }
+
+    //Player INfo
 
     if ("?".equalsIgnoreCase(args[0]) || "help".equalsIgnoreCase(args[0])) {
       tell(getUsage());
