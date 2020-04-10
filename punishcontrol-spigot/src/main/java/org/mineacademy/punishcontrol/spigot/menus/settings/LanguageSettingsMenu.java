@@ -4,7 +4,7 @@ import javax.inject.Inject;
 import lombok.NonNull;
 import org.bukkit.entity.Player;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
-import org.mineacademy.punishcontrol.spigot.menus.MainMenu;
+import org.mineacademy.punishcontrol.spigot.menus.browser.SettingsBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.setting.AbstractSettingsMenu;
 
 public final class LanguageSettingsMenu extends AbstractSettingsMenu {
@@ -14,8 +14,8 @@ public final class LanguageSettingsMenu extends AbstractSettingsMenu {
   }
 
   @Inject
-  public LanguageSettingsMenu(final MainMenu mainMenu) {
-    super(mainMenu);
+  public LanguageSettingsMenu(final SettingsBrowser settingsBrowser) {
+    super(settingsBrowser);
   }
 
 }

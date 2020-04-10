@@ -157,7 +157,7 @@ public final class JsonStorageProvider extends SecureJson implements StorageProv
     final List<Warn> result = new ArrayList<>();
 
     for (final String key : keys) { // UUIDs
-      final Map<String, Object> bans = getMap(key);
+      final Map<String, Object> bans = getMap(WARN_PATH_PREFIX + "." + key);
 
       for (final val entry : bans.entrySet()) { // MS
         // Actual ban

@@ -48,7 +48,7 @@ Punishes:
     Apply_On_IP: true
   Mute:
     # Commands the player should be disallowed to use
-    Blocked_Commands:
+    Allowed_Commands:
       - /msg
       - /r
     Permission: punishcontrol.command.mute
@@ -71,9 +71,9 @@ Groups:
   Admin:
     Priority: 0
     Permission: punishcontrol.group.admin
-    # May the class override an existing punishment?
+    # May the group override an existing punishment?
     # For example ban a already banned player again?
-    Override_Punishes: false
+    Override_Punishes: true
     #Set to -1 to disable
     Limits:
       Ban: -1
@@ -109,6 +109,7 @@ Groups:
 # -> Don't change them unless you really know, what you are doing.
 #
 Advanced:
+
   Cache_Results: true
   API:
     #You can disable the API for security reasons

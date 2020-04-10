@@ -9,7 +9,7 @@ import org.mineacademy.punishcontrol.core.CoreComponent;
 import org.mineacademy.punishcontrol.core.DaggerCoreComponent;
 import org.mineacademy.punishcontrol.core.SimplePunishControlPlugin;
 import org.mineacademy.punishcontrol.core.provider.Providers;
-import org.mineacademy.punishcontrol.core.storage.StorageType;
+import org.mineacademy.punishcontrol.core.settings.Settings;
 import org.mineacademy.punishcontrol.proxy.commands.CommandBan;
 import org.mineacademy.punishcontrol.proxy.commands.CommandKick;
 import org.mineacademy.punishcontrol.proxy.commands.CommandMain;
@@ -22,10 +22,8 @@ import org.mineacademy.punishcontrol.proxy.impl.ProxyExceptionHandler;
 import org.mineacademy.punishcontrol.proxy.impl.ProxyPlayerProvider;
 import org.mineacademy.punishcontrol.proxy.impl.ProxyPluginDataProvider;
 import org.mineacademy.punishcontrol.proxy.impl.ProxyPunishProvider;
-import org.mineacademy.punishcontrol.proxy.impl.ProxySettingsProvider;
 import org.mineacademy.punishcontrol.proxy.impl.ProxyTextureProvider;
 import org.mineacademy.punishcontrol.proxy.listeners.ProxyListenerImpl;
-import org.mineacademy.punishcontrol.proxy.settings.Settings;
 
 public final class PunishControl extends SimplePlugin implements SimplePunishControlPlugin {
 
@@ -51,7 +49,7 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
     registerCommand(CommandUnBan.newInstance());
     registerCommand(CommandUnMute.newInstance());
     registerCommand(CommandWarn.newInstance());
-    registerCommand(CommandMain.newInstance(Settings.MAIN_COMMAND_ALIASES));
+    registerCommand(CommandMain.create(Settings.MAIN_COMMAND_ALIASES));
   }
 
   @Override
@@ -68,8 +66,6 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
     Providers.pluginDataProvider(ProxyPluginDataProvider.create());
     // Player providers
 
-    // Settings
-    Providers.settingsProvider(ProxySettingsProvider.newInstance());
     // TextureProvider
     Providers.textureProvider(ProxyTextureProvider.newInstance());
     // Broadcaster
@@ -94,11 +90,6 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
   @Override
   public String chooseLanguage() {
     return "ENG";
-  }
-
-  @Override
-  public StorageType chooseStorageProvider() {
-    return null;
   }
 
   @Override

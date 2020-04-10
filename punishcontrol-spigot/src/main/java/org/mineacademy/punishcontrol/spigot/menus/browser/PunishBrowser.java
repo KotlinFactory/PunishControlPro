@@ -13,12 +13,12 @@ import org.mineacademy.fo.model.Replacer;
 import org.mineacademy.fo.remain.CompMaterial;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.punish.Punish;
+import org.mineacademy.punishcontrol.core.settings.Settings;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
 import org.mineacademy.punishcontrol.spigot.Scheduler;
 import org.mineacademy.punishcontrol.spigot.menu.AbstractBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.MainMenu;
-import org.mineacademy.punishcontrol.spigot.settings.Settings;
 import org.mineacademy.punishcontrol.spigot.util.ItemStacks;
 
 // TODO Punishes from Type/Player/This/That
@@ -55,26 +55,12 @@ public final class PunishBrowser extends AbstractBrowser<Punish> {
 
   @Override
   protected ItemStack convertToItemStack(final Punish punish) {
-    CompMaterial material = null;
+    final CompMaterial material = null;
 
-    switch (punish.punishType()) {
-      case BAN:
-        material = CompMaterial.OAK_DOOR;
-        break;
-      case MUTE:
-        material = CompMaterial.PAPER;
-        break;
-      case WARN:
-        material = CompMaterial.ORANGE_DYE;
-        break;
-    }
 
     final val builder = ItemCreator
-        .of(material, "&8" + punish.punishType().localized());
-    //Due to the, we have to set the item for the Warn manually.
-    if (material == CompMaterial.ORANGE_DYE) {
-      builder.item(ItemStacks.yellowDye());
-    }
+        .of(ItemStacks.forPunishType(punish.punishType()));
+    builder.name("&8" + punish.punishType().localized());
 
     final String end =
         punish.removed() ? "&cRemoved"

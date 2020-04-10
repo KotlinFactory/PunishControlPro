@@ -1,10 +1,9 @@
 package org.mineacademy.punishcontrol.core.util;
 
 import de.leonhard.storage.util.Valid;
-import lombok.experimental.UtilityClass;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import lombok.experimental.UtilityClass;
 
 /** Utility class for calculating time from ticks and back. */
 @UtilityClass
@@ -128,8 +127,8 @@ public class TimeUtil {
       } else if (sub.startsWith("year")) {
         unit = 31556926;
       } else {
-        throw new IllegalStateException(
-            "Must define date type! Example: '1 second' (Got '" + sub + "')");
+        //Invalid-format
+        return Long.MIN_VALUE;
       }
 
       seconds += multiplier * (isTicks ? 1 : unit * 20);

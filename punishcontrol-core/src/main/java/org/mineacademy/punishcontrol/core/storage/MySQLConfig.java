@@ -1,6 +1,6 @@
 package org.mineacademy.punishcontrol.core.storage;
 
-import de.leonhard.storage.internal.exception.LightningValidationException;
+import de.leonhard.storage.internal.exceptions.LightningValidationException;
 import de.leonhard.storage.util.FileUtils;
 import de.leonhard.storage.util.Valid;
 import java.io.File;
@@ -160,6 +160,7 @@ public final class MySQLConfig {
         return splitted[1];
       }
     }
+
     throw new LightningValidationException("Couldn't find key '" + key + "'");
   }
 }

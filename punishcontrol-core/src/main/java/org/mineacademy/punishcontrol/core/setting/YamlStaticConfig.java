@@ -1,4 +1,4 @@
-package org.mineacademy.punishcontrol.core.fo.settings;
+package org.mineacademy.punishcontrol.core.setting;
 
 import de.leonhard.storage.Yaml;
 import de.leonhard.storage.util.ClassWrapper;
@@ -14,17 +14,19 @@ import lombok.NonNull;
 import lombok.SneakyThrows;
 import org.jetbrains.annotations.Nullable;
 import org.mineacademy.punishcontrol.core.fo.constants.FoConstants;
+import org.mineacademy.punishcontrol.core.fo.constants.FoConstants.Header;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.PluginDataProvider;
 
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class YamlStaticConfig {
 
-  protected static final PluginDataProvider DATA = Providers.pluginDataProvider();
+  protected static final PluginDataProvider DATA = Providers
+      .pluginDataProvider();
 
   private static Yaml TEMPORARY_INSTANCE;
 
-  public static void pathPrefix(@NonNull final String pathPrefix) {
+  public static void pathPrefix(final String pathPrefix) {
     temporaryInstance().setPathPrefix(pathPrefix);
   }
 
@@ -42,8 +44,9 @@ public abstract class YamlStaticConfig {
 
   protected static void set(final String path, final Object value) {
     temporaryInstance().set(path, value);
-    temporaryInstance()
-        .setHeader(Arrays.asList(FoConstants.Header.UPDATED_FILE));
+    temporaryInstance().setHeader(
+        Arrays.asList(FoConstants.Header.UPDATED_FILE)
+    );
   }
 
   // ----------------------------------------------------------------------------------------------------
@@ -74,9 +77,17 @@ public abstract class YamlStaticConfig {
     return temporaryInstance().get(key);
   }
 
-  protected static <T> T getOrDefault(@NonNull final String key,
+  protected static <T> T getOrDefault(
+      @NonNull final String key,
       final T def) {
     return temporaryInstance().getOrDefault(key, def);
+  }
+
+  protected static <T> T getOrSetDefault(@NonNull final String key,
+      final T def) {
+    final T result = temporaryInstance().getOrSetDefault(key, def);
+    temporaryInstance().setHeader(Header.UPDATED_FILE);
+    return result;
   }
 
   // ----------------------------------------------------------------------------------------------------
@@ -85,8 +96,9 @@ public abstract class YamlStaticConfig {
 
   protected static <T> T getOrError(@NonNull final String key,
       @NonNull final Class<T> type) {
-    Valid.checkBoolean(contains(key), "Your config lacks '" + type.getSimpleName() +
-        "' at '" + key + "'");
+    Valid.checkBoolean(contains(key),
+        "Your config lacks '" + type.getSimpleName() +
+            "' at '" + key + "'");
 
     return ClassWrapper.getFromDef(get(key), type);
   }
@@ -104,31 +116,9 @@ public abstract class YamlStaticConfig {
   // ----------------------------------------------------------------------------------------------------
 
   protected static String getString(final String path) {
-    return temporaryInstance().getString(path);
+    return colorize(temporaryInstance().getString(path));
   }
 
-//  /**
-//   * Return a replacer for localizable messages
-//   *
-//   * @param path
-//   * @return
-//   */
-//  protected static Replacer getReplacer(final String path) {
-//    return getReplacer(path, "");
-//  }
-//
-//  /**
-//   * Return a replacer for localizable messages
-//   *
-//   * @param path
-//   * @param def
-//   * @return
-//   */
-//  protected static Replacer getReplacer(final String path, final String def) {
-//    final String message = getString(path);
-//
-//    return Replacer.of(Common.getOrDefault(message, def));
-//  }
 
   protected static int getInteger(final String path) {
     return temporaryInstance().getInt(path);
@@ -142,6 +132,11 @@ public abstract class YamlStaticConfig {
     Valid.notNull(TEMPORARY_INSTANCE, "Temporary instance is null",
         "Make sure to set your temporaryInstance.");
     return TEMPORARY_INSTANCE;
+  }
+
+  @SafeVarargs
+  public static void loadAll(final Class<? extends YamlStaticConfig>... classes){
+    loadAll(Arrays.asList(classes));
   }
 
   @SneakyThrows
@@ -193,7 +188,8 @@ public abstract class YamlStaticConfig {
   }
 
   /**
-   * Loads the class via reflection, scanning for "private static void init()" methods to run
+   * Loads the class via reflection, scanning for "private static void init()"
+   * methods to run
    */
   public final void loadViaReflection() {
     try {
@@ -216,7 +212,8 @@ public abstract class YamlStaticConfig {
   }
 
   /**
-   * Invoke all "private static void init()" methods in the class and its subclasses
+   * Invoke all "private static void init()" methods in the class and its
+   * subclasses
    *
    * @param clazz
    * @throws Exception

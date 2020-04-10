@@ -1,5 +1,9 @@
 package org.mineacademy.punishcontrol.proxy.command;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
 import lombok.Getter;
 import lombok.NonNull;
 import net.md_5.bungee.api.CommandSender;
@@ -7,11 +11,6 @@ import org.mineacademy.bfo.collection.StrictList;
 import org.mineacademy.bfo.command.SimpleCommand;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.punish.PunishDuration;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
 
 /** Command to handle (Un) banning, muting, warning, reporting & kicking players */
 /*
@@ -76,6 +75,7 @@ public abstract class AbstractPunishCommand extends SimpleCommand {
               "please provide at least 2 arguments.");
         }
         break;
+
       case 1:
         onCase2(getSender(), findTarget());
         break;

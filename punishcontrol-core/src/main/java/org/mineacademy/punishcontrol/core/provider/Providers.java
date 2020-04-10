@@ -11,7 +11,6 @@ import org.mineacademy.punishcontrol.core.providers.ExceptionHandler;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.providers.PluginDataProvider;
 import org.mineacademy.punishcontrol.core.providers.PunishProvider;
-import org.mineacademy.punishcontrol.core.providers.SettingsProvider;
 import org.mineacademy.punishcontrol.core.providers.TextureProvider;
 import org.mineacademy.punishcontrol.core.storage.MySQLConfig;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
@@ -34,10 +33,6 @@ public final class Providers {
   @Setter
   @NonNull
   private static TextureProvider textureProvider;
-
-  @Setter
-  @NonNull
-  private static SettingsProvider settingsProvider;
 
   @Setter
   @NonNull
@@ -68,13 +63,6 @@ public final class Providers {
     Valid.notNull(textureProvider, "TextureProvider not yet set.");
 
     return textureProvider;
-  }
-
-  @Provides
-  public static SettingsProvider settingsProvider() {
-    Valid.notNull(settingsProvider, "SettingsProvider not yet set");
-
-    return settingsProvider;
   }
 
   @Provides

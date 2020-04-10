@@ -1,12 +1,12 @@
 package org.mineacademy.punishcontrol.spigot.menus.setting;
 
 import org.mineacademy.fo.menu.Menu;
-import org.mineacademy.punishcontrol.spigot.menus.MainMenu;
+import org.mineacademy.punishcontrol.spigot.menus.browser.SettingsBrowser;
 
 public abstract class AbstractSettingsMenu extends Menu {
 
-  protected AbstractSettingsMenu(final MainMenu mainMenu) {
-    super(mainMenu);
+  protected AbstractSettingsMenu(final SettingsBrowser settingsBrowser) {
+    super(settingsBrowser);
   }
 
   @Override

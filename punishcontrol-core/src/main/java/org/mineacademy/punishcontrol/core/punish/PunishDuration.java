@@ -10,12 +10,23 @@ import org.mineacademy.punishcontrol.core.util.TimeUtil;
 
 /**
  * Class to be able
- *
+ * <p>
  * TODO: do not obfuscate!
  */
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class PunishDuration {
+
   private final long ms;
+
+
+  /**
+   * Returns an empty punish-duration.
+   * Normally indicates that the String that should be parsed had the
+   * wrong format.
+   */
+  public static PunishDuration empty() {
+    return new PunishDuration(Long.MIN_VALUE);
+  }
 
   public static PunishDuration of(@NonNull String humanReadableTime) {
     if (humanReadableTime.equalsIgnoreCase("-1")) {
@@ -27,12 +38,20 @@ public final class PunishDuration {
       humanReadableTime = splitHumanToHumanReadable(humanReadableTime);
     }
 
-    return new PunishDuration(
-        TimeUtil.toTicks(humanReadableTime) * 50); // Converting to ms (1tick = 50ms)
+    // Converting to ms (1tick = 50ms)
+
+    final long ticks = TimeUtil.toTicks(humanReadableTime);
+
+    //Invalid format
+    if (ticks == Long.MIN_VALUE) {
+      return empty();
+    }
+    return new PunishDuration(TimeUtil.toTicks(humanReadableTime) * 50);
   }
 
   // 10days becomes 10 days
-  private static String splitHumanToHumanReadable(@NonNull final String humanReadable) {
+  private static String splitHumanToHumanReadable(
+      @NonNull final String humanReadable) {
     // returns an OptionalInt with the value of the index of the first Letter
     final OptionalInt firstLetterIndex =
         IntStream.range(0, humanReadable.length())
@@ -66,6 +85,11 @@ public final class PunishDuration {
   // ----------------------------------------------------------------------------------------------------
   // Convenience methods here
   // ----------------------------------------------------------------------------------------------------
+
+  public boolean isEmpty() {
+    return toMs() == Long.MIN_VALUE;
+  }
+
 
   public boolean isPermanent() {
     return ms == -1L;

@@ -1,10 +1,9 @@
 package org.mineacademy.punishcontrol.core.providers;
 
-import lombok.NonNull;
-
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import lombok.NonNull;
 
 /** Provide Data needed */
 public interface PlayerProvider {
@@ -27,4 +26,6 @@ public interface PlayerProvider {
   Optional<String> getIp(@NonNull UUID uuid);
 
   void sendIfOnline(@NonNull UUID uuid, @NonNull String... messages);
+
+  void kickIfOnline(@NonNull UUID uuid, @NonNull String... reason);
 }

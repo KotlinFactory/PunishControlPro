@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import lombok.NonNull;
 import org.mineacademy.punishcontrol.core.punish.Punish;
+import org.mineacademy.punishcontrol.core.punish.PunishType;
 import org.mineacademy.punishcontrol.core.punishes.Ban;
 import org.mineacademy.punishcontrol.core.punishes.Mute;
 import org.mineacademy.punishcontrol.core.punishes.Warn;
@@ -143,6 +144,20 @@ public interface StorageProvider {
   // ----------------------------------------------------------------------------------------------------
   // Methods to check whether a player is punished
   // ----------------------------------------------------------------------------------------------------
+
+  default boolean isPunished(
+      @NonNull final UUID uuid,
+      @NonNull final PunishType punishType){
+    switch (punishType) {
+      case BAN:
+        return isBanned(uuid);
+      case MUTE:
+        return isMuted(uuid);
+      case WARN:
+        return isWarned(uuid);
+    }
+    throw new IllegalStateException("Invalid punish-type");
+  }
 
   default boolean isBanned(@NonNull final UUID uuid) {
     return currentBan(uuid).isPresent();

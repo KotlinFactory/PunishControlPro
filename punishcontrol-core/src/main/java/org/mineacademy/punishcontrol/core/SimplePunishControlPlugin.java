@@ -2,18 +2,21 @@ package org.mineacademy.punishcontrol.core;
 
 import de.leonhard.storage.Yaml;
 import java.io.File;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
 import lombok.NonNull;
 import lombok.val;
 import org.mineacademy.punishcontrol.core.group.Group;
-import org.mineacademy.punishcontrol.core.group.GroupManager;
+import org.mineacademy.punishcontrol.core.group.Groups;
 import org.mineacademy.punishcontrol.core.listener.Listener;
 import org.mineacademy.punishcontrol.core.listener.Listeners;
 import org.mineacademy.punishcontrol.core.listeners.PunishQueue;
 import org.mineacademy.punishcontrol.core.punish.PunishDuration;
-import org.mineacademy.punishcontrol.core.punish.template.PunishTemplateManager;
-import org.mineacademy.punishcontrol.core.storage.StorageType;
+import org.mineacademy.punishcontrol.core.punish.template.PunishTemplates;
+import org.mineacademy.punishcontrol.core.setting.YamlStaticConfig;
+import org.mineacademy.punishcontrol.core.settings.Localization;
+import org.mineacademy.punishcontrol.core.settings.Settings;
 
 /**
  * Class for a unified startup of our Main-Plugin classes
@@ -69,6 +72,8 @@ public interface SimplePunishControlPlugin {
 
     // Settings
 
+    YamlStaticConfig.loadAll(Settings.class, Localization.class);
+
     try {
       final String language = chooseLanguage();
 
@@ -82,17 +87,15 @@ public interface SimplePunishControlPlugin {
     }
 
     try {
-      final StorageType storageType = chooseStorageProvider();
+      PunishControlManager.setStorageType(Settings.STORAGE_TYPE);
 
-      PunishControlManager.setStorageType(storageType);
-
-      log("Storage: " + storageType.name());
+      log("Storage: " + Settings.STORAGE_TYPE.name());
     } catch (final Throwable throwable) {
       log("Couldn't choose StorageProvider");
       saveError(throwable);
     }
 
-    log(" ");
+    log();
 
     // Startup
     try {
@@ -111,6 +114,7 @@ public interface SimplePunishControlPlugin {
       saveError(throwable);
     }
 
+    //Settings! Must be loaded after providers
     try {
       registerCommands();
       log("Commands §l§a✔");
@@ -141,7 +145,8 @@ public interface SimplePunishControlPlugin {
     }
 
     try {
-      PunishTemplateManager.loadTemplates(new File(getWorkingDirectory() + "/templates"));
+      PunishTemplates
+          .load(new File(getWorkingDirectory() + "/templates"));
       log("Templates §l§a✔ ");
     } catch (final Throwable throwable) {
       log("Templates §l§c✘");
@@ -151,7 +156,8 @@ public interface SimplePunishControlPlugin {
     log();
 
     // Logging an random message
-    final int index = getRandomNumberInRange(0, getStartupFinishedMessages().length - 1);
+    final int index = getRandomNumberInRange(0,
+        getStartupFinishedMessages().length - 1);
 
     log(getStartupFinishedMessages()[index]);
 
@@ -176,7 +182,8 @@ public interface SimplePunishControlPlugin {
 
       builder.name(entry.getKey());
       builder.permission(groupRawData.get("Permission").toString());
-      builder.priority(Integer.parseInt(groupRawData.get("Priority").toString()));
+      builder
+          .priority(Integer.parseInt(groupRawData.get("Priority").toString()));
 
       @SuppressWarnings("unchecked") final Map<String, String> limits = (Map<String, String>) groupRawData
           .get("Limits");
@@ -184,8 +191,12 @@ public interface SimplePunishControlPlugin {
       builder.banLimit(PunishDuration.of(limits.get("Ban")));
       builder.muteLimit(PunishDuration.of(limits.get("Mute")));
       builder.warnLimit(PunishDuration.of(limits.get("Warn")));
+      builder.overridePunishes(groupRawData.get("Override_Punishes").toString().equalsIgnoreCase("true"));
+      builder.templateByPasses(
+          (List<String>) groupRawData.get("Template_Bypasses")
+      );
 
-      GroupManager.registerGroup(builder.build());
+      Groups.registerGroup(builder.build());
     }
   }
 
@@ -212,8 +223,6 @@ public interface SimplePunishControlPlugin {
   void registerProviders();
 
   String chooseLanguage();
-
-  StorageType chooseStorageProvider();
 
   void saveError(@NonNull Throwable t);
 }

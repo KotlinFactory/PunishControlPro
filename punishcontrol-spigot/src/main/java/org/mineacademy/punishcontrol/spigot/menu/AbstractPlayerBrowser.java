@@ -8,10 +8,12 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
+import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.providers.TextureProvider;
 import org.mineacademy.punishcontrol.spigot.menus.MainMenu;
+import org.mineacademy.punishcontrol.spigot.util.ItemStacks;
 
 public abstract class AbstractPlayerBrowser extends AbstractBrowser<UUID> {
 
@@ -29,7 +31,7 @@ public abstract class AbstractPlayerBrowser extends AbstractBrowser<UUID> {
   public AbstractPlayerBrowser(
       final PlayerProvider playerProvider,
       final TextureProvider textureProvider,
-      final MainMenu mainMenu,
+      final Menu mainMenu,
       final boolean onlineOnly) {
 
     this(
@@ -43,7 +45,7 @@ public abstract class AbstractPlayerBrowser extends AbstractBrowser<UUID> {
   private AbstractPlayerBrowser(
       final PlayerProvider playerProvider,
       final TextureProvider textureProvider,
-      final MainMenu mainMenu,
+      final Menu mainMenu,
       final List<UUID> players
   ) {
 
@@ -62,11 +64,6 @@ public abstract class AbstractPlayerBrowser extends AbstractBrowser<UUID> {
 
 
   @Override
-  protected final boolean addPageNumbers() {
-    return true;
-  }
-
-  @Override
   protected final ItemStack convertToItemStack(final UUID uuid) {
     final String name = playerProvider.getName(uuid);
     final String hash = textureProvider.getSkinTexture(uuid);
@@ -82,7 +79,7 @@ public abstract class AbstractPlayerBrowser extends AbstractBrowser<UUID> {
 
     builder.glow(true);
 
-    return builder.build().make();
+    return ItemStacks.glow(builder.build());
   }
 
   @Override

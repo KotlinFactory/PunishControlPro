@@ -3,7 +3,7 @@
   "Type": "BAN",
   "Duration": "10 days",
   "Reason": "Example",
-  "Item": "Stone",
   "Silent": false,
-  "SuperSilent": false
+  "SuperSilent": false,
+  "Permission": "templates-default.ban"
 }

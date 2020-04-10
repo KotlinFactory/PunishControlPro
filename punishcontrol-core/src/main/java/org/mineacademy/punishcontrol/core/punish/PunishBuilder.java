@@ -1,7 +1,10 @@
 package org.mineacademy.punishcontrol.core.punish;
 
 import de.leonhard.storage.util.Valid;
+import java.util.Optional;
+import java.util.UUID;
 import lombok.AccessLevel;
+import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -11,28 +14,32 @@ import org.mineacademy.punishcontrol.core.punishes.Ban;
 import org.mineacademy.punishcontrol.core.punishes.Mute;
 import org.mineacademy.punishcontrol.core.punishes.Warn;
 
-import java.util.Optional;
-import java.util.UUID;
-
 /**
  * Class to build a punishment from a given punish-type and other information
  *
- * <p>Especially useful if we don't know which punishtype finally will be choosen like in the
- * specific Punish-Commands
+ * <p>Especially useful if we don't know which punishtype finally will be
+ * choosen like in the specific Punish-Commands
+ * <p>
+ * Every field exluding punishType might be null! * Don't access without prior
+ * null-checks
  *
  * <p>* TODO: do not obfuscate!
  */
+@Getter
 @Setter
 @Accessors(fluent = true, chain = true)
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 @NonNull
 public final class PunishBuilder {
-  private final PunishType punishType;
+
+  @NonNull
+  private PunishType punishType;
   private UUID target;
   private UUID creator;
   private PunishDuration duration;
   private long creation;
-  @Nullable private String ip;
+  @Nullable
+  private String ip;
   private boolean silent, superSilent, removed;
 
   private String reason;
@@ -97,7 +104,8 @@ public final class PunishBuilder {
             .isSilent(silent)
             .isSuperSilent(superSilent);
     }
-    Valid.error("Invalid punishtype! Neither WARN/BAN/MUTE!", "What have you done to your jdk?!");
+    Valid.error("Invalid punishtype! Neither WARN/BAN/MUTE!",
+        "What have you done to your jdk?!");
     return build(); // Will never be executed. Just here because of the java-compiler.
   }
 }

@@ -14,7 +14,8 @@ import org.mineacademy.fo.remain.CompMaterial;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
 import org.mineacademy.punishcontrol.spigot.menus.browser.PlayerBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.browser.PunishBrowser;
-import org.mineacademy.punishcontrol.spigot.menus.setting.ChooseSettingsMenu;
+import org.mineacademy.punishcontrol.spigot.menus.browser.SettingsBrowser;
+import org.mineacademy.punishcontrol.spigot.menus.punish.PunishCreatorMenu;
 import org.mineacademy.punishcontrol.spigot.util.ItemStacks;
 
 public final class MainMenu extends Menu {
@@ -22,9 +23,8 @@ public final class MainMenu extends Menu {
   private final Button punishesButton;
   private final Button newButton;
   private final Button playerViewButton;
-  private final Button reloadButton;
+  private final Button settingsButton;
 
-  // TODO See boss for design.
   @Inject
   public MainMenu() {
     setSize(9 * 5);
@@ -69,7 +69,9 @@ public final class MainMenu extends Menu {
     newButton = new Button() {
 
       @Override
-      public void onClickedInMenu(final Player pl, final Menu menu,
+      public void onClickedInMenu(
+          final Player pl,
+          final Menu menu,
           final ClickType click) {
         PunishCreatorMenu.showTo(pl);
       }
@@ -79,17 +81,17 @@ public final class MainMenu extends Menu {
         return ItemCreator
             .of(ItemStacks.cyanDye())
             .name("&6Create New")
-            .lores(Arrays.asList(" ", "Make new boss"))
+            .lores(Arrays.asList(" ", "Make new punish"))
             .build().make();
       }
     };
 
-    reloadButton = new Button() {
+    settingsButton = new Button() {
 
       @Override
       public void onClickedInMenu(final Player pl, final Menu menu,
           final ClickType click) {
-        ChooseSettingsMenu.showTo(pl);
+        SettingsBrowser.showTo(pl);
       }
 
       @Override
@@ -134,7 +136,7 @@ public final class MainMenu extends Menu {
     }
 
     if (slot == 9 * 3 + 4) {
-      return reloadButton.getItem();
+      return settingsButton.getItem();
     }
 
     return super.getItemAt(slot);

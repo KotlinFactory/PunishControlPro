@@ -1,4 +1,4 @@
-package org.mineacademy.punishcontrol.core.fo.settings;
+package org.mineacademy.punishcontrol.core.setting;
 
 
 import de.leonhard.storage.Config;
@@ -9,8 +9,8 @@ import java.util.List;
 import org.mineacademy.punishcontrol.core.fo.constants.FoConstants;
 
 /**
- * A simple implementation of a typical main plugin settings where each key can be accessed in a
- * static way from anywhere.
+ * A simple implementation of a typical main plugin settings where each key can
+ * be accessed in a static way from anywhere.
  * <p>
  * Typically we use this class for settings.yml main plugin config.
  */
@@ -30,17 +30,17 @@ public abstract class SimpleSettings extends YamlStaticConfig {
   // Version
   // --------------------------------------------------------------------
   /**
-   * When processing regular expressions, limit executing to the specified time. This prevents
-   * server freeze/crash on malformed regex (loops).
+   * When processing regular expressions, limit executing to the specified time.
+   * This prevents server freeze/crash on malformed regex (loops).
    * <p>
    * Regex_Timeout_Milis: 100
    */
   public static Integer REGEX_TIMEOUT = 100;
   public static List<String> MAIN_COMMAND_ALIASES = new ArrayList<>();
   /**
-   * The localization prefix, given you are using {@link SimpleLocalization} class to load and
-   * manage your locale file. Typically the file path is: localization/messages_PREFIX.yml with this
-   * prefix below.
+   * The localization prefix, given you are using {@link SimpleLocalization}
+   * class to load and manage your locale file. Typically the file path is:
+   * localization/messages_PREFIX.yml with this prefix below.
    * <p>
    * Typically: Locale: en
    * <p>
@@ -53,8 +53,8 @@ public abstract class SimpleSettings extends YamlStaticConfig {
   // Specify those you need to modify
   // --------------------------------------------------------------------
   /**
-   * The server name used in {server_name} variable or BungeeCord, if your plugin supports either of
-   * those.
+   * The server name used in {server_name} variable or BungeeCord, if your
+   * plugin supports either of those.
    * <p>
    * Typically for ChatControl:
    * <p>
@@ -70,17 +70,19 @@ public abstract class SimpleSettings extends YamlStaticConfig {
    */
   public static String BUNGEE_SERVER_NAME = "Server";
   /**
-   * Antipiracy stuff for our protected software, leave empty to Serialization: ""
+   * Antipiracy stuff for our protected software, leave empty to Serialization:
+   * ""
    * <p>
    * // NOT MANDATORY //
    */
   public static String SECRET_KEY = "";
   public static Boolean NOTIFY_UPDATES = false;
   /**
-   * Should we enable inbuilt advertisements? ** We found out that users really hate this feature,
-   * you may want not to use this completelly ** ** If you want to broadcast important messages
-   * regardless of this feature just implement your ** ** own Runnable that checks for a YAML file
-   * on your external server on plugin load. **
+   * Should we enable inbuilt advertisements? ** We found out that users really
+   * hate this feature, you may want not to use this completelly ** ** If you
+   * want to broadcast important messages regardless of this feature just
+   * implement your ** ** own Runnable that checks for a YAML file on your
+   * external server on plugin load. **
    * <p>
    * Typically for ChatControl:
    * <p>
@@ -96,8 +98,8 @@ public abstract class SimpleSettings extends YamlStaticConfig {
   private static boolean settingsClassCalled;
 
   /**
-   * Load the values -- this method is called automatically by reflection in the {@link
-   * YamlStaticConfig} class!
+   * Load the values -- this method is called automatically by reflection in the
+   * {@link YamlStaticConfig} class!
    */
   private static void init() {
     Valid.checkBoolean(!settingsClassCalled,
@@ -108,6 +110,9 @@ public abstract class SimpleSettings extends YamlStaticConfig {
     if (isSet("Prefix")) {
       PLUGIN_PREFIX = getString("Prefix");
     }
+
+    //Colorizing default-prefix
+    PLUGIN_PREFIX = PLUGIN_PREFIX.replace("&", "§");
 
     if (isSet("Log_Lag_Over_Milis")) {
       LAG_THRESHOLD_MILLIS = getInteger("Log_Lag_Over_Milis");
@@ -182,12 +187,6 @@ public abstract class SimpleSettings extends YamlStaticConfig {
 
       final boolean keySet = isSet("Command_Aliases");
 
-      // if (SimplePlugin.getInstance().getMainCommand() != null &&
-      // !keySet)
-      // throw new FoException("Since you override getMainCommand in your
-      // main plugin class you must set the 'Command_Aliases' key in " +
-      // getFileName());
-
       MAIN_COMMAND_ALIASES = keySet
           ? getStringList("Command_Aliases")
           : MAIN_COMMAND_ALIASES;
@@ -220,7 +219,8 @@ public abstract class SimpleSettings extends YamlStaticConfig {
   }
 
   /**
-   * Reset the flag indicating that the class has been loaded, used in reloading.
+   * Reset the flag indicating that the class has been loaded, used in
+   * reloading.
    */
   public static void resetSettingsCall() {
     settingsClassCalled = false;
@@ -228,10 +228,10 @@ public abstract class SimpleSettings extends YamlStaticConfig {
 
   @Override
   protected final Config getConfigInstance() {
-    //TODO CONFIG
     return LightningBuilder
         .fromPath("settings.yml", DATA.getDataFolder().getAbsolutePath())
-        .addInputStreamFromResource("settings.yml").createConfig();
+        .addInputStreamFromResource("settings.yml")
+        .createConfig();
   }
 
   /**
@@ -244,9 +244,9 @@ public abstract class SimpleSettings extends YamlStaticConfig {
   }
 
   /**
-   * Set and update the config version automatically, however the {@link #VERSION} will contain the
-   * older version used in the file on the disk so you can use it for comparing in the init()
-   * methods
+   * Set and update the config version automatically, however the {@link
+   * #VERSION} will contain the older version used in the file on the disk so
+   * you can use it for comparing in the init() methods
    * <p>
    * Please call this as a super method when overloading this!
    */
@@ -263,7 +263,8 @@ public abstract class SimpleSettings extends YamlStaticConfig {
   /**
    * Return the very latest config version
    * <p>
-   * Any changes here must also be made to the "Version" key in your settings file.
+   * Any changes here must also be made to the "Version" key in your settings
+   * file.
    *
    * @return
    */

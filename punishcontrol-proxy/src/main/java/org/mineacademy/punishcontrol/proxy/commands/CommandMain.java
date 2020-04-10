@@ -1,5 +1,6 @@
 package org.mineacademy.punishcontrol.proxy.commands;
 
+import java.util.List;
 import lombok.NonNull;
 import org.mineacademy.bfo.collection.StrictList;
 import org.mineacademy.bfo.command.SimpleCommand;
@@ -10,8 +11,12 @@ public final class CommandMain extends SimpleCommand {
     super(labels);
   }
 
-  public static CommandMain newInstance(@NonNull final StrictList<String> labels) {
+  public static CommandMain create(@NonNull final StrictList<String> labels) {
     return new CommandMain(labels);
+  }
+
+  public static CommandMain create(final List<String> labels){
+    return create(new StrictList<>(labels));
   }
 
   @Override

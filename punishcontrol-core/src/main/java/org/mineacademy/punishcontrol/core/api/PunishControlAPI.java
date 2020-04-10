@@ -2,7 +2,6 @@ package org.mineacademy.punishcontrol.core.api;
 
 import de.leonhard.storage.util.Valid;
 import lombok.Setter;
-import org.mineacademy.punishcontrol.core.provider.Providers;
 
 public abstract class PunishControlAPI {
 
@@ -24,9 +23,7 @@ public abstract class PunishControlAPI {
         "Not installed on your server or",
         "You were hooking into it before it was loaded.");
 
-    if (!Providers.settingsProvider().isAPIEnabled()) {
-      Valid.error("The API was disabled in the settings.", "You can enable it in the settings.yml");
-    }
+
     return instance;
   }
   

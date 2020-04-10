@@ -14,10 +14,11 @@ import org.mineacademy.punishcontrol.spigot.listeners.SpigotDataSetter;
 import org.mineacademy.punishcontrol.spigot.menus.DurationChooserMenu;
 import org.mineacademy.punishcontrol.spigot.menus.MainMenu;
 import org.mineacademy.punishcontrol.spigot.menus.PunishChooserMenu;
-import org.mineacademy.punishcontrol.spigot.menus.PunishCreatorMenu;
 import org.mineacademy.punishcontrol.spigot.menus.browser.PlayerBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.browser.PunishBrowser;
-import org.mineacademy.punishcontrol.spigot.menus.setting.ChooseSettingsMenu;
+import org.mineacademy.punishcontrol.spigot.menus.browser.PunishTemplateBrowser;
+import org.mineacademy.punishcontrol.spigot.menus.browser.SettingsBrowser;
+import org.mineacademy.punishcontrol.spigot.menus.punish.PunishCreatorMenu;
 import org.mineacademy.punishcontrol.spigot.menus.settings.LanguageSettingsMenu;
 import org.mineacademy.punishcontrol.spigot.menus.settings.StorageSettingsMenu;
 
@@ -69,11 +70,13 @@ public interface SpigotComponent {
 
   PunishBrowser punishBrowserMenu();
 
+  PunishTemplateBrowser punishTemplateBrowser();
+
   PunishCreatorMenu punishCreatorMenu();
 
  //Settings - Menus
 
-  ChooseSettingsMenu chooseSettingsMenu();
+  SettingsBrowser settingsBrowser();
 
   StorageSettingsMenu mySqlSettingsMenu();
 

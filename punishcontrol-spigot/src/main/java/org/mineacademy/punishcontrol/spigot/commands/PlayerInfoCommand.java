@@ -7,11 +7,11 @@ import org.mineacademy.fo.Common;
 import org.mineacademy.fo.collection.StrictList;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.punish.Punish;
+import org.mineacademy.punishcontrol.core.settings.Settings;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 import org.mineacademy.punishcontrol.spigot.Scheduler;
 import org.mineacademy.punishcontrol.spigot.command.AbstractSimplePunishControlCommand;
 import org.mineacademy.punishcontrol.spigot.menus.browser.PlayerBrowser;
-import org.mineacademy.punishcontrol.spigot.settings.Settings;
 
 public class PlayerInfoCommand extends AbstractSimplePunishControlCommand {
 

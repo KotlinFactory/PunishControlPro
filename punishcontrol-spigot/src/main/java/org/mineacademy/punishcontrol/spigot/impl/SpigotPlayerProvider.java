@@ -10,6 +10,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 import org.mineacademy.fo.Common;
+import org.mineacademy.fo.Players;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.AbstractPlayerProvider;
 import org.mineacademy.punishcontrol.core.providers.ExceptionHandler;
@@ -67,6 +68,13 @@ public final class SpigotPlayerProvider extends AbstractPlayerProvider {
     }
 
     Common.tell(player, messages);
+  }
+
+  @Override
+  public void kickIfOnline(@NonNull final UUID uuid, @NonNull final String... reason) {
+    Players.find(uuid).ifPresent((player -> {
+      player.kickPlayer(String.join("\n", reason));
+    }));
   }
 
   @Override

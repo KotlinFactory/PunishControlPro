@@ -1,10 +1,10 @@
-package org.mineacademy.punishcontrol.spigot.settings;
+package org.mineacademy.punishcontrol.core.settings;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import org.mineacademy.fo.settings.SimpleSettings;
+import org.mineacademy.punishcontrol.core.setting.SimpleSettings;
 import org.mineacademy.punishcontrol.core.storage.StorageType;
 
 public final class Settings extends SimpleSettings {
@@ -33,11 +33,11 @@ public final class Settings extends SimpleSettings {
     }
 
     public static final class Mute{
-      public static List<String> BLOCKED_COMMANDS;
+      public static List<String> allowedCommands;
 
       private static void init() {
         pathPrefix("Punishes.Mute");
-        BLOCKED_COMMANDS = getOrSetDefault("Allowed_Commands", new ArrayList<>());
+        allowedCommands = getStringList("Allowed_Commands");
       }
     }
 

@@ -1,20 +1,27 @@
 package org.mineacademy.punishcontrol.spigot.command;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.val;
+import org.mineacademy.fo.Common;
 import org.mineacademy.fo.Players;
 import org.mineacademy.fo.collection.StrictList;
 import org.mineacademy.fo.debug.LagCatcher;
 import org.mineacademy.fo.model.Replacer;
+import org.mineacademy.fo.plugin.SimplePlugin;
+import org.mineacademy.punishcontrol.core.fo.constants.FoConstants;
+import org.mineacademy.punishcontrol.core.group.Groups;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.punish.Punish;
 import org.mineacademy.punishcontrol.core.punish.PunishBuilder;
 import org.mineacademy.punishcontrol.core.punish.PunishDuration;
 import org.mineacademy.punishcontrol.core.punish.PunishType;
+import org.mineacademy.punishcontrol.core.punish.template.PunishTemplate;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 import org.mineacademy.punishcontrol.spigot.Scheduler;
 import org.mineacademy.punishcontrol.spigot.menus.browser.PlayerBrowser;
@@ -29,9 +36,6 @@ TODO: Put in core & work with type parameters
 @Getter
 public abstract class AbstractPunishCommand extends
     AbstractSimplePunishControlCommand {
-
-  private static final UUID CONSOLE = UUID
-      .fromString("f78a4d8d-d51b-4b39-98a3-230f2de0c670");
 
   private final StorageProvider storageProvider;
   private final PunishType punishType;
@@ -102,9 +106,6 @@ public abstract class AbstractPunishCommand extends
 
     final int size = Math.min(finalArgs.size(), 3);
 
-    final UUID target;
-    final PunishDuration punishDuration;
-
     final StringBuilder reason = new StringBuilder();
 
     switch (size) {
@@ -131,66 +132,138 @@ public abstract class AbstractPunishCommand extends
         if (!isPlayer()) {
           returnTell(MORE_ARGUMENTS_AS_CONSOLE_MESSAGE);
         }
-        // Open inv
+        final val optionalTemplate = PunishTemplate
+            .byName(new File(
+                    SimplePlugin.getData().getAbsolutePath() + "/templates/"),
+                finalArgs.get(0));
 
-        break;
-      case 3:
-        target = findTarget(finalArgs);
-        punishDuration = PunishDuration.of(finalArgs.get(1));
+        checkBoolean(
+            optionalTemplate.isPresent(),
+            "&cThis template doesn't exist"
+        );
 
-        for (int i = 0; i < finalArgs.size(); i++) {
-          if (i == 0 || i == 1) // Ignoring first & second argument//
-          {
-            continue;
+        final val template = optionalTemplate.get();
+
+        checkBoolean(
+            template.punishType() == punishType,
+            "&cThis punish-template can't be to a &6" + punishType.localized()
+        );
+
+        Scheduler.runAsync(() -> {
+          final UUID target = findTarget(finalArgs);
+          final Punish punish = template.toPunishBuilder()
+              .creator(isPlayer()
+                  ? getPlayer().getUniqueId()
+                  : FoConstants.CONSOLE)
+              .target(target)
+              .ip(playerProvider.getIp(target).orElse("unknown"))
+              .creation(System.currentTimeMillis())
+              .build();
+
+          punish.create();
+
+          if (!punishType.shouldKick()) {
+            return;
           }
 
-          reason.append(finalArgs.get(i)).append(" ");
-        }
 
-        final Punish punish =
-            PunishBuilder.of(punishType)
-                .target(target)
-                .creator(isPlayer() ? getPlayer().getUniqueId()
-                    : CONSOLE) //The uuid of the player called "Console"
-                .duration(punishDuration)
-                .creation(System.currentTimeMillis())
-                .reason(reason.toString())
-                .silent(silent)
-                .superSilent(superSilent)
-                .build();
+          Scheduler.runSync(() -> {
+            Players.find(target).ifPresent((player -> {
+//          TODO: Format Reason!
+              player.kickPlayer(reason.toString());
+            }));
+          });
+        });
+
+        // Open inv
+        break;
+      case 3:
+
+        final PunishDuration punishDuration = PunishDuration
+            .of(finalArgs.get(1));
+
+        //PunishDuration mustn't be empty: If its empty the given string had the wrong format
+        checkBoolean(!punishDuration.isEmpty(), "&cInvalid time format! Example: 10days");
+
+        checkBoolean(Groups.hasAccess(
+            (isPlayer() ? getPlayer().getUniqueId() : FoConstants.CONSOLE),
+            punishType,
+            punishDuration),
+            "&cThis action would exceed your limits."
+        );
+
+
 
         Scheduler.runAsync(() -> {
           LagCatcher.start("spigot-cmd-save-async");
+
+          final UUID target = findTarget(finalArgs);
+
+          if (storageProvider.isPunished(target, punishType) && !Groups.canOverride(target)) {
+            tell("&cYou are not allowed to override punishes");
+            return;
+          }
+
+
+
+          for (int i = 0; i < finalArgs.size(); i++) {
+            // Ignoring first & second argument//
+            if (i == 0 || i == 1) {
+              continue;
+            }
+
+            reason.append(finalArgs.get(i)).append(" ");
+          }
+
+          final Punish punish =
+              PunishBuilder.of(punishType)
+                  .target(target)
+                  .creator(isPlayer()
+                      ? getPlayer().getUniqueId()
+                      : FoConstants.CONSOLE) //The uuid of the player called "Console"
+                  .duration(punishDuration)
+                  .creation(System.currentTimeMillis())
+                  .reason(reason.toString())
+                  .silent(silent)
+                  .superSilent(superSilent)
+                  .build();
+
           punish.create();
+
+          final Replacer punishMessage =
+              Replacer.of(
+                  "&7You &asuccessfully &7punished &6{target} &7for &6{duration}",
+                  "&6Reason: &6{reason}");
+
+          punishMessage.replaceAll(
+              "target",
+              playerProvider.getName(target),
+              "duration",
+              punishDuration.toString(),
+              "reason",
+              reason.toString());
+
+          tell(punishMessage.getReplacedMessage());
+
+          if (!punishType.shouldKick()) {
+            return;
+          }
+
+          Scheduler.runSync(() -> {
+            Players.find(target).ifPresent((player -> {
+//          TODO: Format Reason!
+              player.kickPlayer(reason.toString());
+            }));
+          });
           LagCatcher.end("spigot-cmd-save-async");
         });
-//        Common.runLaterAsync(punish::create);
-
-        final Replacer punishMessage =
-            Replacer.of(
-                "&7You &asuccessfully &7punished &6{target} &7for &6{duration}",
-                "&6Reason: &6{reason}");
-
-        punishMessage.replaceAll(
-            "target",
-            playerProvider.getName(target),
-            "duration",
-            punishDuration.toString(),
-            "reason",
-            reason.toString());
-
-        tell(punishMessage.getReplacedMessage());
-
-        if (!punishType.shouldKick()) {
-          return;
-        }
-
-        Players.find(target).ifPresent((player -> {
-//          TODO: Format Reason!
-          player.kickPlayer(reason.toString());
-        }));
-
         break;
     }
+  }
+
+
+  @Override
+  protected List<String> tabComplete() {
+    return Common.getPlayerNames();
   }
 }

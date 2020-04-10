@@ -1,7 +1,7 @@
 package org.mineacademy.punishcontrol.core.flatfiles;
 
 import de.leonhard.storage.Json;
-import de.leonhard.storage.internal.exception.LightningValidationException;
+import de.leonhard.storage.internal.exceptions.LightningValidationException;
 import de.leonhard.storage.internal.settings.ReloadSettings;
 import de.leonhard.storage.shaded.jetbrains.annotations.Nullable;
 import de.leonhard.storage.util.FileUtils;

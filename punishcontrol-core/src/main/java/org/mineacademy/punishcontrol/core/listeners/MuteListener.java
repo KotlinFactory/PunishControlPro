@@ -6,25 +6,23 @@ import javax.inject.Inject;
 import org.mineacademy.punishcontrol.core.events.ChatEvent;
 import org.mineacademy.punishcontrol.core.listener.Listener;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
-import org.mineacademy.punishcontrol.core.providers.SettingsProvider;
 import org.mineacademy.punishcontrol.core.punish.Punishes;
 import org.mineacademy.punishcontrol.core.punishes.Mute;
+import org.mineacademy.punishcontrol.core.settings.Settings;
+import org.mineacademy.punishcontrol.core.settings.Settings.Punish;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 
 public final class MuteListener implements Listener<ChatEvent> {
 
   private final StorageProvider storageProvider;
-  private final SettingsProvider settingsProvider;
   private final PlayerProvider playerProvider;
 
   @Inject
   public MuteListener(
       final StorageProvider storageProvider,
-      final PlayerProvider playerProvider,
-      final SettingsProvider settingsProvider) {
+      final PlayerProvider playerProvider) {
     this.storageProvider = storageProvider;
     this.playerProvider = playerProvider;
-    this.settingsProvider = settingsProvider;
   }
 
   @Override
@@ -39,11 +37,11 @@ public final class MuteListener implements Listener<ChatEvent> {
 
     optionalMute.ifPresent((mute -> {
       //TODO format
-      if(settingsProvider.allowedCommands().contains("*")) {
+      if(Punish.Mute.allowedCommands.contains("*")) {
         return;
       }
       if (event.message().startsWith("/")) {
-        for (final String allowed : settingsProvider.allowedCommands()) {
+        for (final String allowed : Settings.Punish.Mute.allowedCommands) {
           if (event.message().startsWith(allowed)) {
             return;
           }

@@ -80,6 +80,16 @@ public final class ProxyPlayerProvider extends AbstractPlayerProvider
   }
 
   @Override
+  public void kickIfOnline(@NonNull final UUID uuid, @NonNull final String... reason) {
+    final val player = ProxyServer.getInstance().getPlayer(uuid);
+    if (player == null) {
+      return;
+    }
+
+    player.disconnect(String.join("\n", reason));
+  }
+
+  @Override
   public ExceptionHandler exceptionHandler() {
     return Providers.exceptionHandler();
   }

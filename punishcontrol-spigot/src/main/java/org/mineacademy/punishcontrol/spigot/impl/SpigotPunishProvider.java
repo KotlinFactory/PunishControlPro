@@ -8,8 +8,8 @@ import org.bukkit.entity.Player;
 import org.mineacademy.fo.Common;
 import org.mineacademy.punishcontrol.core.providers.PunishProvider;
 import org.mineacademy.punishcontrol.core.punish.Punish;
+import org.mineacademy.punishcontrol.core.settings.Settings;
 import org.mineacademy.punishcontrol.spigot.events.AsyncPunishCreateEvent;
-import org.mineacademy.punishcontrol.spigot.settings.Settings;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class SpigotPunishProvider implements PunishProvider {
@@ -20,7 +20,8 @@ public final class SpigotPunishProvider implements PunishProvider {
 
   @Override
   public void broadCastPunishMessage(
-      @NonNull final Punish punish, final boolean silent, final boolean superSilent) {
+      @NonNull final Punish punish, final boolean silent,
+      final boolean superSilent) {
 
     // No one will be notified
     if (superSilent) {
@@ -36,7 +37,8 @@ public final class SpigotPunishProvider implements PunishProvider {
       for (final Player player : Bukkit.getOnlinePlayers()) {
 
         // The player {} has been banned by
-        if (!player.hasPermission(Settings.Notifications.SilentPunish.PERMISSION)) {
+        if (!player
+            .hasPermission(Settings.Notifications.SilentPunish.PERMISSION)) {
           continue;
         }
 

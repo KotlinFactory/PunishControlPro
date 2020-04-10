@@ -34,7 +34,7 @@ public final class PunishTemplate extends SecureJson {
     return template;
   }
 
-  public static Optional<PunishTemplate> getByName(
+  public static Optional<PunishTemplate> byName(
       @NonNull final File folder, @NonNull final String name) {
     final List<File> files = FileUtils.listFiles(folder, ".json");
 
@@ -70,6 +70,10 @@ public final class PunishTemplate extends SecureJson {
 
   public PunishDuration duration() {
     return PunishDuration.of(getOrSetDefault("Duration", "2 days"));
+  }
+
+  public String name(){
+    return file.getName().replace(".json", "");
   }
 
   public String reason() {
