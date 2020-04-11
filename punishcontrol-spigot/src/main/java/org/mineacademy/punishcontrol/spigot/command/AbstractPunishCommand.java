@@ -1,6 +1,5 @@
 package org.mineacademy.punishcontrol.spigot.command;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -13,7 +12,6 @@ import org.mineacademy.fo.Players;
 import org.mineacademy.fo.collection.StrictList;
 import org.mineacademy.fo.debug.LagCatcher;
 import org.mineacademy.fo.model.Replacer;
-import org.mineacademy.fo.plugin.SimplePlugin;
 import org.mineacademy.punishcontrol.core.fo.constants.FoConstants;
 import org.mineacademy.punishcontrol.core.group.Groups;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
@@ -21,7 +19,7 @@ import org.mineacademy.punishcontrol.core.punish.Punish;
 import org.mineacademy.punishcontrol.core.punish.PunishBuilder;
 import org.mineacademy.punishcontrol.core.punish.PunishDuration;
 import org.mineacademy.punishcontrol.core.punish.PunishType;
-import org.mineacademy.punishcontrol.core.punish.template.PunishTemplate;
+import org.mineacademy.punishcontrol.core.punish.template.PunishTemplates;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 import org.mineacademy.punishcontrol.spigot.Scheduler;
 import org.mineacademy.punishcontrol.spigot.menus.browser.PlayerBrowser;
@@ -132,10 +130,8 @@ public abstract class AbstractPunishCommand extends
         if (!isPlayer()) {
           returnTell(MORE_ARGUMENTS_AS_CONSOLE_MESSAGE);
         }
-        final val optionalTemplate = PunishTemplate
-            .byName(new File(
-                    SimplePlugin.getData().getAbsolutePath() + "/templates/"),
-                finalArgs.get(0));
+
+        final val optionalTemplate = PunishTemplates.fromName(finalArgs.get(0));
 
         checkBoolean(
             optionalTemplate.isPresent(),

@@ -5,15 +5,22 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import lombok.experimental.UtilityClass;
 
-/** Utility class for calculating time from ticks and back. */
+/**
+ * Utility class for calculating time from ticks and back.
+ */
 @UtilityClass
 public class TimeUtil {
 
-  /** The date format in dd.MM.yyy HH:mm:ss */
-  private final DateFormat DATE_FORMAT = new SimpleDateFormat("dd.MM.yyyy HH:mm:ss");
-
-  /** The date format in dd.MM.yyy HH:mm */
-  private final DateFormat DATE_FORMAT_SHORT = new SimpleDateFormat("dd.MM.yyyy HH:mm");
+  /**
+   * The date format in dd.MM.yyy HH:mm:ss
+   */
+  private final DateFormat DATE_FORMAT = new SimpleDateFormat(
+      "dd.MM.yyyy HH:mm:ss");
+  /**
+   * The date format in dd.MM.yyy HH:mm
+   */
+  private final DateFormat DATE_FORMAT_SHORT = new SimpleDateFormat(
+      "dd.MM.yyyy HH:mm");
 
   // ------------------------------------------------------------------------------------------------------------
   // Current time
@@ -51,7 +58,8 @@ public class TimeUtil {
   }
 
   /**
-   * Return the given date in millis formatted as DAY.MONTH.YEAR HOUR:MINUTES:SECONDS
+   * Return the given date in millis formatted as DAY.MONTH.YEAR
+   * HOUR:MINUTES:SECONDS
    *
    * @param time
    * @return
@@ -84,10 +92,12 @@ public class TimeUtil {
   // ------------------------------------------------------------------------------------------------------------
 
   /**
-   * Converts the time from a human readable format like "10 minutes" to seconds.
+   * Converts the time from a human readable format like "10 minutes" to
+   * seconds.
    *
-   * @param humanReadableTime the human readable time format: {time} {period} example: 5 seconds, 10
-   *     ticks, 7 minutes, 12 hours etc..
+   * @param humanReadableTime the human readable time format: {time} {period}
+   *                          example: 5 seconds, 10 ticks, 7 minutes, 12 hours
+   *                          etc..
    * @return the converted human time to seconds
    */
   public long toTicks(final String humanReadableTime) {
@@ -190,8 +200,8 @@ public class TimeUtil {
   }
 
   /**
-   * Format the time in seconds, for example: 10d 5h 10m 20s or just 5m 10s If the seconds are zero,
-   * an output 0s is given
+   * Format the time in seconds, for example: 10d 5h 10m 20s or just 5m 10s If
+   * the seconds are zero, an output 0s is given
    *
    * @param seconds
    * @return
@@ -210,5 +220,51 @@ public class TimeUtil {
         + (minutes > 0 ? minutes + "m " : "")
         + seconds
         + "s";
+  }
+
+  public String formatMenuDate(final long duration) {
+    return formatMenuDate(duration, true);
+  }
+
+  /**
+   * Formats milliseconds so that they are easily to read in a menu-title
+   *
+   * @param duration Duration in milliseconds
+   * @param isShort  Determines whether the title should be long or short
+   * @return
+   */
+  public String formatMenuDate(final long duration, final boolean isShort) {
+    final long years = (duration / ((long) 1000 * 60 * 60 * 24 * 365));
+    final long month = (duration / ((long) 1000 * 60 * 60 * 24 * 30) % 12);
+    final long days = (duration / (1000 * 60 * 60 * 24) % 30);
+    final long hours = (duration / (1000 * 60 * 60) % 24);
+    String preString = years + " years, " +
+        month + " month, " +
+        days + " days, " +
+        hours + " hours";
+
+    preString = preString.replace("0 years, ", "");
+    preString = preString.replace("0 month, ", "");
+    preString = preString.replace("0 days, ", "");
+    preString = preString.replace("0 hours, ", "");
+    if (preString.contains("years") && preString
+        .contains("hours")) { //TODO Years, Month & days
+      preString = "{years} years {month} month"
+          .replace("{years}", years + "")
+          .replace("{month}", month + "");
+    }
+
+    if (preString.contains("hours") && preString.contains("month")) {
+      preString = "{month} month {days} days"
+          .replace("{month}", month + "")
+          .replace("{days}", days + "");
+    }
+
+    if (isShort && preString.contains("month") && preString.contains("days")
+        && preString.contains("hours")) {
+      preString = preString.replace(", 1 hours", "");
+    }
+
+    return preString;
   }
 }

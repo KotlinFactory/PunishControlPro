@@ -6,14 +6,23 @@ import org.bukkit.entity.Player;
 import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
 
-public final class PunishChooserMenu extends Menu {
+public final class ChooseActionMenu extends Menu {
 
   @Inject
-  public PunishChooserMenu() {
+  public ChooseActionMenu() {
     super();
     setSize(9 * 4);
     setTitle("§3Choose an action");
   }
+
+  /*
+  TODO:
+    - Punish
+    - Punishes
+    - As console view
+    - Kick
+
+   */
 
   public static void showTo(@NonNull final Player player) {
     DaggerSpigotComponent.create().punishChooserMenu().displayTo(player);
@@ -21,6 +30,6 @@ public final class PunishChooserMenu extends Menu {
 
   @Override
   protected String[] getInfo() {
-    return new String[0];
+    return new String[]{"&7Menu to select an", "&7Action for players"};
   }
 }

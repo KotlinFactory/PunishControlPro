@@ -4,8 +4,11 @@ import java.util.List;
 import org.mineacademy.fo.MathUtil;
 import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.fo.menu.MenuPagged;
+import org.mineacademy.punishcontrol.spigot.util.Schedulable;
 
-public abstract class AbstractBrowser<T> extends MenuPagged<T> {
+public abstract class AbstractBrowser<T>
+    extends MenuPagged<T>
+    implements Schedulable {
 
   private static int calculateSizeForContent(final int items) {
     return MathUtil.range((int) (9 * Math

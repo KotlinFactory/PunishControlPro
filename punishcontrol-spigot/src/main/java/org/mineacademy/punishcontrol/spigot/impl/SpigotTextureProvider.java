@@ -1,15 +1,20 @@
 package org.mineacademy.punishcontrol.spigot.impl;
 
 import de.leonhard.storage.Json;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+import lombok.val;
 import org.mineacademy.fo.debug.Debugger;
 import org.mineacademy.fo.plugin.SimplePlugin;
 import org.mineacademy.punishcontrol.core.PunishControlManager;
 import org.mineacademy.punishcontrol.core.providers.TextureProvider;
 import org.mineacademy.punishcontrol.spigot.util.MojangUtils;
 
-import java.util.UUID;
+public final class SpigotTextureProvider
+    extends Json
+    implements TextureProvider {
 
-public final class SpigotTextureProvider extends Json implements TextureProvider {
   private SpigotTextureProvider() {
     super(
         PunishControlManager.FILES.SKIN_STORAGE,
@@ -33,5 +38,14 @@ public final class SpigotTextureProvider extends Json implements TextureProvider
   @Override
   public String getSkinTexture(final UUID uuid) {
     return getString(uuid.toString());
+  }
+
+  @Override
+  public List<String> listTextures() {
+    final val result = new ArrayList<String>();
+    for (final val entry : fileData.toMap().entrySet()) {
+      result.add(entry.getValue().toString());
+    }
+    return result;
   }
 }

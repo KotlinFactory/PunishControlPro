@@ -1,23 +1,29 @@
 package org.mineacademy.punishcontrol.proxy.impl;
 
+import java.util.List;
+import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import org.mineacademy.punishcontrol.core.providers.TextureProvider;
 
-import java.util.UUID;
-
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ProxyTextureProvider implements TextureProvider {
 
-  public static ProxyTextureProvider newInstance() {
+  public static ProxyTextureProvider create() {
     return new ProxyTextureProvider();
   }
 
   @Override
-  public void saveSkinTexture(final UUID uuid) {}
+  public void saveSkinTexture(final UUID uuid) {
+  }
 
   @Override
   public String getSkinTexture(final UUID uuid) {
+    return null;
+  }
+
+  @Override
+  public List<String> listTextures() {
     return null;
   }
 }

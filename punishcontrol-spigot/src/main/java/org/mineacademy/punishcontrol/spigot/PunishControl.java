@@ -32,7 +32,7 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 
   @Override
   protected void onPluginStart() {
-//    Common.ADD_LOG_PREFIX = true;
+    Common.ADD_LOG_PREFIX = false;
 
     onPunishControlPluginStart();
     SimpleSettingsInjector.inject();

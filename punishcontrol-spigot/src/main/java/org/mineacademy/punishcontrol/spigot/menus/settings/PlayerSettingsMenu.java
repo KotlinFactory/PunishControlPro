@@ -1,18 +1,23 @@
 package org.mineacademy.punishcontrol.spigot.menus.settings;
 
 import java.util.Arrays;
-import java.util.List;
 import java.util.UUID;
 import lombok.NonNull;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.mineacademy.punishcontrol.core.group.Group;
+import org.mineacademy.punishcontrol.core.group.Groups;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
 import org.mineacademy.punishcontrol.spigot.menu.AbstractBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.setting.AbstractSettingsMenu;
 
 public final class PlayerSettingsMenu extends AbstractSettingsMenu {
+
+  /*
+  TODO:
+   Make unpunishable
+   */
 
   private final UUID target;
 
@@ -32,10 +37,8 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
 
 class GroupBrowser extends AbstractBrowser<Group>{
 
-  protected GroupBrowser(
-      final PlayerSettingsMenu parent,
-      final List<Group> content) {
-    super(parent, content);
+  protected GroupBrowser(final PlayerSettingsMenu parent, final UUID target) {
+    super(parent, Groups.list(target));
   }
 
   @Override

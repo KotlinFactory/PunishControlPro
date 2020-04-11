@@ -8,6 +8,7 @@ import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
@@ -20,14 +21,24 @@ import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 public class PunishTemplates {
 
   private final PlayerProvider playerProvider = Providers.playerProvider();
-  private final List<PunishTemplate> punishTemplates = new ArrayList<>();
+  private final List<PunishTemplate> registeredTemplates = new ArrayList<>();
   private final InputStreamProvider inputStreamProvider = LightningProviders
       .inputStreamProvider();
 
 
   public void register(@NonNull final PunishTemplate punishTemplate) {
-    punishTemplates.add(punishTemplate);
+    registeredTemplates.add(punishTemplate);
   }
+
+
+  public static Optional<PunishTemplate> fromName(@NonNull final String name) {
+
+    return registeredTemplates
+        .stream()
+        .filter((punishTemplate -> punishTemplate.name().equalsIgnoreCase(name)))
+        .findFirst();
+  }
+
 
   public boolean hasAccess(
       @NonNull final UUID target,
@@ -49,17 +60,17 @@ public class PunishTemplates {
 
   public void load(@NonNull final File directory) {
     for (final File file : FileUtils.listFiles(directory, ".json")) {
-      punishTemplates.add(PunishTemplate.load(file));
+      registeredTemplates.add(PunishTemplate.load(file));
     }
 
     // No templates created
-    if (punishTemplates.size() == 0) {
+    if (registeredTemplates.size() == 0) {
       extractAndAddDefaults(directory);
     }
   }
 
   public List<PunishTemplate> list() {
-    return Collections.unmodifiableList(punishTemplates);
+    return Collections.unmodifiableList(registeredTemplates);
   }
 
   private void extractAndAddDefaults(@NonNull final File destination) {
@@ -85,15 +96,15 @@ public class PunishTemplates {
             .getAndMake("default-warn.json", destination.getAbsolutePath()),
         warnInputStream);
 
-    punishTemplates.add(
+    registeredTemplates.add(
         PunishTemplate.load(
             new File(destination.getAbsolutePath() + "/templates/",
                 "default-ban.json")));
-    punishTemplates.add(
+    registeredTemplates.add(
         PunishTemplate.load(
             new File(destination.getAbsolutePath() + "/templates/",
                 "default-mute.json")));
-    punishTemplates.add(
+    registeredTemplates.add(
         PunishTemplate.load(
             new File(destination.getAbsolutePath() + "/templates/",
                 "default-warn.json")));

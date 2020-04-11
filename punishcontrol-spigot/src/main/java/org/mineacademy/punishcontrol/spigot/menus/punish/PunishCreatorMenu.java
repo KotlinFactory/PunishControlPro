@@ -25,8 +25,8 @@ import org.mineacademy.punishcontrol.spigot.menu.AbstractDurationChooser;
 import org.mineacademy.punishcontrol.spigot.menu.AbstractPlayerBrowser;
 import org.mineacademy.punishcontrol.spigot.menu.AbstractPunishTypeBrowser;
 import org.mineacademy.punishcontrol.spigot.menu.AbstractTemplateBrowser;
+import org.mineacademy.punishcontrol.spigot.menus.ChooseActionMenu;
 import org.mineacademy.punishcontrol.spigot.menus.MainMenu;
-import org.mineacademy.punishcontrol.spigot.menus.PunishChooserMenu;
 import org.mineacademy.punishcontrol.spigot.util.ItemStacks;
 
 public final class PunishCreatorMenu extends Menu {
@@ -36,7 +36,6 @@ public final class PunishCreatorMenu extends Menu {
   private final Button chooseDuration;
   private final Button chooseReason;
   private final Button choosePlayer;
-  private final Button choosePunishType;
   private final TextureProvider textureProvider;
   private final PlayerProvider playerProvider;
 
@@ -92,7 +91,7 @@ public final class PunishCreatorMenu extends Menu {
 
           @Override
           protected void confirm() {
-            Valid.checkBoolean(menu instanceof PunishChooserMenu,
+            Valid.checkBoolean(menu instanceof ChooseActionMenu,
                 "Invalid type?");
             final val creatorMenu = (PunishCreatorMenu) menu;
             creatorMenu.punishBuilder().duration(ms);
@@ -139,13 +138,13 @@ public final class PunishCreatorMenu extends Menu {
                   "&7Create an punish",
                   "&7from an existing",
                   "&7template",
-                  "&7Current: &6: " + punishTemplate.name()))
+                  "&7Current: &6" + punishTemplate.name()))
               .build()
               .makeMenuTool();
         }
 
         return ItemCreator
-            .of(ItemStacks.forPunishType(punishBuilder().punishType()))
+            .of(CompMaterial.PAPER)
             .name("&6From template")
             .lores(Arrays.asList(
                 "&7Create an punish",
@@ -160,7 +159,6 @@ public final class PunishCreatorMenu extends Menu {
       @Override
       public void onClickedInMenu(
           final Player player, final Menu menu, final ClickType click) {
-        player.closeInventory();
         AddReasonConversation.create((PunishCreatorMenu) menu);
       }
 
@@ -225,24 +223,18 @@ public final class PunishCreatorMenu extends Menu {
       }
     };
 
-    choosePunishType = new Button() {
-      @Override
-      public void onClickedInMenu(
-          final Player player, final Menu menu, final ClickType click) {
-        new AbstractPunishTypeBrowser(menu) {
-          @Override
-          protected void onClick(final PunishType punishType) {
-            PunishCreatorMenu
-                .showTo(player, punishBuilder().punishType(punishType));
-          }
-        };
-      }
-
-      @Override
-      public ItemStack getItem() {
-        return ItemStacks.forPunishType(punishBuilder().punishType());
-      }
-    };
+//    choosePunishType = new Button() {
+//      @Override
+//      public void onClickedInMenu(
+//          final Player player, final Menu menu, final ClickType click) {
+//
+//      }
+//
+//      @Override
+//      public ItemStack getItem() {
+//        return ItemStacks.forPunishType(punishBuilder().punishType());
+//      }
+//    };
   }
 
   @Override
@@ -266,26 +258,51 @@ public final class PunishCreatorMenu extends Menu {
 
   @Override
   public ItemStack getItemAt(final int slot) {
-    if (slot == 10) {
-      return choosePlayer.getItem();
-    }
-    if (slot == 17) {
-      return fromTemplate.getItem();
+
+    if (slot == 4) {
+      return ItemCreator
+          .of(ItemStacks.forPunishType(punishBuilder().punishType()))
+          .name("&6Change type")
+          .lores(Arrays.asList(
+              "&7Change the type",
+              "&7of the punish",
+              "&7Currently: " + punishBuilder.punishType().localized()))
+          .build()
+          .makeMenuTool();
     }
 
     if (slot == 19) {
       return chooseReason.getItem();
     }
 
-    if (slot == 28) {
+    if (slot == 25) {
+      return fromTemplate.getItem();
+    }
+
+    if (slot == 29) {
       return chooseDuration.getItem();
     }
 
-    if (slot == 30) {
-      choosePunishType.getItem();
+    if (slot == 33) {
+      return choosePlayer.getItem();
     }
 
     return null;
+  }
+
+  @Override
+  protected void onMenuClick(
+      final Player player,
+      final int slot,
+      final ItemStack clicked) {
+    if (slot == 4) {
+      new AbstractPunishTypeBrowser(this) {
+        @Override
+        protected void onClick(final PunishType punishType) {
+          PunishCreatorMenu.showTo(player, punishBuilder().punishType(punishType));
+        }
+      }.displayTo(player);
+    }
   }
 }
 

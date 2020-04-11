@@ -67,7 +67,7 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
     // Player providers
 
     // TextureProvider
-    Providers.textureProvider(ProxyTextureProvider.newInstance());
+    Providers.textureProvider(ProxyTextureProvider.create());
     // Broadcaster
     Providers.punishProvider(ProxyPunishProvider.newInstance());
 

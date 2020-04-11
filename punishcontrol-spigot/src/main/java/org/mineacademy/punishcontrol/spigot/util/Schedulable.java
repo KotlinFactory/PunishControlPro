@@ -7,32 +7,32 @@ import org.mineacademy.fo.plugin.SimplePlugin;
 
 public interface Schedulable {
 
-  static void sync(final Runnable runnable) {
+  default void sync(final Runnable runnable) {
     Bukkit.getScheduler().runTask(SimplePlugin.getInstance(), runnable);
   }
 
-  static void async(final Runnable runnable) {
+  default void async(final Runnable runnable) {
     Bukkit.getScheduler()
         .runTaskAsynchronously(SimplePlugin.getInstance(), runnable);
   }
 
-  static void later(final Runnable runnable, final long ticks) {
+  default void later(final Runnable runnable, final long ticks) {
     Bukkit.getScheduler()
         .runTaskLater(SimplePlugin.getInstance(), runnable, ticks);
   }
 
-  static void laterAsync(final Runnable runnable, final long ticks) {
+  default void laterAsync(final Runnable runnable, final long ticks) {
     Bukkit.getScheduler()
         .runTaskLaterAsynchronously(SimplePlugin.getInstance(), runnable,
             ticks);
   }
 
-  static void repeat(final Consumer<Integer> runnable, final long tickPeriod,
+  default void repeat(final Consumer<Integer> runnable, final long tickPeriod,
       final int times) {
     repeat(runnable, tickPeriod, tickPeriod, times);
   }
 
-  static void repeat(final Consumer<Integer> runnable, final long delay,
+  default void repeat(final Consumer<Integer> runnable, final long delay,
       final long tickPeriod, final int times) {
     new BukkitRunnable() {
       private int count;
@@ -48,12 +48,26 @@ public interface Schedulable {
     }.runTaskTimer(SimplePlugin.getInstance(), delay, tickPeriod);
   }
 
-  static void repeatAsync(final Consumer<Integer> runnable,
+  default void repeatAsync(
+      final Runnable runnable,
+      final int delay,
+      final int tickPeriod) {
+    new BukkitRunnable() {
+      private int count;
+
+      @Override
+      public void run() {
+        runnable.run();
+      }
+    }.runTaskTimerAsynchronously(SimplePlugin.getInstance(), delay, tickPeriod);
+  }
+
+  default void repeatAsync(final Consumer<Integer> runnable,
       final long tickPeriod, final int times) {
     repeatAsync(runnable, tickPeriod, tickPeriod, times);
   }
 
-  static void repeatAsync(final Consumer<Integer> runnable, final long delay,
+  default void repeatAsync(final Consumer<Integer> runnable, final long delay,
       final long tickPeriod, final int times) {
     new BukkitRunnable() {
       private int count;

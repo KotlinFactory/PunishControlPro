@@ -58,6 +58,19 @@ public class Groups {
     registeredGroups.add(group);
   }
 
+  public List<Group> list(@NonNull final UUID target){
+    final List<Group> result = new ArrayList<>();
+
+    for (final Group group : registeredGroups) {
+      if (!provider.hasPermission(target, group.permission())) {
+        continue;
+      }
+      result.add(group);
+    }
+
+    return result;
+  }
+
   /**
    * @param target UUID to find the group of
    * @return The group of the highest priority the player according to the UUID

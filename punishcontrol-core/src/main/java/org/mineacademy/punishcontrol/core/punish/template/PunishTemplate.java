@@ -1,9 +1,6 @@
 package org.mineacademy.punishcontrol.core.punish.template;
 
-import de.leonhard.storage.util.FileUtils;
 import java.io.File;
-import java.util.List;
-import java.util.Optional;
 import lombok.NonNull;
 import org.jetbrains.annotations.NotNull;
 import org.mineacademy.punishcontrol.core.flatfiles.SecureJson;
@@ -32,21 +29,6 @@ public final class PunishTemplate extends SecureJson {
     template.permission();
 
     return template;
-  }
-
-  public static Optional<PunishTemplate> byName(
-      @NonNull final File folder, @NonNull final String name) {
-    final List<File> files = FileUtils.listFiles(folder, ".json");
-
-    final Optional<File> optionalFile =
-        files.stream()
-            .filter((file) -> file.getName().replace(".json", "").equalsIgnoreCase(name))
-            .findFirst();
-
-    // If optionalFile is present -> PunishTemplate of this file else: Optional.empty()
-    return optionalFile.map(PunishTemplate::new);
-
-    //
   }
 
   @Override

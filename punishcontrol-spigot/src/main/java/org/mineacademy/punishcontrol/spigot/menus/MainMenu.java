@@ -3,6 +3,7 @@ package org.mineacademy.punishcontrol.spigot.menus;
 import java.util.Arrays;
 import javax.inject.Inject;
 import lombok.NonNull;
+import lombok.val;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
@@ -11,22 +12,29 @@ import org.mineacademy.fo.menu.button.Button;
 import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.fo.plugin.SimplePlugin;
 import org.mineacademy.fo.remain.CompMaterial;
+import org.mineacademy.punishcontrol.core.providers.TextureProvider;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
+import org.mineacademy.punishcontrol.spigot.Scheduler;
 import org.mineacademy.punishcontrol.spigot.menus.browser.PlayerBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.browser.PunishBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.browser.SettingsBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.punish.PunishCreatorMenu;
 import org.mineacademy.punishcontrol.spigot.util.ItemStacks;
+import org.mineacademy.punishcontrol.spigot.util.Schedulable;
 
-public final class MainMenu extends Menu {
+public final class MainMenu extends Menu implements Schedulable {
 
+  public static final int PLAYER_BROWSER_SLOT = 9 * 2 + 6;
   private final Button punishesButton;
   private final Button newButton;
   private final Button playerViewButton;
   private final Button settingsButton;
+  private final TextureProvider textureProvider;
+
 
   @Inject
-  public MainMenu() {
+  public MainMenu(final TextureProvider textureProvider) {
+    this.textureProvider = textureProvider;
     setSize(9 * 5);
     setTitle("§3Punish§bControl");
 
@@ -39,11 +47,17 @@ public final class MainMenu extends Menu {
 
       @Override
       public ItemStack getItem() {
-        return ItemCreator.of(CompMaterial.PLAYER_HEAD, "&6Players",
-            "", "Browse players", "and select an", "action for them")
+        return ItemCreator
+            .of(CompMaterial.PLAYER_HEAD)
+//            .fromCustomHash(
+//                textureProvider.getSkinTexture(getViewer().getUniqueId()))
+            .name("&6Players")
+            .lores(Arrays.asList("", "Browse players", "and select an",
+                "action for them"))
             .build()
             .make();
       }
+
     };
 
     punishesButton = new Button() {
@@ -109,7 +123,11 @@ public final class MainMenu extends Menu {
   }
 
   public static void showTo(@NonNull final Player player) {
-    DaggerSpigotComponent.create().menuMain().displayTo(player);
+    Scheduler.runAsync(() -> {
+      final val menu = DaggerSpigotComponent.create().menuMain();
+
+      Scheduler.runSync(() -> menu.displayTo(player));
+    });
   }
 
   @Override
@@ -122,7 +140,6 @@ public final class MainMenu extends Menu {
           .build()
           .make();
     }
-
     if (slot == 9 * 2 + 2) {
       return punishesButton.getItem();
     }
@@ -131,8 +148,16 @@ public final class MainMenu extends Menu {
       return newButton.getItem();
     }
 
-    if (slot == 9 * 2 + 6) {
-      return playerViewButton.getItem();
+    if (slot == PLAYER_BROWSER_SLOT) {
+      return ItemCreator
+          .fromCustomHash(
+              textureProvider.getSkinTexture(getViewer().getUniqueId()))
+          .name("&6Players")
+          .lores(Arrays.asList("", "Browse players", "and select an",
+              "action for them"))
+          .build()
+          .make();
+
     }
 
     if (slot == 9 * 3 + 4) {
@@ -140,6 +165,25 @@ public final class MainMenu extends Menu {
     }
 
     return super.getItemAt(slot);
+  }
+
+  private void startUpdateTask(){
+
+  }
+
+  @Override
+  protected void onMenuClick(final Player player, final int slot,
+      final ItemStack clicked) {
+
+    if (slot != PLAYER_BROWSER_SLOT) {
+      return;
+    }
+
+    async(() -> {
+      redraw();
+    });
+
+//    PlayerBrowser.showTo(player);
   }
 
   @Override

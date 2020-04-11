@@ -13,8 +13,8 @@ import org.mineacademy.punishcontrol.core.providers.TextureProvider;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
 import org.mineacademy.punishcontrol.spigot.Scheduler;
 import org.mineacademy.punishcontrol.spigot.menu.AbstractPlayerBrowser;
+import org.mineacademy.punishcontrol.spigot.menus.ChooseActionMenu;
 import org.mineacademy.punishcontrol.spigot.menus.MainMenu;
-import org.mineacademy.punishcontrol.spigot.menus.PunishChooserMenu;
 
 public final class PlayerBrowser extends AbstractPlayerBrowser {
 
@@ -44,6 +44,6 @@ public final class PlayerBrowser extends AbstractPlayerBrowser {
 
   @Override
   public void onClick(final UUID data) {
-    PunishChooserMenu.showTo(getViewer());
+    ChooseActionMenu.showTo(getViewer());
   }
 }
