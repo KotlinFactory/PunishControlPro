@@ -1,11 +1,13 @@
 package org.mineacademy.punishcontrol.spigot.menu;
 
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.Nullable;
 import org.mineacademy.fo.menu.Menu;
+import org.mineacademy.fo.plugin.SimplePlugin;
 import org.mineacademy.punishcontrol.spigot.menu.buttons.ChangingButton;
 import org.mineacademy.punishcontrol.spigot.util.Schedulable;
 
@@ -14,36 +16,46 @@ import org.mineacademy.punishcontrol.spigot.util.Schedulable;
  * <p>
  * Good performance because it will be build on a different thead:)
  */
-public abstract class AbstractChangingMenu extends Menu implements Schedulable {
+public class ChangingMenu extends Menu implements Schedulable {
 
-  private final Map<Integer, ItemStack> changingButtonsMap = new ConcurrentHashMap<>();
+  private final List<ChangingButton> buttons;
+  private boolean cancelled;
 
-  public AbstractChangingMenu() {
+  protected ChangingMenu(final List<ChangingButton> buttons) {
+    this(null, buttons);
   }
 
-  public AbstractChangingMenu(final Menu parent) {
-    super(parent);
-  }
-
-  public AbstractChangingMenu(
+  protected ChangingMenu(
       final Menu parent,
-      final boolean returnMakesNewInstance) {
-    super(parent, returnMakesNewInstance);
-    for (final ChangingButton button : buttons()) {
-      changingButtonsMap
-          .put(button.slot(), button.creators().get(0).build().makeMenuTool());
-    }
-
+      final List<ChangingButton> buttons) {
+    super(parent);
+    this.buttons = buttons;
     start();
   }
 
+
   private void start() {
-    repeatAsync(() -> {
-      for (final ChangingButton button : buttons()) {
-        changingButtonsMap.put(button.slot(), button.nextItem());
+    new BukkitRunnable() {
+      @Override
+      public void run() {
+        if (getViewer() == null) {
+          cancel();
+          return;
+        }
+
+        if (cancelled) {
+          cancel();
+          return;
+        }
+
+        for (final ChangingButton button : buttons) {
+          getViewer().getOpenInventory().setItem(button.slot(), button.nextItem());
+        }
+        getViewer().updateInventory();
       }
-      redraw();
-    }, updateDelay(), updateDelay());
+    }.runTaskTimerAsynchronously(SimplePlugin.getInstance(), updateDelay(),
+        updateDelay());
+
   }
 
   // ----------------------------------------------------------------------------------------------------
@@ -54,7 +66,7 @@ public abstract class AbstractChangingMenu extends Menu implements Schedulable {
    * Tick delay between the changing of the Buttons
    */
   protected int updateDelay() {
-    return 50;
+    return 30;
   }
 
   @Nullable
@@ -62,16 +74,24 @@ public abstract class AbstractChangingMenu extends Menu implements Schedulable {
     return null;
   }
 
-  protected abstract List<ChangingButton> buttons();
-
   // ----------------------------------------------------------------------------------------------------
   // Overridden methods form Menu
   // ----------------------------------------------------------------------------------------------------
 
 
   @Override
+  protected final void onMenuClose(final Player player, final Inventory inventory) {
+    cancelled = true;
+  }
+
+  @Override
   public final ItemStack getItemAt(final int slot) {
     //Will return null if nothing was found
-    return changingButtonsMap.getOrDefault(slot, findItem(slot));
+    for (final ChangingButton button : buttons) {
+      if (slot == button.slot()) {
+        return button.nextItem();
+      }
+    }
+    return findItem(slot);
   }
 }

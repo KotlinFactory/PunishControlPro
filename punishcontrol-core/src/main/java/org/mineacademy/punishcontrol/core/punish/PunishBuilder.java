@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.jetbrains.annotations.Nullable;
+import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.punishes.Ban;
 import org.mineacademy.punishcontrol.core.punishes.Mute;
 import org.mineacademy.punishcontrol.core.punishes.Warn;
@@ -66,16 +67,34 @@ public final class PunishBuilder {
     return this;
   }
 
+  public boolean canBuild(){
+    if (punishType == null) {
+      return false;
+    }
+    if (target == null) {
+      return false;
+    }
+    if (creator == null) {
+      return false;
+    }
+
+    return reason != null;
+  }
+
   // ----------------------------------------------------------------------------------------------------
   // Building
   // ----------------------------------------------------------------------------------------------------
 
   public Punish build() {
-
+    //Check manually to provide a better exception-handling
     Valid.notNull(punishType, "Forgot to set punishtype in builder!");
     Valid.notNull(target, "Forgot to set target in builder!");
     Valid.notNull(creator, "Forgot to set creator in builder!");
     Valid.notNull(reason, "Forgot to set reason in builder!");
+
+    if (ip == null) {
+      ip = Providers.playerProvider().getIp(target).orElse("Unknown");
+    }
 
     switch (punishType) {
       case BAN:

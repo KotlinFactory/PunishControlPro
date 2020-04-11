@@ -31,6 +31,7 @@ public final class SpigotDataSetter implements Listener<JoinEvent> {
     final UUID uuid = event.targetUUID();
     final String name = playerProvider.getName(uuid);
 
+    System.out.println("Saved textures");
 //    final String name = playerProvider.getName(uuid);
     final String ip = event.targetInetAddress() == null ? "unknown" : event.targetInetAddress().getHostName();
     Scheduler.runAsync(

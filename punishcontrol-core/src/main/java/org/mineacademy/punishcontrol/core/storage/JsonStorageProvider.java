@@ -261,6 +261,8 @@ public final class JsonStorageProvider extends SecureJson implements StorageProv
         PATH_TO_BAN
             .replace("{uuid}", ban.target().toString())
             .replace("{creation}", ban.creation() + "");
+
+    currentBan(ban.target()).ifPresent(this::removeBan);
     set(path, ban.toMap());
   }
 
@@ -270,6 +272,7 @@ public final class JsonStorageProvider extends SecureJson implements StorageProv
         PATH_TO_MUTE
             .replace("{uuid}", mute.target().toString())
             .replace("{creation}", mute.creation() + "");
+    currentMute(mute.target()).ifPresent(this::removeMute);
     set(path, mute.toMap());
   }
 
@@ -280,6 +283,7 @@ public final class JsonStorageProvider extends SecureJson implements StorageProv
             .replace("{uuid}", warn.target().toString())
             .replace("{creation}", warn.creation() + "");
 
+    currentWarn(warn.target()).ifPresent(this::removeWarn);
     set(path, warn.toMap());
   }
 

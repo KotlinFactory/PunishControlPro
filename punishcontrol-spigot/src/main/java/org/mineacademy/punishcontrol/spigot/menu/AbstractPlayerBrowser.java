@@ -12,7 +12,6 @@ import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.providers.TextureProvider;
-import org.mineacademy.punishcontrol.spigot.menus.MainMenu;
 import org.mineacademy.punishcontrol.spigot.util.ItemStacks;
 
 public abstract class AbstractPlayerBrowser extends AbstractBrowser<UUID> {
@@ -24,7 +23,7 @@ public abstract class AbstractPlayerBrowser extends AbstractBrowser<UUID> {
   public AbstractPlayerBrowser(
       final PlayerProvider playerProvider,
       final TextureProvider textureProvider,
-      final MainMenu mainMenu) {
+      final Menu mainMenu) {
     this(playerProvider, textureProvider, mainMenu, false);
   }
 

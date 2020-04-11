@@ -35,7 +35,7 @@ public class PunishTemplates {
 
     return registeredTemplates
         .stream()
-        .filter((punishTemplate -> punishTemplate.name().equalsIgnoreCase(name)))
+        .filter((punishTemplate -> !punishTemplate.name().equalsIgnoreCase(name)))
         .findFirst();
   }
 

@@ -1,6 +1,7 @@
 package org.mineacademy.punishcontrol.spigot.menus;
 
 import java.util.Arrays;
+import java.util.Collections;
 import javax.inject.Inject;
 import lombok.NonNull;
 import lombok.val;
@@ -15,50 +16,36 @@ import org.mineacademy.fo.remain.CompMaterial;
 import org.mineacademy.punishcontrol.core.providers.TextureProvider;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
 import org.mineacademy.punishcontrol.spigot.Scheduler;
+import org.mineacademy.punishcontrol.spigot.menu.ChangingMenu;
+import org.mineacademy.punishcontrol.spigot.menu.buttons.ChangingButton;
 import org.mineacademy.punishcontrol.spigot.menus.browser.PlayerBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.browser.PunishBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.browser.SettingsBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.punish.PunishCreatorMenu;
 import org.mineacademy.punishcontrol.spigot.util.ItemStacks;
-import org.mineacademy.punishcontrol.spigot.util.Schedulable;
 
-public final class MainMenu extends Menu implements Schedulable {
+public final class MainMenu extends ChangingMenu {
 
   public static final int PLAYER_BROWSER_SLOT = 9 * 2 + 6;
   private final Button punishesButton;
   private final Button newButton;
-  private final Button playerViewButton;
   private final Button settingsButton;
   private final TextureProvider textureProvider;
 
-
   @Inject
   public MainMenu(final TextureProvider textureProvider) {
+    super(null, Collections.singletonList(
+        ChangingButton
+            .fromCustomHashes(
+                textureProvider.listTextures())
+            .name("&6Players")
+            .slot(24)
+            .lore("&7View players", "&7to select", "&7one for more",
+                "&7actions")
+    ));
     this.textureProvider = textureProvider;
     setSize(9 * 5);
     setTitle("§3Punish§bControl");
-
-    playerViewButton = new Button() {
-      @Override
-      public void onClickedInMenu(
-          final Player player, final Menu menu, final ClickType click) {
-        PlayerBrowser.showTo(player);
-      }
-
-      @Override
-      public ItemStack getItem() {
-        return ItemCreator
-            .of(CompMaterial.PLAYER_HEAD)
-//            .fromCustomHash(
-//                textureProvider.getSkinTexture(getViewer().getUniqueId()))
-            .name("&6Players")
-            .lores(Arrays.asList("", "Browse players", "and select an",
-                "action for them"))
-            .build()
-            .make();
-      }
-
-    };
 
     punishesButton = new Button() {
       @Override
@@ -131,7 +118,7 @@ public final class MainMenu extends Menu implements Schedulable {
   }
 
   @Override
-  public ItemStack getItemAt(final int slot) {
+  public ItemStack findItem(final int slot) {
 
     if (Arrays.asList(0, 9, 18, 27, 36, 8, 17, 26, 35, 44, 1, 7, 37, 43)
         .contains(slot)) {
@@ -148,27 +135,11 @@ public final class MainMenu extends Menu implements Schedulable {
       return newButton.getItem();
     }
 
-    if (slot == PLAYER_BROWSER_SLOT) {
-      return ItemCreator
-          .fromCustomHash(
-              textureProvider.getSkinTexture(getViewer().getUniqueId()))
-          .name("&6Players")
-          .lores(Arrays.asList("", "Browse players", "and select an",
-              "action for them"))
-          .build()
-          .make();
-
-    }
-
     if (slot == 9 * 3 + 4) {
       return settingsButton.getItem();
     }
 
-    return super.getItemAt(slot);
-  }
-
-  private void startUpdateTask(){
-
+    return null;
   }
 
   @Override
@@ -179,11 +150,7 @@ public final class MainMenu extends Menu implements Schedulable {
       return;
     }
 
-    async(() -> {
-      redraw();
-    });
-
-//    PlayerBrowser.showTo(player);
+    PlayerBrowser.showTo(player);
   }
 
   @Override

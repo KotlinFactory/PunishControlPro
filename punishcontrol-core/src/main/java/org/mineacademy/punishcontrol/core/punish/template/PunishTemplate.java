@@ -94,6 +94,7 @@ public final class PunishTemplate extends SecureJson {
   public PunishBuilder toPunishBuilder() {
     return PunishBuilder.of(punishType())
         .duration(duration())
+        .reason(reason())
         .silent(silent())
         .superSilent(superSilent());
   }

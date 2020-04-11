@@ -4,5 +4,7 @@ import org.bukkit.inventory.ItemStack;
 
 public interface UpdatingButton {
 
+  int slot();
+
   ItemStack build();
 }

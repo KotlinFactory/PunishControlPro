@@ -79,7 +79,7 @@ public class ChangingButton {
 
   private int getRandomNumberInRange(final int min, final int max) {
 
-    if (min >= max) {
+    if (min > max) {
       throw new IllegalArgumentException("max must be greater than min");
     }
 

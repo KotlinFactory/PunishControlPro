@@ -152,7 +152,6 @@ public abstract class AbstractDurationChooser
       @Override
       public void onClickedInMenu(
           final Player player, final Menu menu, final ClickType click) {
-        System.out.println("confirmed!");
         confirm();
       }
 
