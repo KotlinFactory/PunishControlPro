@@ -1,7 +1,7 @@
 package org.mineacademy.punishcontrol.spigot.menus.setting;
 
 import org.mineacademy.fo.menu.Menu;
-import org.mineacademy.punishcontrol.spigot.menus.browser.SettingsBrowser;
+import org.mineacademy.punishcontrol.spigot.menus.browsers.SettingsBrowser;
 
 public abstract class AbstractSettingsMenu extends Menu {
 

@@ -79,6 +79,10 @@ public final class PunishTemplate extends SecureJson {
   // Setters
   // ----------------------------------------------------------------------------------------------------
 
+  public void permission(@NonNull final String permission){
+    set("Permission", permission);
+  }
+
   public void punishType(@NonNull final PunishType punishType) {
     set("PunishType", punishType);
   }

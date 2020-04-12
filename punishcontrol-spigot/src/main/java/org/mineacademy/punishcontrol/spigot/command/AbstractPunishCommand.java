@@ -22,7 +22,7 @@ import org.mineacademy.punishcontrol.core.punish.PunishType;
 import org.mineacademy.punishcontrol.core.punish.template.PunishTemplates;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 import org.mineacademy.punishcontrol.spigot.Scheduler;
-import org.mineacademy.punishcontrol.spigot.menus.browser.PlayerBrowser;
+import org.mineacademy.punishcontrol.spigot.menus.browsers.PlayerBrowser;
 
 /**
  * Command to handle (Un) banning, muting, warning, reporting & kicking players
@@ -233,7 +233,7 @@ public abstract class AbstractPunishCommand extends
 
           punishMessage.replaceAll(
               "target",
-              playerProvider.getName(target),
+              playerProvider.findNameUnsafe(target),
               "duration",
               punishDuration.toString(),
               "reason",
@@ -245,12 +245,6 @@ public abstract class AbstractPunishCommand extends
             return;
           }
 
-          Scheduler.runSync(() -> {
-            Players.find(target).ifPresent((player -> {
-//          TODO: Format Reason!
-              player.kickPlayer(reason.toString());
-            }));
-          });
           LagCatcher.end("spigot-cmd-save-async");
         });
         break;

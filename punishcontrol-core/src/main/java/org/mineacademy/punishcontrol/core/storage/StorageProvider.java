@@ -147,7 +147,7 @@ public interface StorageProvider {
 
   default boolean isPunished(
       @NonNull final UUID uuid,
-      @NonNull final PunishType punishType){
+      @NonNull final PunishType punishType) {
     switch (punishType) {
       case BAN:
         return isBanned(uuid);
@@ -237,6 +237,22 @@ public interface StorageProvider {
   void saveWarn(@NonNull Warn warn);
 
   // Returns false if not punished
+
+  default void removePunish(final Punish punish) {
+    switch (punish.punishType()) {
+      case BAN:
+        removeBan((Ban) punish);
+        break;
+
+      case MUTE:
+        removeMute((Mute) punish);
+        break;
+
+      case WARN:
+        removeWarn((Warn) punish);
+        break;
+    }
+  }
 
   void removeBan(@NonNull final Ban ban);
 

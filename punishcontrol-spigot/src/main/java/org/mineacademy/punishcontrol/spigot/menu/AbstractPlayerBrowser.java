@@ -3,7 +3,6 @@ package org.mineacademy.punishcontrol.spigot.menu;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
-import lombok.val;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
@@ -54,6 +53,7 @@ public abstract class AbstractPlayerBrowser extends AbstractBrowser<UUID> {
   }
 
 
+
   @Nullable
   protected List<String> lore(final UUID uuid) {
     return null;
@@ -64,10 +64,10 @@ public abstract class AbstractPlayerBrowser extends AbstractBrowser<UUID> {
 
   @Override
   protected final ItemStack convertToItemStack(final UUID uuid) {
-    final String name = playerProvider.getName(uuid);
+    final String name = playerProvider.findNameUnsafe(uuid);
     final String hash = textureProvider.getSkinTexture(uuid);
 
-    final val builder = ItemCreator.fromCustomHash(hash)
+    final ItemCreator.ItemCreatorBuilder builder = ItemCreator.ofSkullHash(hash)
         .name("§3" + name);
 
     if (lore(uuid) == null) {

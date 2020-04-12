@@ -218,7 +218,7 @@
                         <phase>install</phase>
                         <configuration>
                             <tasks>
-                                <copy todir="/Users/leonhard/TestServer/1.12TestServer/plugins"
+                                <copy todir="/Users/leonhard/TestServer/1.15TestServer/plugins"
                                       flatten="true" overwrite="true"
                                       verbose="true" failonerror="true">
                                     <fileset dir="${basedir}/target"

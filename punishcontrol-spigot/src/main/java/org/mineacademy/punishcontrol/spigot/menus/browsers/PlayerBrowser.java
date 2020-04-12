@@ -1,4 +1,4 @@
-package org.mineacademy.punishcontrol.spigot.menus.browser;
+package org.mineacademy.punishcontrol.spigot.menus.browsers;
 
 import java.util.List;
 import java.util.UUID;
@@ -18,7 +18,6 @@ import org.mineacademy.punishcontrol.spigot.menus.MainMenu;
 
 public final class PlayerBrowser extends AbstractPlayerBrowser {
 
-
   @Inject
   public PlayerBrowser(
       final PlayerProvider playerProvider,
@@ -32,7 +31,7 @@ public final class PlayerBrowser extends AbstractPlayerBrowser {
     Scheduler.runAsync(() -> {
       LagCatcher.start("async-show-up-player-browser");
       final val browser = DaggerSpigotComponent.create().playerBrowserMenu();
-      Scheduler.runSync(() -> browser.displayTo(player));
+      browser.displayTo(player);
       LagCatcher.end("async-show-up-player-browser");
     });
   }
@@ -44,6 +43,6 @@ public final class PlayerBrowser extends AbstractPlayerBrowser {
 
   @Override
   public void onClick(final UUID data) {
-    ChooseActionMenu.showTo(getViewer());
+    ChooseActionMenu.showTo(getViewer(), data);
   }
 }

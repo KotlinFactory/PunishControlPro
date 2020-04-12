@@ -11,7 +11,7 @@ import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
 import org.mineacademy.punishcontrol.spigot.Scheduler;
 import org.mineacademy.punishcontrol.spigot.menu.AbstractPlayerBrowser;
-import org.mineacademy.punishcontrol.spigot.menus.browser.PunishTemplateBrowser;
+import org.mineacademy.punishcontrol.spigot.menus.browsers.PunishTemplateBrowser;
 
 @Getter
 @Accessors(fluent = true)

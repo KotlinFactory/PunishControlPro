@@ -10,6 +10,7 @@ import org.mineacademy.punishcontrol.core.providers.TextureProvider;
 import org.mineacademy.punishcontrol.spigot.Scheduler;
 
 public final class SpigotDataSetter implements Listener<JoinEvent> {
+
   private final TextureProvider textureProvider;
   private final PlayerProvider playerProvider;
 
@@ -29,11 +30,12 @@ public final class SpigotDataSetter implements Listener<JoinEvent> {
   @Override
   public void handleEvent(final JoinEvent event) {
     final UUID uuid = event.targetUUID();
-    final String name = playerProvider.getName(uuid);
+    final String name = event.name();
 
     System.out.println("Saved textures");
 //    final String name = playerProvider.getName(uuid);
-    final String ip = event.targetInetAddress() == null ? "unknown" : event.targetInetAddress().getHostName();
+    final String ip = event.targetInetAddress() == null ? "unknown"
+        : event.targetInetAddress().getHostName();
     Scheduler.runAsync(
         () -> {
           playerProvider.saveData(uuid, name, ip);

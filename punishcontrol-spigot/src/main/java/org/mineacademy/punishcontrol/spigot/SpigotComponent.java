@@ -11,13 +11,12 @@ import org.mineacademy.punishcontrol.spigot.commands.UnMuteCommand;
 import org.mineacademy.punishcontrol.spigot.commands.UnWarnCommand;
 import org.mineacademy.punishcontrol.spigot.commands.WarnCommand;
 import org.mineacademy.punishcontrol.spigot.listeners.SpigotDataSetter;
-import org.mineacademy.punishcontrol.spigot.menus.ChooseActionMenu;
 import org.mineacademy.punishcontrol.spigot.menus.DurationChooserMenu;
 import org.mineacademy.punishcontrol.spigot.menus.MainMenu;
-import org.mineacademy.punishcontrol.spigot.menus.browser.PlayerBrowser;
-import org.mineacademy.punishcontrol.spigot.menus.browser.PunishBrowser;
-import org.mineacademy.punishcontrol.spigot.menus.browser.PunishTemplateBrowser;
-import org.mineacademy.punishcontrol.spigot.menus.browser.SettingsBrowser;
+import org.mineacademy.punishcontrol.spigot.menus.browsers.AllPunishesBrowser;
+import org.mineacademy.punishcontrol.spigot.menus.browsers.PlayerBrowser;
+import org.mineacademy.punishcontrol.spigot.menus.browsers.PunishTemplateBrowser;
+import org.mineacademy.punishcontrol.spigot.menus.browsers.SettingsBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.punish.PunishCreatorMenu;
 import org.mineacademy.punishcontrol.spigot.menus.settings.LanguageSettingsMenu;
 import org.mineacademy.punishcontrol.spigot.menus.settings.StorageSettingsMenu;
@@ -62,13 +61,11 @@ public interface SpigotComponent {
 
   DurationChooserMenu durationChooserMenu();
 
-  ChooseActionMenu punishChooserMenu();
-
   MainMenu menuMain();
 
   PlayerBrowser playerBrowserMenu();
 
-  PunishBrowser punishBrowserMenu();
+  AllPunishesBrowser punishBrowserMenu();
 
   PunishTemplateBrowser punishTemplateBrowser();
 

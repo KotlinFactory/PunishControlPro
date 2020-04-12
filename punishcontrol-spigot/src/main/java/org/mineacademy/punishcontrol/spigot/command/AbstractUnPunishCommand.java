@@ -11,7 +11,7 @@ import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.punish.PunishType;
 import org.mineacademy.punishcontrol.core.settings.Settings;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
-import org.mineacademy.punishcontrol.spigot.menus.browser.PunishBrowser;
+import org.mineacademy.punishcontrol.spigot.menus.browsers.AllPunishesBrowser;
 
 @Getter
 public abstract class AbstractUnPunishCommand extends
@@ -30,7 +30,6 @@ public abstract class AbstractUnPunishCommand extends
     this.punishType = punishType;
     setTellPrefix(Settings.PLUGIN_PREFIX);
     addTellPrefix(true);
-    REGISTERED_COMMANDS.add(this);
   }
 
   @Override
@@ -51,7 +50,7 @@ public abstract class AbstractUnPunishCommand extends
         if (!isPlayer()) {
           returnTell(MORE_ARGUMENTS_AS_CONSOLE_MESSAGE);
         }
-        PunishBrowser.showTo(getPlayer());
+        AllPunishesBrowser.showTo(getPlayer());
         break;
       case 1:
         final UUID target = findTarget(finalArgs);
@@ -69,7 +68,7 @@ public abstract class AbstractUnPunishCommand extends
                 "Player is not warned");
             break;
         }
-        tell("&7Successfully unpunished &6" + playerProvider.getName(target));
+        tell("&7Successfully unpunished &6" + playerProvider.findNameUnsafe(target));
         break;
       default:
         returnInvalidArgs();

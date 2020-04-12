@@ -64,7 +64,7 @@ public abstract class AbstractDurationChooser
       @Override
       public ItemStack getItem() {
         return ItemCreator
-            .fromCustomHash(Time.YEAR.hash())
+            .ofSkullHash(Time.YEAR.hash())
             .name("&6" + Time.YEAR.localized())
             .lores(
                 Arrays.asList("&7Left-Click to add", "&7Right-Click to remove"))
@@ -84,7 +84,7 @@ public abstract class AbstractDurationChooser
       @Override
       public ItemStack getItem() {
         return ItemCreator
-            .fromCustomHash(Time.MONTH.hash())
+            .ofSkullHash(Time.MONTH.hash())
             .name("&6" + Time.MONTH.localized())
             .lores(
                 Arrays.asList("&7Left-Click to add", "&7Right-Click to remove"))
@@ -103,7 +103,7 @@ public abstract class AbstractDurationChooser
       @Override
       public ItemStack getItem() {
         return ItemCreator
-            .fromCustomHash(Time.DAY.hash())
+            .ofSkullHash(Time.DAY.hash())
             .name("&6" + Time.DAY.localized())
             .lores(
                 Arrays.asList("&7Left-Click to add", "&7Right-Click to remove"))
@@ -122,7 +122,7 @@ public abstract class AbstractDurationChooser
       @Override
       public ItemStack getItem() {
         return ItemCreator
-            .fromCustomHash(Time.HOUR.hash())
+            .ofSkullHash(Time.HOUR.hash())
             .name("&6" + Time.HOUR.localized())
             .lores(
                 Arrays.asList("&7Left-Click to add", "&7Right-Click to remove"))

@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="CompilerConfiguration">
-    <option name="DEFAULT_COMPILER" value="Eclipse" />
     <option name="BUILD_PROCESS_HEAP_SIZE" value="2000" />
     <option name="BUILD_PROCESS_ADDITIONAL_VM_OPTIONS" value="-javaagent:/Users/leonhard/Repository/Etc/lombok.jar" />
     <annotationProcessing>
@@ -53,7 +52,7 @@
       <module name="punishcontrol-plugin" target="1.8" />
       <module name="punishcontrol-proxy" target="1.8" />
       <module name="punishcontrol-spigot" target="1.8" />
-      <module name="PunishControlPro" target="8" />
+      <module name="PunishControlPro" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="EclipseCompilerSettings">

@@ -18,9 +18,9 @@ import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
 import org.mineacademy.punishcontrol.spigot.Scheduler;
 import org.mineacademy.punishcontrol.spigot.menu.ChangingMenu;
 import org.mineacademy.punishcontrol.spigot.menu.buttons.ChangingButton;
-import org.mineacademy.punishcontrol.spigot.menus.browser.PlayerBrowser;
-import org.mineacademy.punishcontrol.spigot.menus.browser.PunishBrowser;
-import org.mineacademy.punishcontrol.spigot.menus.browser.SettingsBrowser;
+import org.mineacademy.punishcontrol.spigot.menus.browsers.AllPunishesBrowser;
+import org.mineacademy.punishcontrol.spigot.menus.browsers.PlayerBrowser;
+import org.mineacademy.punishcontrol.spigot.menus.browsers.SettingsBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.punish.PunishCreatorMenu;
 import org.mineacademy.punishcontrol.spigot.util.ItemStacks;
 
@@ -31,6 +31,14 @@ public final class MainMenu extends ChangingMenu {
   private final Button newButton;
   private final Button settingsButton;
   private final TextureProvider textureProvider;
+
+  public static void showTo(@NonNull final Player player) {
+    Scheduler.runAsync(() -> {
+      final val menu = DaggerSpigotComponent.create().menuMain();
+      menu.displayTo(player);
+    });
+  }
+
 
   @Inject
   public MainMenu(final TextureProvider textureProvider) {
@@ -43,6 +51,7 @@ public final class MainMenu extends ChangingMenu {
             .lore("&7View players", "&7to select", "&7one for more",
                 "&7actions")
     ));
+
     this.textureProvider = textureProvider;
     setSize(9 * 5);
     setTitle("§3Punish§bControl");
@@ -52,7 +61,7 @@ public final class MainMenu extends ChangingMenu {
       public void onClickedInMenu(
           final Player player, final Menu menu, final ClickType click) {
 
-        PunishBrowser.showTo(player);
+        AllPunishesBrowser.showTo(player);
       }
 
       @Override
@@ -107,14 +116,6 @@ public final class MainMenu extends ChangingMenu {
             .build().make();
       }
     };
-  }
-
-  public static void showTo(@NonNull final Player player) {
-    Scheduler.runAsync(() -> {
-      final val menu = DaggerSpigotComponent.create().menuMain();
-
-      Scheduler.runSync(() -> menu.displayTo(player));
-    });
   }
 
   @Override

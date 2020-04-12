@@ -1,4 +1,4 @@
-package org.mineacademy.punishcontrol.spigot.menus.browser;
+package org.mineacademy.punishcontrol.spigot.menus.browsers;
 
 import java.util.Arrays;
 import javax.inject.Inject;

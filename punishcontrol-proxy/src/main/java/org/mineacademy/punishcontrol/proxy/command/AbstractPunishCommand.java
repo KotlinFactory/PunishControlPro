@@ -121,7 +121,7 @@ public abstract class AbstractPunishCommand extends SimpleCommand {
   }
 
   private UUID findTarget() {
-    final UUID target = Providers.playerProvider().getUUID(args[0]);
+    final UUID target = Providers.playerProvider().findUUID(args[0]).orElse(null);
     checkNotNull(target, UNKNOWN_PLAYER);
     return target;
   }

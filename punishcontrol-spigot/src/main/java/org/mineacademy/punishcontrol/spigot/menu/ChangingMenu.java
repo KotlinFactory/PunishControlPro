@@ -7,6 +7,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.Nullable;
 import org.mineacademy.fo.menu.Menu;
+import org.mineacademy.fo.menu.model.InventoryDrawer;
 import org.mineacademy.fo.plugin.SimplePlugin;
 import org.mineacademy.punishcontrol.spigot.menu.buttons.ChangingButton;
 import org.mineacademy.punishcontrol.spigot.util.Schedulable;
@@ -25,12 +26,17 @@ public class ChangingMenu extends Menu implements Schedulable {
     this(null, buttons);
   }
 
+  @Override
+  protected final void onDisplay(final InventoryDrawer drawer) {
+    cancelled = false;
+    start();
+  }
+
   protected ChangingMenu(
       final Menu parent,
       final List<ChangingButton> buttons) {
     super(parent);
     this.buttons = buttons;
-    start();
   }
 
 

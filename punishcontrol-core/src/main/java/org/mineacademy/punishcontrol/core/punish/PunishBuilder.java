@@ -38,7 +38,7 @@ public final class PunishBuilder {
   private UUID target;
   private UUID creator;
   private PunishDuration duration;
-  private long creation;
+  private long creation = System.currentTimeMillis();
   @Nullable
   private String ip;
   private boolean silent, superSilent, removed;

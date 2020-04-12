@@ -10,7 +10,6 @@ import lombok.val;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import org.mineacademy.bfo.Common;
-import org.mineacademy.bfo.debug.Debugger;
 import org.mineacademy.burst.provider.UUIDNameProvider;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.AbstractPlayerProvider;
@@ -24,20 +23,6 @@ public final class ProxyPlayerProvider extends AbstractPlayerProvider
 
   public static ProxyPlayerProvider newInstance() {
     return new ProxyPlayerProvider();
-  }
-
-  @Override
-  public List<UUID> getOfflinePlayers() {
-    final List<UUID> result = new ArrayList<>();
-    for (final String str : singleLayerKeySet()) {
-      try {
-        result.add(UUID.fromString(str));
-      } catch (final Throwable throwable) {
-        Debugger.saveError(throwable);
-      }
-    }
-
-    return result;
   }
 
   @Override

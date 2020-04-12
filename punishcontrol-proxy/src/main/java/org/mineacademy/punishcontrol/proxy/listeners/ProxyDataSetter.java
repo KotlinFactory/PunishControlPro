@@ -32,7 +32,7 @@ public final class ProxyDataSetter implements Listener<JoinEvent>, Schedulable {
   @Override
   public void handleEvent(final JoinEvent event) {
     final UUID uuid = event.targetUUID();
-    final String name = playerProvider.getName(uuid);
+    final String name = playerProvider.findNameUnsafe(uuid);
 
     async(() -> {
       uuidNameProvider.saveUUIDAndName(uuid, name);

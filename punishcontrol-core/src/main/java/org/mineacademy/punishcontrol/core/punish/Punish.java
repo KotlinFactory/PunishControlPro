@@ -190,6 +190,10 @@ public abstract class Punish {
       PLAYER_PROVIDER.sendIfOnline(
           creator, "&cException while creating Punish!",
           "Please check your console.");
+
+      if (punishType().shouldKick()) {
+        PLAYER_PROVIDER.kickIfOnline(target(), reason());
+      }
     }
   }
 }

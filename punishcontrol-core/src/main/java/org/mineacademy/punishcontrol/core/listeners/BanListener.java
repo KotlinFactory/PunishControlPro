@@ -5,7 +5,9 @@ import java.util.UUID;
 import javax.inject.Inject;
 import org.mineacademy.punishcontrol.core.events.JoinEvent;
 import org.mineacademy.punishcontrol.core.listener.Listener;
+import org.mineacademy.punishcontrol.core.punish.Punish;
 import org.mineacademy.punishcontrol.core.punishes.Ban;
+import org.mineacademy.punishcontrol.core.settings.Settings;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 
 public final class BanListener implements Listener<JoinEvent> {
@@ -26,10 +28,24 @@ public final class BanListener implements Listener<JoinEvent> {
   public void handleEvent(final JoinEvent event) {
     final UUID target = event.targetUUID();
     final Optional<Ban> optionalBan = storageProvider.currentBan(target);
-    optionalBan.ifPresent((ban -> {
-      //TODO format
+
+    final String reason = optionalBan.map(Punish::reason).orElseGet(
+        () -> {
+          if (!Settings.Punish.Ban.applyOnIp) {
+            return null;
+          }
+
+          if (!storageProvider.isBanned(event.targetInetAddress())) {
+            return null;
+          }
+
+          return "&cBanned with other ip";
+        });
+
+    if (reason != null) {
       event.canceled(true);
-      event.cancelReason(ban.reason() == null ? "unknown" : ban.reason());
-    }));
+      //TODO format
+      event.cancelReason(reason);
+    }
   }
 }

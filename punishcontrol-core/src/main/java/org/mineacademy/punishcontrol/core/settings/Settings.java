@@ -24,20 +24,26 @@ public final class Settings extends SimpleSettings {
   }
 
   public static final class Punish {
+
     public static final class Ban{
+
+      public static Boolean applyOnIp;
 
       private static void init() {
         pathPrefix("Punishes.Ban");
+        applyOnIp = getBoolean("Apply_On_Ip");
 
       }
     }
 
     public static final class Mute{
       public static List<String> allowedCommands;
+      public static Boolean applyOnIp;
 
       private static void init() {
         pathPrefix("Punishes.Mute");
         allowedCommands = getStringList("Allowed_Commands");
+        applyOnIp = getBoolean("Apply_On_Ip");
       }
     }
 

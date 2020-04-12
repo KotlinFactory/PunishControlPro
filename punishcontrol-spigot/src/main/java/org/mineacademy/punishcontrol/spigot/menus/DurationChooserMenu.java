@@ -5,6 +5,7 @@ import lombok.NonNull;
 import org.bukkit.entity.Player;
 import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
+import org.mineacademy.punishcontrol.spigot.Scheduler;
 
 public final class DurationChooserMenu extends Menu {
 
@@ -14,7 +15,7 @@ public final class DurationChooserMenu extends Menu {
   }
 
   public static void showTo(@NonNull final Player player) {
-    DaggerSpigotComponent.create().durationChooserMenu().displayTo(player);
+    Scheduler.runAsync(() -> DaggerSpigotComponent.create().durationChooserMenu().displayTo(player));
   }
 
   @Override

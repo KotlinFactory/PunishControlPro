@@ -2,7 +2,6 @@ package org.mineacademy.punishcontrol.spigot.menus.punish;
 
 import de.leonhard.storage.util.Valid;
 import java.util.Arrays;
-import java.util.List;
 import java.util.UUID;
 import javax.inject.Inject;
 import lombok.NonNull;
@@ -22,7 +21,7 @@ import org.mineacademy.punishcontrol.core.punish.PunishType;
 import org.mineacademy.punishcontrol.core.punish.template.PunishTemplate;
 import org.mineacademy.punishcontrol.core.settings.Settings;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
-import org.mineacademy.punishcontrol.spigot.conversation.AddReasonConversation;
+import org.mineacademy.punishcontrol.spigot.conversation.PunishReasonConversation;
 import org.mineacademy.punishcontrol.spigot.menu.AbstractDurationChooser;
 import org.mineacademy.punishcontrol.spigot.menu.AbstractPlayerBrowser;
 import org.mineacademy.punishcontrol.spigot.menu.AbstractPunishTypeBrowser;
@@ -34,14 +33,14 @@ public final class PunishCreatorMenu extends Menu {
 
   public static final int SIZE = 9 * 5;
   public static final int PLAYER_CHOOSER_SLOT = 33;
+  public static final int CHOOSE_REASON_SLOT = 19;
   private final Button fromTemplate;
   private final Button chooseDuration;
-  private final Button chooseReason;
+  //  private final Button chooseReason;
   private final Button choosePlayer;
   private final Button applyPunish;
   private final TextureProvider textureProvider;
   private final PlayerProvider playerProvider;
-  private final Button choosePunishType;
 
   //Silent & Super silent
 
@@ -88,7 +87,7 @@ public final class PunishCreatorMenu extends Menu {
     setSize(SIZE);
 
     if (punishBuilder().target() != null) {
-      setTitle("&8Punish " + playerProvider.getName(punishBuilder().target()));
+      setTitle("&8Punish " + playerProvider.findNameUnsafe(punishBuilder().target()));
     } else {
       setTitle("&8Create punish");
     }
@@ -157,7 +156,6 @@ public final class PunishCreatorMenu extends Menu {
       @Override
       public ItemStack getItem() {
         if (punishTemplate != null) {
-
           return ItemCreator
               .of(ItemStacks.forPunishType(punishBuilder().punishType()))
               .name("&6Choose template")
@@ -186,10 +184,31 @@ public final class PunishCreatorMenu extends Menu {
       @Override
       public void onClickedInMenu(
           final Player player, final Menu menu, final ClickType click) {
-        if (!punishBuilder.canBuild()) {
-          animateTitle("&7Missing information!");
+
+        punishBuilder()
+            .creator(getViewer().getUniqueId())
+            .creation(System.currentTimeMillis());
+
+
+        if (punishBuilder().punishType() == null) {
+          animateTitle("&cMissing punish-type!");
           return;
         }
+        if (punishBuilder().target() == null) {
+          animateTitle("&cMissing target!");
+          return;
+        }
+        if (punishBuilder().creator() == null) {
+          animateTitle("&cMissing creator!");
+          return;
+        }
+
+        if (punishBuilder().reason() == null) {
+          animateTitle("&cMissing reason!");
+          return;
+        }
+
+        punishBuilder().build().create();
 
       }
 
@@ -204,35 +223,34 @@ public final class PunishCreatorMenu extends Menu {
       }
     };
 
-    registerButtons();
-    chooseReason = new Button() {
-      @Override
-      public void onClickedInMenu(
-          final Player player, final Menu menu, final ClickType click) {
-        AddReasonConversation.create((PunishCreatorMenu) menu);
-      }
-
-      @Override
-      public ItemStack getItem() {
-
-        if (punishBuilder().reason() != null) {
-          return ItemCreator.of(CompMaterial.BOOK,
-              "&6Reason",
-              "&7Choose different reason",
-              "&7Current: " + punishBuilder.reason())
-              .build()
-              .make();
-        }
-
-        return ItemCreator.of(CompMaterial.BOOK,
-            "&6Reason",
-            "&7Choose the",
-            "&7reason of the",
-            "&7punish")
-            .build()
-            .make();
-      }
-    };
+//    chooseReason = new Button() {
+//      @Override
+//      public void onClickedInMenu(
+//          final Player player, final Menu menu, final ClickType click) {
+//        AddReasonConversation.create((PunishCreatorMenu) menu);
+//      }
+//
+//      @Override
+//      public ItemStack getItem() {
+//
+//        if (punishBuilder().reason() != null) {
+//          return ItemCreator.of(CompMaterial.BOOK,
+//              "&6Reason",
+//              "&7Choose different reason",
+//              "&7Current: " + punishBuilder.reason())
+//              .build()
+//              .make();
+//        }
+//
+//        return ItemCreator.of(CompMaterial.BOOK,
+//            "&6Reason",
+//            "&7Choose the",
+//            "&7reason of the",
+//            "&7punish")
+//            .build()
+//            .make();
+//      }
+//    };
 
     choosePlayer = new Button() {
       @Override
@@ -256,11 +274,11 @@ public final class PunishCreatorMenu extends Menu {
         final UUID target = punishBuilder().target();
         if (target != null) {
           return ItemCreator
-              .fromCustomHash(textureProvider.getSkinTexture(target))
+              .ofSkullHash(textureProvider.getSkinTexture(target))
               .lore("&6Choose player")
               .lores(Arrays.asList("&7Choose different player",
                   "&7Current: " + playerProvider
-                      .getName(punishBuilder().target())))
+                      .findNameUnsafe(punishBuilder().target())))
               .build()
               .makeMenuTool();
         }
@@ -273,23 +291,18 @@ public final class PunishCreatorMenu extends Menu {
       }
     };
 
-    choosePunishType = new Button() {
-      @Override
-      public void onClickedInMenu(
-          final Player player, final Menu menu, final ClickType click) {
-
-      }
-
-      @Override
-      public ItemStack getItem() {
-        return ItemStacks.forPunishType(punishBuilder().punishType());
-      }
-    };
-  }
-
-  @Override
-  protected List<Button> getButtonsToAutoRegister() {
-    return Arrays.asList(chooseReason, choosePlayer);
+//    choosePunishType = new Button() {
+//      @Override
+//      public void onClickedInMenu(
+//          final Player player, final Menu menu, final ClickType click) {
+//
+//      }
+//
+//      @Override
+//      public ItemStack getItem() {
+//        return ItemStacks.forPunishType(punishBuilder().punishType());
+//      }
+//    };
   }
 
   @Override
@@ -315,19 +328,34 @@ public final class PunishCreatorMenu extends Menu {
   public ItemStack getItemAt(final int slot) {
 
     if (slot == 4) {
-//      return ItemCreator
-//          .of(ItemStacks.forPunishType(punishBuilder().punishType()))
-//          .name("&6Change type")
-//          .lores(Arrays.asList(
-//              "&7Change the type",
-//              "&7of the punish",
-//              "&7Currently: " + punishBuilder.punishType().localized()))
-//          .build()
-//          .makeMenuTool();
+      return ItemCreator
+          .of(ItemStacks.forPunishType(punishBuilder().punishType()))
+          .name("&6Change type")
+          .lores(Arrays.asList(
+              "&7Change the type",
+              "&7of the punish",
+              "&7Currently: " + punishBuilder.punishType().localized()))
+          .build()
+          .makeMenuTool();
     }
 
-    if (slot == 19) {
-      return chooseReason.getItem();
+    if (slot == CHOOSE_REASON_SLOT) {
+      if (punishBuilder().reason() != null) {
+        return ItemCreator.of(CompMaterial.BOOK,
+            "&6Reason",
+            "&7Choose different reason",
+            "&7Current: " + punishBuilder.reason())
+            .build()
+            .make();
+      }
+
+      return ItemCreator.of(CompMaterial.BOOK,
+          "&6Reason",
+          "&7Choose the",
+          "&7reason of the",
+          "&7punish")
+          .build()
+          .make();
     }
 
     if (slot == 22) {
@@ -344,30 +372,26 @@ public final class PunishCreatorMenu extends Menu {
 
     //Handling Button for choosePlayer
     if (slot == PLAYER_CHOOSER_SLOT) {
-      return choosePlayer.getItem();
-    }
+      final UUID target = punishBuilder().target();
+      if (target != null) {
+        return ItemCreator
+            .ofSkullHash(textureProvider.getSkinTexture(target))
+            .name("&6Choose player")
+            .lores(Arrays.asList(
+                "&7Current: " + playerProvider
+                    .findNameUnsafe(punishBuilder().target()),
+                "&7Click to choose", "&7another player"))
+            .build()
+            .makeMenuTool();
+      }
 
-//    if (slot == PLAYER_CHOOSER_SLOT) {
-//      final UUID target = punishBuilder().target();
-//      if (target != null) {
-//        return ItemCreator
-//            .fromCustomHash(textureProvider.getSkinTexture(target))
-//            .name("&6Choose player")
-//            .lores(Arrays.asList(
-//                "&7Current: " + playerProvider
-//                    .getName(punishBuilder().target()),
-//                "&7Click to choose", "&7another player"))
-//            .build()
-//            .makeMenuTool();
-//      }
-//
-//      return ItemCreator
-//          .of(CompMaterial.PLAYER_HEAD, "&6Choose player",
-//              "&7Choose the",
-//              "&7player the", "&7punish should be", "&7applied to")
-//          .build()
-//          .makeMenuTool();
-//    }
+      return ItemCreator
+          .of(CompMaterial.PLAYER_HEAD, "&6Choose player",
+              "&7Choose the",
+              "&7player the", "&7punish should be", "&7applied to")
+          .build()
+          .makeMenuTool();
+    }
 
     return null;
   }
@@ -390,6 +414,11 @@ public final class PunishCreatorMenu extends Menu {
     if (slot == PLAYER_CHOOSER_SLOT) {
       //We don't care about the click-type
       choosePlayer.onClickedInMenu(player, this, ClickType.LEFT);
+    }
+
+    if (slot == CHOOSE_REASON_SLOT) {
+      getViewer().closeInventory();
+      PunishReasonConversation.create(this).start(getViewer());
     }
   }
 }

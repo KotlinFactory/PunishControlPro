@@ -10,6 +10,7 @@ import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent.Result;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.mineacademy.fo.debug.Debugger;
 import org.mineacademy.fo.debug.LagCatcher;
 import org.mineacademy.punishcontrol.core.event.Events;
 import org.mineacademy.punishcontrol.core.events.ChatEvent;
@@ -31,7 +32,7 @@ public final class SpigotListenerImpl implements Listener {
     LagCatcher.start("async-join");
     final JoinEvent joinEvent = Events.call(
         JoinEvent
-            .create(playerPreLoginEvent.getUniqueId(), playerPreLoginEvent.getAddress()));
+            .create(playerPreLoginEvent.getUniqueId(),playerPreLoginEvent.getName(), playerPreLoginEvent.getAddress()));
 
     if (!joinEvent.canceled()) {
       LagCatcher.end("async-join");
@@ -47,23 +48,39 @@ public final class SpigotListenerImpl implements Listener {
   @EventHandler
   public void chat(final AsyncPlayerChatEvent asyncPlayerChatEvent) {
     LagCatcher.start("async-chat");
-    final ChatEvent chatEvent = Events.call(ChatEvent
-        .create(asyncPlayerChatEvent.getPlayer().getUniqueId(),
-            asyncPlayerChatEvent.getMessage()));
-    asyncPlayerChatEvent.setCancelled(chatEvent.canceled());
-    asyncPlayerChatEvent.setMessage(chatEvent.message());
+    try {
+      final ChatEvent chatEvent = Events.call(ChatEvent
+          .create(
+              asyncPlayerChatEvent.getPlayer().getUniqueId(),
+              asyncPlayerChatEvent.getPlayer().getAddress().getAddress(),
+              asyncPlayerChatEvent.getMessage()));
+      asyncPlayerChatEvent.setCancelled(chatEvent.canceled());
+      asyncPlayerChatEvent.setMessage(chatEvent.message());
+    } catch (final Throwable throwable) {
+      Debugger.saveError(throwable, "Exception while calling chat-event!");
+    }
+
     LagCatcher.start("async-chat");
   }
 
   @EventHandler
   public void chat2(final PlayerCommandPreprocessEvent playerCommandPreprocessEvent){
-    LagCatcher.start("command-chat");
-    final ChatEvent chatEvent = Events.call(ChatEvent
-        .create(playerCommandPreprocessEvent.getPlayer().getUniqueId(),
-            playerCommandPreprocessEvent.getMessage()));
-    playerCommandPreprocessEvent.setCancelled(chatEvent.canceled());
-    playerCommandPreprocessEvent.setMessage(chatEvent.message());
-    LagCatcher.start("command-chat");
+    try {
+      LagCatcher.start("command-chat");
+      final ChatEvent chatEvent = Events.call(ChatEvent
+          .create(
+              playerCommandPreprocessEvent.getPlayer().getUniqueId(),
+              playerCommandPreprocessEvent.getPlayer().getAddress().getAddress(),
+              playerCommandPreprocessEvent.getMessage()));
+      playerCommandPreprocessEvent.setCancelled(chatEvent.canceled());
+      playerCommandPreprocessEvent.setMessage(chatEvent.message());
+      LagCatcher.start("command-chat");
+    } catch (final Throwable throwable) {
+      Debugger.saveError(
+          throwable,
+          "Exception while calling command-preprocess-event!"
+      );
+    }
   }
 
   @EventHandler

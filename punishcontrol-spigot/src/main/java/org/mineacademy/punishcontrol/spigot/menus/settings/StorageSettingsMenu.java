@@ -5,7 +5,7 @@ import lombok.NonNull;
 import org.bukkit.entity.Player;
 import org.mineacademy.punishcontrol.core.storage.MySQLStorageProvider;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
-import org.mineacademy.punishcontrol.spigot.menus.browser.SettingsBrowser;
+import org.mineacademy.punishcontrol.spigot.menus.browsers.SettingsBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.setting.AbstractSettingsMenu;
 
 public final class StorageSettingsMenu extends AbstractSettingsMenu {

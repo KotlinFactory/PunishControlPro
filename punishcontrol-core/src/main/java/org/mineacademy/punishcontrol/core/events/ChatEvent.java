@@ -1,5 +1,6 @@
 package org.mineacademy.punishcontrol.core.events;
 
+import java.net.InetAddress;
 import java.util.UUID;
 import lombok.AccessLevel;
 import lombok.Getter;
@@ -16,10 +17,14 @@ import org.mineacademy.punishcontrol.core.event.AbstractEvent;
 public final class ChatEvent extends AbstractEvent {
 
   private final UUID targetUUID;
+  private final InetAddress targetAddress;
   @NonNull
   private String message;
 
-  public static ChatEvent create(final UUID targetUUID, final String message) {
-    return new ChatEvent(targetUUID, message);
+  public static ChatEvent create(
+      final UUID targetUUID,
+      final InetAddress targetAddress,
+      final String message) {
+    return new ChatEvent(targetUUID, targetAddress, message);
   }
 }

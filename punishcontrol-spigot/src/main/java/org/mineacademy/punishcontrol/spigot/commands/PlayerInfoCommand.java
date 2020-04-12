@@ -11,7 +11,7 @@ import org.mineacademy.punishcontrol.core.settings.Settings;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 import org.mineacademy.punishcontrol.spigot.Scheduler;
 import org.mineacademy.punishcontrol.spigot.command.AbstractSimplePunishControlCommand;
-import org.mineacademy.punishcontrol.spigot.menus.browser.PlayerBrowser;
+import org.mineacademy.punishcontrol.spigot.menus.browsers.PlayerBrowser;
 
 public class PlayerInfoCommand extends AbstractSimplePunishControlCommand {
 
@@ -34,6 +34,7 @@ public class PlayerInfoCommand extends AbstractSimplePunishControlCommand {
       if (!isPlayer()) {
         returnTell(MORE_ARGUMENTS_AS_CONSOLE_MESSAGE);
       }
+
 
       PlayerBrowser.showTo(getPlayer());
       return;
@@ -62,7 +63,7 @@ public class PlayerInfoCommand extends AbstractSimplePunishControlCommand {
       punishes.sort((o1, o2) -> o1.creation() > o2.creation() ? 1 : -1);
 
       tell("&7" + Common.chatLineSmooth());
-      tell("&7Data for: &6" + playerProvider.getName(target));
+      tell("&7Data for: &6" + playerProvider.findNameUnsafe(target));
       tell("&7IP: " + playerProvider.getIp(target).orElse("unknown"));
       tell(" ");
       for (final Punish punish : punishes) {

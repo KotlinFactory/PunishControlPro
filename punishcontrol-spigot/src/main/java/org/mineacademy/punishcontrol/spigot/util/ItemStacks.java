@@ -48,6 +48,24 @@ public class ItemStacks {
     return CompMaterial.YELLOW_DYE.toItem();
   }
 
+  public static ItemStack redPane(){
+    if (MinecraftVersion.olderThan(V.v1_13)) {
+      final ItemStack limeDye = new ItemStack(
+          CompMaterial.RED_STAINED_GLASS_PANE.getMaterial(), 1,
+          DyeColor.RED.getDyeData());
+    }
+    return CompMaterial.RED_STAINED_GLASS_PANE.toItem();
+  }
+
+  public static ItemStack greenPane(){
+    if (MinecraftVersion.olderThan(V.v1_13)) {
+      final ItemStack limeDye = new ItemStack(
+          CompMaterial.GREEN_STAINED_GLASS_PANE.getMaterial(), 1,
+          DyeColor.GREEN.getDyeData());
+    }
+    return CompMaterial.GREEN_STAINED_GLASS_PANE.toItem();
+  }
+
   public ItemStack cyanDye() {
     if (MinecraftVersion.olderThan(V.v1_13)) {
       final ItemStack limeDye = new ItemStack(

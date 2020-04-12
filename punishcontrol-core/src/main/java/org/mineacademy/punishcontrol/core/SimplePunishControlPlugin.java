@@ -136,6 +136,7 @@ public interface SimplePunishControlPlugin {
       saveError(throwable);
     }
 
+
     try {
       loadGroups();
       log("Groups §l§a✔");
@@ -161,7 +162,7 @@ public interface SimplePunishControlPlugin {
 
     log(getStartupFinishedMessages()[index]);
 
-    log("§7*------------------------------------------------------------------*");
+    log("§7*----------------------------------------------------------------*");
   }
 
   default void loadGroups() {

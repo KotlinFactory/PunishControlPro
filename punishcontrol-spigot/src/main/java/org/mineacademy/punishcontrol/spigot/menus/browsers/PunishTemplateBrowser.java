@@ -1,4 +1,4 @@
-package org.mineacademy.punishcontrol.spigot.menus.browser;
+package org.mineacademy.punishcontrol.spigot.menus.browsers;
 
 import java.util.Arrays;
 import javax.inject.Inject;
@@ -48,7 +48,8 @@ public class PunishTemplateBrowser extends AbstractTemplateBrowser {
         return ItemCreator
             .of(CompMaterial.EMERALD)
             .name("&aAdd template")
-            .lores(Arrays.asList("&7Click here to", "&7Add custom templates")).build()
+            .lores(Arrays.asList("&7Click here to", "&7Add custom templates"))
+            .build()
             .makeMenuTool();
       }
     };
@@ -79,6 +80,7 @@ public class PunishTemplateBrowser extends AbstractTemplateBrowser {
 
   @Override
   protected void onClick(final PunishTemplate punishTemplate) {
-    PunishTemplateCreatorMenu.fromExisting(punishTemplate).displayTo(getViewer());
+    PunishTemplateCreatorMenu.fromExisting(punishTemplate)
+        .displayTo(getViewer());
   }
 }

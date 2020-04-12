@@ -8,6 +8,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.jetbrains.annotations.Nullable;
 import org.mineacademy.fo.menu.Menu;
+import org.mineacademy.fo.menu.model.InventoryDrawer;
 import org.mineacademy.fo.plugin.SimplePlugin;
 import org.mineacademy.punishcontrol.spigot.menu.buttons.UpdatingButton;
 import org.mineacademy.punishcontrol.spigot.util.Schedulable;
@@ -15,7 +16,7 @@ import org.mineacademy.punishcontrol.spigot.util.Schedulable;
 public class UpdatingMenu extends Menu implements Schedulable {
 
   private final List<UpdatingButton> buttons;
-  private boolean canceled;
+  private boolean cancelled;
 
   protected UpdatingMenu(final UpdatingButton... buttons) {
     this.buttons = Arrays.asList(buttons);
@@ -31,6 +32,12 @@ public class UpdatingMenu extends Menu implements Schedulable {
     this.buttons = buttons;
   }
 
+  @Override
+  protected final void onDisplay(final InventoryDrawer drawer) {
+    cancelled = false;
+    start();
+  }
+
   private void start() {
 
     new BukkitRunnable() {
@@ -41,7 +48,7 @@ public class UpdatingMenu extends Menu implements Schedulable {
           return;
         }
 
-        if (canceled) {
+        if (cancelled) {
           cancel();
           return;
         }
@@ -81,7 +88,7 @@ public class UpdatingMenu extends Menu implements Schedulable {
   @Override
   protected final void onMenuClose(final Player player,
       final Inventory inventory) {
-    canceled = true;
+    cancelled = true;
   }
 
   @Override

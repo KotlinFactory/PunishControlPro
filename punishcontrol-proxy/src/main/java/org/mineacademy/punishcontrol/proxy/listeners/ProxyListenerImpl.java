@@ -21,6 +21,7 @@ public class ProxyListenerImpl implements Listener {
   public void login(final PreLoginEvent playerPreLoginEvent) {
     final JoinEvent joinEvent = Events.call(
         JoinEvent.create(playerPreLoginEvent.getConnection().getUniqueId(),
+            playerPreLoginEvent.getConnection().getName(),
             playerPreLoginEvent.getConnection().getAddress().getAddress()));
 
     if (!joinEvent.canceled()) {
@@ -33,8 +34,12 @@ public class ProxyListenerImpl implements Listener {
   @EventHandler
   public void chat(final net.md_5.bungee.api.event.ChatEvent playerChatEvent) {
     final ProxiedPlayer sender = (ProxiedPlayer) playerChatEvent.getSender();
-    final ChatEvent chatEvent = Events.call(ChatEvent
-        .create(sender.getUniqueId(), playerChatEvent.getMessage()));
+    final ChatEvent chatEvent = Events.call(
+        ChatEvent.create(
+            sender.getUniqueId(),
+            sender.getAddress().getAddress(),
+            playerChatEvent.getMessage())
+    );
 
     playerChatEvent.setCancelled(chatEvent.canceled());
     playerChatEvent.setMessage(chatEvent.message());
@@ -42,7 +47,9 @@ public class ProxyListenerImpl implements Listener {
 
   @EventHandler
   public void quit(final PlayerDisconnectEvent playerDisconnectEvent) {
-    final QuitEvent quitEvent = Events
-        .call(QuitEvent.create(playerDisconnectEvent.getPlayer().getUniqueId()));
+    final QuitEvent quitEvent =
+        Events.call(
+            QuitEvent.create(playerDisconnectEvent.getPlayer().getUniqueId())
+        );
   }
 }

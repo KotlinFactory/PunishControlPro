@@ -28,17 +28,25 @@ public abstract class AbstractTemplateBrowser extends
     final Replacer replacer = Replacer.of(
         "&6Type: &7{type}",
         "&6Duration: &7{duration}",
+        "&6Reason: &7{reason}",
         "&6Permission: &7{permission}",
         "&6Silent: {silent}",
         "&6Super-Silent: {super-silent}",
         "&6Access: &7{access}"
     );
 
-    replacer.find("type", "duration", "permission", "silent", "super-silent",
+    replacer.find(
+        "type",
+        "reason",
+        "duration",
+        "permission",
+        "silent",
+        "super-silent",
         "access");
 
     replacer.replace(
         item.punishType(),
+        item.reason(),
         item.duration(),
         item.permission(),
         item.silent() ? "&aYes" : "&cNo",

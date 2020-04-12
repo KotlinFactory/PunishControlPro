@@ -30,6 +30,8 @@ public final class SpigotTextureProvider
     final String textureHash = MojangUtils.getTextureHash(uuid);
     Debugger.debug("hash", textureHash);
 
+
+
     if (textureHash != null) {
       set(uuid.toString(), textureHash);
     }

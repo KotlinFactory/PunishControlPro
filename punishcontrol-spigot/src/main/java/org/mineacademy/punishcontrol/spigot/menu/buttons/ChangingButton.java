@@ -13,6 +13,7 @@ import lombok.val;
 import org.bukkit.inventory.ItemStack;
 import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.fo.menu.model.ItemCreator.ItemCreatorBuilder;
+import org.mineacademy.fo.remain.CompMaterial;
 
 @Setter
 @Getter
@@ -22,6 +23,8 @@ public class ChangingButton {
 
   private final List<ItemCreator.ItemCreatorBuilder> creators;
   private int slot = 0;
+  private String name = "";
+  private List<String> lore = new ArrayList<>();
   // ----------------------------------------------------------------------------------------------------
   // Static factory methods
   // ----------------------------------------------------------------------------------------------------
@@ -34,7 +37,7 @@ public class ChangingButton {
     final val creators = new ArrayList<ItemCreator.ItemCreatorBuilder>();
 
     for (final String hash : hashes) {
-      creators.add(ItemCreator.fromCustomHash(hash));
+      creators.add(ItemCreator.ofSkullHash(hash));
     }
 
     return of(creators);
@@ -55,6 +58,7 @@ public class ChangingButton {
   // ----------------------------------------------------------------------------------------------------
 
   public ChangingButton lore(final String... lores) {
+    lore = new ArrayList<>(Arrays.asList(lores));
     for (final ItemCreatorBuilder creator : creators) {
       creator.lores(Arrays.asList(lores));
     }
@@ -62,6 +66,7 @@ public class ChangingButton {
   }
 
   public ChangingButton name(final String name) {
+    this.name = name;
     for (final ItemCreatorBuilder creator : creators) {
       creator.name(name);
     }
@@ -74,13 +79,24 @@ public class ChangingButton {
 
   public ItemStack nextItem() {
     final int index = getRandomNumberInRange(0, creators().size() - 1);
+    if (creators.isEmpty()) {
+      return ItemCreator
+          .of(CompMaterial.PLAYER_HEAD)
+          .name(name)
+          .lores(lore)
+          .build()
+          .make();
+    }
+    if (creators.size() == 1) {
+      return creators.get(0).build().makeMenuTool();
+    }
     return creators().get(index).build().makeMenuTool();
   }
 
   private int getRandomNumberInRange(final int min, final int max) {
 
     if (min > max) {
-      throw new IllegalArgumentException("max must be greater than min");
+      return max;
     }
 
     final Random random = new Random();

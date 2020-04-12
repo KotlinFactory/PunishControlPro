@@ -16,6 +16,7 @@ public abstract class LoadingCache<K, V> {
 
   public abstract V load(K k);
 
+
   public synchronized void put(final K k, final V v) {
     map.put(k, v);
     new Timer()

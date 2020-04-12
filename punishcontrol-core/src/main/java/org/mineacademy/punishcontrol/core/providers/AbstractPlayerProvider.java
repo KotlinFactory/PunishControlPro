@@ -1,6 +1,7 @@
 package org.mineacademy.punishcontrol.core.providers;
 
-import de.leonhard.storage.util.Valid;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
@@ -11,8 +12,9 @@ import org.mineacademy.punishcontrol.core.flatfiles.SecureJson;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.uuid.UUIDs;
 
-public abstract class AbstractPlayerProvider extends SecureJson implements
-    PlayerProvider {
+public abstract class AbstractPlayerProvider
+    extends SecureJson
+    implements PlayerProvider {
 
   public AbstractPlayerProvider() {
     super(
@@ -22,8 +24,28 @@ public abstract class AbstractPlayerProvider extends SecureJson implements
   }
 
   @Override
+  public final List<UUID> getOfflinePlayers() {
+    final List<UUID> result = new ArrayList<>();
+
+    for (final String key : fileData.singleLayerKeySet()) {
+      try {
+        result.add(UUID.fromString(key));
+      } catch (final Throwable throwable) {
+        System.err.println("Exception while parsing: '" + key + "' to UUID");
+        System.err.println("Have you altered the data?");
+        System.err.println("Skipping it...");
+        throwable.printStackTrace();
+      }
+    }
+
+    return result;
+  }
+
+  @Override
   public final void saveData(
-      @NonNull final UUID uuid, @NonNull final String name, final String ip) {
+      @NonNull final UUID uuid,
+      @NonNull final String name,
+      @NonNull final String ip) {
     fileData.insert(
         uuid.toString() + ".ip",
         ip); // Increasing performance -> Only writing to file 1x time.
@@ -40,19 +62,20 @@ public abstract class AbstractPlayerProvider extends SecureJson implements
   }
 
   @Override
-  public final String getName(@NonNull final UUID uuid) {
+  public Optional<String> findName(@NonNull final UUID uuid) {
     if (contains(uuid.toString())) {
-      return getString(uuid + ".name");
+      return Optional.ofNullable(getString(uuid + ".name"));
     } else {
       final String name = UUIDs.toName(uuid).orElse(null);
-      Valid.notNull(name, "No player with UUID '" + uuid + "' found on Mojang-Side");
-      set(uuid.toString() + ".name", name);
-      return name;
+      if (name != null) {
+        set(uuid.toString() + ".name", name);
+      }
+      return Optional.ofNullable(name);
     }
   }
 
   @Override
-  public final UUID getUUID(@NonNull final String name) {
+  public final Optional<UUID> findUUID(@NonNull final String name) {
     for (final val entry : getFileData().toMap().entrySet()) {
       if (!(entry.getValue() instanceof Map)) {
         continue;
@@ -60,22 +83,25 @@ public abstract class AbstractPlayerProvider extends SecureJson implements
       @SuppressWarnings("unchecked") final Map<String, Object> data = (Map<String, Object>) entry
           .getValue();
       if (data.get("name").toString().equalsIgnoreCase(name)) {
-        return UUID.fromString(entry.getKey());
+        return Optional.of(UUID.fromString(entry.getKey()));
       }
     }
-
-    // Not yet set.
-    // Getting from Mojang & Setting it manually.
-
     final UUID uuid = UUIDs.find(name).orElse(null);
-
-    Valid.notNull(uuid, "No player named '" + name + "' found on the mojang side");
-
-    set(uuid.toString() + ".name", name);
-    return uuid;
+    if (uuid != null) {
+      set(uuid.toString() + ".name", name);
+    }
+    return Optional.ofNullable(uuid);
   }
 
-  // ----------------------------------------------------------------------------------------------------
-  // Overridden methods for usability & security
-  // ----------------------------------------------------------------------------------------------------
+  @Override
+  public void punishable(
+      @NonNull final UUID target,
+      @NonNull final boolean punishable){
+    set(target + ".punishable", punishable);
+  }
+
+  @Override
+  public boolean punishable(@NonNull final UUID target){
+    return getOrSetDefault(target + ".punishable", true);
+  }
 }

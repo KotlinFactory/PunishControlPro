@@ -15,10 +15,13 @@ import org.mineacademy.punishcontrol.core.event.AbstractEvent;
 public final class JoinEvent extends AbstractEvent {
 
   private final UUID targetUUID;
+  private final String name;
   private final InetAddress targetInetAddress;
 
-  public static JoinEvent create(@NonNull final UUID targetUUID,
+  public static JoinEvent create(
+      @NonNull final UUID targetUUID,
+      @NonNull final String name,
       @NonNull final InetAddress targetInetAddress) {
-    return new JoinEvent(targetUUID, targetInetAddress);
+    return new JoinEvent(targetUUID,name, targetInetAddress);
   }
 }

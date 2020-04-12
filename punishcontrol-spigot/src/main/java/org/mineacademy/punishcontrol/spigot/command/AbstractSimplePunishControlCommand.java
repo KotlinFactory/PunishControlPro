@@ -2,6 +2,7 @@ package org.mineacademy.punishcontrol.spigot.command;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
 import lombok.NonNull;
@@ -12,7 +13,7 @@ import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 
 public abstract class AbstractSimplePunishControlCommand extends SimpleCommand {
 
-  public static final List<AbstractSimplePunishControlCommand> REGISTERED_COMMANDS = new ArrayList<>();
+  private static final List<AbstractSimplePunishControlCommand> registeredCommands = new ArrayList<>();
 
   public static final String INVALID_SILENCE_USAGE =
       "§cCan't be silent and super-silent simultaneously";
@@ -32,11 +33,16 @@ public abstract class AbstractSimplePunishControlCommand extends SimpleCommand {
   protected boolean silent;
   protected boolean superSilent;
 
+  public static List<AbstractSimplePunishControlCommand> registeredCommands(){
+    return Collections.unmodifiableList(registeredCommands());
+  }
+
   protected AbstractSimplePunishControlCommand(
       @NonNull final PlayerProvider playerProvider,
       @NonNull final String label) {
     super(label);
     this.playerProvider = playerProvider;
+    registeredCommands.add(this);
   }
 
   protected AbstractSimplePunishControlCommand(
@@ -44,6 +50,7 @@ public abstract class AbstractSimplePunishControlCommand extends SimpleCommand {
       @NonNull final StrictList<String> labels) {
     super(labels);
     this.playerProvider = playerProvider;
+    registeredCommands.add(this);
   }
 
   // ----------------------------------------------------------------------------------------------------
@@ -87,7 +94,7 @@ public abstract class AbstractSimplePunishControlCommand extends SimpleCommand {
       }
     }
 
-    final UUID target = Providers.playerProvider().getUUID(name);
+    final UUID target = Providers.playerProvider().findUUIDUnsafe(name);
     checkNotNull(target, UNKNOWN_PLAYER);
     return target;
   }

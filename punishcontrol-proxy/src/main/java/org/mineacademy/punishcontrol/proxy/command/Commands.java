@@ -1,16 +1,15 @@
 package org.mineacademy.punishcontrol.proxy.command;
 
 import de.exceptionflug.mccommons.core.Providers;
+import java.util.Arrays;
+import java.util.Objects;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
+import lombok.val;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.plugin.Command;
 import net.md_5.bungee.api.plugin.Plugin;
-
-import java.util.Arrays;
-import java.util.Map;
-import java.util.Objects;
 
 @UtilityClass
 public class Commands {
@@ -46,8 +45,7 @@ public class Commands {
 
   private Command getCommand(final String name) {
     Command out = null;
-    for (final Map.Entry<String, Command> entry :
-        ProxyServer.getInstance().getPluginManager().getCommands()) {
+    for (final val entry : ProxyServer.getInstance().getPluginManager().getCommands()) {
       if (entry.getValue().getName().equalsIgnoreCase(name)) {
         out = entry.getValue();
       }
