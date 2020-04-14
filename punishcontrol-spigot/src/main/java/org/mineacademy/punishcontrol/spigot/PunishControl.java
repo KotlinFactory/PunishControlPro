@@ -7,7 +7,6 @@ import org.mineacademy.fo.plugin.SimplePlugin;
 import org.mineacademy.punishcontrol.core.SimplePunishControlPlugin;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.settings.Settings;
-import org.mineacademy.punishcontrol.spigot.commands.DevCommand;
 import org.mineacademy.punishcontrol.spigot.commands.MainCommand;
 import org.mineacademy.punishcontrol.spigot.impl.SpigotExceptionHandler;
 import org.mineacademy.punishcontrol.spigot.impl.SpigotPlayerProvider;
@@ -47,7 +46,6 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
   @Override
   public void registerCommands() {
     registerCommand(MainCommand.create(Settings.MAIN_COMMAND_ALIASES));
-    registerCommand(DevCommand.create());
     registerCommand(spigotModule.commandKick());
     registerCommand(spigotModule.commandBan());
     registerCommand(spigotModule.commandMute());

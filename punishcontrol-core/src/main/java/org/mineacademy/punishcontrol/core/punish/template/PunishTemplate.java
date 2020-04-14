@@ -47,7 +47,7 @@ public final class PunishTemplate extends SecureJson {
   // ----------------------------------------------------------------------------------------------------
 
   public PunishType punishType() {
-    return PunishType.valueOf(getOrDefault("Type", "Ban").toUpperCase());
+    return PunishType.valueOf(getOrSetDefault("Type", "Ban").toUpperCase());
   }
 
   public PunishDuration duration() {
@@ -84,7 +84,7 @@ public final class PunishTemplate extends SecureJson {
   }
 
   public void punishType(@NonNull final PunishType punishType) {
-    set("PunishType", punishType);
+    set("Type", punishType);
   }
 
   public void reason(@NonNull final String reason) {

@@ -42,13 +42,19 @@ public final class PunishTemplateCreatorMenu extends Menu {
 //  private final Button fromTemplate;
 
 
-  public static void createAndShow(
+  public static void showTo(
+      final Player player,
+      final PunishTemplate punishTemplate) {
+    Scheduler.runAsync(() -> fromExisting(punishTemplate).displayTo(player));
+  }
+
+  public static void showTo(
       @NonNull final Player player,
       @NonNull final String name) {
     Scheduler.runAsync(() -> {
       final val menu = create(name);
 
-      Scheduler.runSync(() -> menu.displayTo(player));
+      menu.displayTo(player);
     });
   }
 
@@ -148,14 +154,6 @@ public final class PunishTemplateCreatorMenu extends Menu {
   }
 
 
-  private void redrawAndShow(final Player viewer) {
-    Scheduler.runAsync(() -> {
-      redraw();
-      Scheduler.runSync(() -> displayTo(viewer, true));
-    });
-  }
-
-
   @Override
   protected String[] getInfo() {
     return new String[]{"&7Menu to", "&7edit templates"};
@@ -206,9 +204,9 @@ public final class PunishTemplateCreatorMenu extends Menu {
     if (slot == CHOOSE_PERMISSION_SLOT) {
       return ItemCreator
           .of(CompMaterial.PAPER,
-              "&7Choose reason",
+              "&6Choose permission",
               " ",
-              "Currently: " + template().reason())
+              "Currently: " + template().permission())
           .build()
           .makeMenuTool();
     }
@@ -225,14 +223,16 @@ public final class PunishTemplateCreatorMenu extends Menu {
       final Player player,
       final int slot,
       final ItemStack clicked) {
+
     if (slot == 4) {
       new AbstractPunishTypeBrowser(this) {
         @Override
         protected void onClick(final PunishType punishType) {
-          getViewer().closeInventory();
           template.punishType(punishType);
+          template.forceReload();
+
+          template.punishType();
           PunishTemplateCreatorMenu.this.displayTo(player);
-          PunishTemplateCreatorMenu.this.redraw();
         }
       }.displayTo(player);
     }

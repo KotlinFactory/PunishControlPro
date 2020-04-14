@@ -47,7 +47,7 @@ public final class AddTemplateConversation extends SimpleConversation {
         @NotNull final String s) {
 
       PunishTemplateCreatorMenu
-          .createAndShow(getPlayer(conversationContext), s);
+          .showTo(getPlayer(conversationContext), s);
       return null;
     }
   }

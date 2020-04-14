@@ -16,7 +16,7 @@ public final class JoinEvent extends AbstractEvent {
 
   private final UUID targetUUID;
   private final String name;
-  private final InetAddress targetInetAddress;
+  private final InetAddress targetAddress;
 
   public static JoinEvent create(
       @NonNull final UUID targetUUID,

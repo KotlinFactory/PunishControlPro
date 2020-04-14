@@ -42,6 +42,12 @@ public final class SpigotPunishProvider implements PunishProvider {
           continue;
         }
 
+//        Common
+//            .tell(player, Localization.Punish.PUNISH_BROADCAST_MESSAGE.replace(
+//                Common.chatLine(),
+//                Providers.playerProvider().findNameUnsafe(punish.target()),//
+//                ).replacedMessage());
+
         // Sending message
       }
 

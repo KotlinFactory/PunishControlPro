@@ -92,6 +92,18 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
       }
     };
   }
+
+  @Override
+  public ItemStack getItemAt(final int slot) {
+    if (slot == 0) {
+      return permissionBrowser.getItem();
+    }
+    if (slot == 1) {
+      return groupBrowser.getItem();
+    }
+
+    return null;
+  }
 }
 
 // ----------------------------------------------------------------------------------------------------

@@ -128,6 +128,8 @@ public interface SimplePunishControlPlugin {
       registerEvents(PunishQueue.create());
       registerEvents(coreModule.banListener());
       registerEvents(coreModule.muteListener());
+      registerEvents(coreModule.banIpListener());
+      registerEvents(coreModule.muteIpListener());
       //Spigot-Listeners
       registerListener();
       log("Listener §l§a✔");

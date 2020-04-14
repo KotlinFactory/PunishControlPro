@@ -4,4 +4,14 @@ Commands:
     Not_Online: "&cPlayer {player} &cis not online on this server."
     Not_Exists: "&cPlayer {player} &cdoes not exist."
 
+Punish:
+  #Placeholders: {console_line}, {player}, {type}, {reason}, {duration}, {expiration}, {ip}
+  Message_To_Broadcast:
+    - "&7{chat_line}"
+    - "&7The player {player} was {type}"
+    - "&7Reason: {reason}"
+    - "&7IP: {ip}"
+    - "&7{chat_line}"
+
+
 Version: 1

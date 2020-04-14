@@ -173,6 +173,10 @@ public abstract class Punish {
       return;
     }
 
+    if (reason.isEmpty()) {
+      reason = "unknown";
+    }
+
     try {
       STORAGE_PROVIDER.savePunish(this);
 

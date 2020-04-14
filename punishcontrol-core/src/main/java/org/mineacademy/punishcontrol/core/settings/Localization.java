@@ -7,12 +7,6 @@ import org.mineacademy.punishcontrol.core.setting.SimpleLocalization;
 
 public class Localization extends SimpleLocalization {
 
-  public static String PLAYER_DOES_NOT_EXIST;
-
-  private static void init() {
-
-    PLAYER_DOES_NOT_EXIST = getString("Player.Not_Exists");
-  }
 
   @Override
   protected int getConfigVersion() {
@@ -45,4 +39,16 @@ public class Localization extends SimpleLocalization {
     private final String hash;
   }
 
+  public static final class Punish {
+
+    public static Replacer PUNISH_BROADCAST_MESSAGE;
+    public static String PLAYER_DOES_NOT_EXIST;
+
+    private static void init() {
+      PLAYER_DOES_NOT_EXIST = getString("Player.Not_Exists");
+      Punish.PUNISH_BROADCAST_MESSAGE
+          = getReplacer("Punish.Message_To_Broadcast")
+          .find("chat_line", "player", "type", "reason", "ip");
+    }
+  }
 }

@@ -121,6 +121,21 @@ public interface StorageProvider {
     return Optional.empty();
   }
 
+  default Optional<Ban> currentBan(@NonNull final InetAddress inetAddress) {
+    for (final Ban ban : listCurrentBans()) {
+      final String toCompare = ban.ip().orElse("unknown");
+      if ("unknown".equalsIgnoreCase(toCompare)) {
+        continue;
+      }
+      //toCompare is never null
+      if (toCompare.equalsIgnoreCase(inetAddress.getHostAddress())) {
+        return Optional.ofNullable(ban);
+      }
+    }
+    return Optional.empty();
+  }
+
+
   default Optional<Mute> currentMute(@NonNull final UUID uuid) {
     for (final Mute mute : listMutes(uuid)) {
       if (!mute.isOld()) {
@@ -128,6 +143,20 @@ public interface StorageProvider {
       }
     }
 
+    return Optional.empty();
+  }
+
+  default Optional<Mute> currentMute(@NonNull final InetAddress inetAddress) {
+    for (final Mute mute : listCurrentMutes()) {
+      final String toCompare = mute.ip().orElse("unknown");
+      if ("unknown".equalsIgnoreCase(toCompare)) {
+        continue;
+      }
+      //toCompare is never null
+      if (toCompare.equalsIgnoreCase(inetAddress.getHostAddress())) {
+        return Optional.ofNullable(mute);
+      }
+    }
     return Optional.empty();
   }
 

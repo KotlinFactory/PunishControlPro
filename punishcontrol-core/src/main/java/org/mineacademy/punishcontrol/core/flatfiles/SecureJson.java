@@ -11,10 +11,11 @@ import lombok.NonNull;
 import org.mineacademy.punishcontrol.core.providers.ExceptionHandler;
 
 /**
- * A class designed to make it as easy as possible
- * to handle exceptions while handling JSON-Files
+ * A class designed to make it as easy as possible to handle exceptions while
+ * handling JSON-Files
  */
 public abstract class SecureJson extends Json {
+
   protected final boolean canWrite;
 
   protected SecureJson(final Json json) {
@@ -27,7 +28,8 @@ public abstract class SecureJson extends Json {
     canWrite = file.canWrite();
   }
 
-  protected SecureJson(final String name, final String path, final InputStream inputStream) {
+  protected SecureJson(final String name, final String path,
+      final InputStream inputStream) {
     super(name, path, inputStream);
     canWrite = file.canWrite();
   }
@@ -74,7 +76,7 @@ public abstract class SecureJson extends Json {
   @Override
   public final <T> T getOrSetDefault(final String key, @NonNull final T def) {
     try {
-      super.getOrSetDefault(key, def);
+      return super.getOrSetDefault(key, def);
     } catch (final Throwable throwable) {
       exceptionHandler().saveError(
           throwable,

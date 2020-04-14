@@ -37,13 +37,13 @@ public final class Settings extends SimpleSettings {
     }
 
     public static final class Mute{
-      public static List<String> allowedCommands;
-      public static Boolean applyOnIp;
+      public static List<String> DISABLED_COMMANDS;
+      public static Boolean APPLY_ON_IP;
 
       private static void init() {
         pathPrefix("Punishes.Mute");
-        allowedCommands = getStringList("Allowed_Commands");
-        applyOnIp = getBoolean("Apply_On_Ip");
+        DISABLED_COMMANDS = getStringList("Disabled_Commands");
+        APPLY_ON_IP = getBoolean("Apply_On_Ip");
       }
     }
 

@@ -12,12 +12,17 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
 import lombok.SneakyThrows;
+import lombok.val;
 import org.jetbrains.annotations.Nullable;
 import org.mineacademy.punishcontrol.core.fo.constants.FoConstants;
 import org.mineacademy.punishcontrol.core.fo.constants.FoConstants.Header;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.PluginDataProvider;
+import org.mineacademy.punishcontrol.core.settings.Replacer;
 
+/**
+ * Platform independent version of the YamlStaticConfig
+ */
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public abstract class YamlStaticConfig {
 
@@ -73,6 +78,26 @@ public abstract class YamlStaticConfig {
     return temporaryInstance().get(key);
   }
 
+  /**
+   * Return a replacer for localizable messages
+   *
+   * @param path
+   * @return
+   */
+  @SuppressWarnings("unchecked")
+  protected static Replacer getReplacer(final String path) {
+    final val raw = get(path);
+
+    Valid.checkBoolean(
+        raw != null,
+        "Your config lacks a Replacer at '" + path + "'");
+
+    if (raw instanceof List<?>) {
+      return Replacer.of((List<String>) raw);
+    }
+    return Replacer.of(raw.toString());
+  }
+
   protected static Object getObject(@NonNull final String key) {
     return temporaryInstance().get(key);
   }
@@ -96,7 +121,9 @@ public abstract class YamlStaticConfig {
 
   protected static <T> T getOrError(@NonNull final String key,
       @NonNull final Class<T> type) {
-    Valid.checkBoolean(contains(key),
+    final val raw = get(key);
+
+    Valid.checkBoolean(raw != null,
         "Your config lacks '" + type.getSimpleName() +
             "' at '" + key + "'");
 
@@ -108,7 +135,7 @@ public abstract class YamlStaticConfig {
   }
 
   protected static boolean getBoolean(final String path) {
-    return temporaryInstance().getBoolean(path);
+    return getOrError(path, boolean.class);
   }
 
   // ----------------------------------------------------------------------------------------------------
@@ -116,16 +143,16 @@ public abstract class YamlStaticConfig {
   // ----------------------------------------------------------------------------------------------------
 
   protected static String getString(final String path) {
-    return colorize(temporaryInstance().getString(path));
+    return colorize(getOrError(path, String.class));
   }
 
 
   protected static int getInteger(final String path) {
-    return temporaryInstance().getInt(path);
+    return getOrError(path, int.class);
   }
 
   protected static double getDouble(final String path) {
-    return temporaryInstance().getDouble(path);
+    return getOrError(path, double.class);
   }
 
   protected static Yaml temporaryInstance() {
@@ -135,7 +162,8 @@ public abstract class YamlStaticConfig {
   }
 
   @SafeVarargs
-  public static void loadAll(final Class<? extends YamlStaticConfig>... classes){
+  public static void loadAll(
+      final Class<? extends YamlStaticConfig>... classes) {
     loadAll(Arrays.asList(classes));
   }
 

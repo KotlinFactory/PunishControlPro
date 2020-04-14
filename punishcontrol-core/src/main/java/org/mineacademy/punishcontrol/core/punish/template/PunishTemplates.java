@@ -25,11 +25,9 @@ public class PunishTemplates {
   private final InputStreamProvider inputStreamProvider = LightningProviders
       .inputStreamProvider();
 
-
   public void register(@NonNull final PunishTemplate punishTemplate) {
     registeredTemplates.add(punishTemplate);
   }
-
 
   public static Optional<PunishTemplate> fromName(@NonNull final String name) {
 
@@ -38,7 +36,6 @@ public class PunishTemplates {
         .filter((punishTemplate -> !punishTemplate.name().equalsIgnoreCase(name)))
         .findFirst();
   }
-
 
   public boolean hasAccess(
       @NonNull final UUID target,
