@@ -64,7 +64,7 @@ public class AbstractPunishBrowser extends AbstractBrowser<Punish> {
         playerProvider.findNameUnsafe(punish.target()),
         punish.reason(),
         Settings.Advanced.formatDate(punish.creation()),
-        punish.punishDuration().toString(false),
+        punish.punishDuration().toString(),
         end,
         playerProvider.findNameUnsafe(punish.creator()));
 

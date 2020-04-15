@@ -223,71 +223,49 @@ public class TimeUtil {
         + "s";
   }
 
-  public String formatMenuDate(final long duration) {
-    return formatMenuDate(duration, true);
-  }
 
-  /**
-   * Formats milliseconds so that they are easily to read in a menu-title
-   *
-   * @param duration Duration in milliseconds
-   * @param isShort  Determines whether the title should be long or short
-   * @return
-   */
-  public String formatMenuDate(final long duration, final boolean isShort) {
+  public String formatMenuDate(long duration) {
     if (duration == -1) {
       return "&cPermanent";
     }
 
-    final long years = (duration / ((long) 1000 * 60 * 60 * 24 * 365));
-    final long month = (duration / ((long) 1000 * 60 * 60 * 24 * 30) % 12);
-    final long days = (duration / (1000 * 60 * 60 * 24) % 30);
-    final long hours = (duration / (1000 * 60 * 60) % 24);
-    String preString = years + " years, " +
-        month + " month, " +
-        days + " days, " +
-        hours + " hours";
+    long years = TimeUnit.MILLISECONDS.toDays(duration) / 365;
+    duration -= (TimeUnit.DAYS.toMillis(years) * 365);
+    long month = TimeUnit.MILLISECONDS.toDays(duration) / 30;
+    duration -= TimeUnit.DAYS.toMillis(years) * 30;
+    long days = TimeUnit.MILLISECONDS.toDays(duration);
+    duration -= TimeUnit.DAYS.toMillis(years);
+    long hours = TimeUnit.MILLISECONDS.toHours(duration);
 
-    System.out.println("Duration '" + duration + "'");
-    System.out.println("PreString: " + preString);
-    preString = preString.replace("0 years, ", "");
-    preString = preString.replace("0 month, ", "");
-    preString = preString.replace("0 days, ", "");
-    preString = preString.replace("0 hours, ", "");
-    if (preString.contains("years") && preString
-        .contains("hours")) { //TODO Years, Month & days
-      preString = "{years} years {month} month"
-          .replace("{years}", years + "")
-          .replace("{month}", month + "");
+    if (years < 0) {
+      years = 0;
     }
 
-    if (preString.contains("hours") && preString.contains("month")) {
-      preString = "{month} month {days} days"
-          .replace("{month}", month + "")
-          .replace("{days}", days + "");
+    if (month < 0) {
+      month = 0;
     }
 
-    if (isShort && preString.contains("month") && preString.contains("days")
-        && preString.contains("hours")) {
-      preString = preString.replace(", 1 hours", "");
+    if (days < 0) {
+      days = 0;
     }
 
-    return preString;
+    if (hours < 0) {
+      hours = 0;
+    }
+
+    String preResult = "{years} years {month} month {days} days"
+        .replace("{years}", years + "")
+        .replace("{month}", month + "")
+        .replace("{days}", days + "")
+        .replace("{hours}", hours + "");
+
+    preResult = preResult
+        .replace("0 years ", "")
+        .replace("0 month ", "")
+        .replace("0 days ", "")
+        .replace("0 hours ", "");
+
+    return preResult;
   }
 
-  public String format(long duration) {
-    final long days = TimeUnit.MILLISECONDS.toDays(duration);
-    duration -= TimeUnit.DAYS.toMillis(days);
-    final long hours = TimeUnit.MILLISECONDS.toHours(duration);
-    duration -= TimeUnit.HOURS.toMillis(hours);
-
-    final StringBuilder sb = new StringBuilder(64);
-    sb.append(days);
-    sb.append(" Days ");
-    sb.append(hours);
-    sb.append(" Hours ");
-
-
-    return (sb.toString());
-  }
 }

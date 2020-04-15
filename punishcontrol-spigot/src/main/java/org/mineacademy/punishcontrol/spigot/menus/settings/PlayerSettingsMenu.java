@@ -157,9 +157,9 @@ final class GroupBrowser extends AbstractBrowser<Group> {
     replacer.find("priority", "ban-limit", "mute-limit", "warn-limit", "override");
     replacer.replace(
         group.priority(),
-        group.banLimit().toString(false),
-        group.muteLimit().toString(false),
-        group.warnLimit().toString(false),
+        group.banLimit().toString(),
+        group.muteLimit().toString(),
+        group.warnLimit().toString(),
         group.overridePunishes() ? "&ayes" : "&cno");
 
     //TODO CHECK FOR ERRORS: WHAT IF THE MATERIAL IS INVALID

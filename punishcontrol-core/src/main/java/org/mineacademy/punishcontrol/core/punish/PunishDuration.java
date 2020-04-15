@@ -99,15 +99,12 @@ public final class PunishDuration {
     return System.currentTimeMillis() + ms;
   }
 
-  public String toString(final boolean makeShort){
+  @Override
+  public String toString() {
     if (isPermanent()) {
       return "&cPermanent";
     }
-    return TimeUtil.formatMenuDate(ms, makeShort);
-  }
-  @Override
-  public String toString() {
-    return toString(false);
+    return TimeUtil.formatMenuDate(ms);
   }
 
   public long toMs() {

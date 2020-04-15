@@ -66,28 +66,6 @@
         <defaultGoal>clean verify -U</defaultGoal>
         <pluginManagement>
             <plugins>
-                <!--                <plugin>-->
-                <!--                    <groupId>org.apache.maven.plugins</groupId>-->
-                <!--                    <artifactId>maven-install-plugin</artifactId>-->
-                <!--                    <version>3.0.0-M1</version>-->
-                <!--                    <executions>-->
-                <!--                        <execution>-->
-                <!--                            <id>install-burst</id>-->
-                <!--                            <phase>clean</phase>-->
-                <!--                            <configuration>-->
-                <!--                                <groupId>org.mineacademy</groupId>-->
-                <!--                                <artifactId>burst</artifactId>-->
-                <!--                                <version>1.0.3</version>-->
-                <!--                                <file>../lib/burst.jar</file>-->
-                <!--                                <packaging>jar</packaging>-->
-                <!--                                <generatePom>true</generatePom>-->
-                <!--                            </configuration>-->
-                <!--                            <goals>-->
-                <!--                                <goal>install-file</goal>-->
-                <!--                            </goals>-->
-                <!--                        </execution>-->
-                <!--                    </executions>-->
-                <!--                </plugin>-->
 
                 <plugin>
                     <artifactId>maven-site-plugin</artifactId>
@@ -135,8 +113,6 @@
                             <include>org.mineacademy:burst*</include>
                             <include>de.leonhard:storage*</include>
                             <include>com.github.JavaFactoryDev:LightningStorage*</include>
-
-
                             <!-- Dependency Injection -->
                             <include>com.google.dagger*</include>
                             <include>javax.inject:javax.inject*</include>
