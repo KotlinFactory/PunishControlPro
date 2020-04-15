@@ -1,12 +1,19 @@
 package org.mineacademy.punishcontrol.spigot;
 
+import java.util.ArrayList;
+import java.util.List;
 import lombok.NonNull;
+import lombok.val;
 import org.mineacademy.fo.Common;
 import org.mineacademy.fo.MinecraftVersion.V;
+import org.mineacademy.fo.command.SimpleCommand;
 import org.mineacademy.fo.plugin.SimplePlugin;
 import org.mineacademy.punishcontrol.core.SimplePunishControlPlugin;
+import org.mineacademy.punishcontrol.core.permission.Permission;
+import org.mineacademy.punishcontrol.core.permission.PermissionType;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.settings.Settings;
+import org.mineacademy.punishcontrol.core.util.Permissions;
 import org.mineacademy.punishcontrol.spigot.commands.MainCommand;
 import org.mineacademy.punishcontrol.spigot.impl.SpigotExceptionHandler;
 import org.mineacademy.punishcontrol.spigot.impl.SpigotPlayerProvider;
@@ -16,7 +23,9 @@ import org.mineacademy.punishcontrol.spigot.impl.SpigotTextureProvider;
 import org.mineacademy.punishcontrol.spigot.listeners.SpigotListenerImpl;
 import org.mineacademy.punishcontrol.spigot.settings.SimpleSettingsInjector;
 
-public final class PunishControl extends SimplePlugin implements SimplePunishControlPlugin {
+public final class PunishControl extends SimplePlugin implements
+    SimplePunishControlPlugin {
+
   private final SpigotComponent spigotModule = DaggerSpigotComponent.create();
 
   /**
@@ -89,6 +98,29 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
   // ----------------------------------------------------------------------------------------------------
   // Methods overridden from SimplePunishControlPlugin
   // ----------------------------------------------------------------------------------------------------
+
+  @Override
+  public List<Permission> permissions() {
+    final val result = new ArrayList<Permission>();
+
+    for (final SimpleCommand command : SimpleCommand.getRegisteredCommands()) {
+      if (command.getPermission() == null) {
+        continue;
+      }
+      result.add(Permission.of(command.getPermission(), command.getDescription()));
+    }
+
+    result.add(Permission
+        .of(Permissions.PERMISSION_MENU_SETTINGS_STORAGE,
+        "Access the storage-settings")
+        .type(PermissionType.MENU));
+
+    result.add(Permission
+        .of(Permissions.PERMISSION_MENU_SETTINGS_PLAYER)
+        .type(PermissionType.MENU));
+
+    return result;
+  }
 
   @Override
   public void log(final @NonNull String... message) {

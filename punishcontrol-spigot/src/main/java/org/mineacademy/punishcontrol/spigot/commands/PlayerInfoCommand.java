@@ -25,6 +25,7 @@ public class PlayerInfoCommand extends AbstractSimplePunishControlCommand {
     this.storageProvider = storageProvider;
     setMinArguments(1);
     setUsage("[player]");
+    setDescription("Get info for a player");
   }
 
   @Override

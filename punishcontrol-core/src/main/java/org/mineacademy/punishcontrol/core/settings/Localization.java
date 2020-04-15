@@ -8,6 +8,8 @@ import org.mineacademy.punishcontrol.core.setting.SimpleLocalization;
 public class Localization extends SimpleLocalization {
 
 
+  public static final String TARGET_IS_OFFLINE = "&cTarget is offline!";
+
   @Override
   protected int getConfigVersion() {
     return 1;

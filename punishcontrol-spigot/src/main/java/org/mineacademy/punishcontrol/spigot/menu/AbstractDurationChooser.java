@@ -22,6 +22,7 @@ public abstract class AbstractDurationChooser
 
 
   public static final int SIZE = 9 * 5;
+  public static final int EXPIRATION_CLOCK_SLOT = 26;
 
   private final Button year, month, day, hour;
 
@@ -203,7 +204,7 @@ public abstract class AbstractDurationChooser
       return confirm.getItem();
     }
 
-    if (slot == 26) {
+    if (slot == EXPIRATION_CLOCK_SLOT) {
       return expirationClock;
     }
     return null;
@@ -216,12 +217,12 @@ public abstract class AbstractDurationChooser
       final ItemStack cursor, final ItemStack clicked,
       final boolean cancelled) {
     super.onMenuClick(player, slot, action, click, cursor, clicked, cancelled);
+
     if (slot == 0) {
       addOrRemoveYear(click);
     }
 
     if (slot == 8) {
-      System.out.println("Made permanent?");
       makePermanent();
     }
 

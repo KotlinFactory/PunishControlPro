@@ -72,7 +72,7 @@ public final class Replacer {
     return this;
   }
 
-  public String[] replacedMessage(){
+  public String[] replacedMessage() {
     Valid.checkBoolean(replacements.size() == variables.size(),
         "Variables " + variables.size()
             + " != replacements " + replacements.size());
@@ -96,5 +96,9 @@ public final class Replacer {
     }
 
     return message.split(DELIMITER);
+  }
+
+  public String replacedMessageJoined() {
+    return String.join(DELIMITER, replacedMessage());
   }
 }

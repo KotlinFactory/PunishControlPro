@@ -6,7 +6,6 @@ import java.util.UUID;
 import lombok.NonNull;
 import lombok.val;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.ClickType;
 import org.jetbrains.annotations.Nullable;
 import org.mineacademy.fo.debug.LagCatcher;
 import org.mineacademy.fo.menu.Menu;
@@ -25,6 +24,7 @@ import org.mineacademy.punishcontrol.spigot.menus.ChooseActionMenu;
 public final class PlayerPunishBrowser extends AbstractPunishBrowser {
 
   private final StorageProvider storageProvider;
+  private final UUID target;
 
   //Showing up while saving performance:)
   public static void showTo(
@@ -49,6 +49,7 @@ public final class PlayerPunishBrowser extends AbstractPunishBrowser {
       final StorageProvider storageProvider,
       final UUID target) {
     super(parent, playerProvider, storageProvider.listPunishes(target));
+    this.target = target;
     this.storageProvider = storageProvider;
   }
 
@@ -57,20 +58,5 @@ public final class PlayerPunishBrowser extends AbstractPunishBrowser {
     return Collections.singletonList(
         "&6Right click: Remove"
     );
-  }
-
-  @Override
-  protected void onPageClick(
-      final Player player,
-      final Punish item,
-      final ClickType click) {
-    super.onPageClick(player, item, click);
-    if (click.isRightClick()) {
-      Scheduler.runAsync(() -> {
-        storageProvider.removePunish(item);
-        //TODO works?
-        redraw();
-      });
-    }
   }
 }

@@ -19,6 +19,7 @@ import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.providers.TextureProvider;
 import org.mineacademy.punishcontrol.core.punish.PunishBuilder;
 import org.mineacademy.punishcontrol.core.punish.PunishType;
+import org.mineacademy.punishcontrol.core.settings.Localization;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
 import org.mineacademy.punishcontrol.spigot.Scheduler;
@@ -116,6 +117,10 @@ public final class ChooseActionMenu extends Menu {
       @Override
       public void onClickedInMenu(
           final Player player, final Menu menu, final ClickType click) {
+        if (!targetOnline) {
+          animateTitle(Localization.TARGET_IS_OFFLINE);
+          return;
+        }
         PlayerSettingsMenu.showTo(player, target);
       }
 
@@ -125,8 +130,8 @@ public final class ChooseActionMenu extends Menu {
             .of(CompMaterial.COMPARATOR,
                 "&6Settings",
                 " ",
-                " &7View settings",
-                "&7for " + targetName)
+                "&cDisabled:",
+                "&7Player is offline")
             .build()
             .makeMenuTool();
       }
@@ -136,13 +141,24 @@ public final class ChooseActionMenu extends Menu {
       @Override
       public void onClickedInMenu(
           final Player player, final Menu menu, final ClickType click) {
+        if (!targetOnline) {
+          animateTitle(Localization.TARGET_IS_OFFLINE);
+          return;
+        }
         KickConversation.create(menu, target, targetName).start(player);
       }
 
       @Override
       public ItemStack getItem() {
         if (!targetOnline) {
-          return null;
+          return ItemCreator
+              .of(
+                  CompMaterial.BLAZE_POWDER,
+                  "&6Kick",
+                  "",
+                  "&cDisabled:",
+                  "&7Player is offline")
+              .build().makeMenuTool();
         }
 
         return ItemCreator

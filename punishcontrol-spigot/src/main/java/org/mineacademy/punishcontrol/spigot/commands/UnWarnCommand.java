@@ -17,5 +17,6 @@ public final class UnWarnCommand extends AbstractUnPunishCommand {
     super(storageProvider, playerProvider, PunishType.WARN, "unwarn");
     this.storageProvider = storageProvider;
     setUsage("[player]");
+    setDescription("Unwarn a player");
   }
 }

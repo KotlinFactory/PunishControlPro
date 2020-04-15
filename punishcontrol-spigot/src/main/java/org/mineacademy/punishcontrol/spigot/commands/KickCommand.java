@@ -12,6 +12,7 @@ public final class KickCommand extends AbstractSimplePunishControlCommand {
   public KickCommand(final PlayerProvider playerProvider) {
     super(playerProvider, "kick");
     setUsage("kick <player>");
+    setDescription("Kick a player");
   }
 
   @Override

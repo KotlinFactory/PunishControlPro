@@ -3,6 +3,7 @@ package org.mineacademy.punishcontrol.core.util;
 import de.leonhard.storage.util.Valid;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.concurrent.TimeUnit;
 import lombok.experimental.UtilityClass;
 
 /**
@@ -234,6 +235,10 @@ public class TimeUtil {
    * @return
    */
   public String formatMenuDate(final long duration, final boolean isShort) {
+    if (duration == -1) {
+      return "&cPermanent";
+    }
+
     final long years = (duration / ((long) 1000 * 60 * 60 * 24 * 365));
     final long month = (duration / ((long) 1000 * 60 * 60 * 24 * 30) % 12);
     final long days = (duration / (1000 * 60 * 60 * 24) % 30);
@@ -243,6 +248,8 @@ public class TimeUtil {
         days + " days, " +
         hours + " hours";
 
+    System.out.println("Duration '" + duration + "'");
+    System.out.println("PreString: " + preString);
     preString = preString.replace("0 years, ", "");
     preString = preString.replace("0 month, ", "");
     preString = preString.replace("0 days, ", "");
@@ -266,5 +273,21 @@ public class TimeUtil {
     }
 
     return preString;
+  }
+
+  public String format(long duration) {
+    final long days = TimeUnit.MILLISECONDS.toDays(duration);
+    duration -= TimeUnit.DAYS.toMillis(days);
+    final long hours = TimeUnit.MILLISECONDS.toHours(duration);
+    duration -= TimeUnit.HOURS.toMillis(hours);
+
+    final StringBuilder sb = new StringBuilder(64);
+    sb.append(days);
+    sb.append(" Days ");
+    sb.append(hours);
+    sb.append(" Hours ");
+
+
+    return (sb.toString());
   }
 }

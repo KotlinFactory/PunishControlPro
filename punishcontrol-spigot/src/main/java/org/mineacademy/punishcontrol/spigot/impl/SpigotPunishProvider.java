@@ -6,8 +6,10 @@ import lombok.NonNull;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.mineacademy.fo.Common;
+import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.PunishProvider;
 import org.mineacademy.punishcontrol.core.punish.Punish;
+import org.mineacademy.punishcontrol.core.settings.Localization;
 import org.mineacademy.punishcontrol.core.settings.Settings;
 import org.mineacademy.punishcontrol.spigot.events.AsyncPunishCreateEvent;
 
@@ -42,11 +44,14 @@ public final class SpigotPunishProvider implements PunishProvider {
           continue;
         }
 
-//        Common
-//            .tell(player, Localization.Punish.PUNISH_BROADCAST_MESSAGE.replace(
-//                Common.chatLine(),
-//                Providers.playerProvider().findNameUnsafe(punish.target()),//
-//                ).replacedMessage());
+        Common
+            .tell(player, Localization.Punish.PUNISH_BROADCAST_MESSAGE.replace(
+                Common.chatLine(),
+                Providers.playerProvider().findNameUnsafe(punish.target()),
+                punish.punishType().localized(),
+                punish.reason(),
+                punish.ip().orElse("unknown")
+            ).replacedMessage());
 
         // Sending message
       }
@@ -64,7 +69,16 @@ public final class SpigotPunishProvider implements PunishProvider {
         continue;
       }
 
-      // Sending message
+      System.out.println("Locale: '" + Localization.Punish.PUNISH_BROADCAST_MESSAGE.replacedMessageJoined() + "'");
+
+      Common
+          .tell(player, Localization.Punish.PUNISH_BROADCAST_MESSAGE.replace(
+              Common.chatLine(),
+              Providers.playerProvider().findNameUnsafe(punish.target()),
+              punish.punishType().localized(),
+              punish.reason(),
+              punish.ip().orElse("unknown")
+          ).replacedMessage());
     }
   }
 

@@ -22,7 +22,7 @@ import org.mineacademy.punishcontrol.core.punish.PunishType;
 import org.mineacademy.punishcontrol.core.punish.template.PunishTemplates;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 import org.mineacademy.punishcontrol.spigot.Scheduler;
-import org.mineacademy.punishcontrol.spigot.menus.browsers.PlayerBrowser;
+import org.mineacademy.punishcontrol.spigot.menus.punish.PunishCreatorMenu;
 
 /**
  * Command to handle (Un) banning, muting, warning, reporting & kicking players
@@ -32,8 +32,8 @@ TODO: Put in core & work with type parameters
  */
 
 @Getter
-public abstract class AbstractPunishCommand extends
-    AbstractSimplePunishControlCommand {
+public abstract class AbstractPunishCommand
+    extends AbstractSimplePunishControlCommand {
 
   private final StorageProvider storageProvider;
   private final PunishType punishType;
@@ -112,11 +112,11 @@ public abstract class AbstractPunishCommand extends
           returnTell(MORE_ARGUMENTS_AS_CONSOLE_MESSAGE);
         }
 
-        PlayerBrowser.showTo(getPlayer());
+        PunishCreatorMenu.showTo(getPlayer(), PunishBuilder.of(punishType));
         break;
       case 1:
 
-        if ("?".equalsIgnoreCase(args[0]) || "help".equalsIgnoreCase(args[0])) {
+        if ("?".equalsIgnoreCase(finalArgs.get(0)) || "help".equalsIgnoreCase(finalArgs.get(0))) {
           returnTell(getMultilineUsageMessage());
         }
 
@@ -124,14 +124,14 @@ public abstract class AbstractPunishCommand extends
           returnTell(MORE_ARGUMENTS_AS_CONSOLE_MESSAGE);
         }
         // Choose action (PUNISH)
-        PlayerBrowser.showTo(getPlayer());
+        PunishCreatorMenu.showTo(getPlayer(), PunishBuilder.of(punishType).target(findTarget(finalArgs)));
         break;
       case 2:
         if (!isPlayer()) {
           returnTell(MORE_ARGUMENTS_AS_CONSOLE_MESSAGE);
         }
 
-        final val optionalTemplate = PunishTemplates.fromName(finalArgs.get(0));
+        final val optionalTemplate = PunishTemplates.fromName(finalArgs.get(1));
 
         checkBoolean(
             optionalTemplate.isPresent(),
@@ -142,7 +142,8 @@ public abstract class AbstractPunishCommand extends
 
         checkBoolean(
             template.punishType() == punishType,
-            "&cThis punish-template can't be to a &6" + punishType.localized()
+            "&cThis punish-template can't be applied to a &6" + punishType
+                .localized()
         );
 
         Scheduler.runAsync(() -> {
@@ -162,7 +163,6 @@ public abstract class AbstractPunishCommand extends
             return;
           }
 
-
           Scheduler.runSync(() -> {
             Players.find(target).ifPresent((player -> {
 //          TODO: Format Reason!
@@ -179,7 +179,8 @@ public abstract class AbstractPunishCommand extends
             .of(finalArgs.get(1));
 
         //PunishDuration mustn't be empty: If its empty the given string had the wrong format
-        checkBoolean(!punishDuration.isEmpty(), "&cInvalid time format! Example: 10days");
+        checkBoolean(!punishDuration.isEmpty(),
+            "&cInvalid time format! Example: 10days");
 
         checkBoolean(Groups.hasAccess(
             (isPlayer() ? getPlayer().getUniqueId() : FoConstants.CONSOLE),
@@ -188,19 +189,16 @@ public abstract class AbstractPunishCommand extends
             "&cThis action would exceed your limits."
         );
 
-
-
         Scheduler.runAsync(() -> {
           LagCatcher.start("spigot-cmd-save-async");
 
           final UUID target = findTarget(finalArgs);
 
-          if (storageProvider.isPunished(target, punishType) && !Groups.canOverride(target)) {
+          if (storageProvider.isPunished(target, punishType) && !Groups
+              .canOverride(target)) {
             tell("&cYou are not allowed to override punishes");
             return;
           }
-
-
 
           for (int i = 0; i < finalArgs.size(); i++) {
             // Ignoring first & second argument//

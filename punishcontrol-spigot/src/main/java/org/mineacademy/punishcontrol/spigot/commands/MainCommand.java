@@ -10,6 +10,7 @@ public final class MainCommand extends SimpleCommand {
 
   private MainCommand(@NonNull final StrictList<String> labels) {
     super(labels);
+    setDescription("Main-Command of PunishControlPro");
   }
 
   public static MainCommand create(@NonNull final StrictList<String> labels) {

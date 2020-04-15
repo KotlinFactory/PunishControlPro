@@ -50,6 +50,7 @@ public abstract class AbstractPlayerBrowser extends AbstractBrowser<UUID> {
     super(mainMenu, players);
     this.playerProvider = playerProvider;
     this.textureProvider = textureProvider;
+    setTitle("&8Players");
   }
 
 

@@ -1,5 +1,6 @@
 package org.mineacademy.punishcontrol.proxy;
 
+import java.util.List;
 import lombok.NonNull;
 import org.mineacademy.bfo.Common;
 import org.mineacademy.bfo.bungee.SimpleBungee;
@@ -8,6 +9,7 @@ import org.mineacademy.burst.Burst;
 import org.mineacademy.punishcontrol.core.CoreComponent;
 import org.mineacademy.punishcontrol.core.DaggerCoreComponent;
 import org.mineacademy.punishcontrol.core.SimplePunishControlPlugin;
+import org.mineacademy.punishcontrol.core.permission.Permission;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.settings.Settings;
 import org.mineacademy.punishcontrol.proxy.commands.CommandBan;
@@ -86,6 +88,11 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
   // ----------------------------------------------------------------------------------------------------
   // Overridden methods from SimplePunishControl
   // ----------------------------------------------------------------------------------------------------
+
+  @Override
+  public List<Permission> permissions() {
+    return null;
+  }
 
   @Override
   public String chooseLanguage() {

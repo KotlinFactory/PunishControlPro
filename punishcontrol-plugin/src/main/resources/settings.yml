@@ -45,7 +45,7 @@ Punishes:
     Permission: punishcontrol.command.ban
     Enabled: true
 
-    Apply_On_IP: true
+    Apply_On_Ip: true
   Mute:
     # Commands the player should be disallowed to use
     Allowed_Commands:
@@ -53,11 +53,11 @@ Punishes:
       - /r
     Permission: punishcontrol.command.mute
     Enabled: true
-    Apply_On_IP: true
+    Apply_On_Ip: true
   Warn:
     Permission: punishcontrol.command.warn
     Enabled: true
-    Apply_On_IP: true
+    Apply_On_Ip: true
 
 Notifications:
   Punish:

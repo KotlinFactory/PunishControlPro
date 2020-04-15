@@ -14,5 +14,6 @@ public final class MuteCommand extends AbstractPunishCommand {
       final @NonNull StorageProvider storageProvider,
       final @NonNull PlayerProvider playerProvider) {
     super(storageProvider, playerProvider, PunishType.MUTE, "mute");
+    setDescription("Mute a player");
   }
 }

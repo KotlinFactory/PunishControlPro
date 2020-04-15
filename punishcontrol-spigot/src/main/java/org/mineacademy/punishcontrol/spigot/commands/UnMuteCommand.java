@@ -14,6 +14,7 @@ public final class UnMuteCommand extends AbstractUnPunishCommand {
       final StorageProvider storageProvider) {
     super(storageProvider, playerProvider, PunishType.MUTE, "unmute");
     setUsage("[player]");
+    setDescription("Unmute a player");
   }
 
 }

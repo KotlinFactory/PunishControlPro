@@ -30,11 +30,10 @@ public class PunishTemplates {
   }
 
   public static Optional<PunishTemplate> fromName(@NonNull final String name) {
-
     return registeredTemplates
         .stream()
         .filter((punishTemplate -> !punishTemplate.name().equalsIgnoreCase(name)))
-        .findFirst();
+        .findAny();
   }
 
   public boolean hasAccess(

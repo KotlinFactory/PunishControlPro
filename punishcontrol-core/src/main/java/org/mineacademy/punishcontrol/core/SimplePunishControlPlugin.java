@@ -12,6 +12,8 @@ import org.mineacademy.punishcontrol.core.group.Groups;
 import org.mineacademy.punishcontrol.core.listener.Listener;
 import org.mineacademy.punishcontrol.core.listener.Listeners;
 import org.mineacademy.punishcontrol.core.listeners.PunishQueue;
+import org.mineacademy.punishcontrol.core.permission.Permission;
+import org.mineacademy.punishcontrol.core.permission.Permissions;
 import org.mineacademy.punishcontrol.core.punish.PunishDuration;
 import org.mineacademy.punishcontrol.core.punish.template.PunishTemplates;
 import org.mineacademy.punishcontrol.core.setting.YamlStaticConfig;
@@ -138,6 +140,17 @@ public interface SimplePunishControlPlugin {
       saveError(throwable);
     }
 
+    try {
+      //Your custom stuff.
+      if (permissions() != null) {
+        Permissions.registerAll(permissions());
+      }
+
+      log("Permissions §l§a✔");
+    } catch (final Throwable throwable) {
+      log("Permissions §l§c✘");
+      saveError(throwable);
+    }
 
     try {
       loadGroups();
@@ -194,7 +207,8 @@ public interface SimplePunishControlPlugin {
       builder.banLimit(PunishDuration.of(limits.get("Ban")));
       builder.muteLimit(PunishDuration.of(limits.get("Mute")));
       builder.warnLimit(PunishDuration.of(limits.get("Warn")));
-      builder.overridePunishes(groupRawData.get("Override_Punishes").toString().equalsIgnoreCase("true"));
+      builder.overridePunishes(groupRawData.get("Override_Punishes").toString()
+          .equalsIgnoreCase("true"));
       builder.templateByPasses(
           (List<String>) groupRawData.get("Template_Bypasses")
       );
@@ -224,6 +238,8 @@ public interface SimplePunishControlPlugin {
   void registerListener();
 
   void registerProviders();
+
+  List<Permission> permissions();
 
   String chooseLanguage();
 

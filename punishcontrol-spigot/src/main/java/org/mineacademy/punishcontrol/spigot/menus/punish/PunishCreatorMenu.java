@@ -28,8 +28,9 @@ import org.mineacademy.punishcontrol.spigot.menu.AbstractPunishTypeBrowser;
 import org.mineacademy.punishcontrol.spigot.menu.AbstractTemplateBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.MainMenu;
 import org.mineacademy.punishcontrol.spigot.util.ItemStacks;
+import org.mineacademy.punishcontrol.spigot.util.Schedulable;
 
-public final class PunishCreatorMenu extends Menu {
+public final class PunishCreatorMenu extends Menu implements Schedulable {
 
   public static final int SIZE = 9 * 5;
   public static final int PLAYER_CHOOSER_SLOT = 33;
@@ -87,7 +88,8 @@ public final class PunishCreatorMenu extends Menu {
     setSize(SIZE);
 
     if (punishBuilder().target() != null) {
-      setTitle("&8Punish " + playerProvider.findNameUnsafe(punishBuilder().target()));
+      setTitle("&8Punish " + playerProvider
+          .findNameUnsafe(punishBuilder().target()));
     } else {
       setTitle("&8Create punish");
     }
@@ -189,7 +191,6 @@ public final class PunishCreatorMenu extends Menu {
             .creator(getViewer().getUniqueId())
             .creation(System.currentTimeMillis());
 
-
         if (punishBuilder().punishType() == null) {
           animateTitle("&cMissing punish-type!");
           return;
@@ -208,8 +209,9 @@ public final class PunishCreatorMenu extends Menu {
           return;
         }
 
-        punishBuilder().build().create();
-
+        animateTitle("&7Created punish");
+        async(() -> punishBuilder().build().create());
+        getParent().displayTo(getViewer());
       }
 
       @Override

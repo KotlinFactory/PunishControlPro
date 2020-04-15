@@ -4,13 +4,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 import lombok.NonNull;
 import lombok.val;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
-import org.mineacademy.fo.command.SimpleCommand;
+import org.mineacademy.fo.Players;
 import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.fo.menu.button.Button;
 import org.mineacademy.fo.menu.model.ItemCreator;
@@ -18,11 +17,12 @@ import org.mineacademy.fo.model.Replacer;
 import org.mineacademy.fo.remain.CompMaterial;
 import org.mineacademy.punishcontrol.core.group.Group;
 import org.mineacademy.punishcontrol.core.group.Groups;
+import org.mineacademy.punishcontrol.core.permission.Permission;
+import org.mineacademy.punishcontrol.core.permission.Permissions;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
 import org.mineacademy.punishcontrol.spigot.Scheduler;
-import org.mineacademy.punishcontrol.spigot.command.AbstractSimplePunishControlCommand;
 import org.mineacademy.punishcontrol.spigot.menu.AbstractBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.setting.AbstractSettingsMenu;
 import org.mineacademy.punishcontrol.spigot.util.ItemStacks;
@@ -31,13 +31,14 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
 
   private final Button groupBrowser;
   private final Button permissionBrowser;
+  private final boolean targetOnline;
+  private final UUID target;
 
   /*
   TODO:
    Make unpunishable
    */
 
-  private final UUID target;
 
   public static void showTo(@NonNull final Player player,
       @NonNull final UUID target) {
@@ -47,12 +48,13 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
   private PlayerSettingsMenu(final UUID target) {
     super(DaggerSpigotComponent.create().settingsBrowser());
     this.target = target;
+    targetOnline = Players.find(target).isPresent();
 
     groupBrowser = new Button() {
       @Override
       public void onClickedInMenu(
           final Player player, final Menu menu, final ClickType click) {
-          GroupBrowser.showTo(player, target, PlayerSettingsMenu.this);
+        GroupBrowser.showTo(player, target, PlayerSettingsMenu.this);
       }
 
       @Override
@@ -75,14 +77,29 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
       @Override
       public void onClickedInMenu(
           final Player player, final Menu menu, final ClickType click) {
-          PermissionsBrowser.showTo(player, target, PlayerSettingsMenu.this);
+        if (!targetOnline) {
+          animateTitle("&cTarget is offline");
+          return;
+        }
+        PermissionsBrowser.showTo(player, target, PlayerSettingsMenu.this);
       }
 
       @Override
       public ItemStack getItem() {
+        if (!targetOnline) {
+          return ItemCreator
+              .of(CompMaterial.ICE,
+                  "&6Permissions",
+                  "",
+                  "&7Cant be used:",
+                  "&7target is offline")
+              .build()
+              .makeMenuTool();
+        }
+
         return ItemCreator
             .of(CompMaterial.ICE,
-                "&7Permissions",
+                "&6Permissions",
                 "",
                 "&7View which",
                 "&7actions the player",
@@ -116,11 +133,14 @@ final class GroupBrowser extends AbstractBrowser<Group> {
       final Player player,
       final UUID target,
       final PlayerSettingsMenu parent) {
-    Scheduler.runAsync(() -> new GroupBrowser(parent, target).displayTo(player));
+    Scheduler.runAsync(
+        () -> new GroupBrowser(parent, target).displayTo(player)
+    );
   }
 
   protected GroupBrowser(final PlayerSettingsMenu parent, final UUID target) {
     super(parent, Groups.list(target));
+    setTitle("&8Groups");
   }
 
   @Override
@@ -131,15 +151,16 @@ final class GroupBrowser extends AbstractBrowser<Group> {
         "&6Ban-Limit: &7{ban-limit}",
         "&6Mute-Limit: &7{mute-limit}",
         "&6Warn-Limit: &7{warn-limit}",
-        ""
+        "&6Override-Punishes: &7{override}"
     );
 
-    replacer.find("priority", "ban-limit", "mute-limit", "warn-limit");
+    replacer.find("priority", "ban-limit", "mute-limit", "warn-limit", "override");
     replacer.replace(
         group.priority(),
-        group.banLimit().toString(),
-        group.muteLimit().toString(),
-        group.warnLimit().toString());
+        group.banLimit().toString(false),
+        group.muteLimit().toString(false),
+        group.warnLimit().toString(false),
+        group.overridePunishes() ? "&ayes" : "&cno");
 
     //TODO CHECK FOR ERRORS: WHAT IF THE MATERIAL IS INVALID
     final CompMaterial compMaterial = CompMaterial.fromString(group.item());
@@ -152,6 +173,14 @@ final class GroupBrowser extends AbstractBrowser<Group> {
         .makeMenuTool();
   }
 
+  @Override
+  protected String[] getInfo() {
+    return new String[]{
+        "&7Menu to view",
+        "&7the groups",
+        "&7a player has"
+    };
+  }
 
   @Override
   protected void onPageClick(
@@ -160,7 +189,7 @@ final class GroupBrowser extends AbstractBrowser<Group> {
   }
 }
 
-class PermissionsBrowser extends AbstractBrowser<String> {
+class PermissionsBrowser extends AbstractBrowser<Permission> {
 
   private final PlayerProvider playerProvider;
   private final UUID target;
@@ -170,36 +199,42 @@ class PermissionsBrowser extends AbstractBrowser<String> {
       final UUID target,
       final PlayerSettingsMenu parent) {
     //Adding permissions of our commands
-    final List<String> content = AbstractSimplePunishControlCommand
-        .registeredCommands()
-        .stream()
-        .map(SimpleCommand::getPermission).collect(Collectors.toList());
 
     Scheduler.runAsync(() -> {
-      final val menu = new PermissionsBrowser(target, content, parent);
+      final val menu = new PermissionsBrowser(target, parent);
       menu.displayTo(player);
     });
   }
 
 
   private PermissionsBrowser(
-      final UUID target, final List<String> content,
+      final UUID target,
       final PlayerSettingsMenu parent) {
-    super(parent, content);
+    super(parent, Permissions.registeredPermissions());
     this.target = target;
     playerProvider = Providers.playerProvider();
+    setTitle("&8Permissions");
   }
 
   @Override
-  protected ItemStack convertToItemStack(final String permission) {
-    if (playerProvider.hasPermission(target, permission)) {
+  protected String[] getInfo() {
+    return new String[]{
+        "&7Menu to view",
+        "&7the permissions",
+        "&7a player has"
+    };
+  }
+
+  @Override
+  protected ItemStack convertToItemStack(final Permission permission) {
+    if (playerProvider.hasPermission(target, permission.permission())) {
       final List<String> lore = new ArrayList<>(
           descriptionForPermission(permission));
       lore.addAll(Arrays.asList(" ", "&aHas access"));
 
       return ItemCreator
           .of(ItemStacks.greenPane())
-          .name("&6Permission: " + permission)
+          .name("&6Permission: " + permission.permission())
           .lores(lore)
           .build()
           .makeMenuTool();
@@ -211,32 +246,23 @@ class PermissionsBrowser extends AbstractBrowser<String> {
 
     return ItemCreator
         .of(ItemStacks.redPane())
-        .name("&6Permission: " + permission)
+        .name("&6Permission: " + permission.permission())
         .lores(lore)
         .build()
         .makeMenuTool();
 
   }
 
-  private List<String> descriptionForPermission(final String item) {
-    final val optionalCommand = AbstractSimplePunishControlCommand
-        .registeredCommands()
-        .stream()
-        .filter((cmd) -> item.equalsIgnoreCase(cmd.getPermission()))
-        .findFirst();
-
-    //TODO add menu permissions!
-    return optionalCommand
-        .map(abstractSimplePunishControlCommand -> Arrays.asList(
-            "",
-            "&7Permission to ",
-            "&7" + abstractSimplePunishControlCommand.getDescription()))
-        .orElseGet(ArrayList::new);
+  private List<String> descriptionForPermission(final Permission item) {
+    return Arrays.asList(
+        "",
+        "&7Permission to: ",
+        "&7" + String.join(" ", item.description()));
   }
 
 
   @Override
   protected void onPageClick(
-      final Player player, final String item, final ClickType click) {
+      final Player player, final Permission item, final ClickType click) {
   }
 }

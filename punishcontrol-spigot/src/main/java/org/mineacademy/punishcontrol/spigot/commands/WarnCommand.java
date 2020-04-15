@@ -14,6 +14,7 @@ public final class WarnCommand extends AbstractPunishCommand {
       final @NonNull StorageProvider storageProvider,
       final @NonNull PlayerProvider playerProvider) {
     super(storageProvider, playerProvider, PunishType.WARN, "warn");
+    setDescription("Warn a player");
   }
 
 }

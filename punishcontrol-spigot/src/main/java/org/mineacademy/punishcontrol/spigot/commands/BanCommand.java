@@ -14,5 +14,6 @@ public final class BanCommand extends AbstractPunishCommand {
       final @NonNull StorageProvider storageProvider,
       final @NonNull PlayerProvider playerProvider) {
     super(storageProvider, playerProvider, PunishType.BAN, "ban");
+    setDescription("Ban a player");
   }
 }

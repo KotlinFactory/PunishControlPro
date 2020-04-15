@@ -35,6 +35,7 @@ public class PunishTemplateBrowser extends AbstractTemplateBrowser {
   public PunishTemplateBrowser(final MainMenu mainMenu) {
     super(mainMenu);
 
+    setTitle("&8PunishTemplates");
     addTemplateButton = new Button() {
       @Override
       public void onClickedInMenu(
