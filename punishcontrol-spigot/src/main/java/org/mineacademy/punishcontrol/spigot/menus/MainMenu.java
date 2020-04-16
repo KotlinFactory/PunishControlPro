@@ -62,7 +62,6 @@ public final class MainMenu extends ChangingMenu {
       public void onClickedInMenu(
           final Player player, final Menu menu, final ClickType click) {
         if (click.isRightClick()) {
-          System.out.println("he");
           PunishedPlayerBrowser.showTo(player);
           return;
         }
@@ -75,7 +74,10 @@ public final class MainMenu extends ChangingMenu {
             .of(CompMaterial.CHEST,
                 "&6Punishes",
                 "",
-                "Browse created Punishes.")
+                "Browse created Punishes.",
+                "Right click to view",
+                "punished players"
+            )
             .glow(true).build().make();
       }
     };

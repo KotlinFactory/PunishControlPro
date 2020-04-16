@@ -24,6 +24,7 @@ public interface StorageProvider {
   default Set<UUID> listPunishedPlayers(){
     return listCurrentPunishes()
         .stream()
+        .filter((punish -> !punish.isOld()))
         .map(Punish::target)
         .collect(Collectors.toSet());
   }

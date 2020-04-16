@@ -93,7 +93,7 @@ public final class Settings extends SimpleSettings {
   public static final class Advanced {
 
     public static Boolean CACHE_RESULTS;
-    public static String DATE_FORMAT = "dd,MM,yyyy";
+    public static String DATE_FORMAT = "MM,dd,yyyy hh";
 
     private static void init() {
       pathPrefix("Advanced");

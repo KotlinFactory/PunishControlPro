@@ -39,10 +39,10 @@ public abstract class AbstractConfirmMenu extends Menu implements Schedulable {
     if (getViewer() == null) {
       return;
     }
-    async(() -> {
+//    async(() -> {
       getParent().displayTo(getViewer());
       getParent().restartMenu();
-    });
+//    });
   }
 
   @Override

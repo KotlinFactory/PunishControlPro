@@ -75,7 +75,11 @@ public final class Replacer {
   public String[] replacedMessage() {
     Valid.checkBoolean(replacements.size() == variables.size(),
         "Variables " + variables.size()
-            + " != replacements " + replacements.size());
+            + " != replacements " + replacements.size(),
+        "Variables: " + variables.toString(),
+        "Replacments: " + replacements
+    );
+
     // Join and replace as 1 message for maximum performance
     String message = String.join(DELIMITER, messages);
 
