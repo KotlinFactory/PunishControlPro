@@ -5,6 +5,7 @@ import net.md_5.bungee.api.event.PlayerDisconnectEvent;
 import net.md_5.bungee.api.event.PreLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
+import org.mineacademy.bfo.Common;
 import org.mineacademy.punishcontrol.core.event.Events;
 import org.mineacademy.punishcontrol.core.events.ChatEvent;
 import org.mineacademy.punishcontrol.core.events.JoinEvent;
@@ -28,7 +29,7 @@ public class ProxyListenerImpl implements Listener {
       return;
     }
     playerPreLoginEvent.setCancelled(true);
-    playerPreLoginEvent.setCancelReason(joinEvent.cancelReason());
+    playerPreLoginEvent.setCancelReason(Common.colorize(joinEvent.cancelReason()));
   }
 
   @EventHandler
@@ -42,7 +43,7 @@ public class ProxyListenerImpl implements Listener {
     );
 
     playerChatEvent.setCancelled(chatEvent.canceled());
-    playerChatEvent.setMessage(chatEvent.message());
+    playerChatEvent.setMessage(Common.colorize(chatEvent.message()));
   }
 
   @EventHandler

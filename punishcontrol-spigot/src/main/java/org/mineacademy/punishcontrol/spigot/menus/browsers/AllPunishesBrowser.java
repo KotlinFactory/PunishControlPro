@@ -9,7 +9,7 @@ import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
 import org.mineacademy.punishcontrol.spigot.Scheduler;
-import org.mineacademy.punishcontrol.spigot.menu.AbstractPunishBrowser;
+import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractPunishBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.MainMenu;
 
 public final class AllPunishesBrowser extends AbstractPunishBrowser {

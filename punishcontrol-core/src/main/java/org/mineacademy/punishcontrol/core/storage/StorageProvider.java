@@ -4,6 +4,7 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -18,6 +19,13 @@ public interface StorageProvider {
 
   default PlayerCache getCacheFor(@NonNull final UUID uuid) {
     return new PlayerCache(this, uuid);
+  }
+
+  default Set<UUID> listPunishedPlayers(){
+    return listCurrentPunishes()
+        .stream()
+        .map(Punish::target)
+        .collect(Collectors.toSet());
   }
 
   // ----------------------------------------------------------------------------------------------------
@@ -44,6 +52,16 @@ public interface StorageProvider {
   // Listing all current punishes/warns/reports
   // ----------------------------------------------------------------------------------------------------
 
+
+  default List<Punish> listCurrentPunishes(){
+    final List<Punish> result = new ArrayList<>();
+
+    result.addAll(listBans());
+    result.addAll(listMutes());
+    result.addAll(listWarns());
+
+    return result;
+  }
 
   default List<Ban> listCurrentBans() {
 

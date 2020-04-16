@@ -46,7 +46,7 @@ public class TemplateReasonConversation extends SimpleConversation {
         @NotNull final String input) {
 
       Scheduler.runAsync(() -> {
-        menu.template().reason(input);
+        menu.punishTemplate().reason(input);
         menu.displayTo(getPlayer(context));
         menu.restartMenu();
       });

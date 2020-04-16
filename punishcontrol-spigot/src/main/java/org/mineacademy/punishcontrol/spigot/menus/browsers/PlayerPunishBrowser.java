@@ -1,20 +1,16 @@
 package org.mineacademy.punishcontrol.spigot.menus.browsers;
 
-import java.util.Collections;
-import java.util.List;
 import java.util.UUID;
 import lombok.NonNull;
 import lombok.val;
 import org.bukkit.entity.Player;
-import org.jetbrains.annotations.Nullable;
 import org.mineacademy.fo.debug.LagCatcher;
 import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
-import org.mineacademy.punishcontrol.core.punish.Punish;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 import org.mineacademy.punishcontrol.spigot.Scheduler;
-import org.mineacademy.punishcontrol.spigot.menu.AbstractPunishBrowser;
+import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractPunishBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.ChooseActionMenu;
 
 /**
@@ -51,12 +47,5 @@ public final class PlayerPunishBrowser extends AbstractPunishBrowser {
     super(parent, playerProvider, storageProvider.listPunishes(target));
     this.target = target;
     this.storageProvider = storageProvider;
-  }
-
-  @Override
-  protected @Nullable List<String> loresToAdd(final Punish punish) {
-    return Collections.singletonList(
-        "&6Right click: Remove"
-    );
   }
 }

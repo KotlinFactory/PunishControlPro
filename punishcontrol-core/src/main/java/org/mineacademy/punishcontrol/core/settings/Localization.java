@@ -5,8 +5,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
 import org.mineacademy.punishcontrol.core.setting.SimpleLocalization;
 
-public class Localization extends SimpleLocalization {
-
+public final class Localization extends SimpleLocalization {
 
   public static final String TARGET_IS_OFFLINE = "&cTarget is offline!";
 
@@ -47,8 +46,9 @@ public class Localization extends SimpleLocalization {
     public static String PLAYER_DOES_NOT_EXIST;
 
     private static void init() {
-      PLAYER_DOES_NOT_EXIST = getString("Player.Not_Exists");
-      Punish.PUNISH_BROADCAST_MESSAGE
+      pathPrefix(null);
+      PLAYER_DOES_NOT_EXIST = getString("Commands.Player.Not_Exists");
+      PUNISH_BROADCAST_MESSAGE
           = getReplacer("Punish.Message_To_Broadcast")
           .find("chat_line", "player", "type", "reason", "ip");
     }

@@ -7,7 +7,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
-import org.mineacademy.punishcontrol.spigot.menu.AbstractBrowser;
+import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.MainMenu;
 import org.mineacademy.punishcontrol.spigot.menus.settings.SettingTypes;
 

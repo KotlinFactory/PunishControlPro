@@ -10,7 +10,7 @@ import org.mineacademy.fo.remain.CompMaterial;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
 import org.mineacademy.punishcontrol.spigot.Scheduler;
-import org.mineacademy.punishcontrol.spigot.menu.AbstractPlayerBrowser;
+import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractPlayerBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.browsers.PunishTemplateBrowser;
 
 @Getter

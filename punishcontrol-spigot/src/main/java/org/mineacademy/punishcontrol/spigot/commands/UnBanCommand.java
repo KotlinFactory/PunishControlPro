@@ -13,5 +13,6 @@ public final class UnBanCommand extends AbstractUnPunishCommand {
     super(storageProvider, playerProvider, PunishType.BAN, "unban");
     setUsage("[player]");
     setDescription("Unban a player");
+    setPermission("punishcontrol.command.unban");
   }
 }

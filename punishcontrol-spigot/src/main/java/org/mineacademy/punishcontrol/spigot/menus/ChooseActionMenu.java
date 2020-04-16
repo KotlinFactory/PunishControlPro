@@ -1,6 +1,5 @@
 package org.mineacademy.punishcontrol.spigot.menus;
 
-import java.util.Arrays;
 import java.util.UUID;
 import lombok.NonNull;
 import lombok.val;
@@ -12,7 +11,6 @@ import org.mineacademy.fo.Players;
 import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.fo.menu.button.Button;
 import org.mineacademy.fo.menu.model.ItemCreator;
-import org.mineacademy.fo.model.Replacer;
 import org.mineacademy.fo.remain.CompMaterial;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
@@ -27,6 +25,7 @@ import org.mineacademy.punishcontrol.spigot.conversation.KickConversation;
 import org.mineacademy.punishcontrol.spigot.menus.browsers.PlayerPunishBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.punish.PunishCreatorMenu;
 import org.mineacademy.punishcontrol.spigot.menus.settings.PlayerSettingsMenu;
+import org.mineacademy.punishcontrol.spigot.util.ItemStacks;
 
 public final class ChooseActionMenu extends Menu {
 
@@ -199,26 +198,10 @@ public final class ChooseActionMenu extends Menu {
     }
 
     if (slot == 13) {
-      final Replacer lores = Replacer.of(
-          "",
-          "&6Online: &7{online}",
-          "&6Banned: &7{banned}",
-          "&6Muted: &7{muted}",
-          "&6Warned: &7{warned}",
-          ""
-      );
-
-      lores.find("online", "banned", "muted", "warned");
-      lores.replace(
-          targetOnline ? "&ayes" : "&cno",
-          storageProvider.isBanned(target) ? "&ayes" : "&cno",
-          storageProvider.isMuted(target) ? "&ayes" : "&cno",
-          storageProvider.isWarned(target) ? "&ayes" : "&cno");
-
       return ItemCreator
           .ofSkullHash(textureProvider.getSkinTexture(target))
           .name("&7Data for: &6" + (targetOnline ? "&a" : "&7") + targetName)
-          .lores(Arrays.asList(lores.getReplacedMessage()))
+          .lores(ItemStacks.loreForPlayer(target, storageProvider))
           .build()
           .makeMenuTool();
     }

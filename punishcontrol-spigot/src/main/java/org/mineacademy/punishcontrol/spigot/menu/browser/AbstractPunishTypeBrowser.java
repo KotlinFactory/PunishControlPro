@@ -1,4 +1,4 @@
-package org.mineacademy.punishcontrol.spigot.menu;
+package org.mineacademy.punishcontrol.spigot.menu.browser;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -10,7 +10,8 @@ import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.punishcontrol.core.punish.PunishType;
 import org.mineacademy.punishcontrol.spigot.util.ItemStacks;
 
-public abstract class AbstractPunishTypeBrowser extends AbstractBrowser<PunishType> {
+public abstract class AbstractPunishTypeBrowser extends
+    AbstractBrowser<PunishType> {
 
   protected AbstractPunishTypeBrowser(final Menu parent) {
     super(parent, Arrays.asList(PunishType.values()));
@@ -27,7 +28,9 @@ public abstract class AbstractPunishTypeBrowser extends AbstractBrowser<PunishTy
 
   @Override
   protected void onPageClick(
-      final Player player, final PunishType punishType, final ClickType click) {
+      final Player player,
+      final PunishType punishType,
+      final ClickType click) {
       onClick(punishType);
   }
 

@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.UUID;
 import lombok.NonNull;
 import lombok.val;
+import org.mineacademy.punishcontrol.core.MessageType;
 
 /**
  * Provide Data needed
@@ -53,6 +54,11 @@ public interface PlayerProvider {
   Optional<String> getIp(@NonNull UUID uuid);
 
   void sendIfOnline(@NonNull UUID uuid, @NonNull String... messages);
+
+  void sendIfOnline(
+      @NonNull UUID uuid,
+      @NonNull MessageType messageType,
+      @NonNull String... messages);
 
   void kickIfOnline(@NonNull UUID uuid, @NonNull String... reason);
 

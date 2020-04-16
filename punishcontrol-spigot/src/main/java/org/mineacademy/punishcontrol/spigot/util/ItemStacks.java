@@ -1,5 +1,8 @@
 package org.mineacademy.punishcontrol.spigot.util;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.UUID;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 import lombok.val;
@@ -10,9 +13,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.mineacademy.fo.MinecraftVersion;
 import org.mineacademy.fo.MinecraftVersion.V;
+import org.mineacademy.fo.Players;
 import org.mineacademy.fo.menu.model.ItemCreator;
+import org.mineacademy.fo.model.Replacer;
 import org.mineacademy.fo.remain.CompMaterial;
 import org.mineacademy.punishcontrol.core.punish.PunishType;
+import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 
 
 @UtilityClass
@@ -48,7 +54,7 @@ public class ItemStacks {
     return CompMaterial.YELLOW_DYE.toItem();
   }
 
-  public static ItemStack redPane(){
+  public static ItemStack redPane() {
     if (MinecraftVersion.olderThan(V.v1_13)) {
       final ItemStack limeDye = new ItemStack(
           CompMaterial.RED_STAINED_GLASS_PANE.getMaterial(), 1,
@@ -57,7 +63,7 @@ public class ItemStacks {
     return CompMaterial.RED_STAINED_GLASS_PANE.toItem();
   }
 
-  public static ItemStack greenPane(){
+  public static ItemStack greenPane() {
     if (MinecraftVersion.olderThan(V.v1_13)) {
       final ItemStack limeDye = new ItemStack(
           CompMaterial.GREEN_STAINED_GLASS_PANE.getMaterial(), 1,
@@ -108,5 +114,36 @@ public class ItemStacks {
     throw new IllegalStateException(
         "Invalid punishtype: '" + punishType.getClass().getSimpleName() + "'"
     );
+  }
+
+  public List<String> loreForPlayer(
+      final UUID target,
+      final StorageProvider storageProvider) {
+    final boolean targetOnline = Players.find(target).isPresent();
+
+    final Replacer lores = Replacer.of(
+        "",
+        "&6Online: &7{online}",
+        "&6Banned: &7{banned}",
+        "&6Muted: &7{muted}",
+        "&6Warned: &7{warned}",
+        ""
+    );
+
+    final val ban = storageProvider.currentBan(target);
+    final val mute = storageProvider.currentMute(target);
+    final val warn = storageProvider.currentWarn(target);
+
+    lores.find("online", "banned", "muted", "warned");
+    lores.replace(
+        targetOnline ? "&ayes" : "&cno",
+        ban.map(value -> "&ayes &7- " + value.punishDuration().toString())
+            .orElse("&cno"),
+        mute.map(value -> "&ayes &7- " + value.punishDuration().toString())
+            .orElse("&cno"),
+        warn.map(value -> "&ayes &7- " + value.punishDuration().toString())
+            .orElse("&cno"));
+
+    return Arrays.asList(lores.getReplacedMessage());
   }
 }

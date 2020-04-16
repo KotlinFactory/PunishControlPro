@@ -1,4 +1,4 @@
-package org.mineacademy.punishcontrol.spigot.menu;
+package org.mineacademy.punishcontrol.spigot.menu.browser;
 
 import java.util.Arrays;
 import lombok.val;
@@ -10,6 +10,8 @@ import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.fo.model.Replacer;
 import org.mineacademy.punishcontrol.core.punish.template.PunishTemplate;
 import org.mineacademy.punishcontrol.core.punish.template.PunishTemplates;
+import org.mineacademy.punishcontrol.spigot.menu.AbstractConfirmMenu;
+import org.mineacademy.punishcontrol.spigot.menus.template.PunishTemplateCreatorMenu;
 import org.mineacademy.punishcontrol.spigot.util.ItemStacks;
 
 public abstract class AbstractTemplateBrowser extends
@@ -32,7 +34,8 @@ public abstract class AbstractTemplateBrowser extends
         "&6Permission: &7{permission}",
         "&6Silent: {silent}",
         "&6Super-Silent: {super-silent}",
-        "&6Access: &7{access}"
+        "&6Access: &7{access}",
+        "Right-Click to remove"
     );
 
     replacer.find(
@@ -65,8 +68,22 @@ public abstract class AbstractTemplateBrowser extends
       final Player player,
       final PunishTemplate punishTemplate,
       final ClickType click) {
-    onClick(punishTemplate);
-  }
+    if (click.isRightClick()) {
 
-  protected abstract void onClick(final PunishTemplate punishTemplate);
+      new AbstractConfirmMenu(this){
+        @Override
+        public void onConfirm() {
+          //Unregistering
+          PunishTemplates.unregister(punishTemplate);
+          //Deleting file so it won't be re-registered after a server-restart
+          punishTemplate.getFile().delete();
+        }
+      }.displayTo(getViewer());
+      return;
+    }
+
+    PunishTemplateCreatorMenu
+        .fromExisting(punishTemplate)
+        .displayTo(getViewer());
+  }
 }

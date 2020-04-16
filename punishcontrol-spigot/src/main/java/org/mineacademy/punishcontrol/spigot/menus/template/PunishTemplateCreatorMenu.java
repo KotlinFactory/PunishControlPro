@@ -24,7 +24,7 @@ import org.mineacademy.punishcontrol.spigot.Scheduler;
 import org.mineacademy.punishcontrol.spigot.conversation.template.TemplatePermissionConversation;
 import org.mineacademy.punishcontrol.spigot.conversation.template.TemplateReasonConversation;
 import org.mineacademy.punishcontrol.spigot.menu.AbstractDurationChooser;
-import org.mineacademy.punishcontrol.spigot.menu.AbstractPunishTypeBrowser;
+import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractPunishTypeBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.browsers.PunishTemplateBrowser;
 import org.mineacademy.punishcontrol.spigot.util.ItemStacks;
 
@@ -34,11 +34,15 @@ public final class PunishTemplateCreatorMenu extends Menu {
   private static final int SIZE = 9 * 6;
   private static final int CHOOSE_REASON_SLOT = 19;
   private static final int CHOOSE_PERMISSION_SLOT = 25;
+  public static final int MAKE_SILENT_SLOT = 29;
+  public static final int MAKE_SUPER_SILENT_SLOT = 33;
 
   @Getter
-  private final PunishTemplate template;
+  private final PunishTemplate punishTemplate;
   private final Button applyAndSaveTemplate;
   private final Button chooseDuration;
+  private final Button makeSuperSilent;
+  private final Button makeSilent;
 //  private final Button fromTemplate;
 
 
@@ -87,7 +91,7 @@ public final class PunishTemplateCreatorMenu extends Menu {
   private PunishTemplateCreatorMenu(
       @NonNull final PunishTemplate punishTemplate) {
     super(DaggerSpigotComponent.create().punishTemplateBrowser());
-    template = punishTemplate;
+    this.punishTemplate = punishTemplate;
     setSize(SIZE);
 
     chooseDuration = new Button() {
@@ -97,7 +101,7 @@ public final class PunishTemplateCreatorMenu extends Menu {
         new AbstractDurationChooser(menu) {
           @Override
           protected void confirm() {
-            template.duration(PunishDuration.of(ms));
+            PunishTemplateCreatorMenu.this.punishTemplate.duration(PunishDuration.of(ms));
             PunishTemplateCreatorMenu.this.redraw();
           }
         }.displayTo(player);
@@ -105,15 +109,16 @@ public final class PunishTemplateCreatorMenu extends Menu {
 
       @Override
       public ItemStack getItem() {
-        if (template.duration() != null) {
+        if (PunishTemplateCreatorMenu.this.punishTemplate.duration() != null) {
           return ItemCreator.of(CompMaterial.CLOCK,
               "&6Duration",
               "&7Currently: ",
-              "&7" + template.duration().toString(),
+              "&7" + PunishTemplateCreatorMenu.this.punishTemplate.duration().toString(),
               "&7Punish will end on:",
               "&7" + Settings.Advanced
                   .formatDate(
-                      System.currentTimeMillis() + template.duration()
+                      System.currentTimeMillis() + PunishTemplateCreatorMenu.this.punishTemplate
+                          .duration()
                           .toMs()),
               "",
               "&7Click to change")
@@ -151,6 +156,85 @@ public final class PunishTemplateCreatorMenu extends Menu {
             .makeMenuTool();
       }
     };
+
+    makeSilent = new Button() {
+      @Override
+      public void onClickedInMenu(
+          final Player player, final Menu menu, final ClickType click) {
+        punishTemplate.silent(!punishTemplate.silent());
+        restartMenu("&8Made punishment " + (punishTemplate.superSilent()
+            ? "&silent"
+            : "&8not silent"));
+      }
+
+      @Override
+      public ItemStack getItem() {
+        if(PunishTemplateCreatorMenu.this.punishTemplate.silent()){
+          return ItemCreator
+              .of(ItemStacks.greenPane())
+              .name("&6Silent")
+              .lores(Arrays.asList(
+                  "",
+                  "&7Click to make",
+                  "&7the punish",
+                  "&7not silent"
+              ))
+              .build()
+              .makeMenuTool();
+        }
+        return ItemCreator
+            .of(ItemStacks.redPane())
+            .name("&6Make Silent")
+            .lores(Arrays.asList(
+                "",
+                "&7Click to make",
+                "&7the punish",
+                "&7silent"
+            ))
+            .build()
+            .makeMenuTool();
+      }
+    };
+
+    makeSuperSilent = new Button() {
+      @Override
+      public void onClickedInMenu(
+          final Player player, final Menu menu, final ClickType click) {
+        punishTemplate.superSilent(!punishTemplate.superSilent());
+        restartMenu("&8Made punishment " + (punishTemplate.superSilent()
+            ? "&asuper-silent"
+            : "&8not super-silent"));
+      }
+
+      @Override
+      public ItemStack getItem() {
+        if (punishTemplate.superSilent()) {
+          return ItemCreator
+              .of(ItemStacks.greenPane())
+              .name("&6Super-Silent")
+              .lores(Arrays.asList(
+                  "",
+                  "&7Click to make",
+                  "&7the punish",
+                  "&7not silent"
+              ))
+              .build()
+              .makeMenuTool();
+        }
+
+        return ItemCreator
+            .of(ItemStacks.redPane())
+            .name("&6Make Silent")
+            .lores(Arrays.asList(
+                "",
+                "&7Click to make",
+                "&7the punish",
+                "&7super-silent"
+            ))
+            .build()
+            .makeMenuTool();
+      }
+    };
   }
 
 
@@ -159,8 +243,8 @@ public final class PunishTemplateCreatorMenu extends Menu {
     return new String[]{"&7Menu to", "&7edit templates"};
   }
 
-  public void setReason(final String reason) {
-    template.reason(reason);
+  public void reason(final String reason) {
+    punishTemplate.reason(reason);
   }
 
   @Override
@@ -168,22 +252,22 @@ public final class PunishTemplateCreatorMenu extends Menu {
 
     if (slot == 4) {
       return ItemCreator
-          .of(ItemStacks.forPunishType(template.punishType()))
+          .of(ItemStacks.forPunishType(punishTemplate.punishType()))
           .name("&6Change type")
           .lores(Arrays.asList(
               "&7Change the type",
               "&7of the punish",
-              "&7Currently: " + template.punishType().localized()))
+              "&7Currently: " + punishTemplate.punishType().localized()))
           .build()
           .makeMenuTool();
     }
 
     if (slot == CHOOSE_REASON_SLOT) {
-      if (template.reason() != null) {
+      if (punishTemplate.reason() != null) {
         return ItemCreator.of(CompMaterial.BOOK,
             "&6Reason",
             "&7Choose different reason",
-            "&7Current: " + template.reason())
+            "&7Current: " + punishTemplate.reason())
             .build()
             .make();
       }
@@ -206,9 +290,17 @@ public final class PunishTemplateCreatorMenu extends Menu {
           .of(CompMaterial.PAPER,
               "&6Choose permission",
               " ",
-              "Currently: " + template().permission())
+              "Currently: " + punishTemplate().permission())
           .build()
           .makeMenuTool();
+    }
+
+    if (slot == MAKE_SILENT_SLOT) {
+      return makeSilent.getItem();
+    }
+
+    if (slot == MAKE_SUPER_SILENT_SLOT) {
+      return makeSuperSilent.getItem();
     }
 
     if (slot == 40) {
@@ -228,10 +320,10 @@ public final class PunishTemplateCreatorMenu extends Menu {
       new AbstractPunishTypeBrowser(this) {
         @Override
         protected void onClick(final PunishType punishType) {
-          template.punishType(punishType);
-          template.forceReload();
+          punishTemplate.punishType(punishType);
+          punishTemplate.forceReload();
 
-          template.punishType();
+          punishTemplate.punishType();
           PunishTemplateCreatorMenu.this.displayTo(player);
         }
       }.displayTo(player);

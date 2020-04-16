@@ -3,13 +3,11 @@ package org.mineacademy.punishcontrol.spigot.conversation;
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
 import org.bukkit.conversations.ConversationContext;
-import org.bukkit.conversations.ConversationPrefix;
 import org.bukkit.conversations.Prompt;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.mineacademy.fo.conversation.SimpleConversation;
 import org.mineacademy.fo.conversation.SimplePrompt;
-import org.mineacademy.punishcontrol.core.settings.Settings;
 import org.mineacademy.punishcontrol.spigot.menus.template.PunishTemplateCreatorMenu;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
@@ -17,11 +15,6 @@ public final class AddTemplateConversation extends SimpleConversation {
 
   public static AddTemplateConversation create() {
     return new AddTemplateConversation();
-  }
-
-  @Override
-  protected ConversationPrefix getPrefix() {
-    return conversationContext -> Settings.PLUGIN_PREFIX;
   }
 
   @Override

@@ -25,15 +25,23 @@ public class PunishTemplates {
   private final InputStreamProvider inputStreamProvider = LightningProviders
       .inputStreamProvider();
 
+  public boolean unregister(final PunishTemplate punishTemplate) {
+    return registeredTemplates.remove(punishTemplate);
+  }
+
   public void register(@NonNull final PunishTemplate punishTemplate) {
     registeredTemplates.add(punishTemplate);
   }
 
-  public static Optional<PunishTemplate> fromName(@NonNull final String name) {
-    return registeredTemplates
-        .stream()
-        .filter((punishTemplate -> !punishTemplate.name().equalsIgnoreCase(name)))
-        .findAny();
+  public Optional<PunishTemplate> fromName(@NonNull final String name) {
+    for (final PunishTemplate template : registeredTemplates) {
+      if (!template.name().equalsIgnoreCase(name)) {
+        continue;
+      }
+      return Optional.of(template);
+    }
+
+    return Optional.empty();
   }
 
   public boolean hasAccess(

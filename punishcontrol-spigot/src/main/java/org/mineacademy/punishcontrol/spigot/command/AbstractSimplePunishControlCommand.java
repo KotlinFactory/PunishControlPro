@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import lombok.NonNull;
+import lombok.val;
 import org.mineacademy.fo.collection.StrictList;
 import org.mineacademy.fo.command.SimpleCommand;
 import org.mineacademy.punishcontrol.core.provider.Providers;
@@ -84,8 +85,13 @@ public abstract class AbstractSimplePunishControlCommand extends SimpleCommand {
       }
     }
 
-    final UUID target = Providers.playerProvider().findUUIDUnsafe(name);
-    checkNotNull(target, UNKNOWN_PLAYER);
-    return target;
+    final val optionalTarget = Providers.playerProvider().findUUID(name);
+//    checkNotNull(target, UNKNOWN_PLAYER);
+    //
+    checkBoolean(optionalTarget.isPresent(), UNKNOWN_PLAYER);
+    if (!optionalTarget.isPresent()) {
+      throw new Error();
+    }
+    return optionalTarget.get();
   }
 }

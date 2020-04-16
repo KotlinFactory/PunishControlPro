@@ -16,7 +16,7 @@ import org.mineacademy.fo.conversation.SimplePrompt;
 import org.mineacademy.fo.menu.Menu;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public class KickConversation extends SimpleConversation  {
+public class KickConversation extends SimpleConversation {
 
   private final Menu menu;
   private final UUID target;
@@ -68,9 +68,11 @@ public class KickConversation extends SimpleConversation  {
           return;
         }
 
-        Common.runLaterAsync(() -> {
-          menu.displayTo(viewer, true);
-        });
+        Common.tell(
+            viewer,
+            "&7Successfully kicked {target}".replace("{target}", targetName));
+
+        Common.runLaterAsync(20, () -> menu.displayTo(viewer, true));
       });
       return null;
     }

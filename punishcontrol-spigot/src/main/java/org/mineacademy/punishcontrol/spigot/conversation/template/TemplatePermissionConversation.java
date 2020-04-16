@@ -38,7 +38,7 @@ public class TemplatePermissionConversation extends SimpleConversation {
 
     @Override
     protected String getPrompt(final ConversationContext ctx) {
-      return "&7Type in a permission.";
+      return "&7Type in a reason.";
     }
 
     @Override
@@ -46,7 +46,7 @@ public class TemplatePermissionConversation extends SimpleConversation {
         @NotNull final ConversationContext context,
         @NotNull final String input) {
       Scheduler.runAsync(() -> {
-        menu.template().permission(input);
+        menu.punishTemplate().permission(input);
         menu.displayTo(getPlayer(context));
         menu.restartMenu();
       });

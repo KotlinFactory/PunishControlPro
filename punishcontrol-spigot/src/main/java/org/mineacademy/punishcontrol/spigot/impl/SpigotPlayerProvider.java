@@ -10,6 +10,8 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.mineacademy.fo.Common;
 import org.mineacademy.fo.Players;
+import org.mineacademy.fo.remain.Remain;
+import org.mineacademy.punishcontrol.core.MessageType;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.AbstractPlayerProvider;
 import org.mineacademy.punishcontrol.core.providers.ExceptionHandler;
@@ -57,6 +59,32 @@ public final class SpigotPlayerProvider extends AbstractPlayerProvider {
     }
 
     Common.tell(player, messages);
+  }
+
+  @Override
+  public void sendIfOnline(
+      @NonNull final UUID uuid,
+      @NonNull final MessageType messageType,
+      @NonNull final String... messages) {
+
+    final Player player = Players.find(uuid).orElse(null);
+
+    if (player == null) {
+      return;
+    }
+
+    switch (messageType) {
+      case CHAT:
+        Common.tell(player, messages);
+        return;
+      case TITLE:
+        final String title = messages.length >= 1 ? messages[0] : "";
+        final String subTitle = messages.length >= 2 ? messages[1] : "";
+        Remain.sendTitle(player, title, subTitle);
+        return;
+      case ACTION_BAR:
+        Remain.sendActionBar(player, String.join(" ", messages));
+    }
   }
 
   @Override

@@ -13,6 +13,7 @@ import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.punish.PunishDuration;
 import org.mineacademy.punishcontrol.core.punish.PunishType;
+import org.mineacademy.punishcontrol.core.punish.template.PunishTemplate;
 
 @UtilityClass
 public class Groups {
@@ -29,6 +30,12 @@ public class Groups {
   }
 
   public boolean hasAccess(
+      @NonNull final UUID uuid,
+      @NonNull final PunishTemplate punishTemplate){
+    return true;
+  }
+
+  public boolean hasAccess(
       @NonNull final UUID target,
       @NonNull final PunishType punishType,
       @NonNull final PunishDuration punishDuration) {
@@ -40,6 +47,7 @@ public class Groups {
     if (!optionalGroup.isPresent()) {
       return true;
     }
+
 
     final val group = optionalGroup.get();
 

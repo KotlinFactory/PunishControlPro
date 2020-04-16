@@ -127,10 +127,6 @@ public abstract class AbstractPunishCommand
         PunishCreatorMenu.showTo(getPlayer(), PunishBuilder.of(punishType).target(findTarget(finalArgs)));
         break;
       case 2:
-        if (!isPlayer()) {
-          returnTell(MORE_ARGUMENTS_AS_CONSOLE_MESSAGE);
-        }
-
         final val optionalTemplate = PunishTemplates.fromName(finalArgs.get(1));
 
         checkBoolean(
@@ -139,6 +135,11 @@ public abstract class AbstractPunishCommand
         );
 
         final val template = optionalTemplate.get();
+
+        checkBoolean(Groups.hasAccess(isPlayer()
+            ? getPlayer().getUniqueId()
+            : FoConstants.CONSOLE,
+            template), "&cYou can't access this template.");
 
         checkBoolean(
             template.punishType() == punishType,

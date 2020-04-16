@@ -86,7 +86,7 @@ public abstract class YamlStaticConfig {
    */
   @SuppressWarnings("unchecked")
   protected static Replacer getReplacer(final String path) {
-    final val raw = get(path);
+    final Object raw = get(path);
 
     Valid.checkBoolean(
         raw != null,
@@ -235,7 +235,7 @@ public abstract class YamlStaticConfig {
       invokeAll(getClass());
 
     } catch (final Throwable t) {
-
+      t.printStackTrace();
     }
   }
 
@@ -311,8 +311,8 @@ public abstract class YamlStaticConfig {
         result = field.get(null);
       } catch (final NullPointerException ex) {
       }
-      Valid.notNull(result, "Null " + field.getType().getSimpleName()
-          + " field '" + field.getName() + "' in " + clazz);
+//      Valid.notNull(result, "Null " + field.getType().getSimpleName()
+//          + " field '" + field.getName() + "' in " + clazz);
     }
   }
 }

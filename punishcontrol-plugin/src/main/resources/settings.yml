@@ -44,7 +44,6 @@ Punishes:
     #if an punish of this type is created?
     Permission: punishcontrol.command.ban
     Enabled: true
-
     Apply_On_Ip: true
   Mute:
     # Commands the player should be disallowed to use
@@ -53,12 +52,12 @@ Punishes:
       - /r
     Permission: punishcontrol.command.mute
     Enabled: true
-    Apply_On_Ip: true
+    Apply_On_Ip: false
   Warn:
     Permission: punishcontrol.command.warn
     Enabled: true
-    Apply_On_Ip: true
-
+    #Types: ACTION_BAR, TITLE, CHAT
+    MessageType: TITLE
 Notifications:
   Punish:
     Enabled: true

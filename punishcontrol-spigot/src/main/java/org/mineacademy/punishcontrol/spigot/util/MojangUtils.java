@@ -3,11 +3,6 @@ package org.mineacademy.punishcontrol.spigot.util;
 import com.mojang.util.UUIDTypeAdapter;
 import de.leonhard.storage.internal.FileData;
 import de.leonhard.storage.shaded.json.JSONObject;
-import lombok.SneakyThrows;
-import lombok.experimental.FieldDefaults;
-import lombok.experimental.UtilityClass;
-import org.mineacademy.fo.collection.expiringmap.ExpiringMap;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -17,14 +12,20 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
+import lombok.SneakyThrows;
+import lombok.experimental.FieldDefaults;
+import lombok.experimental.UtilityClass;
+import org.mineacademy.fo.collection.expiringmap.ExpiringMap;
+import org.mineacademy.fo.debug.Debugger;
 
 @UtilityClass
 @SuppressWarnings("unchecked")
 @FieldDefaults(makeFinal = true)
 public class MojangUtils {
-  private String SERVICE_URL =
+
+  private final String SERVICE_URL =
       "https://sessionserver.mojang.com/session/minecraft/profile/%s?unsigned=false";
-  private ExpiringMap<UUID, String> cache =
+  private final ExpiringMap<UUID, String> cache =
       ExpiringMap.builder().expiration(3L, TimeUnit.HOURS).build();
 
   @SneakyThrows
@@ -43,9 +44,11 @@ public class MojangUtils {
   }
 
   private String fetch(final UUID uuid) throws IOException {
+
     final HttpURLConnection con =
         (HttpURLConnection)
-            new URL(String.format(SERVICE_URL, UUIDTypeAdapter.fromUUID(uuid))).openConnection();
+            new URL(String.format(SERVICE_URL, UUIDTypeAdapter.fromUUID(uuid)))
+                .openConnection();
     con.setReadTimeout(5000);
 
     if (con.getResponseCode() != HttpURLConnection.HTTP_OK) {
@@ -54,23 +57,29 @@ public class MojangUtils {
     }
 
     final String jsonString =
-        new BufferedReader(new InputStreamReader(con.getInputStream())).readLine();
-    final JSONObject jsonObject = new JSONObject(jsonString);
-    final FileData fileData = new FileData(jsonObject);
-    final List<?> list = (List<?>) fileData.get("properties");
+        new BufferedReader(new InputStreamReader(con.getInputStream()))
+            .readLine();
 
-    if (list.size() != 1) {
-      return null;
+    try {
+      final JSONObject jsonObject = new JSONObject(jsonString);
+      final FileData fileData = new FileData(jsonObject);
+      final List<?> list = (List<?>) fileData.get("properties");
+
+      if (list.size() != 1) {
+        return null;
+      }
+
+      final Map<String, Object> result = (Map<String, Object>) list.get(0);
+
+      final Object hash = result.get("value");
+
+      if (hash != null) {
+        cache.put(uuid, hash.toString());
+      }
+
+    } catch (final Throwable throwable) {
+      Debugger.debug("Mojang-API is not working probarly", jsonString);
     }
-
-    final Map<String, Object> result = (Map<String, Object>) list.get(0);
-
-    final Object hash = result.get("value");
-
-    if (hash != null) {
-      cache.put(uuid, hash.toString());
-    }
-
     return null;
   }
 }

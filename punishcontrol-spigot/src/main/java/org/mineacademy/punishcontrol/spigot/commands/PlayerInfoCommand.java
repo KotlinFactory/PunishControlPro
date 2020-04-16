@@ -26,6 +26,7 @@ public class PlayerInfoCommand extends AbstractSimplePunishControlCommand {
     setMinArguments(1);
     setUsage("[player]");
     setDescription("Get info for a player");
+    setPermission("punishcontrol.command.playerinfo");
   }
 
   @Override

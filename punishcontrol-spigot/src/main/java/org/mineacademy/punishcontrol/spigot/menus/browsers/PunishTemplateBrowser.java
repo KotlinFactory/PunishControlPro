@@ -11,13 +11,11 @@ import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.fo.menu.button.Button;
 import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.fo.remain.CompMaterial;
-import org.mineacademy.punishcontrol.core.punish.template.PunishTemplate;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
 import org.mineacademy.punishcontrol.spigot.Scheduler;
 import org.mineacademy.punishcontrol.spigot.conversation.AddTemplateConversation;
-import org.mineacademy.punishcontrol.spigot.menu.AbstractTemplateBrowser;
+import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractTemplateBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.MainMenu;
-import org.mineacademy.punishcontrol.spigot.menus.template.PunishTemplateCreatorMenu;
 
 public class PunishTemplateBrowser extends AbstractTemplateBrowser {
 
@@ -77,11 +75,5 @@ public class PunishTemplateBrowser extends AbstractTemplateBrowser {
         "&7You can edit",
         "&7the templates, too"
     };
-  }
-
-  @Override
-  protected void onClick(final PunishTemplate punishTemplate) {
-    PunishTemplateCreatorMenu.fromExisting(punishTemplate)
-        .displayTo(getViewer());
   }
 }

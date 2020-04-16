@@ -200,7 +200,6 @@
                                     <fileset dir="${basedir}/target"
                                              includes="punishcontrol-plugin-1.0.0.jar"/>
                                 </copy>
-
                             </tasks>
                         </configuration>
                         <goals>

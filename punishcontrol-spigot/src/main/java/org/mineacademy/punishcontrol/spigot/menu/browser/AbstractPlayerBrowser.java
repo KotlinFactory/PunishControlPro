@@ -1,5 +1,6 @@
-package org.mineacademy.punishcontrol.spigot.menu;
+package org.mineacademy.punishcontrol.spigot.menu.browser;
 
+import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
@@ -40,11 +41,11 @@ public abstract class AbstractPlayerBrowser extends AbstractBrowser<UUID> {
     );
   }
 
-  private AbstractPlayerBrowser(
+  protected AbstractPlayerBrowser(
       final PlayerProvider playerProvider,
       final TextureProvider textureProvider,
       final Menu mainMenu,
-      final List<UUID> players
+      final Collection<UUID> players
   ) {
 
     super(mainMenu, players);
@@ -52,8 +53,6 @@ public abstract class AbstractPlayerBrowser extends AbstractBrowser<UUID> {
     this.textureProvider = textureProvider;
     setTitle("&8Players");
   }
-
-
 
   @Nullable
   protected List<String> lore(final UUID uuid) {

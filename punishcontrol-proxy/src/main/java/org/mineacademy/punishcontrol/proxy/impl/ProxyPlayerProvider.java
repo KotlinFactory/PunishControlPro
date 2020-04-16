@@ -10,13 +10,17 @@ import lombok.val;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import org.mineacademy.bfo.Common;
+import org.mineacademy.bfo.PlayerUtil;
 import org.mineacademy.burst.provider.UUIDNameProvider;
+import org.mineacademy.punishcontrol.core.MessageType;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.AbstractPlayerProvider;
 import org.mineacademy.punishcontrol.core.providers.ExceptionHandler;
+import org.mineacademy.punishcontrol.proxy.Players;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-public final class ProxyPlayerProvider extends AbstractPlayerProvider
+public final class ProxyPlayerProvider
+    extends AbstractPlayerProvider
     implements UUIDNameProvider { // Compatibility
 
   private static final ProxyServer proxyServer = ProxyServer.getInstance();
@@ -62,6 +66,31 @@ public final class ProxyPlayerProvider extends AbstractPlayerProvider
     }
 
     Common.tell(player, messages);
+  }
+
+  @Override
+  public void sendIfOnline(
+      @NonNull final UUID uuid,
+      @NonNull final MessageType messageType,
+      @NonNull final String... messages) {
+    final ProxiedPlayer player = Players.find(uuid).orElse(null);
+
+    if (player == null) {
+      return;
+    }
+
+    switch (messageType) {
+      case CHAT:
+        Common.tell(player, messages);
+        return;
+      case TITLE:
+        final String title = messages.length >= 1 ? messages[0] : "";
+        final String subTitle = messages.length >= 2 ? messages[1] : "";
+        PlayerUtil.sendTitle(player, title, subTitle);
+        return;
+      case ACTION_BAR:
+        PlayerUtil.sendActionBar(player, String.join(" ", messages));
+    }
   }
 
   @Override

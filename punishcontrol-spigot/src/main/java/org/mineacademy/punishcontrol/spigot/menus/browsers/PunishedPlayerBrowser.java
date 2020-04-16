@@ -3,42 +3,40 @@ package org.mineacademy.punishcontrol.spigot.menus.browsers;
 import java.util.List;
 import java.util.UUID;
 import javax.inject.Inject;
-import lombok.NonNull;
-import lombok.val;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.Nullable;
-import org.mineacademy.fo.debug.LagCatcher;
+import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.providers.TextureProvider;
+import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
 import org.mineacademy.punishcontrol.spigot.Scheduler;
 import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractPlayerBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.ChooseActionMenu;
-import org.mineacademy.punishcontrol.spigot.menus.MainMenu;
+import org.mineacademy.punishcontrol.spigot.util.ItemStacks;
 
-public final class PlayerBrowser extends AbstractPlayerBrowser {
+public class PunishedPlayerBrowser extends AbstractPlayerBrowser {
 
-  @Inject
-  public PlayerBrowser(
-      final PlayerProvider playerProvider,
-      final TextureProvider textureProvider,
-      final MainMenu parent) {
-    super(playerProvider, textureProvider, parent);
-    setTitle("§3Player-Browser");
+  private final StorageProvider storageProvider;
+
+  public static void showTo(final Player player) {
+    Scheduler.runAsync(() -> DaggerSpigotComponent.create().punishedPlayerBrowser().displayTo(player));
   }
 
-  public static void showTo(@NonNull final Player player) {
-    Scheduler.runAsync(() -> {
-      LagCatcher.start("async-show-up-player-browser");
-      final val browser = DaggerSpigotComponent.create().playerBrowserMenu();
-      browser.displayTo(player);
-      LagCatcher.end("async-show-up-player-browser");
-    });
+
+  @Inject
+  public PunishedPlayerBrowser(
+      final PlayerProvider playerProvider,
+      final TextureProvider textureProvider,
+      final StorageProvider storageProvider,
+      final Menu mainMenu) {
+    super(playerProvider, textureProvider, mainMenu, storageProvider.listPunishedPlayers());
+    this.storageProvider = storageProvider;
   }
 
   @Override
-  protected @Nullable List<String> lore(final UUID uuid) {
-    return super.lore(uuid);
+  protected @Nullable List<String> lore(final UUID target) {
+    return ItemStacks.loreForPlayer(target, storageProvider);
   }
 
   @Override

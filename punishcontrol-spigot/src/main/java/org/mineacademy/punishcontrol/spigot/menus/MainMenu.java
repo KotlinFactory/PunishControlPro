@@ -20,6 +20,7 @@ import org.mineacademy.punishcontrol.spigot.menu.ChangingMenu;
 import org.mineacademy.punishcontrol.spigot.menu.buttons.ChangingButton;
 import org.mineacademy.punishcontrol.spigot.menus.browsers.AllPunishesBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.browsers.PlayerBrowser;
+import org.mineacademy.punishcontrol.spigot.menus.browsers.PunishedPlayerBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.browsers.SettingsBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.punish.PunishCreatorMenu;
 import org.mineacademy.punishcontrol.spigot.util.ItemStacks;
@@ -60,7 +61,11 @@ public final class MainMenu extends ChangingMenu {
       @Override
       public void onClickedInMenu(
           final Player player, final Menu menu, final ClickType click) {
-
+        if (click.isRightClick()) {
+          System.out.println("he");
+          PunishedPlayerBrowser.showTo(player);
+          return;
+        }
         AllPunishesBrowser.showTo(player);
       }
 

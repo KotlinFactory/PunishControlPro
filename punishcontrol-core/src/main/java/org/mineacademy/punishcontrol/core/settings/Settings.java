@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import org.mineacademy.punishcontrol.core.MessageType;
 import org.mineacademy.punishcontrol.core.setting.SimpleSettings;
 import org.mineacademy.punishcontrol.core.storage.StorageType;
 
@@ -18,14 +19,15 @@ public final class Settings extends SimpleSettings {
     COMMAND_ALIASES = getStringList("Command_Aliases");
   }
 
+
   @Override
   protected int getConfigVersion() {
-    return 1;
+    return 2;
   }
 
   public static final class Punish {
 
-    public static final class Ban{
+    public static final class Ban {
 
       public static Boolean applyOnIp;
 
@@ -36,7 +38,8 @@ public final class Settings extends SimpleSettings {
       }
     }
 
-    public static final class Mute{
+    public static final class Mute {
+
       public static List<String> DISABLED_COMMANDS;
       public static Boolean APPLY_ON_IP;
 
@@ -47,16 +50,21 @@ public final class Settings extends SimpleSettings {
       }
     }
 
-    public static final class Warn{
+    public static final class Warn {
+
+      public static MessageType messageType;
 
       private static void init() {
         pathPrefix("Punishes.Warn");
+        messageType = MessageType
+            .valueOf(getOrSetDefault("Message_Type", "TITLE").toUpperCase());
 
       }
     }
   }
 
   public static final class Notifications {
+
     public static final class Punish {
 
       public static Boolean ENABLED;
@@ -70,6 +78,7 @@ public final class Settings extends SimpleSettings {
     }
 
     public static final class SilentPunish {
+
       public static Boolean ENABLED;
       public static String PERMISSION;
 
@@ -82,6 +91,7 @@ public final class Settings extends SimpleSettings {
   }
 
   public static final class Advanced {
+
     public static Boolean CACHE_RESULTS;
     public static String DATE_FORMAT = "dd,MM,yyyy";
 
@@ -97,6 +107,7 @@ public final class Settings extends SimpleSettings {
     }
 
     public static final class API {
+
       public static Boolean ENABLED;
 
       private static void init() {

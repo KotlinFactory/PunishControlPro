@@ -15,6 +15,7 @@ import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.ExceptionHandler;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.providers.PunishProvider;
+import org.mineacademy.punishcontrol.core.settings.Settings.Punish.Warn;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 
 @Data
@@ -195,8 +196,11 @@ public abstract class Punish {
           creator, "&cException while creating Punish!",
           "Please check your console.");
 
-      if (punishType().shouldKick()) {
-        PLAYER_PROVIDER.kickIfOnline(target(), reason());
+      if (punishType().shouldWarn()) {
+        PLAYER_PROVIDER.sendIfOnline(
+            target,
+            Warn.messageType,
+            "&eYou have been warned", "&7Reason: " + reason());
       }
     }
   }

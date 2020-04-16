@@ -69,8 +69,6 @@ public final class SpigotPunishProvider implements PunishProvider {
         continue;
       }
 
-      System.out.println("Locale: '" + Localization.Punish.PUNISH_BROADCAST_MESSAGE.replacedMessageJoined() + "'");
-
       Common
           .tell(player, Localization.Punish.PUNISH_BROADCAST_MESSAGE.replace(
               Common.chatLine(),

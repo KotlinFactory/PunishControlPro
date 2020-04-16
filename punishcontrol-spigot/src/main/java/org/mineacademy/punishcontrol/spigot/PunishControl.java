@@ -23,9 +23,9 @@ import org.mineacademy.punishcontrol.spigot.impl.SpigotTextureProvider;
 import org.mineacademy.punishcontrol.spigot.listeners.SpigotListenerImpl;
 import org.mineacademy.punishcontrol.spigot.settings.SimpleSettingsInjector;
 
-public final class PunishControl extends SimplePlugin implements
-    SimplePunishControlPlugin {
-
+public final class PunishControl
+    extends SimplePlugin
+    implements SimplePunishControlPlugin {
   private final SpigotComponent spigotModule = DaggerSpigotComponent.create();
 
   /**

@@ -23,9 +23,9 @@ import org.mineacademy.punishcontrol.core.settings.Settings;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
 import org.mineacademy.punishcontrol.spigot.conversation.PunishReasonConversation;
 import org.mineacademy.punishcontrol.spigot.menu.AbstractDurationChooser;
-import org.mineacademy.punishcontrol.spigot.menu.AbstractPlayerBrowser;
-import org.mineacademy.punishcontrol.spigot.menu.AbstractPunishTypeBrowser;
-import org.mineacademy.punishcontrol.spigot.menu.AbstractTemplateBrowser;
+import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractPlayerBrowser;
+import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractPunishTypeBrowser;
+import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractTemplateBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.MainMenu;
 import org.mineacademy.punishcontrol.spigot.util.ItemStacks;
 import org.mineacademy.punishcontrol.spigot.util.Schedulable;
@@ -35,8 +35,12 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
   public static final int SIZE = 9 * 5;
   public static final int PLAYER_CHOOSER_SLOT = 33;
   public static final int CHOOSE_REASON_SLOT = 19;
+  public static final int MAKE_SILENT_SLOT = 30;
+  public static final int MAKE_SUPER_SILENT_SLOT = 32;
   private final Button fromTemplate;
   private final Button chooseDuration;
+  private final Button makeSilent;
+  private final Button makeSuperSilent;
   //  private final Button chooseReason;
   private final Button choosePlayer;
   private final Button applyPunish;
@@ -102,7 +106,8 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
 
           @Override
           protected void confirm() {
-            Valid.checkBoolean(menu instanceof PunishCreatorMenu,
+            Valid.checkBoolean(
+                menu instanceof PunishCreatorMenu,
                 "Invalid type?");
             final val creatorMenu = (PunishCreatorMenu) menu;
             creatorMenu.punishBuilder().duration(ms);
@@ -145,12 +150,9 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
           final Player player, final Menu menu, final ClickType click) {
 
         new AbstractTemplateBrowser(menu) {
-
           @Override
-          protected void onClick(final PunishTemplate choosenTemplate) {
-            final val builder = choosenTemplate.toPunishBuilder();
-            builder.target(punishBuilder().target());
-            PunishCreatorMenu.showTo(getViewer(), builder, choosenTemplate);
+          protected String[] getInfo() {
+            return new String[]{"", "&7Menu to ", "&7choose a punish-template"};
           }
         }.displayTo(player);
       }
@@ -225,35 +227,6 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
       }
     };
 
-//    chooseReason = new Button() {
-//      @Override
-//      public void onClickedInMenu(
-//          final Player player, final Menu menu, final ClickType click) {
-//        AddReasonConversation.create((PunishCreatorMenu) menu);
-//      }
-//
-//      @Override
-//      public ItemStack getItem() {
-//
-//        if (punishBuilder().reason() != null) {
-//          return ItemCreator.of(CompMaterial.BOOK,
-//              "&6Reason",
-//              "&7Choose different reason",
-//              "&7Current: " + punishBuilder.reason())
-//              .build()
-//              .make();
-//        }
-//
-//        return ItemCreator.of(CompMaterial.BOOK,
-//            "&6Reason",
-//            "&7Choose the",
-//            "&7reason of the",
-//            "&7punish")
-//            .build()
-//            .make();
-//      }
-//    };
-
     choosePlayer = new Button() {
       @Override
       public void onClickedInMenu(
@@ -293,19 +266,84 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
       }
     };
 
-//    choosePunishType = new Button() {
-//      @Override
-//      public void onClickedInMenu(
-//          final Player player, final Menu menu, final ClickType click) {
-//
-//      }
-//
-//      @Override
-//      public ItemStack getItem() {
-//        return ItemStacks.forPunishType(punishBuilder().punishType());
-//      }
-//    };
-  }
+    makeSilent = new Button() {
+      @Override
+      public void onClickedInMenu(
+          final Player player, final Menu menu, final ClickType click) {
+        punishBuilder.silent(!punishBuilder.silent());
+        restartMenu("&8Made punishment " + (punishBuilder.superSilent()
+            ? "&silent"
+            : "&8not silent"));
+      }
+
+      @Override
+      public ItemStack getItem() {
+        if(punishBuilder.silent()){
+          return ItemCreator
+              .of(ItemStacks.greenPane())
+              .name("&6Silent")
+              .lores(Arrays.asList(
+                  "",
+                  "&7Click to make",
+                  "&7the punish",
+                  "&7not silent"
+              ))
+              .build()
+              .makeMenuTool();
+        }
+        return ItemCreator
+            .of(ItemStacks.redPane())
+            .name("&6Make Silent")
+            .lores(Arrays.asList(
+                "",
+                "&7Click to make",
+                "&7the punish",
+                "&7silent"
+            ))
+            .build()
+            .makeMenuTool();
+      }
+    };
+
+    makeSuperSilent = new Button() {
+      @Override
+      public void onClickedInMenu(
+          final Player player, final Menu menu, final ClickType click) {
+        punishBuilder.superSilent(!punishBuilder.superSilent());
+        restartMenu("&8Made punishment " + (punishBuilder.superSilent()
+            ? "&asuper-silent"
+            : "&8not super-silent"));
+      }
+
+      @Override
+      public ItemStack getItem() {
+        if (punishBuilder.superSilent()) {
+          return ItemCreator
+              .of(ItemStacks.greenPane())
+              .name("&6Super-Silent")
+              .lores(Arrays.asList(
+                  "",
+                  "&7Click to make",
+                  "&7the punish",
+                  "&7not silent"
+              ))
+              .build()
+              .makeMenuTool();
+        }
+        return ItemCreator
+            .of(ItemStacks.redPane())
+            .name("&6Make Silent")
+            .lores(Arrays.asList(
+                "",
+                "&7Click to make",
+                "&7the punish",
+                "&7super-silent"
+            ))
+            .build()
+            .makeMenuTool();
+      }
+    };
+}
 
   @Override
   protected String[] getInfo() {
@@ -393,6 +431,14 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
               "&7player the", "&7punish should be", "&7applied to")
           .build()
           .makeMenuTool();
+    }
+
+    if (slot == MAKE_SILENT_SLOT) {
+      return makeSilent.getItem();
+    }
+
+    if (slot == MAKE_SUPER_SILENT_SLOT) {
+      return makeSuperSilent.getItem();
     }
 
     return null;

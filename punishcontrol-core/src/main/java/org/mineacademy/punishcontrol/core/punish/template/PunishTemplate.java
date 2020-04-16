@@ -87,6 +87,14 @@ public final class PunishTemplate extends SecureJson {
     set("Type", punishType);
   }
 
+  public void silent(final boolean silent) {
+    set("Silent", silent);
+  }
+
+  public void superSilent(final boolean superSilent) {
+    set("SuperSilent", superSilent);
+  }
+
   public void reason(@NonNull final String reason) {
     set("Reason", reason);
   }

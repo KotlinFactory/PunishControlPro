@@ -23,7 +23,7 @@ import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
 import org.mineacademy.punishcontrol.spigot.Scheduler;
-import org.mineacademy.punishcontrol.spigot.menu.AbstractBrowser;
+import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.setting.AbstractSettingsMenu;
 import org.mineacademy.punishcontrol.spigot.util.ItemStacks;
 

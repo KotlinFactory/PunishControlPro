@@ -10,6 +10,7 @@ import org.bukkit.event.player.AsyncPlayerPreLoginEvent;
 import org.bukkit.event.player.AsyncPlayerPreLoginEvent.Result;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.mineacademy.fo.Common;
 import org.mineacademy.fo.debug.Debugger;
 import org.mineacademy.fo.debug.LagCatcher;
 import org.mineacademy.punishcontrol.core.event.Events;
@@ -41,7 +42,7 @@ public final class SpigotListenerImpl implements Listener {
 
 
     playerPreLoginEvent.setLoginResult(Result.KICK_BANNED);
-    playerPreLoginEvent.setKickMessage(joinEvent.cancelReason());
+    playerPreLoginEvent.setKickMessage(Common.colorize(joinEvent.cancelReason()));
     LagCatcher.end("async-join");
   }
 
@@ -55,7 +56,7 @@ public final class SpigotListenerImpl implements Listener {
               asyncPlayerChatEvent.getPlayer().getAddress().getAddress(),
               asyncPlayerChatEvent.getMessage()));
       asyncPlayerChatEvent.setCancelled(chatEvent.canceled());
-      asyncPlayerChatEvent.setMessage(chatEvent.message());
+      asyncPlayerChatEvent.setMessage(Common.colorize(chatEvent.message()));
     } catch (final Throwable throwable) {
       Debugger.saveError(throwable, "Exception while calling chat-event!");
     }
@@ -73,7 +74,7 @@ public final class SpigotListenerImpl implements Listener {
               playerCommandPreprocessEvent.getPlayer().getAddress().getAddress(),
               playerCommandPreprocessEvent.getMessage()));
       playerCommandPreprocessEvent.setCancelled(chatEvent.canceled());
-      playerCommandPreprocessEvent.setMessage(chatEvent.message());
+      playerCommandPreprocessEvent.setMessage(Common.colorize(chatEvent.message()));
       LagCatcher.start("command-chat");
     } catch (final Throwable throwable) {
       Debugger.saveError(

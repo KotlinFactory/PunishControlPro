@@ -16,6 +16,7 @@ import org.mineacademy.punishcontrol.spigot.menus.MainMenu;
 import org.mineacademy.punishcontrol.spigot.menus.browsers.AllPunishesBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.browsers.PlayerBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.browsers.PunishTemplateBrowser;
+import org.mineacademy.punishcontrol.spigot.menus.browsers.PunishedPlayerBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.browsers.SettingsBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.punish.PunishCreatorMenu;
 import org.mineacademy.punishcontrol.spigot.menus.settings.LanguageSettingsMenu;
@@ -70,6 +71,8 @@ public interface SpigotComponent {
   PunishTemplateBrowser punishTemplateBrowser();
 
   PunishCreatorMenu punishCreatorMenu();
+
+  PunishedPlayerBrowser punishedPlayerBrowser();
 
  //Settings - Menus
 
