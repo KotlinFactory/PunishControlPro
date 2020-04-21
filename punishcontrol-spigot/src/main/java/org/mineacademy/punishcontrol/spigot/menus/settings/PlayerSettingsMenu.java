@@ -42,7 +42,7 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
 
   public static void showTo(@NonNull final Player player,
       @NonNull final UUID target) {
-    new PlayerSettingsMenu(target).displayTo(player);
+    new PlayerSettingsMenu(target).displayTo(player, true);
   }
 
   private PlayerSettingsMenu(final UUID target) {
@@ -134,7 +134,7 @@ final class GroupBrowser extends AbstractBrowser<Group> {
       final UUID target,
       final PlayerSettingsMenu parent) {
     Scheduler.runAsync(
-        () -> new GroupBrowser(parent, target).displayTo(player)
+        () -> new GroupBrowser(parent, target).displayTo(player, true)
     );
   }
 
@@ -145,22 +145,31 @@ final class GroupBrowser extends AbstractBrowser<Group> {
 
   @Override
   protected ItemStack convertToItemStack(final Group group) {
-
     final Replacer replacer = Replacer.of(
         "&6Priority: &7{priority}",
         "&6Ban-Limit: &7{ban-limit}",
         "&6Mute-Limit: &7{mute-limit}",
         "&6Warn-Limit: &7{warn-limit}",
-        "&6Override-Punishes: &7{override}"
+        "&6Override-Punishes: &7{override}",
+        "&6Template only: &7{template_only}"
     );
 
-    replacer.find("priority", "ban-limit", "mute-limit", "warn-limit", "override");
+    replacer.find("priority",
+        "ban-limit",
+        "mute-limit",
+        "warn-limit",
+        "override",
+        "template_only");
+
     replacer.replace(
         group.priority(),
         group.banLimit().toString(),
         group.muteLimit().toString(),
         group.warnLimit().toString(),
-        group.overridePunishes() ? "&ayes" : "&cno");
+        group.overridePunishes() ? "&ayes" : "&cno",
+        group.templateOnly() ? "&ayes" : "&cno"
+
+    );
 
     //TODO CHECK FOR ERRORS: WHAT IF THE MATERIAL IS INVALID
     final CompMaterial compMaterial = CompMaterial.fromString(group.item());
@@ -202,7 +211,7 @@ class PermissionsBrowser extends AbstractBrowser<Permission> {
 
     Scheduler.runAsync(() -> {
       final val menu = new PermissionsBrowser(target, parent);
-      menu.displayTo(player);
+      menu.displayTo(player, true);
     });
   }
 

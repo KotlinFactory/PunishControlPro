@@ -19,7 +19,7 @@ public final class AllPunishesBrowser extends AbstractPunishBrowser {
     Scheduler.runAsync(() -> {
       LagCatcher.start("async-show-up-punish-browser");
       final val browser = DaggerSpigotComponent.create().punishBrowserMenu();
-      browser.displayTo(player);
+      browser.displayTo(player, true);
       LagCatcher.end("async-show-up-punish-browser");
     });
   }
@@ -31,5 +31,10 @@ public final class AllPunishesBrowser extends AbstractPunishBrowser {
       final StorageProvider storageProvider) {
     super(parent, playerProvider, storageProvider.listPunishes());
     setTitle("&7Browse Punishes");
+  }
+
+  @Override
+  protected void redrawForPlayer(final Player player) {
+    showTo(player);
   }
 }

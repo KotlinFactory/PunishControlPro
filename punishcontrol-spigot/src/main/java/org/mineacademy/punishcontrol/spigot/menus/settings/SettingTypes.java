@@ -8,6 +8,7 @@ import org.bukkit.entity.Player;
 import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.fo.remain.CompMaterial;
 import org.mineacademy.punishcontrol.core.provider.Providers;
+import org.mineacademy.punishcontrol.core.util.PunishControlPermissions;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
 import org.mineacademy.punishcontrol.spigot.Scheduler;
 import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractPlayerBrowser;
@@ -16,6 +17,7 @@ import org.mineacademy.punishcontrol.spigot.menus.browsers.PunishTemplateBrowser
 @Getter
 @Accessors(fluent = true)
 public enum SettingTypes {
+
   PLAYER {
     @Override
     public ItemCreator itemCreator() {
@@ -45,7 +47,12 @@ public enum SettingTypes {
         };
         Scheduler.runSync(() -> browser.displayTo(player));
       });
+    }
 
+    @Override
+    public boolean hasAccess(final Player player) {
+      return player.hasPermission(
+          PunishControlPermissions.MENU_SETTINGS_PLAYER.permission());
     }
   },
 
@@ -65,39 +72,39 @@ public enum SettingTypes {
     public void showMenu(final Player player) {
       StorageSettingsMenu.showTo(player);
     }
+
+    @Override
+    public boolean hasAccess(final Player player) {
+      return player.hasPermission(
+          PunishControlPermissions.MENU_SETTINGS_STORAGE.permission());
+    }
   },
 
-  PUNISH_TEMPLATE{
+  PUNISH_TEMPLATE {
     @Override
     public ItemCreator itemCreator() {
-      return ItemCreator.of(CompMaterial.PAPER, "&6Punish-Templates", "&7View and add", "&7Punish-Templates").build();
+      return ItemCreator.of(CompMaterial.PAPER, "&6Punish-Templates", "&7View and add",
+          "&7Punish-Templates").build();
     }
 
     @Override
     public void showMenu(final Player player) {
       PunishTemplateBrowser.showTo(player);
     }
+
+    @Override
+    public boolean hasAccess(final Player player) {
+      return player.hasPermission(
+          PunishControlPermissions.MENU_SETTINGS_TEMPLATES.permission());
+    }
+  };
+
+  public boolean hasAccess(final Player player) {
+    throw new AbstractMethodError("Not implemented");
   }
-
-
-
-  ;
-
-//  LANGUAGE {
-//    @Override
-//    public ItemCreator itemCreator() {
-//      return ItemCreator.of(CompMaterial.PAPER, "&6Language", "&7Select the language").build();
-//    }
-//
-//    @Override
-//    public void showMenu(final Player player) {
-//      LanguageSettingsMenu.showTo(player);
-//    }
-//  };
 
   public ItemCreator itemCreator() {
     throw new AbstractMethodError("Not implemented");
-
   }
 
   public void showMenu(final Player player) {

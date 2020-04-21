@@ -25,6 +25,25 @@ public final class Settings extends SimpleSettings {
     return 2;
   }
 
+  public static final class MySQL {
+
+    public static String DATABASE;
+    public static String HOST;
+    public static Integer PORT;
+    public static String USER;
+    public static String PASSWORD;
+
+    private static void init() {
+      pathPrefix("MySQL");
+      HOST = getString("Host");
+      PORT = getInteger("Port");
+      DATABASE = getString("Database");
+      USER = getString("User");
+      PASSWORD = getString("Password");
+    }
+  }
+
+
   public static final class Punish {
 
     public static final class Ban {
@@ -34,7 +53,6 @@ public final class Settings extends SimpleSettings {
       private static void init() {
         pathPrefix("Punishes.Ban");
         applyOnIp = getBoolean("Apply_On_Ip");
-
       }
     }
 
@@ -56,8 +74,9 @@ public final class Settings extends SimpleSettings {
 
       private static void init() {
         pathPrefix("Punishes.Warn");
-        messageType = MessageType
-            .valueOf(getOrSetDefault("Message_Type", "TITLE").toUpperCase());
+        messageType = MessageType.valueOf(
+            getOrSetDefault("Message_Type", "TITLE")
+                .toUpperCase());
 
       }
     }
@@ -93,7 +112,7 @@ public final class Settings extends SimpleSettings {
   public static final class Advanced {
 
     public static Boolean CACHE_RESULTS;
-    public static String DATE_FORMAT = "MM,dd,yyyy hh";
+    public static String DATE_FORMAT = "MM/dd/yyyy/hh";
 
     private static void init() {
       pathPrefix("Advanced");

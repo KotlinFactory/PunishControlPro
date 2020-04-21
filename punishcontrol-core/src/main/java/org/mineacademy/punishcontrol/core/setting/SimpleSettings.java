@@ -3,6 +3,8 @@ package org.mineacademy.punishcontrol.core.setting;
 
 import de.leonhard.storage.Config;
 import de.leonhard.storage.LightningBuilder;
+import de.leonhard.storage.internal.settings.ConfigSettings;
+import de.leonhard.storage.internal.settings.DataType;
 import de.leonhard.storage.util.Valid;
 import java.util.ArrayList;
 import java.util.List;
@@ -231,6 +233,8 @@ public abstract class SimpleSettings extends YamlStaticConfig {
     return LightningBuilder
         .fromPath("settings.yml", DATA.getDataFolder().getAbsolutePath())
         .addInputStreamFromResource("settings.yml")
+        .setConfigSettings(ConfigSettings.PRESERVE_COMMENTS)
+        .setDataType(DataType.SORTED)
         .createConfig();
   }
 

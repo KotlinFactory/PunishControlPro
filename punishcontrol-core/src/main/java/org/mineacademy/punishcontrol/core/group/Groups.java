@@ -31,7 +31,31 @@ public class Groups {
 
   public boolean hasAccess(
       @NonNull final UUID uuid,
-      @NonNull final PunishTemplate punishTemplate){
+      @NonNull final PunishTemplate punishTemplate) {
+    final val optionalGroup = primaryGroupOf(uuid);
+    if (!optionalGroup.isPresent()) {
+      return true;
+    }
+
+    final Group group = optionalGroup.get();
+
+    if (group.templateByPasses().contains("*")) {
+      return true;
+    }
+
+    if (group.templateByPasses().contains(punishTemplate.name())) {
+      return true;
+    }
+
+    switch (punishTemplate.punishType()) {
+      case BAN:
+        return punishTemplate.duration().lessThan(group.banLimit());
+      case MUTE:
+        return punishTemplate.duration().lessThan(group.muteLimit());
+      case WARN:
+        return punishTemplate.duration().lessThan(group.warnLimit());
+    }
+
     return true;
   }
 
@@ -48,16 +72,15 @@ public class Groups {
       return true;
     }
 
-
     final val group = optionalGroup.get();
 
     switch (punishType) {
       case BAN:
-        return group.banLimit().toMs() <= punishDuration.toMs();
+        return group.banLimit().lessThan(punishDuration);
       case MUTE:
-        return group.muteLimit().toMs() <= punishDuration.toMs();
+        return group.muteLimit().lessThan(punishDuration);
       case WARN:
-        return group.warnLimit().toMs() <= punishDuration.toMs();
+        return group.warnLimit().lessThan(punishDuration);
     }
     return false;
   }
@@ -66,7 +89,7 @@ public class Groups {
     registeredGroups.add(group);
   }
 
-  public List<Group> list(@NonNull final UUID target){
+  public List<Group> list(@NonNull final UUID target) {
     final List<Group> result = new ArrayList<>();
 
     for (final Group group : registeredGroups) {
@@ -81,8 +104,7 @@ public class Groups {
 
   /**
    * @param target UUID to find the group of
-   * @return The group of the highest priority the player according to the UUID
-   * has
+   * @return The group of the highest priority the player according to the UUID has
    */
   public Optional<Group> primaryGroupOf(@NonNull final UUID target) {
     Group lastResult = null;

@@ -36,6 +36,13 @@ Command_Aliases: [punishcontrol,phc, pun, pc]
 #JSON/MYSQL
 Storage: JSON
 
+MySQL:
+  Host: ''
+  Database: ''
+  Port: 3306
+  User: ''
+  Password: ''
+
 Punishes:
   # Should punishing only be possible with an template
   OnlyTemplate: false
@@ -57,7 +64,7 @@ Punishes:
     Permission: punishcontrol.command.warn
     Enabled: true
     #Types: ACTION_BAR, TITLE, CHAT
-    MessageType: TITLE
+    Message_Type: TITLE
 Notifications:
   Punish:
     Enabled: true
@@ -68,11 +75,14 @@ Notifications:
 
 Groups:
   Admin:
+    #The group with the highest priority will be p
     Priority: 0
     Permission: punishcontrol.group.admin
     # May the group override an existing punishment?
     # For example ban a already banned player again?
     Override_Punishes: true
+
+    Template_Only: false
     #Set to -1 to disable
     Limits:
       Ban: -1
@@ -87,6 +97,7 @@ Groups:
     Priority: 1
     Permission: punishcontrol.group.moderator
     Override_Punishes: false
+    Template_Only: false
     Limits:
       Ban: 1 year
       Mute: 1 year
@@ -97,6 +108,7 @@ Groups:
     Priority: 2
     Permission: punishcontrol.group.supporter
     Override_Punishes: false
+    Template_Only: true
     Limits:
       Ban: 1 month
       Mute: 2 month
@@ -114,7 +126,7 @@ Advanced:
     #You can disable the API for security reasons
     Enabled: True
 
-Debug: []
+Debug: ['*']
 
 # Do not change this value, otherwise it will corrupt your plugin installation!
-Version: 1
+Version: 2

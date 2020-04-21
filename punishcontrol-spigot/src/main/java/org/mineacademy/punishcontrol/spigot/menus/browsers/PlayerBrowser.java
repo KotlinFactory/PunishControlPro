@@ -31,7 +31,7 @@ public final class PlayerBrowser extends AbstractPlayerBrowser {
     Scheduler.runAsync(() -> {
       LagCatcher.start("async-show-up-player-browser");
       final val browser = DaggerSpigotComponent.create().playerBrowserMenu();
-      browser.displayTo(player);
+      browser.displayTo(player, true);
       LagCatcher.end("async-show-up-player-browser");
     });
   }

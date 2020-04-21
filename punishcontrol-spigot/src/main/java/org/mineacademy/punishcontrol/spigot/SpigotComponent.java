@@ -11,7 +11,6 @@ import org.mineacademy.punishcontrol.spigot.commands.UnMuteCommand;
 import org.mineacademy.punishcontrol.spigot.commands.UnWarnCommand;
 import org.mineacademy.punishcontrol.spigot.commands.WarnCommand;
 import org.mineacademy.punishcontrol.spigot.listeners.SpigotDataSetter;
-import org.mineacademy.punishcontrol.spigot.menus.DurationChooserMenu;
 import org.mineacademy.punishcontrol.spigot.menus.MainMenu;
 import org.mineacademy.punishcontrol.spigot.menus.browsers.AllPunishesBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.browsers.PlayerBrowser;
@@ -59,8 +58,6 @@ public interface SpigotComponent {
   // ----------------------------------------------------------------------------------------------------
   // Menus
   // ----------------------------------------------------------------------------------------------------
-
-  DurationChooserMenu durationChooserMenu();
 
   MainMenu menuMain();
 

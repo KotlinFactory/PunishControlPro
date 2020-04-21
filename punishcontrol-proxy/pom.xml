@@ -60,8 +60,8 @@
 
         <dependency>
             <groupId>org.mineacademy</groupId>
-            <artifactId>burst</artifactId>
-            <version>1.0.7</version>
+            <artifactId>Burst</artifactId>
+            <version>1.0.0</version>
         </dependency>
 
         <dependency>

@@ -40,14 +40,13 @@ public final class ChooseActionMenu extends Menu {
   private final StorageProvider storageProvider;
   private final UUID target;
   private final String targetName;
-  private final boolean targetOnline;
 
   public static void showTo(
       @NonNull final Player player,
       @NonNull final UUID target) {
     Scheduler.runAsync(() -> {
       final val menu = create(target);
-      menu.displayTo(player);
+      menu.displayTo(player, true);
     });
   }
 
@@ -73,7 +72,6 @@ public final class ChooseActionMenu extends Menu {
     this.storageProvider = storageProvider;
     this.target = target;
     targetName = playerProvider.findNameUnsafe(target);
-    targetOnline = Players.find(target).isPresent();
     setSize(9 * 3);
     setTitle("§8Action for " + targetName);
 
@@ -91,7 +89,7 @@ public final class ChooseActionMenu extends Menu {
       @Override
       public ItemStack getItem() {
         return ItemCreator.of(CompMaterial.ANVIL, "&6Punish", " ",
-            "&7Punish: " + playerProvider.findNameUnsafe(target)).build()
+            "&7Punishment: " + playerProvider.findNameUnsafe(target)).build()
             .makeMenuTool();
       }
     };
@@ -106,7 +104,7 @@ public final class ChooseActionMenu extends Menu {
       @Override
       public ItemStack getItem() {
         return ItemCreator
-            .of(CompMaterial.CHEST, "&6Punishes", "", "&7View punishes")
+            .of(CompMaterial.CHEST, "&6Punishments", "", "&7View punishments")
             .build()
             .makeMenuTool();
       }
@@ -116,7 +114,7 @@ public final class ChooseActionMenu extends Menu {
       @Override
       public void onClickedInMenu(
           final Player player, final Menu menu, final ClickType click) {
-        if (!targetOnline) {
+        if (!targetOnline()) {
           animateTitle(Localization.TARGET_IS_OFFLINE);
           return;
         }
@@ -125,12 +123,21 @@ public final class ChooseActionMenu extends Menu {
 
       @Override
       public ItemStack getItem() {
+        if (!targetOnline()) {
+          return ItemCreator
+              .of(CompMaterial.COMPARATOR,
+                  "&6Settings",
+                  " ",
+                  "&cDisabled:",
+                  "&7Player is offline")
+              .build()
+              .makeMenuTool();
+        }
         return ItemCreator
             .of(CompMaterial.COMPARATOR,
                 "&6Settings",
                 " ",
-                "&cDisabled:",
-                "&7Player is offline")
+                "&7Settings for player")
             .build()
             .makeMenuTool();
       }
@@ -140,7 +147,7 @@ public final class ChooseActionMenu extends Menu {
       @Override
       public void onClickedInMenu(
           final Player player, final Menu menu, final ClickType click) {
-        if (!targetOnline) {
+        if (!targetOnline()) {
           animateTitle(Localization.TARGET_IS_OFFLINE);
           return;
         }
@@ -149,7 +156,7 @@ public final class ChooseActionMenu extends Menu {
 
       @Override
       public ItemStack getItem() {
-        if (!targetOnline) {
+        if (!targetOnline()) {
           return ItemCreator
               .of(
                   CompMaterial.BLAZE_POWDER,
@@ -200,7 +207,7 @@ public final class ChooseActionMenu extends Menu {
     if (slot == 13) {
       return ItemCreator
           .ofSkullHash(textureProvider.getSkinTexture(target))
-          .name("&7Data for: &6" + (targetOnline ? "&a" : "&7") + targetName)
+          .name("&7Data for: &6" + (targetOnline() ? "&a" : "&7") + targetName)
           .lores(ItemStacks.loreForPlayer(target, storageProvider))
           .build()
           .makeMenuTool();
@@ -215,6 +222,10 @@ public final class ChooseActionMenu extends Menu {
     }
 
     return null;
+  }
+
+  private boolean targetOnline() {
+    return Players.find(target).isPresent();
   }
 
   @Override

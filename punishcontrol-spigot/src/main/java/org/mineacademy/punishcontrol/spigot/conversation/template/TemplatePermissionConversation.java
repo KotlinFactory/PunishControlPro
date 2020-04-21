@@ -38,7 +38,7 @@ public class TemplatePermissionConversation extends SimpleConversation {
 
     @Override
     protected String getPrompt(final ConversationContext ctx) {
-      return "&7Type in a reason.";
+      return "&7Type in a permission.";
     }
 
     @Override

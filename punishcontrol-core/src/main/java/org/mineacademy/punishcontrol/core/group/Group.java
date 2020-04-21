@@ -21,6 +21,7 @@ public final class Group {
   private final PunishDuration banLimit;
   private final PunishDuration muteLimit;
   private final PunishDuration warnLimit;
+  private final boolean templateOnly;
 
   private final List<String> templateByPasses;
 //

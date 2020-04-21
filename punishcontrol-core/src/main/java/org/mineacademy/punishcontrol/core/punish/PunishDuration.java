@@ -18,7 +18,6 @@ public final class PunishDuration {
 
   private final long ms;
 
-
   /**
    * Returns an empty punish-duration.
    * Normally indicates that the String that should be parsed had the
@@ -86,10 +85,20 @@ public final class PunishDuration {
   // Convenience methods here
   // ----------------------------------------------------------------------------------------------------
 
+  public boolean moreThan(final PunishDuration punishDuration) {
+    if (punishDuration.isPermanent()) {
+      return true;
+    }
+    return toMs() > punishDuration.toMs();
+  }
+
+  public boolean lessThan(final PunishDuration punishDuration) {
+    return !moreThan(punishDuration);
+  }
+
   public boolean isEmpty() {
     return toMs() == Long.MIN_VALUE;
   }
-
 
   public boolean isPermanent() {
     return ms == -1L;

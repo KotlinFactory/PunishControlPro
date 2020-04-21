@@ -44,7 +44,6 @@ public class MojangUtils {
   }
 
   private String fetch(final UUID uuid) throws IOException {
-
     final HttpURLConnection con =
         (HttpURLConnection)
             new URL(String.format(SERVICE_URL, UUIDTypeAdapter.fromUUID(uuid)))

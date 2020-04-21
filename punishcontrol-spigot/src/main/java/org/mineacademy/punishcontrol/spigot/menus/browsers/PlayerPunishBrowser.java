@@ -33,11 +33,10 @@ public final class PlayerPunishBrowser extends AbstractPunishBrowser {
           Providers.playerProvider(),
           Providers.storageProvider(),
           target);
-      browser.displayTo(player);
+      browser.displayTo(player, true);
       LagCatcher.end("async-show-up-punish-browser");
     });
   }
-
 
   private PlayerPunishBrowser(
       final Menu parent,
@@ -47,5 +46,10 @@ public final class PlayerPunishBrowser extends AbstractPunishBrowser {
     super(parent, playerProvider, storageProvider.listPunishes(target));
     this.target = target;
     this.storageProvider = storageProvider;
+  }
+
+  @Override
+  protected void redrawForPlayer(final Player player) {
+    showTo(player, target);
   }
 }

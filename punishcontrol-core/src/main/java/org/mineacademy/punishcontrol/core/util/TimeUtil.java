@@ -253,7 +253,7 @@ public class TimeUtil {
       hours = 0;
     }
 
-    String preResult = "{years} years {month} month {days} days"
+    String preResult = "{years} years {month} month {days} days {hours} hours"
         .replace("{years}", years + "")
         .replace("{month}", month + "")
         .replace("{days}", days + "")
@@ -263,7 +263,7 @@ public class TimeUtil {
         .replace("0 years ", "")
         .replace("0 month ", "")
         .replace("0 days ", "")
-        .replace("0 hours ", "");
+        .replace("0 hours", "");
 
     return preResult;
   }

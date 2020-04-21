@@ -19,6 +19,7 @@ import org.mineacademy.punishcontrol.core.punish.template.PunishTemplates;
 import org.mineacademy.punishcontrol.core.setting.YamlStaticConfig;
 import org.mineacademy.punishcontrol.core.settings.Localization;
 import org.mineacademy.punishcontrol.core.settings.Settings;
+import org.mineacademy.punishcontrol.core.util.PunishControlPermissions;
 
 /**
  * Class for a unified startup of our Main-Plugin classes
@@ -145,7 +146,7 @@ public interface SimplePunishControlPlugin {
       if (permissions() != null) {
         Permissions.registerAll(permissions());
       }
-
+      Permissions.addFromClass(PunishControlPermissions.class);
       log("Permissions §l§a✔");
     } catch (final Throwable throwable) {
       log("Permissions §l§c✘");
@@ -209,6 +210,8 @@ public interface SimplePunishControlPlugin {
       builder.warnLimit(PunishDuration.of(limits.get("Warn")));
       builder.overridePunishes(groupRawData.get("Override_Punishes").toString()
           .equalsIgnoreCase("true"));
+      builder.templateOnly(
+          groupRawData.get("Template_Only").toString().equalsIgnoreCase("true"));
       builder.templateByPasses(
           (List<String>) groupRawData.get("Template_Bypasses")
       );

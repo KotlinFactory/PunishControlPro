@@ -1,5 +1,11 @@
 package org.mineacademy.punishcontrol.core.storage;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.UUID;
+import javax.inject.Inject;
 import lombok.NonNull;
 import org.mineacademy.punishcontrol.core.providers.ExceptionHandler;
 import org.mineacademy.punishcontrol.core.punish.Punish;
@@ -7,15 +13,10 @@ import org.mineacademy.punishcontrol.core.punish.PunishType;
 import org.mineacademy.punishcontrol.core.punishes.Ban;
 import org.mineacademy.punishcontrol.core.punishes.Mute;
 import org.mineacademy.punishcontrol.core.punishes.Warn;
+import org.mineacademy.punishcontrol.core.settings.Settings.MySQL;
 
-import javax.inject.Inject;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.UUID;
-
-public final class MySQLStorageProvider extends SimpleDatabase implements StorageProvider {
+public final class MySQLStorageProvider extends SimpleDatabase implements
+    StorageProvider {
 
   //
 
@@ -42,11 +43,21 @@ public final class MySQLStorageProvider extends SimpleDatabase implements Storag
   public MySQLStorageProvider(final ExceptionHandler exceptionHandler) {
     this.exceptionHandler = exceptionHandler;
     addVariable("table", "Punishes");
+    connect(
+        MySQL.HOST,
+        MySQL.PORT,
+        MySQL.DATABASE,
+        MySQL.USER,
+        MySQL.PASSWORD,
+        "PunishControl",
+        true);
   }
 
   private void handleMySQLException(final SQLException ex, final String name) {
     exceptionHandler.saveError(
-        ex, "Exception while updating mysql. Have you altered the database? (): ", name);
+        ex,
+        "Exception while updating mysql. Have you altered the database? (): ",
+        name);
   }
 
   @Override
@@ -66,7 +77,8 @@ public final class MySQLStorageProvider extends SimpleDatabase implements Storag
   @Override
   public List<Ban> listBans() {
     final List<Ban> result = new ArrayList<>();
-    try (final ResultSet resultSet = query("SELECT * FROM {table} WHERE Type='BAN'")) {
+    try (final ResultSet resultSet = query(
+        "SELECT * FROM {table} WHERE Type='BAN'")) {
       // No bans found
       if (resultSet == null) {
         return result;
@@ -88,7 +100,8 @@ public final class MySQLStorageProvider extends SimpleDatabase implements Storag
   @Override
   public List<Mute> listMutes() {
     final List<Mute> result = new ArrayList<>();
-    try (final ResultSet resultSet = query("SELECT * FROM {table} WHERE Type='MUTE'")) {
+    try (final ResultSet resultSet = query(
+        "SELECT * FROM {table} WHERE Type='MUTE'")) {
       // No bans found
       if (resultSet == null) {
         return result;
@@ -110,7 +123,8 @@ public final class MySQLStorageProvider extends SimpleDatabase implements Storag
   @Override
   public List<Warn> listWarns() {
     final List<Warn> result = new ArrayList<>();
-    try (final ResultSet resultSet = query("SELECT * FROM {table} WHERE PUNISHTYPE='WARN'")) {
+    try (final ResultSet resultSet = query(
+        "SELECT * FROM {table} WHERE PUNISHTYPE='WARN'")) {
       // No bans found
       if (resultSet == null) {
         return result;
@@ -133,7 +147,8 @@ public final class MySQLStorageProvider extends SimpleDatabase implements Storag
   public List<Ban> listBans(@NonNull final UUID uuid) {
     final List<Ban> result = new ArrayList<>();
     try (final ResultSet resultSet =
-        query("SELECT * FROM {table} WHERE Type='BAN' AND Target='" + uuid + "'")) {
+        query("SELECT * FROM {table} WHERE Type='BAN' AND Target='" + uuid
+            + "'")) {
       // No bans found
       if (resultSet == null) {
         return result;
@@ -156,7 +171,8 @@ public final class MySQLStorageProvider extends SimpleDatabase implements Storag
   public List<Mute> listMutes(@NonNull final UUID uuid) {
     final List<Mute> result = new ArrayList<>();
     try (final ResultSet resultSet =
-        query("SELECT * FROM {table} WHERE Type='MUTE' AND Target='" + uuid + "'")) {
+        query("SELECT * FROM {table} WHERE Type='MUTE' AND Target='" + uuid
+            + "'")) {
       // No bans found
       if (resultSet == null) {
         return result;
@@ -179,7 +195,8 @@ public final class MySQLStorageProvider extends SimpleDatabase implements Storag
   public List<Warn> listWarns(@NonNull final UUID uuid) {
     final List<Warn> result = new ArrayList<>();
     try (final ResultSet resultSet =
-        query("SELECT * FROM {table} WHERE Type='WARN' AND Target='" + uuid + "'")) {
+        query("SELECT * FROM {table} WHERE Type='WARN' AND Target='" + uuid
+            + "'")) {
       // No bans found
       if (resultSet == null) {
         return result;
@@ -227,19 +244,22 @@ public final class MySQLStorageProvider extends SimpleDatabase implements Storag
 
   @Override
   public void removeBan(final @NonNull Ban ban) {
-    update("UPDATE {table} SET removed=true WHERE Creation=" + ban.creation() + " AND Type='BAN'");
+    update("UPDATE {table} SET removed=true WHERE Creation=" + ban.creation()
+        + " AND Type='BAN'");
   }
 
   @Override
   public void removeMute(final @NonNull Mute mute) {
     update(
-        "UPDATE {table} SET removed=true WHERE Creation=" + mute.creation() + " AND Type='MUTE'");
+        "UPDATE {table} SET removed=true WHERE Creation=" + mute.creation()
+            + " AND Type='MUTE'");
   }
 
   @Override
   public void removeWarn(final @NonNull Warn warn) {
     update(
-        "UPDATE {table} SET removed=true WHERE Creation=" + warn.creation() + " AND Type='WARN'");
+        "UPDATE {table} SET removed=true WHERE Creation=" + warn.creation()
+            + " AND Type='WARN'");
   }
 
   private void saveData(

@@ -10,7 +10,7 @@ import org.mineacademy.punishcontrol.spigot.menus.setting.AbstractSettingsMenu;
 public final class LanguageSettingsMenu extends AbstractSettingsMenu {
 
   public static void showTo(@NonNull final Player player) {
-    DaggerSpigotComponent.create().languageSettingsMenu().displayTo(player);
+    DaggerSpigotComponent.create().languageSettingsMenu().displayTo(player, true);
   }
 
   @Inject

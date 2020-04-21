@@ -94,7 +94,7 @@ public final class PunishTemplateCreatorMenu extends Menu {
     this.punishTemplate = punishTemplate;
     setSize(SIZE);
 
-
+    setTitle("&8Template Creator");
     chooseDuration = new Button() {
       @Override
       public void onClickedInMenu(
@@ -102,7 +102,8 @@ public final class PunishTemplateCreatorMenu extends Menu {
         new AbstractDurationChooser(menu) {
           @Override
           protected void confirm() {
-            PunishTemplateCreatorMenu.this.punishTemplate.duration(PunishDuration.of(ms));
+            PunishTemplateCreatorMenu.this.punishTemplate
+                .duration(PunishDuration.of(ms));
             PunishTemplateCreatorMenu.this.redraw();
           }
         }.displayTo(player);
@@ -114,11 +115,13 @@ public final class PunishTemplateCreatorMenu extends Menu {
           return ItemCreator.of(CompMaterial.CLOCK,
               "&6Duration",
               "&7Currently: ",
-              "&7" + PunishTemplateCreatorMenu.this.punishTemplate.duration().toString(),
-              "&7Punish will end on:",
+              "&7" + PunishTemplateCreatorMenu.this.punishTemplate.duration()
+                  .toString(),
+              "&7Punishment will end on:",
               "&7" + Settings.Advanced
                   .formatDate(
-                      System.currentTimeMillis() + PunishTemplateCreatorMenu.this.punishTemplate
+                      System.currentTimeMillis()
+                          + PunishTemplateCreatorMenu.this.punishTemplate
                           .duration()
                           .toMs()),
               "",
@@ -162,22 +165,27 @@ public final class PunishTemplateCreatorMenu extends Menu {
       @Override
       public void onClickedInMenu(
           final Player player, final Menu menu, final ClickType click) {
+        if (punishTemplate.superSilent()) {
+          animateTitle("&cPunishment is already super-silent");
+          return;
+        }
+
         punishTemplate.silent(!punishTemplate.silent());
-        restartMenu("&8Made punishment " + (punishTemplate.superSilent()
-            ? "&silent"
-            : "&8not silent"));
+        restartMenu(punishTemplate.silent()
+            ? "&8silent"
+            : "&8not silent");
       }
 
       @Override
       public ItemStack getItem() {
-        if(PunishTemplateCreatorMenu.this.punishTemplate.silent()){
+        if (PunishTemplateCreatorMenu.this.punishTemplate.silent()) {
           return ItemCreator
               .of(ItemStacks.greenPane())
               .name("&6Silent")
               .lores(Arrays.asList(
                   "",
                   "&7Click to make",
-                  "&7the punish",
+                  "&7the punishment",
                   "&7not silent"
               ))
               .build()
@@ -189,7 +197,7 @@ public final class PunishTemplateCreatorMenu extends Menu {
             .lores(Arrays.asList(
                 "",
                 "&7Click to make",
-                "&7the punish",
+                "&7the punishment",
                 "&7silent"
             ))
             .build()
@@ -201,10 +209,13 @@ public final class PunishTemplateCreatorMenu extends Menu {
       @Override
       public void onClickedInMenu(
           final Player player, final Menu menu, final ClickType click) {
+        if (punishTemplate.silent()) {
+          punishTemplate.silent(false);
+        }
         punishTemplate.superSilent(!punishTemplate.superSilent());
-        restartMenu("&8Made punishment " + (punishTemplate.superSilent()
-            ? "&asuper-silent"
-            : "&8not super-silent"));
+        restartMenu(punishTemplate.superSilent()
+            ? "&8asuper-silent"
+            : "&cnot super-silent");
       }
 
       @Override
@@ -216,13 +227,12 @@ public final class PunishTemplateCreatorMenu extends Menu {
               .lores(Arrays.asList(
                   "",
                   "&7Click to make",
-                  "&7the punish",
+                  "&7the punishment",
                   "&7not silent"
               ))
               .build()
               .makeMenuTool();
         }
-
         return ItemCreator
             .of(ItemStacks.redPane())
             .name("&6Make Silent")

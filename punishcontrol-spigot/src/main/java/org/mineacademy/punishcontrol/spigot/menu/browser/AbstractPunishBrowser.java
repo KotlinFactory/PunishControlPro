@@ -19,7 +19,7 @@ import org.mineacademy.punishcontrol.core.settings.Settings;
 import org.mineacademy.punishcontrol.spigot.menu.AbstractConfirmMenu;
 import org.mineacademy.punishcontrol.spigot.util.ItemStacks;
 
-public class AbstractPunishBrowser extends AbstractBrowser<Punish> {
+public abstract class AbstractPunishBrowser extends AbstractBrowser<Punish> {
 
   protected final PlayerProvider playerProvider;
 
@@ -87,6 +87,8 @@ public class AbstractPunishBrowser extends AbstractBrowser<Punish> {
   // Methods that might be overridden
   // ----------------------------------------------------------------------------------------------------
 
+  protected abstract void redrawForPlayer(final Player player);
+
   @Nullable
   protected List<String> loresToAdd(final Punish punish) {
     return null;
@@ -114,6 +116,11 @@ public class AbstractPunishBrowser extends AbstractBrowser<Punish> {
       @Override
       public void onConfirm() {
         Providers.storageProvider().removePunish(punish);
+      }
+
+      @Override
+      protected void showParent() {
+        redrawForPlayer(player);
       }
     }.displayTo(player);
   }

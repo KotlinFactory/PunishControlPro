@@ -19,7 +19,7 @@ public abstract class AbstractConfirmMenu extends Menu implements Schedulable {
   public AbstractConfirmMenu(final Menu parent) {
     super(parent);
     setSize(9);
-    setTitle("&aConfirm");
+    setTitle("&8Confirm");
   }
 
   public AbstractConfirmMenu(
@@ -27,7 +27,7 @@ public abstract class AbstractConfirmMenu extends Menu implements Schedulable {
       final boolean returnMakesNewInstance) {
     super(parent, returnMakesNewInstance);
     setSize(9);
-    setTitle("&aConfirm");
+    setTitle("&8Confirm");
   }
 
   public abstract void onConfirm();
@@ -39,10 +39,10 @@ public abstract class AbstractConfirmMenu extends Menu implements Schedulable {
     if (getViewer() == null) {
       return;
     }
-//    async(() -> {
+    async(() -> {
       getParent().displayTo(getViewer());
       getParent().restartMenu();
-//    });
+    });
   }
 
   @Override
@@ -79,5 +79,10 @@ public abstract class AbstractConfirmMenu extends Menu implements Schedulable {
           "&7See console & report this error with your error.log");
     }
     showParent();
+  }
+
+  @Override
+  protected String[] getInfo() {
+    return new String[]{"&7Apply action"};
   }
 }

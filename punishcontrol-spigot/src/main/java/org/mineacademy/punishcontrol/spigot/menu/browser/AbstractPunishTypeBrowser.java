@@ -10,8 +10,8 @@ import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.punishcontrol.core.punish.PunishType;
 import org.mineacademy.punishcontrol.spigot.util.ItemStacks;
 
-public abstract class AbstractPunishTypeBrowser extends
-    AbstractBrowser<PunishType> {
+public abstract class AbstractPunishTypeBrowser
+    extends AbstractBrowser<PunishType> {
 
   protected AbstractPunishTypeBrowser(final Menu parent) {
     super(parent, Arrays.asList(PunishType.values()));
@@ -31,7 +31,7 @@ public abstract class AbstractPunishTypeBrowser extends
       final Player player,
       final PunishType punishType,
       final ClickType click) {
-      onClick(punishType);
+    onClick(punishType);
   }
 
   protected abstract void onClick(final PunishType punishType);

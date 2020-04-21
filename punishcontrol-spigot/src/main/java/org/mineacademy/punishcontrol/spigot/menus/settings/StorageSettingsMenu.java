@@ -21,8 +21,6 @@ public final class StorageSettingsMenu extends AbstractSettingsMenu {
   }
 
   public static void showTo(@NonNull final Player player) {
-    DaggerSpigotComponent.create().mysqlModule().displayTo(player);
-
-    //		return MySQLStorageProvider.getInstance (Providers.workingDirectoryProvider());
+    DaggerSpigotComponent.create().mysqlModule().displayTo(player, true);
   }
 }

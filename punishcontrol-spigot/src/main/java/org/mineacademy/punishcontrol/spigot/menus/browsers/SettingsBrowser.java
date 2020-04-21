@@ -14,7 +14,7 @@ import org.mineacademy.punishcontrol.spigot.menus.settings.SettingTypes;
 public final class SettingsBrowser extends AbstractBrowser<SettingTypes> {
 
   public static void showTo(@NonNull final Player player) {
-    DaggerSpigotComponent.create().settingsBrowser().displayTo(player);
+    DaggerSpigotComponent.create().settingsBrowser().displayTo(player, true);
   }
 
   @Inject
@@ -33,7 +33,11 @@ public final class SettingsBrowser extends AbstractBrowser<SettingTypes> {
       final Player player,
       final SettingTypes item,
       final ClickType click) {
-      item.showMenu(getViewer());
+    if (!item.hasAccess(player)) {
+      animateTitle("&cInsufficient permission");
+      return;
+    }
+    item.showMenu(getViewer());
   }
 
   @Override

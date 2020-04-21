@@ -20,7 +20,7 @@ public class PunishedPlayerBrowser extends AbstractPlayerBrowser {
   private final StorageProvider storageProvider;
 
   public static void showTo(final Player player) {
-    Scheduler.runAsync(() -> DaggerSpigotComponent.create().punishedPlayerBrowser().displayTo(player));
+    Scheduler.runAsync(() -> DaggerSpigotComponent.create().punishedPlayerBrowser().displayTo(player, true));
   }
 
   @Inject

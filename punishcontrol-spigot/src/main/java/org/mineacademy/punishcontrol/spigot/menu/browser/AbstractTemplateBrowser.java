@@ -63,14 +63,17 @@ public abstract class AbstractTemplateBrowser extends
     return creator.build().makeMenuTool();
   }
 
+  /**
+   * Default implementation might be overridden
+   */
   @Override
-  protected final void onPageClick(
+  protected void onPageClick(
       final Player player,
       final PunishTemplate punishTemplate,
       final ClickType click) {
     if (click.isRightClick()) {
 
-      new AbstractConfirmMenu(this){
+      new AbstractConfirmMenu(this) {
         @Override
         public void onConfirm() {
           //Unregistering

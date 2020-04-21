@@ -37,7 +37,6 @@ public class PlayerInfoCommand extends AbstractSimplePunishControlCommand {
         returnTell(MORE_ARGUMENTS_AS_CONSOLE_MESSAGE);
       }
 
-
       PlayerBrowser.showTo(getPlayer());
       return;
     }
@@ -71,7 +70,8 @@ public class PlayerInfoCommand extends AbstractSimplePunishControlCommand {
       for (final Punish punish : punishes) {
         final String isActive = punish.isOld() ? "&7[&cI&7]" : "&7[&2A&7]";
         final String end =
-            punish.removed() ? "&cRemoved" : Settings.Advanced.formatDate(punish.getEndTime());
+            punish.removed() ? "&cRemoved"
+                : Settings.Advanced.formatDate(punish.getEndTime());
         tell("&7[&8" + punish.punishType() + "&7] " + isActive + " " + punish
             .reason() + "§7 ┃ Creation: "
             + Settings.Advanced.formatDate(punish.creation())
@@ -83,7 +83,6 @@ public class PlayerInfoCommand extends AbstractSimplePunishControlCommand {
       tell(" ");
       tell("&7" + Common.chatLineSmooth());
     });
-
 
     // Send info here
   }

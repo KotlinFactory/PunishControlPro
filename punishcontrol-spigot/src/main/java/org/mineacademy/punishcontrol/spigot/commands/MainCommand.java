@@ -2,8 +2,10 @@ package org.mineacademy.punishcontrol.spigot.commands;
 
 import java.util.List;
 import lombok.NonNull;
+import org.mineacademy.fo.Common;
 import org.mineacademy.fo.collection.StrictList;
 import org.mineacademy.fo.command.SimpleCommand;
+import org.mineacademy.fo.plugin.SimplePlugin;
 import org.mineacademy.punishcontrol.spigot.menus.MainMenu;
 
 public final class MainCommand extends SimpleCommand {
@@ -19,25 +21,33 @@ public final class MainCommand extends SimpleCommand {
     return new MainCommand(labels);
   }
 
-
   public static MainCommand create(final List<String> labels) {
     return create(new StrictList<>(labels));
   }
+
   @Override
   protected void onCommand() {
     checkConsole();
 
-    if (args.length != 0) {
+    if(args.length == 1
+        && ("?".equalsIgnoreCase(args[0]) || "help".equalsIgnoreCase(args[0]))){
       doHelp();
-      return;
+    }
+
+    if (args.length != 0) {
+      returnInvalidArgs();
     }
 
     MainMenu.showTo(getPlayer());
   }
 
   private void doHelp() {
-
-    tell("");
-
+    tell(Common.chatLineSmooth());
+    tell("&7"+ SimplePlugin.getNamed() + " v." + SimplePlugin.getVersion());
+    tell("&7© MineAcademy 2020");
+    for (final SimpleCommand command : SimpleCommand.getRegisteredCommands()) {
+      tell("&7/" + command.getLabel() + " &8* " + command.getDescription());
+    }
+    tell(Common.chatLineSmooth());
   }
 }

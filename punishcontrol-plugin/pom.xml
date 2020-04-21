@@ -110,7 +110,7 @@
                             <include>org.mineacademy:Foundation*</include>
                             <include>org.mineacademy:BungeeFoundation*</include>
                             <include>org.mineacademy:Protect*</include>
-                            <include>org.mineacademy:burst*</include>
+                            <include>org.mineacademy:Burst*</include>
                             <include>de.leonhard:storage*</include>
                             <include>com.github.JavaFactoryDev:LightningStorage*</include>
                             <!-- Dependency Injection -->
@@ -185,28 +185,6 @@
                 <configuration>
                     <skip>true</skip>
                 </configuration>
-            </plugin>
-            <plugin>
-                <artifactId>maven-antrun-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>moveFiles</id>
-                        <phase>install</phase>
-                        <configuration>
-                            <tasks>
-                                <copy todir="/Users/leonhard/TestServer/1.15TestServer/plugins"
-                                      flatten="true" overwrite="true"
-                                      verbose="true" failonerror="true">
-                                    <fileset dir="${basedir}/target"
-                                             includes="punishcontrol-plugin-1.0.0.jar"/>
-                                </copy>
-                            </tasks>
-                        </configuration>
-                        <goals>
-                            <goal>run</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
         <resources>

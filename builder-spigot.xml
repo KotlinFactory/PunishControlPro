@@ -17,8 +17,8 @@
              includes="**/*">
             <zipgroupfileset dir="${user.home}/.m2/repository/com/github/JavaFactoryDev/LightningStorage/3.1.1"
                              includes="**/*lightningstorage-3.1.1.jar"/>
-            <zipgroupfileset dir="${user.home}/.m2/repository/org/mineacademy/Burst/1.0.7/"
-              includes="**/*Burst-1.0.7.jar"/>
+<!--            <zipgroupfileset dir="${user.home}/.m2/repository/org/mineacademy/Burst/1.0.7/"-->
+<!--              includes="**/*Burst-1.0.7.jar"/>-->
             <zipgroupfileset dir="${user.home}/.m2/repository/com/google/dagger/dagger/2.26"
               includes="**/*dagger-2.26.jar"/>
             <zipgroupfileset dir="${user.home}/.m2/repository/javax/inject/javax.inject/1"
@@ -27,6 +27,8 @@
             <fileset dir="punishcontrol-proxy/target/classes"/>
             <fileset dir="punishcontrol-plugin/target/classes"/>
             <fileset dir="../Foundation/target/classes"/>
+            <fileset dir="../BungeeFoundation/target/classes"/>
+<!--            <fileset dir="../BungeeDesigner/Burst/target/classes"/>-->
 
         </jar>
     </target>

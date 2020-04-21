@@ -19,5 +19,4 @@ public class Players {
 	public Optional<ProxiedPlayer> find(@NonNull final UUID uuid) {
 		return Optional.ofNullable(instance.getPlayer(uuid));
 	}
-
 }

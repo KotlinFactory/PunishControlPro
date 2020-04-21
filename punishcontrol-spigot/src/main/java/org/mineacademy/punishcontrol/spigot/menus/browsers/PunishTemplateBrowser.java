@@ -25,7 +25,7 @@ public class PunishTemplateBrowser extends AbstractTemplateBrowser {
     Scheduler.runAsync(() -> {
       final val browser = DaggerSpigotComponent.create()
           .punishTemplateBrowser();
-      browser.displayTo(player);
+      browser.displayTo(player, true);
     });
   }
 

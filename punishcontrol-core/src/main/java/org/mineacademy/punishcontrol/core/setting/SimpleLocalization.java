@@ -2,6 +2,8 @@ package org.mineacademy.punishcontrol.core.setting;
 
 import de.leonhard.storage.LightningBuilder;
 import de.leonhard.storage.Yaml;
+import de.leonhard.storage.internal.settings.ConfigSettings;
+import de.leonhard.storage.internal.settings.DataType;
 import de.leonhard.storage.util.Valid;
 
 /**
@@ -109,9 +111,10 @@ public abstract class SimpleLocalization extends YamlStaticConfig {
   protected final Yaml getConfigInstance() {
     final String name = "messages_" + SimpleSettings.LOCALE_PREFIX;
     return LightningBuilder
-        .fromPath(name,
-            DATA.getDataFolder().getAbsolutePath() + "/localization/")
+        .fromPath(name, DATA.getDataFolder().getAbsolutePath() + "/localization/")
         .addInputStreamFromResource("localization/" + name + ".yml")
+        .setConfigSettings(ConfigSettings.PRESERVE_COMMENTS)
+        .setDataType(DataType.SORTED)
         .createConfig();
   }
 
@@ -129,6 +132,7 @@ public abstract class SimpleLocalization extends YamlStaticConfig {
     pathPrefix(null);
 
     if ((VERSION = getInteger("Version")) != getConfigVersion()) {
+      //update
       set("Version", getConfigVersion());
     }
   }

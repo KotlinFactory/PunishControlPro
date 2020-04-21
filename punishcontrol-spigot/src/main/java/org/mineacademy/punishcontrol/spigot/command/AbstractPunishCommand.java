@@ -116,7 +116,8 @@ public abstract class AbstractPunishCommand
         break;
       case 1:
 
-        if ("?".equalsIgnoreCase(finalArgs.get(0)) || "help".equalsIgnoreCase(finalArgs.get(0))) {
+        if ("?".equalsIgnoreCase(finalArgs.get(0)) || "help"
+            .equalsIgnoreCase(finalArgs.get(0))) {
           returnTell(getMultilineUsageMessage());
         }
 
@@ -124,7 +125,8 @@ public abstract class AbstractPunishCommand
           returnTell(MORE_ARGUMENTS_AS_CONSOLE_MESSAGE);
         }
         // Choose action (PUNISH)
-        PunishCreatorMenu.showTo(getPlayer(), PunishBuilder.of(punishType).target(findTarget(finalArgs)));
+        PunishCreatorMenu.showTo(getPlayer(),
+            PunishBuilder.of(punishType).target(findTarget(finalArgs)));
         break;
       case 2:
         final val optionalTemplate = PunishTemplates.fromName(finalArgs.get(1));
@@ -136,9 +138,10 @@ public abstract class AbstractPunishCommand
 
         final val template = optionalTemplate.get();
 
-        checkBoolean(Groups.hasAccess(isPlayer()
-            ? getPlayer().getUniqueId()
-            : FoConstants.CONSOLE,
+        checkBoolean(Groups.hasAccess(
+            isPlayer()
+                ? getPlayer().getUniqueId()
+                : FoConstants.CONSOLE,
             template), "&cYou can't access this template.");
 
         checkBoolean(
@@ -184,7 +187,9 @@ public abstract class AbstractPunishCommand
             "&cInvalid time format! Example: 10days");
 
         checkBoolean(Groups.hasAccess(
-            (isPlayer() ? getPlayer().getUniqueId() : FoConstants.CONSOLE),
+            (isPlayer()
+                ? getPlayer().getUniqueId()
+                : FoConstants.CONSOLE),
             punishType,
             punishDuration),
             "&cThis action would exceed your limits."

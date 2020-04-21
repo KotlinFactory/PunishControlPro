@@ -36,7 +36,7 @@ public final class MainMenu extends ChangingMenu {
   public static void showTo(@NonNull final Player player) {
     Scheduler.runAsync(() -> {
       final val menu = DaggerSpigotComponent.create().menuMain();
-      menu.displayTo(player);
+      menu.displayTo(player, true);
     });
   }
 
@@ -72,9 +72,9 @@ public final class MainMenu extends ChangingMenu {
       public ItemStack getItem() {
         return ItemCreator
             .of(CompMaterial.CHEST,
-                "&6Punishes",
+                "&6Punishments",
                 "",
-                "Browse created Punishes.",
+                "Browse created punishments.",
                 "Right click to view",
                 "punished players"
             )

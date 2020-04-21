@@ -10,10 +10,8 @@ import org.mineacademy.fo.command.SimpleCommand;
 import org.mineacademy.fo.plugin.SimplePlugin;
 import org.mineacademy.punishcontrol.core.SimplePunishControlPlugin;
 import org.mineacademy.punishcontrol.core.permission.Permission;
-import org.mineacademy.punishcontrol.core.permission.PermissionType;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.settings.Settings;
-import org.mineacademy.punishcontrol.core.util.Permissions;
 import org.mineacademy.punishcontrol.spigot.commands.MainCommand;
 import org.mineacademy.punishcontrol.spigot.impl.SpigotExceptionHandler;
 import org.mineacademy.punishcontrol.spigot.impl.SpigotPlayerProvider;
@@ -34,7 +32,6 @@ public final class PunishControl
    */
   @Override
   protected void onPluginPreStart() {
-    //
     Providers.pluginDataProvider(SpigotPluginDataProvider.create());
   }
 
@@ -109,15 +106,6 @@ public final class PunishControl
       }
       result.add(Permission.of(command.getPermission(), command.getDescription()));
     }
-
-    result.add(Permission
-        .of(Permissions.PERMISSION_MENU_SETTINGS_STORAGE,
-        "Access the storage-settings")
-        .type(PermissionType.MENU));
-
-    result.add(Permission
-        .of(Permissions.PERMISSION_MENU_SETTINGS_PLAYER)
-        .type(PermissionType.MENU));
 
     return result;
   }
