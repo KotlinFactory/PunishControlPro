@@ -8,18 +8,11 @@ import org.mineacademy.bfo.plugin.SimplePlugin;
 import org.mineacademy.burst.Burst;
 import org.mineacademy.punishcontrol.core.CoreComponent;
 import org.mineacademy.punishcontrol.core.DaggerCoreComponent;
-import org.mineacademy.punishcontrol.core.SimplePunishControlPlugin;
+import org.mineacademy.punishcontrol.core.PunishControlPluginBootstrap;
 import org.mineacademy.punishcontrol.core.permission.Permission;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.settings.Settings;
-import org.mineacademy.punishcontrol.proxy.commands.CommandBan;
-import org.mineacademy.punishcontrol.proxy.commands.CommandKick;
-import org.mineacademy.punishcontrol.proxy.commands.CommandMain;
-import org.mineacademy.punishcontrol.proxy.commands.CommandMute;
-import org.mineacademy.punishcontrol.proxy.commands.CommandReport;
-import org.mineacademy.punishcontrol.proxy.commands.CommandUnBan;
-import org.mineacademy.punishcontrol.proxy.commands.CommandUnMute;
-import org.mineacademy.punishcontrol.proxy.commands.CommandWarn;
+import org.mineacademy.punishcontrol.proxy.commands.MainCommand;
 import org.mineacademy.punishcontrol.proxy.impl.ProxyExceptionHandler;
 import org.mineacademy.punishcontrol.proxy.impl.ProxyPlayerProvider;
 import org.mineacademy.punishcontrol.proxy.impl.ProxyPluginDataProvider;
@@ -27,10 +20,20 @@ import org.mineacademy.punishcontrol.proxy.impl.ProxyPunishProvider;
 import org.mineacademy.punishcontrol.proxy.impl.ProxyTextureProvider;
 import org.mineacademy.punishcontrol.proxy.listeners.ProxyListenerImpl;
 
-public final class PunishControl extends SimplePlugin implements SimplePunishControlPlugin {
+public final class PunishControl extends SimplePlugin implements
+    PunishControlPluginBootstrap {
 
   private final ProxyComponent proxyModule = DaggerProxyComponent.create();
   private final CoreComponent coreModule = DaggerCoreComponent.create();
+
+
+  /**
+   * Setting providers needed before the start
+   */
+  @Override
+  protected void onPluginPreStart() {
+    Providers.pluginDataProvider(ProxyPluginDataProvider.create());
+  }
 
   @Override
   protected void onPluginStart() {
@@ -44,14 +47,16 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
 
   @Override
   public void registerCommands() {
-    registerCommand(CommandBan.newInstance());
-    registerCommand(CommandKick.newInstance());
-    registerCommand(CommandMute.newInstance());
-    registerCommand(CommandReport.newInstance());
-    registerCommand(CommandUnBan.newInstance());
-    registerCommand(CommandUnMute.newInstance());
-    registerCommand(CommandWarn.newInstance());
-    registerCommand(CommandMain.create(Settings.MAIN_COMMAND_ALIASES));
+    registerCommand(MainCommand.create(Settings.MAIN_COMMAND_ALIASES));
+    registerCommand(proxyModule.commandKick());
+    registerCommand(proxyModule.commandBan());
+    registerCommand(proxyModule.commandMute());
+    registerCommand(proxyModule.commandWarn());
+
+    registerCommand(proxyModule.commandUnBan());
+    registerCommand(proxyModule.commandUnMute());
+    registerCommand(proxyModule.commandUnWarn());
+    registerCommand(proxyModule.commandPlayerInfo());
   }
 
   @Override
@@ -63,11 +68,8 @@ public final class PunishControl extends SimplePlugin implements SimplePunishCon
   @Override
   public void registerProviders() {
     Providers.playerProvider(ProxyPlayerProvider.newInstance());
-    org.mineacademy.burst.provider.Providers.setUuidNameProvider(ProxyPlayerProvider.newInstance());
-    // Working directory
-    Providers.pluginDataProvider(ProxyPluginDataProvider.create());
-    // Player providers
-
+    org.mineacademy.burst.provider.Providers
+        .setUuidNameProvider(ProxyPlayerProvider.newInstance());
     // TextureProvider
     Providers.textureProvider(ProxyTextureProvider.create());
     // Broadcaster

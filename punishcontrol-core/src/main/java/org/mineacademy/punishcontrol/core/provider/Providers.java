@@ -67,7 +67,7 @@ public final class Providers {
 
   @Provides
   public static PluginDataProvider pluginDataProvider() {
-    Valid.notNull(pluginDataProvider, "WorkingDirectoryProvider not yet set");
+    Valid.notNull(pluginDataProvider, "PluginDataProvider not yet set");
 
     return pluginDataProvider;
   }

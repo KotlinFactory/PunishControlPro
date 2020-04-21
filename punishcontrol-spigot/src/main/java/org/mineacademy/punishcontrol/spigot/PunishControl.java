@@ -8,7 +8,7 @@ import org.mineacademy.fo.Common;
 import org.mineacademy.fo.MinecraftVersion.V;
 import org.mineacademy.fo.command.SimpleCommand;
 import org.mineacademy.fo.plugin.SimplePlugin;
-import org.mineacademy.punishcontrol.core.SimplePunishControlPlugin;
+import org.mineacademy.punishcontrol.core.PunishControlPluginBootstrap;
 import org.mineacademy.punishcontrol.core.permission.Permission;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.settings.Settings;
@@ -23,12 +23,12 @@ import org.mineacademy.punishcontrol.spigot.settings.SimpleSettingsInjector;
 
 public final class PunishControl
     extends SimplePlugin
-    implements SimplePunishControlPlugin {
+    implements PunishControlPluginBootstrap {
   private final SpigotComponent spigotModule = DaggerSpigotComponent.create();
 
+
   /**
-   * Called before we start loading the plugin, but after {@link
-   * #onPluginLoad()}
+   * Setting providers needed before the start
    */
   @Override
   protected void onPluginPreStart() {

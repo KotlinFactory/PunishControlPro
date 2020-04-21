@@ -46,6 +46,10 @@ public class Punishes {
     return null;
   }
 
+  public String formKickedMessage(final String reason) {
+    return reason;
+  }
+
   /**
    * Form message to send to a player when the player was punished
    */

@@ -19,6 +19,7 @@ import org.mineacademy.punishcontrol.core.punish.Punish;
 import org.mineacademy.punishcontrol.core.punish.PunishBuilder;
 import org.mineacademy.punishcontrol.core.punish.PunishDuration;
 import org.mineacademy.punishcontrol.core.punish.PunishType;
+import org.mineacademy.punishcontrol.core.punish.Punishes;
 import org.mineacademy.punishcontrol.core.punish.template.PunishTemplates;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 import org.mineacademy.punishcontrol.spigot.Scheduler;
@@ -170,7 +171,7 @@ public abstract class AbstractPunishCommand
           Scheduler.runSync(() -> {
             Players.find(target).ifPresent((player -> {
 //          TODO: Format Reason!
-              player.kickPlayer(reason.toString());
+              player.kickPlayer(Punishes.formOnPunishMessage(punish));
             }));
           });
         });
@@ -249,6 +250,9 @@ public abstract class AbstractPunishCommand
             return;
           }
 
+          Players.find(target).ifPresent(targetPlayer -> {
+            targetPlayer.kickPlayer(Punishes.formOnPunishMessage(punish));
+          });
           LagCatcher.end("spigot-cmd-save-async");
         });
         break;

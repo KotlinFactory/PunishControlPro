@@ -24,7 +24,7 @@ import org.mineacademy.punishcontrol.core.util.PunishControlPermissions;
 /**
  * Class for a unified startup of our Main-Plugin classes
  */
-public interface SimplePunishControlPlugin {
+public interface PunishControlPluginBootstrap {
 
   CoreComponent coreModule = DaggerCoreComponent.builder().build();
   String PREFIX = "§3Punish§bControl§5+ §7┃ ";
