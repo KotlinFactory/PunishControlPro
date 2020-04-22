@@ -27,8 +27,6 @@ import org.mineacademy.punishcontrol.spigot.menus.settings.StorageSettingsMenu;
 @Component(modules = {Providers.class, SpigotModule.class})
 public interface SpigotComponent {
 
-  StorageSettingsMenu mysqlModule();
-
   // ----------------------------------------------------------------------------------------------------
   // Listener
   // ----------------------------------------------------------------------------------------------------
@@ -78,4 +76,6 @@ public interface SpigotComponent {
   StorageSettingsMenu mySqlSettingsMenu();
 
   LanguageSettingsMenu languageSettingsMenu();
+
+  StorageSettingsMenu storageMenu();
 }

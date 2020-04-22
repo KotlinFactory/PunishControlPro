@@ -61,7 +61,6 @@ public class ChangingMenu extends Menu implements Schedulable {
       }
     }.runTaskTimerAsynchronously(SimplePlugin.getInstance(), updateDelay(),
         updateDelay());
-
   }
 
   // ----------------------------------------------------------------------------------------------------

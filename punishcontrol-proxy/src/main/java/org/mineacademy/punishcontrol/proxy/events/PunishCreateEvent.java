@@ -16,7 +16,7 @@ public class PunishCreateEvent extends Event implements Cancellable {
   private final Punish punish;
   private boolean cancelled;
 
-  public static PunishCreateEvent newInstance(final Punish punish) {
+  public static PunishCreateEvent create(final Punish punish) {
     return new PunishCreateEvent(punish);
   }
 }

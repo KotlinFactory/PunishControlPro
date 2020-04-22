@@ -1,0 +1,85 @@
+package org.mineacademy.punishcontrol.proxy.menu.browser;
+
+import de.exceptionflug.mccommons.inventories.proxy.utils.ItemUtils;
+import de.exceptionflug.protocolize.items.ItemStack;
+import java.util.Collection;
+import java.util.List;
+import java.util.UUID;
+import org.jetbrains.annotations.Nullable;
+import org.mineacademy.burst.item.Item;
+import org.mineacademy.burst.menu.AbstractBrowser;
+import org.mineacademy.burst.menu.Menu;
+import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
+import org.mineacademy.punishcontrol.core.providers.TextureProvider;
+
+public abstract class AbstractPlayerBrowser extends AbstractBrowser<UUID> {
+
+  protected final PlayerProvider playerProvider;
+  protected final TextureProvider textureProvider;
+
+  public AbstractPlayerBrowser(
+      final PlayerProvider playerProvider,
+      final TextureProvider textureProvider,
+      final Menu mainMenu) {
+    this(playerProvider, textureProvider, mainMenu, false);
+  }
+
+  public AbstractPlayerBrowser(
+      final PlayerProvider playerProvider,
+      final TextureProvider textureProvider,
+      final Menu mainMenu,
+      final boolean onlineOnly) {
+
+    this(
+        playerProvider, textureProvider, mainMenu,
+        onlineOnly
+            ? playerProvider.getOnlinePlayers()
+            : playerProvider.getOfflinePlayers()
+    );
+  }
+
+  protected AbstractPlayerBrowser(
+      final PlayerProvider playerProvider,
+      final TextureProvider textureProvider,
+      final Menu mainMenu,
+      final Collection<UUID> players
+  ) {
+    super("Players", mainMenu, players);
+    this.playerProvider = playerProvider;
+    this.textureProvider = textureProvider;
+    setTitle("&8Players");
+  }
+
+  // ----------------------------------------------------------------------------------------------------
+  // Overridden methods
+  // ----------------------------------------------------------------------------------------------------
+
+  @Nullable
+  protected List<String> lore(final UUID uuid) {
+    return null;
+  }
+
+  @Override
+  protected final ItemStack convertToItemStack(final UUID uuid) {
+    final String name = playerProvider.findNameUnsafe(uuid);
+    final String hash = textureProvider.getSkinTexture(uuid);
+
+    final Item item = Item.of(hash).name("§3" + name);
+
+    if (lore(uuid) == null) {
+      item.lore("&7Choose action");
+    } else {
+      item.lore(lore(uuid));
+    }
+
+    return ItemUtils.addGlow(item.stack());
+  }
+
+  @Override
+  protected final String[] getInfo() {
+    return new String[]{
+        "&7Menu to select",
+        "&7an player"
+    };
+  }
+}

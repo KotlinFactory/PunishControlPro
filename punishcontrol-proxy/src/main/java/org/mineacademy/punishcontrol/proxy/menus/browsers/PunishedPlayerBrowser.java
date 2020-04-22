@@ -1,0 +1,48 @@
+package org.mineacademy.punishcontrol.proxy.menus.browsers;
+
+import de.exceptionflug.mccommons.inventories.api.ClickType;
+import java.util.List;
+import java.util.UUID;
+import javax.inject.Inject;
+import org.jetbrains.annotations.Nullable;
+import org.mineacademy.bfo.settings.SimpleLocalization.Player;
+import org.mineacademy.burst.util.Scheduler;
+import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
+import org.mineacademy.punishcontrol.core.providers.TextureProvider;
+import org.mineacademy.punishcontrol.core.storage.StorageProvider;
+import org.mineacademy.punishcontrol.proxy.DaggerProxyComponent;
+import org.mineacademy.punishcontrol.proxy.ItemUtil;
+import org.mineacademy.punishcontrol.proxy.menu.browser.AbstractPlayerBrowser;
+import org.mineacademy.punishcontrol.proxy.menus.ChooseActionMenu;
+import org.mineacademy.punishcontrol.proxy.menus.MainMenu;
+
+public class PunishedPlayerBrowser extends AbstractPlayerBrowser {
+
+  private final StorageProvider storageProvider;
+
+  public static void showTo(final Player player) {
+    Scheduler.runAsync(() -> DaggerProxyComponent
+        .create().punishedPlayerBrowser().displayTo(player));
+  }
+
+  @Inject
+  public PunishedPlayerBrowser(
+      final PlayerProvider playerProvider,
+      final TextureProvider textureProvider,
+      final StorageProvider storageProvider,
+      final MainMenu mainMenu) {
+    super(playerProvider, textureProvider, mainMenu,
+        storageProvider.listPunishedPlayers());
+    this.storageProvider = storageProvider;
+  }
+
+  @Override
+  protected @Nullable List<String> lore(final UUID target) {
+    return ItemUtil.loreForPlayer(target, storageProvider);
+  }
+
+  @Override
+  protected void onClick(final ClickType clickType, final UUID uuid) {
+    ChooseActionMenu.showTo(getPlayer(), uuid);
+  }
+}

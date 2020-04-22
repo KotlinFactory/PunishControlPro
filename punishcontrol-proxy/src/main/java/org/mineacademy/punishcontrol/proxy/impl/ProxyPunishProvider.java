@@ -86,7 +86,7 @@ public final class ProxyPunishProvider implements PunishProvider {
     final Cancellable event =
         ProxyServer.getInstance()
             .getPluginManager()
-            .callEvent(PunishCreateEvent.newInstance(punish));
+            .callEvent(PunishCreateEvent.create(punish));
     return event.isCancelled();
   }
 }

@@ -23,6 +23,11 @@ public abstract class AbstractDurationChooser
 
   public static final int SIZE = 9 * 5;
   public static final int EXPIRATION_CLOCK_SLOT = 26;
+  public static final int YEAR_SLOT = 0;
+  public static final int PERMANENT_SLOT = 8;
+  public static final int MONTH_SLOT = 9;
+  public static final int DAY_SLOT = 9 * 3;
+  public static final int HOUR_SLOT = 9 * 4;
 
   private final Button year, month, day, hour;
 
@@ -136,7 +141,6 @@ public abstract class AbstractDurationChooser
       @Override
       public void onClickedInMenu(
           final Player player, final Menu menu, final ClickType click) {
-        System.out.println("permanent!!");
         makePermanent();
       }
 
@@ -218,23 +222,23 @@ public abstract class AbstractDurationChooser
       final boolean cancelled) {
     super.onMenuClick(player, slot, action, click, cursor, clicked, cancelled);
 
-    if (slot == 0) {
+    if (slot == YEAR_SLOT) {
       addOrRemoveYear(click);
     }
 
-    if (slot == 8) {
+    if (slot == PERMANENT_SLOT) {
       makePermanent();
     }
 
-    if (slot == 9) {
+    if (slot == MONTH_SLOT) {
       addOrRemoveMonth(click);
     }
 
-    if (slot == 9 * 3) {
+    if (slot == DAY_SLOT) {
       addOrRemoveDay(click);
     }
 
-    if (slot == 9 * 4) {
+    if (slot == HOUR_SLOT) {
       addOrRemoveHour(click);
     }
   }
@@ -248,6 +252,12 @@ public abstract class AbstractDurationChooser
   }
 
   private void makePermanent() {
+    if (isPermanent()) {
+      ms = 1000;
+      animateTitle("&8Reset duration");
+      return;
+    }
+
     ms = -1;
     setTitle("&cPermanent");
     animateTitle("&7Made the punishment permanent");
@@ -272,8 +282,8 @@ public abstract class AbstractDurationChooser
           .of(CompMaterial.CLOCK,
               "&6Expiration",
               "&7This punish ",
-              "&7will expire",
-              expiration)
+              "&7will expire on",
+              "&7" + expiration)
           .build()
           .make();
       if (getViewer() != null) {

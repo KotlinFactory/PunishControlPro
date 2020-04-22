@@ -117,8 +117,8 @@ public abstract class AbstractPunishCommand
         break;
       case 1:
 
-        if ("?".equalsIgnoreCase(finalArgs.get(0)) || "help"
-            .equalsIgnoreCase(finalArgs.get(0))) {
+        if ("?".equalsIgnoreCase(finalArgs.get(0))
+            || "help".equalsIgnoreCase(finalArgs.get(0))) {
           returnTell(getMultilineUsageMessage());
         }
 

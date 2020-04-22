@@ -20,7 +20,8 @@ import org.mineacademy.punishcontrol.proxy.impl.ProxyPunishProvider;
 import org.mineacademy.punishcontrol.proxy.impl.ProxyTextureProvider;
 import org.mineacademy.punishcontrol.proxy.listeners.ProxyListenerImpl;
 
-public final class PunishControl extends SimplePlugin implements
+public final class
+PunishControl extends SimplePlugin implements
     PunishControlPluginBootstrap {
 
   private final ProxyComponent proxyModule = DaggerProxyComponent.create();

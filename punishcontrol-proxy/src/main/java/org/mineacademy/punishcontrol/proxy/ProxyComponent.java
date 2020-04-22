@@ -11,8 +11,19 @@ import org.mineacademy.punishcontrol.proxy.commands.UnMuteCommand;
 import org.mineacademy.punishcontrol.proxy.commands.UnWarnCommand;
 import org.mineacademy.punishcontrol.proxy.commands.WarnCommand;
 import org.mineacademy.punishcontrol.proxy.listeners.ProxyDataSetter;
+import org.mineacademy.punishcontrol.proxy.menus.MainMenu;
+import org.mineacademy.punishcontrol.proxy.menus.browsers.AllPunishesBrowser;
+import org.mineacademy.punishcontrol.proxy.menus.browsers.PlayerBrowser;
+import org.mineacademy.punishcontrol.proxy.menus.browsers.PunishTemplateBrowser;
+import org.mineacademy.punishcontrol.proxy.menus.browsers.PunishedPlayerBrowser;
+import org.mineacademy.punishcontrol.proxy.menus.browsers.SettingsBrowser;
+import org.mineacademy.punishcontrol.proxy.menus.punish.PunishCreatorMenu;
+import org.mineacademy.punishcontrol.proxy.menus.settings.LanguageSettingsMenu;
+import org.mineacademy.punishcontrol.proxy.menus.settings.StorageSettingsMenu;
 
-/** Interface implemented by dagger */
+/**
+ * Interface implemented by dagger
+ */
 @Component(modules = {Providers.class, ProxyModule.class})
 public interface ProxyComponent {
 
@@ -20,7 +31,6 @@ public interface ProxyComponent {
   // Listener
   // ----------------------------------------------------------------------------------------------------
   ProxyDataSetter proxyDataSetter();
-
 
   // ----------------------------------------------------------------------------------------------------
   // Commands
@@ -41,4 +51,34 @@ public interface ProxyComponent {
   UnWarnCommand commandUnWarn();
 
   PlayerInfoCommand commandPlayerInfo();
+
+  // ----------------------------------------------------------------------------------------------------
+  // Menus
+  // ----------------------------------------------------------------------------------------------------
+
+  // ----------------------------------------------------------------------------------------------------
+  // Menus
+  // ----------------------------------------------------------------------------------------------------
+
+  MainMenu menuMain();
+
+  PlayerBrowser playerBrowserMenu();
+
+  AllPunishesBrowser punishBrowserMenu();
+
+  PunishTemplateBrowser punishTemplateBrowser();
+
+  PunishCreatorMenu punishCreatorMenu();
+
+  PunishedPlayerBrowser punishedPlayerBrowser();
+
+  //Settings - Menus
+
+  SettingsBrowser settingsBrowser();
+
+  StorageSettingsMenu mySqlSettingsMenu();
+
+  LanguageSettingsMenu languageSettingsMenu();
+
+  StorageSettingsMenu storageSettingsMenu();
 }

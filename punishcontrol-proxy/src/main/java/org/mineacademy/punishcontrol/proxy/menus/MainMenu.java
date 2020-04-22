@@ -1,29 +1,27 @@
-package org.mineacademy.punishcontrol.spigot.menus;
+package org.mineacademy.punishcontrol.proxy.menus;
 
+import de.exceptionflug.protocolize.items.ItemStack;
 import java.util.Arrays;
 import java.util.Collections;
+import javafx.scene.control.Button;
 import javax.inject.Inject;
 import lombok.NonNull;
 import lombok.val;
-import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.ClickType;
-import org.bukkit.inventory.ItemStack;
-import org.mineacademy.fo.menu.Menu;
-import org.mineacademy.fo.menu.button.Button;
-import org.mineacademy.fo.menu.model.ItemCreator;
-import org.mineacademy.fo.plugin.SimplePlugin;
-import org.mineacademy.fo.remain.CompMaterial;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
+import org.mineacademy.bfo.plugin.SimplePlugin;
+import org.mineacademy.bfo.settings.SimpleLocalization.Player;
+import org.mineacademy.burst.item.ChangingButton;
+import org.mineacademy.burst.item.ItemStacks;
+import org.mineacademy.burst.menu.ChangingMenu;
+import org.mineacademy.burst.menu.Menu;
+import org.mineacademy.burst.util.Scheduler;
 import org.mineacademy.punishcontrol.core.providers.TextureProvider;
-import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
-import org.mineacademy.punishcontrol.spigot.Scheduler;
-import org.mineacademy.punishcontrol.spigot.menu.ChangingMenu;
-import org.mineacademy.punishcontrol.spigot.menu.buttons.ChangingButton;
-import org.mineacademy.punishcontrol.spigot.menus.browsers.AllPunishesBrowser;
-import org.mineacademy.punishcontrol.spigot.menus.browsers.PlayerBrowser;
-import org.mineacademy.punishcontrol.spigot.menus.browsers.PunishedPlayerBrowser;
-import org.mineacademy.punishcontrol.spigot.menus.browsers.SettingsBrowser;
-import org.mineacademy.punishcontrol.spigot.menus.punish.PunishCreatorMenu;
-import org.mineacademy.punishcontrol.spigot.util.ItemStacks;
+import org.mineacademy.punishcontrol.proxy.DaggerProxyComponent;
+import org.mineacademy.punishcontrol.proxy.menus.browsers.AllPunishesBrowser;
+import org.mineacademy.punishcontrol.proxy.menus.browsers.PlayerBrowser;
+import org.mineacademy.punishcontrol.proxy.menus.browsers.PunishedPlayerBrowser;
+import org.mineacademy.punishcontrol.proxy.menus.browsers.SettingsBrowser;
+import org.mineacademy.punishcontrol.proxy.menus.punish.PunishCreatorMenu;
 
 public final class MainMenu extends ChangingMenu {
 
@@ -32,26 +30,27 @@ public final class MainMenu extends ChangingMenu {
   private final Button newButton;
   private final Button settingsButton;
 
-  public static void showTo(@NonNull final Player player) {
+  public static void showTo(@NonNull final ProxiedPlayer player) {
     Scheduler.runAsync(() -> {
-      final val menu = DaggerSpigotComponent.create().menuMain();
-      menu.displayTo(player, true);
+      final val menu = DaggerProxyComponent.create().menuMain();
+      menu.displayTo(player);
     });
   }
 
+
   @Inject
   public MainMenu(final TextureProvider textureProvider) {
-    super(null, Collections.singletonList(
-        ChangingButton
-            .fromCustomHashes(
-                textureProvider.listTextures())
-            .name("&6Players")
-            .slot(24)
-            .lore("&7View players", "&7to select", "&7one for more",
-                "&7actions")
-    ));
-
-    setSize(9 * 5);
+    super("MainMenu",
+        Collections.singletonList(
+            ChangingButton
+                .fromCustomHashes(
+                    textureProvider.listTextures())
+                .name("&6Players")
+                .slot(24)
+                .lore("&7View players", "&7to select", "&7one for more",
+                    "&7actions")),
+        9 * 5
+    );
     setTitle("§3Punish§bControl");
 
     punishesButton = new Button() {

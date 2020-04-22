@@ -8,7 +8,6 @@ import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 import org.mineacademy.punishcontrol.proxy.command.AbstractPunishCommand;
 
 public final class BanCommand extends AbstractPunishCommand {
-
   @Inject
   public BanCommand(
       final @NonNull StorageProvider storageProvider,
