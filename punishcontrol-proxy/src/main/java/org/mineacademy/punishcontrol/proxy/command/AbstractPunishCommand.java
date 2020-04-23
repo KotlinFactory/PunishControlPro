@@ -22,6 +22,7 @@ import org.mineacademy.punishcontrol.core.punish.Punishes;
 import org.mineacademy.punishcontrol.core.punish.template.PunishTemplates;
 import org.mineacademy.punishcontrol.core.settings.Replacer;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
+import org.mineacademy.punishcontrol.proxy.menus.punish.PunishCreatorMenu;
 
 /**
  * Command to handle (Un) banning, muting, warning, reporting & kicking players
@@ -111,7 +112,7 @@ public abstract class AbstractPunishCommand
           returnTell(MORE_ARGUMENTS_AS_CONSOLE_MESSAGE);
         }
 
-//        PunishCreatorMenu.showTo(getPlayer(), PunishBuilder.of(punishType));
+        PunishCreatorMenu.showTo(getPlayer(), PunishBuilder.of(punishType));
         break;
       case 1:
 
@@ -124,8 +125,8 @@ public abstract class AbstractPunishCommand
           returnTell(MORE_ARGUMENTS_AS_CONSOLE_MESSAGE);
         }
         // Choose action (PUNISH)
-//        PunishCreatorMenu.showTo(getPlayer(),
-//            PunishBuilder.of(punishType).target(findTarget(finalArgs)));
+        PunishCreatorMenu.showTo(getPlayer(),
+            PunishBuilder.of(punishType).target(findTarget(finalArgs)));
         break;
       case 2:
         final val optionalTemplate = PunishTemplates.fromName(finalArgs.get(1));

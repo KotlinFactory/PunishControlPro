@@ -36,6 +36,9 @@ public final class PunishTemplateCreatorMenu extends Menu {
   private static final int CHOOSE_PERMISSION_SLOT = 25;
   public static final int MAKE_SILENT_SLOT = 29;
   public static final int MAKE_SUPER_SILENT_SLOT = 33;
+  public static final int CHOOSE_TYPE_SLOT = 4;
+  public static final int CHOOSE_DURATION_SLOT = 40;
+  public static final int APPLY_SLOT = 22;
 
   @Getter
   private final PunishTemplate punishTemplate;
@@ -209,6 +212,7 @@ public final class PunishTemplateCreatorMenu extends Menu {
       @Override
       public void onClickedInMenu(
           final Player player, final Menu menu, final ClickType click) {
+
         if (punishTemplate.silent()) {
           punishTemplate.silent(false);
         }
@@ -261,7 +265,7 @@ public final class PunishTemplateCreatorMenu extends Menu {
   @Override
   public ItemStack getItemAt(final int slot) {
 
-    if (slot == 4) {
+    if (slot == CHOOSE_TYPE_SLOT) {
       return ItemCreator
           .of(ItemStacks.forPunishType(punishTemplate.punishType()))
           .name("&6Change type")
@@ -292,7 +296,7 @@ public final class PunishTemplateCreatorMenu extends Menu {
           .make();
     }
 
-    if (slot == 22) {
+    if (slot == APPLY_SLOT) {
       return applyAndSaveTemplate.getItem();
     }
 
@@ -314,7 +318,7 @@ public final class PunishTemplateCreatorMenu extends Menu {
       return makeSuperSilent.getItem();
     }
 
-    if (slot == 40) {
+    if (slot == CHOOSE_DURATION_SLOT) {
       return chooseDuration.getItem();
     }
 
@@ -327,7 +331,7 @@ public final class PunishTemplateCreatorMenu extends Menu {
       final int slot,
       final ItemStack clicked) {
 
-    if (slot == 4) {
+    if (slot == CHOOSE_TYPE_SLOT) {
       new AbstractPunishTypeBrowser(this) {
         @Override
         protected void onClick(final PunishType punishType) {

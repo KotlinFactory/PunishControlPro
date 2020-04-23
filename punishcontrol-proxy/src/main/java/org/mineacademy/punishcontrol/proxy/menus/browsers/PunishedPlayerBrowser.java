@@ -4,8 +4,8 @@ import de.exceptionflug.mccommons.inventories.api.ClickType;
 import java.util.List;
 import java.util.UUID;
 import javax.inject.Inject;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
 import org.jetbrains.annotations.Nullable;
-import org.mineacademy.bfo.settings.SimpleLocalization.Player;
 import org.mineacademy.burst.util.Scheduler;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.providers.TextureProvider;
@@ -20,7 +20,7 @@ public class PunishedPlayerBrowser extends AbstractPlayerBrowser {
 
   private final StorageProvider storageProvider;
 
-  public static void showTo(final Player player) {
+  public static void showTo(final ProxiedPlayer player) {
     Scheduler.runAsync(() -> DaggerProxyComponent
         .create().punishedPlayerBrowser().displayTo(player));
   }

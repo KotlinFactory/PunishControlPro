@@ -11,6 +11,7 @@ import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.punish.PunishType;
 import org.mineacademy.punishcontrol.core.settings.Settings;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
+import org.mineacademy.punishcontrol.proxy.menus.browsers.AllPunishesBrowser;
 
 @Getter
 public abstract class AbstractUnPunishCommand extends
@@ -49,7 +50,7 @@ public abstract class AbstractUnPunishCommand extends
         if (!isPlayer()) {
           returnTell(MORE_ARGUMENTS_AS_CONSOLE_MESSAGE);
         }
-//        AllPunishesBrowser.showTo(getPlayer());
+        AllPunishesBrowser.showTo(getPlayer());
         break;
       case 1:
         final UUID target = findTarget(finalArgs);

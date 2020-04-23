@@ -11,6 +11,7 @@ import org.mineacademy.punishcontrol.core.punish.Punish;
 import org.mineacademy.punishcontrol.core.settings.Settings;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 import org.mineacademy.punishcontrol.proxy.command.AbstractSimplePunishControlCommand;
+import org.mineacademy.punishcontrol.proxy.menus.browsers.PlayerBrowser;
 
 public class PlayerInfoCommand extends AbstractSimplePunishControlCommand {
 
@@ -36,7 +37,7 @@ public class PlayerInfoCommand extends AbstractSimplePunishControlCommand {
         returnTell(MORE_ARGUMENTS_AS_CONSOLE_MESSAGE);
       }
 
-//      PlayerBrowser.showTo(getPlayer());
+      PlayerBrowser.showTo(getPlayer());
       return;
     }
 

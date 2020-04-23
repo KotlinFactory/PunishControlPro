@@ -15,6 +15,7 @@ import java.util.concurrent.TimeUnit;
 import lombok.SneakyThrows;
 import lombok.experimental.FieldDefaults;
 import lombok.experimental.UtilityClass;
+import org.jetbrains.annotations.Nullable;
 import org.mineacademy.fo.collection.expiringmap.ExpiringMap;
 import org.mineacademy.fo.debug.Debugger;
 
@@ -34,9 +35,9 @@ public class MojangUtils {
       return MojangUtils.cache.get(uuid);
     }
 
-    final String hash;
-    hash = fetch(uuid);
-    if (hash != null) {
+    final String hash = fetch(uuid);
+
+    if (isValid(hash)) {
       final ExpiringMap<UUID, String> cache = MojangUtils.cache;
       cache.put(uuid, hash);
     }
@@ -80,5 +81,14 @@ public class MojangUtils {
       Debugger.debug("Mojang-API is not working probarly", jsonString);
     }
     return null;
+  }
+
+  private boolean isValid(@Nullable final Object hash) {
+
+    if (!(hash instanceof String)) {
+      return false;
+    }
+
+    return !((String) hash).isEmpty();
   }
 }

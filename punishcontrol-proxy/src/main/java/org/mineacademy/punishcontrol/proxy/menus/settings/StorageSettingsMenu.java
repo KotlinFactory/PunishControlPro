@@ -22,6 +22,6 @@ public final class StorageSettingsMenu extends AbstractSettingsMenu {
   }
 
   public static void showTo(@NonNull final ProxiedPlayer player) {
-    DaggerProxyComponent.create().mysqlModule().displayTo(player, true);
+    DaggerProxyComponent.create().storageSettingsMenu().displayTo(player);
   }
 }

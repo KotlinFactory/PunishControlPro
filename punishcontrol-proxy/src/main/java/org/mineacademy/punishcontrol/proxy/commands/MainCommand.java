@@ -6,6 +6,7 @@ import org.mineacademy.bfo.Common;
 import org.mineacademy.bfo.collection.StrictList;
 import org.mineacademy.bfo.command.SimpleCommand;
 import org.mineacademy.bfo.plugin.SimplePlugin;
+import org.mineacademy.punishcontrol.proxy.menus.MainMenu;
 
 public final class MainCommand extends SimpleCommand {
 
@@ -37,7 +38,7 @@ public final class MainCommand extends SimpleCommand {
       returnInvalidArgs();
     }
 
-//    MainMenu.showTo(getPlayer());
+    MainMenu.showTo(getPlayer());
   }
 
   private void doHelp() {

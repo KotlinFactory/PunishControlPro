@@ -95,7 +95,7 @@ public final class MainMenu extends ChangingMenu {
         return ItemCreator
             .of(ItemStacks.cyanDye())
             .name("&6Create New")
-            .lores(Arrays.asList(" ", "Make new punish"))
+            .lores(Arrays.asList(" ", "Make new punishment"))
             .build().make();
       }
     };

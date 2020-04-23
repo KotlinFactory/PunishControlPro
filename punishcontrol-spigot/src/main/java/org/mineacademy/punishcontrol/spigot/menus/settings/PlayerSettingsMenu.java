@@ -29,6 +29,8 @@ import org.mineacademy.punishcontrol.spigot.util.ItemStacks;
 
 public final class PlayerSettingsMenu extends AbstractSettingsMenu {
 
+  public static final int PERMISSION_BROWSER_SLOT = 0;
+  public static final int GROUP_BROWSER_SLOT = 1;
   private final Button groupBrowser;
   private final Button permissionBrowser;
   private final boolean targetOnline;
@@ -112,10 +114,10 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
 
   @Override
   public ItemStack getItemAt(final int slot) {
-    if (slot == 0) {
+    if (slot == PERMISSION_BROWSER_SLOT) {
       return permissionBrowser.getItem();
     }
-    if (slot == 1) {
+    if (slot == GROUP_BROWSER_SLOT) {
       return groupBrowser.getItem();
     }
 

@@ -14,7 +14,6 @@ import org.mineacademy.fo.menu.button.Button;
 import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.fo.remain.CompMaterial;
 import org.mineacademy.punishcontrol.core.group.Groups;
-import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.providers.TextureProvider;
 import org.mineacademy.punishcontrol.core.punish.PunishBuilder;
@@ -24,7 +23,6 @@ import org.mineacademy.punishcontrol.core.settings.Settings;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
 import org.mineacademy.punishcontrol.spigot.conversation.PunishReasonConversation;
 import org.mineacademy.punishcontrol.spigot.menu.AbstractDurationChooser;
-import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractPlayerBrowser;
 import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractPunishTypeBrowser;
 import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractTemplateBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.MainMenu;
@@ -103,16 +101,11 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
       @Override
       public void onClickedInMenu(
           final Player player, final Menu menu, final ClickType click) {
-        new AbstractDurationChooser(menu) {
-
+        new AbstractDurationChooser(PunishCreatorMenu.this) {
           @Override
           protected void confirm() {
-            Valid.checkBoolean(
-                menu instanceof PunishCreatorMenu,
-                "Invalid type?");
-            final val creatorMenu = (PunishCreatorMenu) menu;
-            creatorMenu.punishBuilder().duration(ms);
-            creatorMenu.displayTo(player);
+            punishBuilder().duration(ms);
+            PunishCreatorMenu.this.displayTo(player);
           }
         }.displayTo(player);
       }
@@ -161,6 +154,9 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
               animateTitle("&cYou don't have access to the template");
               return;
             }
+
+            //Reinitialisation of our punishBuilder since this is easier & more safe to
+            //apply. (To many values are changed)
             showTo(
                 player,
                 punishTemplate.toPunishBuilder().target(punishBuilder.target()),
@@ -226,7 +222,6 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
         if (!Groups.hasAccess(getViewer().getUniqueId(),
             punishBuilder.punishType(),
             punishBuilder.duration())) {
-          //TODO
           animateTitle("&cYou would exceed your limits");
           return;
         }
@@ -251,16 +246,7 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
       @Override
       public void onClickedInMenu(
           final Player player, final Menu menu, final ClickType click) {
-        new AbstractPlayerBrowser(
-            Providers.playerProvider(),
-            Providers.textureProvider(),
-            menu) {
 
-          @Override
-          public void onClick(final UUID data) {
-            PunishCreatorMenu.showTo(player, punishBuilder().target(data));
-          }
-        }.displayTo(player);
       }
 
       @Override
@@ -270,10 +256,9 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
         if (target != null) {
           return ItemCreator
               .ofSkullHash(textureProvider.getSkinTexture(target))
-              .lore("&6Choose player")
+              .name("&6Choose player")
               .lores(Arrays.asList("&7Choose different player",
-                  "&7Current: " + playerProvider
-                      .findNameUnsafe(punishBuilder().target())))
+                  "&7Current: " + playerProvider.findNameUnsafe(target)))
               .build()
               .makeMenuTool();
         }
@@ -359,7 +344,7 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
         }
         return ItemCreator
             .of(ItemStacks.redPane())
-            .name("&6Make Silent")
+            .name("&6Make Super-Silent")
             .lores(Arrays.asList(
                 "",
                 "&7Click to make",
@@ -445,8 +430,7 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
             .ofSkullHash(textureProvider.getSkinTexture(target))
             .name("&6Choose player")
             .lores(Arrays.asList(
-                "&7Current: " + playerProvider
-                    .findNameUnsafe(punishBuilder().target()),
+                "&7Current: " + playerProvider.findNameUnsafe(punishBuilder().target()),
                 "&7Click to choose", "&7another player"))
             .build()
             .makeMenuTool();
@@ -496,6 +480,3 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
     }
   }
 }
-
-
-    

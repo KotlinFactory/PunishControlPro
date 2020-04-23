@@ -65,7 +65,6 @@ public class ItemUtil {
         warn.map(value -> "&ayes &7- " + value.punishDuration().toString())
             .orElse("&cno"));
 
-    return Arrays.asList(lores.getReplacedMessage());
+    return Arrays.asList(lores.replacedMessage());
   }
-
 }

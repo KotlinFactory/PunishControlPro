@@ -14,8 +14,8 @@ import org.mineacademy.punishcontrol.spigot.menu.AbstractConfirmMenu;
 import org.mineacademy.punishcontrol.spigot.menus.template.PunishTemplateCreatorMenu;
 import org.mineacademy.punishcontrol.spigot.util.ItemStacks;
 
-public abstract class AbstractTemplateBrowser extends
-    AbstractBrowser<PunishTemplate> {
+public abstract class AbstractTemplateBrowser
+    extends AbstractBrowser<PunishTemplate> {
 
   protected AbstractTemplateBrowser(final Menu parent) {
     super(parent, PunishTemplates.list());

@@ -2,19 +2,17 @@ package org.mineacademy.punishcontrol.proxy.menus.settings;
 
 import de.exceptionflug.mccommons.inventories.api.ClickType;
 import de.exceptionflug.protocolize.items.ItemStack;
+import de.exceptionflug.protocolize.items.ItemType;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
-import javafx.scene.control.Button;
 import lombok.NonNull;
 import lombok.val;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import org.mineacademy.bfo.Players;
-import org.mineacademy.bfo.settings.SimpleLocalization.Player;
-import org.mineacademy.burst.item.ItemStacks;
+import org.mineacademy.burst.item.Item;
 import org.mineacademy.burst.menu.AbstractBrowser;
-import org.mineacademy.burst.menu.Menu;
 import org.mineacademy.burst.util.Scheduler;
 import org.mineacademy.punishcontrol.core.group.Group;
 import org.mineacademy.punishcontrol.core.group.Groups;
@@ -22,13 +20,15 @@ import org.mineacademy.punishcontrol.core.permission.Permission;
 import org.mineacademy.punishcontrol.core.permission.Permissions;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
+import org.mineacademy.punishcontrol.core.settings.Replacer;
 import org.mineacademy.punishcontrol.proxy.DaggerProxyComponent;
 import org.mineacademy.punishcontrol.proxy.menus.setting.AbstractSettingsMenu;
 
 public final class PlayerSettingsMenu extends AbstractSettingsMenu {
 
-  private final Button groupBrowser;
-  private final Button permissionBrowser;
+  public static final int PERMISSION_BROWSER_SLOT = 0;
+  public static final int GROUP_BROWSER_SLOT = 1;
+
   private final boolean targetOnline;
   private final UUID target;
 
@@ -46,77 +46,53 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
     super(DaggerProxyComponent.create().settingsBrowser());
     this.target = target;
     targetOnline = Players.find(target).isPresent();
-
-    groupBrowser = new Button() {
-      @Override
-      public void onClickedInMenu(
-          final Player player, final Menu menu, final ClickType click) {
-        GroupBrowser.showTo(player, target, PlayerSettingsMenu.this);
-      }
-
-      @Override
-      public ItemStack getItem() {
-        return ItemCreator
-            .of(CompMaterial.OBSIDIAN,
-                "&6Groups",
-                " ",
-                "&7View groups",
-                "&7the player has",
-                "&7See your settings.yml",
-                "&7to edit them")
-            .build()
-            .makeMenuTool();
-      }
-    };
-
-    permissionBrowser = new Button() {
-
-      @Override
-      public void onClickedInMenu(
-          final Player player, final Menu menu, final ClickType click) {
-        if (!targetOnline) {
-          animateTitle("&cTarget is offline");
-          return;
-        }
-        PermissionsBrowser.showTo(player, target, PlayerSettingsMenu.this);
-      }
-
-      @Override
-      public ItemStack getItem() {
-        if (!targetOnline) {
-          return ItemCreator
-              .of(CompMaterial.ICE,
-                  "&6Permissions",
-                  "",
-                  "&7Cant be used:",
-                  "&7target is offline")
-              .build()
-              .makeMenuTool();
-        }
-
-        return ItemCreator
-            .of(CompMaterial.ICE,
-                "&6Permissions",
-                "",
-                "&7View which",
-                "&7actions the player",
-                "&7is allowed to take")
-            .build()
-            .makeMenuTool();
-      }
-    };
   }
 
   @Override
-  public ItemStack getItemAt(final int slot) {
-    if (slot == 0) {
-      return permissionBrowser.getItem();
-    }
-    if (slot == 1) {
-      return groupBrowser.getItem();
+  public void updateInventory() {
+    super.updateInventory();
+
+    // Groups | "Groups"
+    {
+      set(
+          Item
+              .of(ItemType.OBSIDIAN,
+                  "&6Groups",
+                  " ",
+                  "&7View groups",
+                  "&7the player has",
+                  "&7See your settings.yml",
+                  "&7to edit them")
+              .slot(GROUP_BROWSER_SLOT)
+              .actionHandler("Groups")
+      );
     }
 
-    return null;
+    // Permissions | "Permissions"
+    {
+      if (!targetOnline) {
+        Item
+            .of(ItemType.ICE,
+                "&6Permissions",
+                "",
+                "&7Cant be used:",
+                "&7target is offline")
+            .slot(PERMISSION_BROWSER_SLOT)
+            .actionHandler("Permissions");
+      } else {
+        set(
+            Item
+                .of(ItemType.ICE,
+                    "&6Permissions",
+                    "",
+                    "&7View which",
+                    "&7actions the player",
+                    "&7is allowed to take")
+                .slot(PERMISSION_BROWSER_SLOT)
+                .actionHandler("Permissions")
+        );
+      }
+    }
   }
 }
 
@@ -127,7 +103,7 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
 final class GroupBrowser extends AbstractBrowser<Group> {
 
   public static void showTo(
-      final Player player,
+      final ProxiedPlayer player,
       final UUID target,
       final PlayerSettingsMenu parent) {
     Scheduler.runAsync(
@@ -136,7 +112,7 @@ final class GroupBrowser extends AbstractBrowser<Group> {
   }
 
   protected GroupBrowser(final PlayerSettingsMenu parent, final UUID target) {
-    super(parent, Groups.list(target));
+    super("GroupBrowser", parent, Groups.list(target));
     setTitle("&8Groups");
   }
 
@@ -174,14 +150,13 @@ final class GroupBrowser extends AbstractBrowser<Group> {
     );
 
     //TODO CHECK FOR ERRORS: WHAT IF THE MATERIAL IS INVALID
-    final CompMaterial compMaterial = CompMaterial.fromString(group.item());
+    final ItemType material = ItemType.valueOf(group.item());
 
-    return ItemCreator
-        .of(compMaterial,
+    return Item
+        .of(material,
             "&7" + group.name(),
-            replacer.getReplacedMessage())
-        .build()
-        .makeMenuTool();
+            replacer.replacedMessage())
+        .build();
   }
 
   @Override
@@ -192,12 +167,6 @@ final class GroupBrowser extends AbstractBrowser<Group> {
         "&7a player has"
     };
   }
-
-  @Override
-  protected void onPageClick(
-      final Player player, final Group item, final ClickType click) {
-
-  }
 }
 
 class PermissionsBrowser extends AbstractBrowser<Permission> {
@@ -206,22 +175,21 @@ class PermissionsBrowser extends AbstractBrowser<Permission> {
   private final UUID target;
 
   public static void showTo(
-      final Player player,
+      final ProxiedPlayer player,
       final UUID target,
       final PlayerSettingsMenu parent) {
     //Adding permissions of our commands
 
     Scheduler.runAsync(() -> {
       final val menu = new PermissionsBrowser(target, parent);
-      menu.displayTo(player, true);
+      menu.displayTo(player);
     });
   }
-
 
   private PermissionsBrowser(
       final UUID target,
       final PlayerSettingsMenu parent) {
-    super(parent, Permissions.registeredPermissions());
+    super("PermissionBrowser", parent, Permissions.registeredPermissions());
     this.target = target;
     playerProvider = Providers.playerProvider();
     setTitle("&8Permissions");
@@ -243,25 +211,22 @@ class PermissionsBrowser extends AbstractBrowser<Permission> {
           descriptionForPermission(permission));
       lore.addAll(Arrays.asList(" ", "&aHas access"));
 
-      return ItemCreator
-          .of(ItemStacks.greenPane())
+      return Item
+          .of(ItemType.GREEN_STAINED_GLASS_PANE)
           .name("&6Permission: " + permission.permission())
-          .lores(lore)
-          .build()
-          .makeMenuTool();
+          .lore(lore)
+          .build();
     }
 
     final List<String> lore = new ArrayList<>(
         descriptionForPermission(permission));
     lore.addAll(Arrays.asList(" ", "&cHas no access"));
 
-    return ItemCreator
-        .of(ItemStacks.redPane())
+    return Item
+        .of(ItemType.RED_STAINED_GLASS_PANE)
         .name("&6Permission: " + permission.permission())
-        .lores(lore)
-        .build()
-        .makeMenuTool();
-
+        .lore(lore)
+        .build();
   }
 
   private List<String> descriptionForPermission(final Permission item) {
@@ -271,9 +236,8 @@ class PermissionsBrowser extends AbstractBrowser<Permission> {
         "&7" + String.join(" ", item.description()));
   }
 
-
   @Override
-  protected void onPageClick(
-      final Player player, final Permission item, final ClickType click) {
+  protected void onClick(final ClickType clickType, final Permission permission) {
+    // Do nothing
   }
 }

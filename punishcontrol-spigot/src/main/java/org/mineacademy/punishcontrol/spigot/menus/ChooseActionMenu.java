@@ -5,7 +5,6 @@ import lombok.NonNull;
 import lombok.val;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
-import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.inventory.ItemStack;
 import org.mineacademy.fo.Players;
 import org.mineacademy.fo.menu.Menu;
@@ -29,7 +28,11 @@ import org.mineacademy.punishcontrol.spigot.util.ItemStacks;
 
 public final class ChooseActionMenu extends Menu {
 
+  private static final int PUNISH_SLOT = 1;
+  private static final int LIST_PUNISHES_SLOT = 11;
   private static final int PLAYER_HEAD_SLOT = 13;
+  private static final int SETTINGS_SLOT = 15;
+  private static final int KICK_SLOT = 7;
 
   private final Button punish;
   private final Button listPunishes;
@@ -196,15 +199,15 @@ public final class ChooseActionMenu extends Menu {
   @Override
   public ItemStack getItemAt(final int slot) {
 
-    if (slot == 1) {
+    if (slot == PUNISH_SLOT) {
       return punish.getItem();
     }
 
-    if (slot == 11) {
+    if (slot == LIST_PUNISHES_SLOT) {
       return listPunishes.getItem();
     }
 
-    if (slot == 13) {
+    if (slot == ChooseActionMenu.PLAYER_HEAD_SLOT) {
       return ItemCreator
           .ofSkullHash(textureProvider.getSkinTexture(target))
           .name("&7Data for: &6" + (targetOnline() ? "&a" : "&7") + targetName)
@@ -213,11 +216,11 @@ public final class ChooseActionMenu extends Menu {
           .makeMenuTool();
     }
 
-    if (slot == 15) {
+    if (slot == SETTINGS_SLOT) {
       return settings.getItem();
     }
 
-    if (slot == 7) {
+    if (slot == KICK_SLOT) {
       return kick.getItem();
     }
 
@@ -231,17 +234,5 @@ public final class ChooseActionMenu extends Menu {
   @Override
   protected String[] getInfo() {
     return new String[]{"&7Menu to select an", "&7Action for players"};
-  }
-
-  @Override
-  protected void onMenuClick(
-      final Player player,
-      final int slot,
-      final InventoryAction action,
-      final ClickType click,
-      final ItemStack cursor,
-      final ItemStack clicked,
-      final boolean cancelled) {
-    super.onMenuClick(player, slot, action, click, cursor, clicked, cancelled);
   }
 }

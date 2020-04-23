@@ -5,7 +5,7 @@ import de.exceptionflug.protocolize.items.ItemStack;
 import java.util.Arrays;
 import javax.inject.Inject;
 import lombok.NonNull;
-import org.mineacademy.bfo.settings.SimpleLocalization;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
 import org.mineacademy.burst.menu.AbstractBrowser;
 import org.mineacademy.punishcontrol.proxy.DaggerProxyComponent;
 import org.mineacademy.punishcontrol.proxy.menus.MainMenu;
@@ -13,7 +13,7 @@ import org.mineacademy.punishcontrol.proxy.menus.settings.SettingTypes;
 
 public final class SettingsBrowser extends AbstractBrowser<SettingTypes> {
 
-  public static void showTo(@NonNull final SimpleLocalization.Player player) {
+  public static void showTo(@NonNull final ProxiedPlayer player) {
     DaggerProxyComponent.create().settingsBrowser().displayTo(player);
   }
 
@@ -34,7 +34,7 @@ public final class SettingsBrowser extends AbstractBrowser<SettingTypes> {
 
   @Override
   protected ItemStack convertToItemStack(final SettingTypes item) {
-    return item.itemCreator();
+    return item.itemCreator().build();
   }
 
 

@@ -10,7 +10,7 @@ import org.mineacademy.punishcontrol.proxy.menus.setting.AbstractSettingsMenu;
 public final class LanguageSettingsMenu extends AbstractSettingsMenu {
 
   public static void showTo(@NonNull final ProxiedPlayer player) {
-    DaggerProxyComponent.create().languageSettingsMenu().displayTo(player, true);
+    DaggerProxyComponent.create().languageSettingsMenu().displayTo(player);
   }
 
   @Inject

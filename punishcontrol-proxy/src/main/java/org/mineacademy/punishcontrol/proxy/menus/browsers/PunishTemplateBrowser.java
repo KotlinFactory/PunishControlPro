@@ -1,15 +1,14 @@
 package org.mineacademy.punishcontrol.proxy.menus.browsers;
 
+import de.exceptionflug.mccommons.inventories.api.CallResult;
 import de.exceptionflug.mccommons.inventories.api.ClickType;
-import de.exceptionflug.protocolize.items.ItemStack;
-import java.util.Arrays;
-import javafx.scene.control.Button;
+import de.exceptionflug.protocolize.inventory.InventoryModule;
+import de.exceptionflug.protocolize.items.ItemType;
 import javax.inject.Inject;
 import lombok.NonNull;
 import lombok.val;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
-import org.mineacademy.bfo.settings.SimpleLocalization.Player;
-import org.mineacademy.burst.menu.Menu;
+import org.mineacademy.burst.item.Item;
 import org.mineacademy.burst.util.Scheduler;
 import org.mineacademy.punishcontrol.core.punish.template.PunishTemplate;
 import org.mineacademy.punishcontrol.proxy.DaggerProxyComponent;
@@ -17,8 +16,6 @@ import org.mineacademy.punishcontrol.proxy.menu.browser.AbstractTemplateBrowser;
 import org.mineacademy.punishcontrol.proxy.menus.MainMenu;
 
 public class PunishTemplateBrowser extends AbstractTemplateBrowser {
-
-  private final Button addTemplateButton;
 
   public static void showTo(@NonNull final ProxiedPlayer player) {
     Scheduler.runAsync(() -> {
@@ -31,41 +28,40 @@ public class PunishTemplateBrowser extends AbstractTemplateBrowser {
   @Inject
   public PunishTemplateBrowser(final MainMenu mainMenu) {
     super(mainMenu);
-
     setTitle("&8PunishTemplates");
-    addTemplateButton = new Button() {
-      @Override
-      public void onClickedInMenu(
-          final Player player, final Menu menu, final ClickType click) {
-        player.closeInventory();
-        AddTemplateConversation.create().start(getViewer());
-      }
+  }
 
-      @Override
-      public ItemStack getItem() {
-        return ItemCreator
-            .of(CompMaterial.EMERALD)
-            .name("&aAdd template")
-            .lores(Arrays.asList("&7Click here to", "&7Add custom templates"))
-            .build()
-            .makeMenuTool();
-      }
-    };
+  // ----------------------------------------------------------------------------------------------------
+  // Overridden methods
+  // ----------------------------------------------------------------------------------------------------
+
+  @Override
+  public void updateInventory() {
+    super.updateInventory();
+
+    // Add | "Add"
+    {
+      set(
+          Item
+              .of(ItemType.EMERALD)
+              .name("&aAdd template")
+              .lore("&7Click here to", "&7Add custom templates")
+              .slot(getInfoItemSlot() + 4)
+              .actionHandler("Add")
+      );
+    }
   }
 
   @Override
-  public ItemStack getItemAt(final int slot) {
-    final ItemStack result = super.getItemAt(slot);
-    if (result != null) {
-      return result;
-    }
-    if (slot == getInfoButtonPosition() + 4) {
-      return addTemplateButton.getItem();
-    }
+  public void registerActionHandlers() {
+    registerActionHandler("Add", (add -> {
 
-    return null;
+      InventoryModule.closeAllInventories(getViewer());
+      //TODO
+      //AddTemplateConversation.create().start(getViewer());
+      return CallResult.DENY_GRABBING;
+    }));
   }
-
 
   @Override
   protected void onClick(final ClickType clickType, final PunishTemplate punishTemplate) {
