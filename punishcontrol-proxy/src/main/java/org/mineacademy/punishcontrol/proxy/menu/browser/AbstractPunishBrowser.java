@@ -86,9 +86,8 @@ public abstract class AbstractPunishBrowser extends AbstractBrowser<Punish> {
   // Methods that might be overridden
   // ----------------------------------------------------------------------------------------------------
 
-
   @Override
-  protected void onClick(ClickType clickType, Punish punish) {
+  protected void onClick(final ClickType clickType, final Punish punish) {
     if (clickType != ClickType.RIGHT_CLICK) {
       return;
     }

@@ -1,5 +1,6 @@
 package org.mineacademy.punishcontrol.proxy;
 
+import de.exceptionflug.mccommons.commands.proxy.Commands;
 import java.util.List;
 import lombok.NonNull;
 import org.mineacademy.bfo.Common;
@@ -49,15 +50,16 @@ public final class PunishControl
   @Override
   public void registerCommands() {
     registerCommand(MainCommand.create(Settings.MAIN_COMMAND_ALIASES));
-    registerCommand(proxyModule.commandKick());
-    registerCommand(proxyModule.commandBan());
-    registerCommand(proxyModule.commandMute());
-    registerCommand(proxyModule.commandWarn());
 
-    registerCommand(proxyModule.commandUnBan());
-    registerCommand(proxyModule.commandUnMute());
-    registerCommand(proxyModule.commandUnWarn());
-    registerCommand(proxyModule.commandPlayerInfo());
+    Commands.registerCommand(proxyModule.commandKick());
+    Commands.registerCommand(proxyModule.commandBan());
+    Commands.registerCommand(proxyModule.commandMute());
+    Commands.registerCommand(proxyModule.commandWarn());
+
+    Commands.registerCommand(proxyModule.commandUnBan());
+    Commands.registerCommand(proxyModule.commandUnMute());
+    Commands.registerCommand(proxyModule.commandUnWarn());
+    Commands.registerCommand(proxyModule.commandPlayerInfo());
   }
 
   @Override
@@ -72,7 +74,7 @@ public final class PunishControl
     org.mineacademy.burst.provider.Providers
         .setUuidNameProvider(ProxyPlayerProvider.newInstance());
     // TextureProvider
-    Providers.textureProvider(ProxyTextureProvider.create());
+    Providers.textureProvider(ProxyTextureProvider.newInstance());
     // Broadcaster
     Providers.punishProvider(ProxyPunishProvider.newInstance());
 

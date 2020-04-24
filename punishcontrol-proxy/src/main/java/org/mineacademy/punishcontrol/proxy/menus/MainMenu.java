@@ -105,7 +105,7 @@ public final class MainMenu extends ChangingMenu {
     }
 
     setBackgroundItems(
-        Item.of(ItemType.CYAN_DYE).build(),
+        Item.of(ItemType.CYAN_STAINED_GLASS_PANE).build(),
         0, 9, 18, 27, 36, 8, 17, 26, 35, 44, 1, 7, 37, 43);
   }
 

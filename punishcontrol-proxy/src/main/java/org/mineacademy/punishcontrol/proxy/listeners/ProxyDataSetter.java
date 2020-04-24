@@ -3,6 +3,7 @@ package org.mineacademy.punishcontrol.proxy.listeners;
 import de.exceptionflug.mccommons.inventories.proxy.utils.Schedulable;
 import java.util.UUID;
 import javax.inject.Inject;
+import org.mineacademy.bfo.debug.Debugger;
 import org.mineacademy.burst.provider.TextureProvider;
 import org.mineacademy.burst.provider.UUIDNameProvider;
 import org.mineacademy.punishcontrol.core.events.JoinEvent;
@@ -35,8 +36,18 @@ public final class ProxyDataSetter implements Listener<JoinEvent>, Schedulable {
     final String name = playerProvider.findNameUnsafe(uuid);
 
     async(() -> {
-      uuidNameProvider.saveUUIDAndName(uuid, name);
-      textureProvider.saveSkinTexture(uuid, name);
+      try {
+        uuidNameProvider.saveUUIDAndName(uuid, name);
+      } catch (final Throwable throwable) {
+        Debugger.saveError(throwable, "Exception while saving UUID");
+      }
+
+      try {
+        textureProvider.saveSkinTexture(uuid, name);
+      } catch (final Throwable throwable) {
+        Debugger.saveError(throwable, "Exception while saving Textures");
+      }
     });
   }
 }
+

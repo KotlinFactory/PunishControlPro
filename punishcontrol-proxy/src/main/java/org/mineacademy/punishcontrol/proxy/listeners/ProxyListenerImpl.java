@@ -2,7 +2,7 @@ package org.mineacademy.punishcontrol.proxy.listeners;
 
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.event.PlayerDisconnectEvent;
-import net.md_5.bungee.api.event.PreLoginEvent;
+import net.md_5.bungee.api.event.PostLoginEvent;
 import net.md_5.bungee.api.plugin.Listener;
 import net.md_5.bungee.event.EventHandler;
 import org.mineacademy.bfo.Common;
@@ -19,17 +19,21 @@ public class ProxyListenerImpl implements Listener {
 
   @EventHandler
   //TODO: TEST! / UNSAFE!
-  public void login(final PreLoginEvent playerPreLoginEvent) {
+  public void login(final PostLoginEvent playerPostLoginEvent) {
     final JoinEvent joinEvent = Events.call(
-        JoinEvent.create(playerPreLoginEvent.getConnection().getUniqueId(),
-            playerPreLoginEvent.getConnection().getName(),
-            playerPreLoginEvent.getConnection().getAddress().getAddress()));
+        JoinEvent.create(
+            playerPostLoginEvent.getPlayer().getUniqueId(),
+            playerPostLoginEvent.getPlayer().getName(),
+            playerPostLoginEvent.getPlayer().getAddress().getAddress()));
 
     if (!joinEvent.canceled()) {
       return;
     }
-    playerPreLoginEvent.setCancelled(true);
-    playerPreLoginEvent.setCancelReason(Common.colorize(joinEvent.cancelReason()));
+
+    if (joinEvent.canceled()) {
+      playerPostLoginEvent.getPlayer()
+          .disconnect(Common.colorize(joinEvent.cancelReason()));
+    }
   }
 
   @EventHandler

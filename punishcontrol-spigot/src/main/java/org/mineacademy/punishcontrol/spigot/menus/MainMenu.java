@@ -41,7 +41,8 @@ public final class MainMenu extends ChangingMenu {
 
   @Inject
   public MainMenu(final TextureProvider textureProvider) {
-    super(null, Collections.singletonList(
+    super(null,
+        Collections.singletonList(
         ChangingButton
             .fromCustomHashes(
                 textureProvider.listTextures())

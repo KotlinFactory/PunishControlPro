@@ -75,6 +75,7 @@ public class MojangUtils {
 
       if (hash != null) {
         cache.put(uuid, hash.toString());
+        return (String) hash;
       }
 
     } catch (final Throwable throwable) {

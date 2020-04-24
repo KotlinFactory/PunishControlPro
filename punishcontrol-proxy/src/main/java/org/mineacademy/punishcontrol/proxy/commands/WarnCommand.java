@@ -17,5 +17,4 @@ public final class WarnCommand extends AbstractPunishCommand {
     setDescription("Warn a player");
     setPermission("punishcontrol.command.warn");
   }
-
 }

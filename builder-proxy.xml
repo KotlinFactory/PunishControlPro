@@ -34,7 +34,7 @@
               includes="**/*protocolize-lib.jar"/>
             <zipgroupfileset
               dir="../mccommons/mccommons-plugin/mccommons-lib-proxy/target"
-              includes="**/*mccommons-lib-proxy-2.0.1.jar"/>
+              includes="**/*mccommons-lib-proxy-2.0.3.jar"/>
         </jar>
     </target>
 
