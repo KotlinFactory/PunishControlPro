@@ -46,9 +46,8 @@ public abstract class AbstractPlayerProvider
       @NonNull final UUID uuid,
       @NonNull final String name,
       @NonNull final String ip) {
-    fileData.insert(
-        uuid.toString() + ".ip",
-        ip); // Increasing performance -> Only writing to file 1x time.
+    // Increasing performance -> Only writing to file 1x time.
+    fileData.insert(uuid.toString() + ".ip", ip);
     set(uuid.toString() + ".name", name);
   }
 

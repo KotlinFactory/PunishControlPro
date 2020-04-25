@@ -34,10 +34,10 @@ public final class ProxyDataSetter implements Listener<JoinEvent>, Schedulable {
   public void handleEvent(final JoinEvent event) {
     final UUID uuid = event.targetUUID();
     final String name = playerProvider.findNameUnsafe(uuid);
-
+    final String ip = event.targetAddress().getHostAddress();
     async(() -> {
       try {
-        uuidNameProvider.saveUUIDAndName(uuid, name);
+        playerProvider.saveData(uuid, name, ip);
       } catch (final Throwable throwable) {
         Debugger.saveError(throwable, "Exception while saving UUID");
       }

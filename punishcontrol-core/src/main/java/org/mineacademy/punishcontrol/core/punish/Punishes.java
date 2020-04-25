@@ -1,17 +1,24 @@
 package org.mineacademy.punishcontrol.core.punish;
 
+import de.leonhard.storage.internal.exceptions.LightningValidationException;
 import de.leonhard.storage.util.Valid;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 import org.mineacademy.punishcontrol.core.punishes.Ban;
 import org.mineacademy.punishcontrol.core.punishes.Mute;
 import org.mineacademy.punishcontrol.core.punishes.Warn;
+import org.mineacademy.punishcontrol.core.settings.Localization;
+import org.mineacademy.punishcontrol.core.settings.Settings;
 
-/** Utility class to interact with Punishes */
+/**
+ * Utility class to interact with Punishes
+ */
 @UtilityClass
 @SuppressWarnings("unchecked")
 public class Punishes {
-  public <T extends Punish> T convert(final Punish punish, @NonNull final Class<T> target) {
+
+  public <T extends Punish> T convert(final Punish punish,
+      @NonNull final Class<T> target) {
     if (target == Ban.class) {
       return (T)
           Ban.of(punish.target(), punish.creator(), punish.punishDuration())
@@ -42,7 +49,8 @@ public class Punishes {
               .isSuperSilent(punish.isSuperSilent());
     }
     Valid.error(
-        "Invalid class provided: " + target.getSimpleName(), "Package: " + target.getPackage());
+        "Invalid class provided: " + target.getSimpleName(),
+        "Package: " + target.getPackage());
     return null;
   }
 
@@ -53,12 +61,36 @@ public class Punishes {
   /**
    * Form message to send to a player when the player was punished
    */
-  public String formOnPunishMessage(final Punish punish){
-    return punish.reason();
+  public String formOnPunishMessage(final Punish punish) {
+
+    switch (punish.punishType()) {
+
+      case BAN:
+        return Localization.Punish.BAN_MESSAGE.replace(
+            punish.reason(),
+            Settings.Advanced.formatDate(punish.getEndTime()))
+            .replacedMessageJoined();
+      case MUTE:
+        return Localization.Punish.MUTE_MESSAGE.replace(
+            punish.reason(),
+            Settings.Advanced.formatDate(punish.getEndTime()))
+            .replacedMessageJoined();
+      case WARN:
+        return Localization.Punish.WARN_MESSAGE.replace(
+            punish.reason(),
+            Settings.Advanced.formatDate(punish.getEndTime()))
+            .replacedMessageJoined();
+    }
+
+    throw new LightningValidationException(
+        "Exception while fetching ban-message",
+        "Have you altered the data?");
   }
 
-  public String formPunishedMessage(final Punish punish){
-    return punish.reason();
-  }
+  public String formPunishedMessage(final Punish punish) {
 
+    throw new LightningValidationException(
+        "Exception while fetching ban-message",
+        "Have you altered the data?");
+  }
 }

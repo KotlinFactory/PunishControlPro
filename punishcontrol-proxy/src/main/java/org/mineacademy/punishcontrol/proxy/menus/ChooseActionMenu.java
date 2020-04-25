@@ -191,7 +191,6 @@ public final class ChooseActionMenu extends Menu {
 
       return CallResult.DENY_GRABBING;
     }));
-
   }
 
   private boolean targetOnline() {

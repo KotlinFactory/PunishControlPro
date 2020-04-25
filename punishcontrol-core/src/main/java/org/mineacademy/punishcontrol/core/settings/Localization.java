@@ -43,14 +43,24 @@ public final class Localization extends SimpleLocalization {
   public static final class Punish {
 
     public static Replacer PUNISH_BROADCAST_MESSAGE;
+    public static Replacer BAN_MESSAGE;
+    public static Replacer MUTE_MESSAGE;
+    public static Replacer WARN_MESSAGE;
     public static String PLAYER_DOES_NOT_EXIST;
 
     private static void init() {
       pathPrefix(null);
       PLAYER_DOES_NOT_EXIST = getString("Commands.Player.Not_Exists");
-      PUNISH_BROADCAST_MESSAGE
-          = getReplacer("Punish.Message_To_Broadcast")
+      pathPrefix("Punish");
+      PUNISH_BROADCAST_MESSAGE = getReplacer("Message_To_Broadcast")
           .find("chat_line", "player", "type", "reason", "ip");
+
+      BAN_MESSAGE = getReplacer("Ban_Message")
+          .find("reason", "duration");
+      MUTE_MESSAGE = getReplacer("Mute_Message")
+          .find("reason", "duration");
+      WARN_MESSAGE = getReplacer("Warn_Message")
+          .find("reason", "duration");
     }
   }
 }

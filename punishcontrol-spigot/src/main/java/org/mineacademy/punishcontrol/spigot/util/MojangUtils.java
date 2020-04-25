@@ -2,6 +2,7 @@ package org.mineacademy.punishcontrol.spigot.util;
 
 import com.mojang.util.UUIDTypeAdapter;
 import de.leonhard.storage.internal.FileData;
+import de.leonhard.storage.shaded.json.JSONException;
 import de.leonhard.storage.shaded.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -45,22 +46,22 @@ public class MojangUtils {
   }
 
   private String fetch(final UUID uuid) throws IOException {
-    final HttpURLConnection con =
-        (HttpURLConnection)
-            new URL(String.format(SERVICE_URL, UUIDTypeAdapter.fromUUID(uuid)))
-                .openConnection();
-    con.setReadTimeout(5000);
-
-    if (con.getResponseCode() != HttpURLConnection.HTTP_OK) {
-      System.out.println(con.getResponseMessage());
-      return null;
-    }
-
-    final String jsonString =
-        new BufferedReader(new InputStreamReader(con.getInputStream()))
-            .readLine();
-
     try {
+      final HttpURLConnection con =
+          (HttpURLConnection)
+              new URL(String.format(SERVICE_URL, UUIDTypeAdapter.fromUUID(uuid)))
+                  .openConnection();
+      con.setReadTimeout(5000);
+
+      if (con.getResponseCode() != HttpURLConnection.HTTP_OK) {
+        System.out.println(con.getResponseMessage());
+        return null;
+      }
+
+      final String jsonString =
+          new BufferedReader(new InputStreamReader(con.getInputStream()))
+              .readLine();
+
       final JSONObject jsonObject = new JSONObject(jsonString);
       final FileData fileData = new FileData(jsonObject);
       final List<?> list = (List<?>) fileData.get("properties");
@@ -77,9 +78,10 @@ public class MojangUtils {
         cache.put(uuid, hash.toString());
         return (String) hash;
       }
-
+    } catch (final JSONException ex) {
+      Debugger.debug("Hash","Mojang-API is not working probarly");
     } catch (final Throwable throwable) {
-      Debugger.debug("Mojang-API is not working probarly", jsonString);
+      Debugger.saveError(throwable, "Exception while saving data");
     }
     return null;
   }

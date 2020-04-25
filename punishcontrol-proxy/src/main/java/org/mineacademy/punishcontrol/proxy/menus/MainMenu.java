@@ -109,7 +109,6 @@ public final class MainMenu extends ChangingMenu {
         0, 9, 18, 27, 36, 8, 17, 26, 35, 44, 1, 7, 37, 43);
   }
 
-
   @Override
   public void registerActionHandlers() {
     super.registerActionHandlers();
