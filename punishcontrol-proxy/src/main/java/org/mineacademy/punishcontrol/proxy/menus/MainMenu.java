@@ -21,7 +21,6 @@ import org.mineacademy.punishcontrol.proxy.menus.punish.PunishCreatorMenu;
 
 public final class MainMenu extends ChangingMenu {
 
-
   public static final int PLAYER_BROWSER_SLOT = 9 * 2 + 6;
   public static final int PUNISHES_BUTTON_SLOT = 9 * 2 + 2;
   public static final int NEW_PUNISH_BUTTON_SLOT = 9 + 4;
@@ -104,9 +103,33 @@ public final class MainMenu extends ChangingMenu {
       );
     }
 
+    set(
+        Item
+            .of(ItemType.CYAN_STAINED_GLASS_PANE)
+            .name("")
+            .lore("")
+            .slot(45)
+            .actionHandler("noAction")
+    );
+
     setBackgroundItems(
         Item.of(ItemType.CYAN_STAINED_GLASS_PANE).build(),
         0, 9, 18, 27, 36, 8, 17, 26, 35, 44, 1, 7, 37, 43);
+    // Settings | "Settings"
+    {
+      set(
+          Item
+              .of(ItemType.COMPARATOR,
+                  "&6Settings",
+                  "&7View Settings for",
+                  SimplePlugin.getNamed(),
+
+                  ""
+              )
+              .slot(45)
+              .actionHandler("Settings")
+      );
+    }
   }
 
   @Override
@@ -114,7 +137,7 @@ public final class MainMenu extends ChangingMenu {
     super.registerActionHandlers();
 
     registerActionHandler("Changing", (changing -> {
-      PlayerBrowser.showTo(getViewer());
+      PlayerBrowser.showTo(getPlayer());
       return CallResult.DENY_GRABBING;
     }));
 

@@ -307,18 +307,18 @@ public final class PunishTemplateCreatorMenu extends Menu {
 
     // Reason
     registerActionHandler("Reason", (reason -> {
-      InventoryModule.closeAllInventories(getViewer());
+      InventoryModule.closeAllInventories(getPlayer());
 
       //TODO
-      //TemplateReasonConversation.create(this).start(getViewer());
+      //TemplateReasonConversation.create(this).start(getPlayer());
       return CallResult.DENY_GRABBING;
     }));
 
     // Permission
     registerActionHandler("Permission", (permission -> {
-      InventoryModule.closeAllInventories(getViewer());
+      InventoryModule.closeAllInventories(getPlayer());
       //TODO
-      //TemplatePermissionConversation.create(this).start(getViewer());
+      //TemplatePermissionConversation.create(this).start(getPlayer());
       return CallResult.DENY_GRABBING;
     }));
 

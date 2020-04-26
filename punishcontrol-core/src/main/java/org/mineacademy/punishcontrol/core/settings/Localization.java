@@ -59,6 +59,7 @@ public final class Localization extends SimpleLocalization {
           .find("reason", "duration");
       MUTE_MESSAGE = getReplacer("Mute_Message")
           .find("reason", "duration");
+
       WARN_MESSAGE = getReplacer("Warn_Message")
           .find("reason", "duration");
     }

@@ -70,11 +70,15 @@ public final class PunishControl
 
   @Override
   public void registerProviders() {
+
     Providers.playerProvider(ProxyPlayerProvider.newInstance());
     org.mineacademy.burst.provider.Providers
         .setUuidNameProvider(ProxyPlayerProvider.newInstance());
+
     // TextureProvider
     Providers.textureProvider(ProxyTextureProvider.newInstance());
+    org.mineacademy.burst.provider.Providers
+        .setTextureProvider(ProxyTextureProvider.newInstance());
     // Broadcaster
     Providers.punishProvider(ProxyPunishProvider.newInstance());
 

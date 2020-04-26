@@ -58,15 +58,15 @@ public final class Replacer {
 
       //Even: Value
       if (i % 2 == 0) {
-        replacements.add(associativeArray[i]);
         //Odd: Key
-      } else {
         final val raw = associativeArray[i];
         Valid.checkBoolean(
             raw instanceof String,
             "Expected String at " + raw + ", got " + raw.getClass()
                 .getSimpleName());
         variables.add((String) raw);
+      } else {
+        replacements.add(associativeArray[i]);
       }
     }
     return this;
@@ -94,7 +94,7 @@ public final class Replacer {
           found = found + "}";
         }
       }
-      final Object rep = i < replacements.size() ? replacements.get(i) : null;
+      final Object rep = i <= replacements.size() ? replacements.get(i) : null;
 
       message = message.replace(found, rep == null ? "" : rep.toString());
     }

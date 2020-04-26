@@ -27,12 +27,12 @@ Punish:
     - "&7Reason {reason}"
     - "&7Duration {duration}"
     - ""
-  Warned_Message:
+
+  Warn_Message:
     - ""
     - "&7You have been warned"
     - "&7Reason {reason}"
     - "&7Duration {duration}"
     - ""
-
 
 Version: 1

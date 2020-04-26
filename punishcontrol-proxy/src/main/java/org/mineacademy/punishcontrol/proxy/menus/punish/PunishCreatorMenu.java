@@ -3,7 +3,6 @@ package org.mineacademy.punishcontrol.proxy.menus.punish;
 import de.exceptionflug.mccommons.inventories.api.CallResult;
 import de.exceptionflug.mccommons.inventories.api.ClickType;
 import de.exceptionflug.protocolize.items.ItemType;
-import de.leonhard.storage.util.Valid;
 import java.util.UUID;
 import javax.inject.Inject;
 import lombok.NonNull;
@@ -348,7 +347,7 @@ public final class PunishCreatorMenu extends Menu {
         protected void onClick(final ClickType clickType, final UUID uuid) {
           PunishCreatorMenu.showTo(player, punishBuilder().target(uuid));
         }
-      }.displayTo(getViewer());
+      }.displayTo(getPlayer());
       return CallResult.DENY_GRABBING;
     }));
 
@@ -387,7 +386,7 @@ public final class PunishCreatorMenu extends Menu {
     registerActionHandler("Apply", (apply -> {
 
       punishBuilder()
-          .creator(getViewer().getUniqueId())
+          .creator(getPlayer().getUniqueId())
           .creation(System.currentTimeMillis());
 
       if (punishBuilder().punishType() == null) {
@@ -408,7 +407,7 @@ public final class PunishCreatorMenu extends Menu {
         return CallResult.DENY_GRABBING;
       }
 
-      if (!Groups.hasAccess(getViewer().getUniqueId(),
+      if (!Groups.hasAccess(getPlayer().getUniqueId(),
           punishBuilder.punishType(),
           punishBuilder.duration())) {
         animateTitle("&cYou would exceed your limits");
@@ -418,7 +417,7 @@ public final class PunishCreatorMenu extends Menu {
       animateTitle("&7Created punish");
       async(() -> punishBuilder().build().create());
       if (getParentMenu() != null) {
-        getParentMenu().displayTo(getViewer());
+        getParentMenu().displayTo(getPlayer());
       }
 
       return CallResult.DENY_GRABBING;
@@ -436,7 +435,6 @@ public final class PunishCreatorMenu extends Menu {
 
   //Lazy getter for the builder
   private PunishBuilder punishBuilder() {
-    Valid.notNull(punishType, "PunishType was set to null!");
     if (punishBuilder != null) {
       return punishBuilder;
     }

@@ -58,7 +58,7 @@ public abstract class AbstractConfirmMenu extends Menu {
       return;
     }
 
-    async(() -> InventoryModule.sendInventory(getPlayer(), getParent()));
+    async(() -> InventoryModule.sendInventory(getPlayer(), getParent().build()));
   }
 
   @Override

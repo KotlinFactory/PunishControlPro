@@ -33,8 +33,8 @@
               dir="../BungeeDesigner/protocolize/protocolize-lib/target"
               includes="**/*protocolize-lib.jar"/>
             <zipgroupfileset
-              dir="../mccommons/mccommons-plugin/mccommons-lib-proxy/target"
-              includes="**/*mccommons-lib-proxy-2.0.3.jar"/>
+              dir="../mccommons/mccommons-plugin/mccommons-plugin-proxy/target"
+              includes="**/*mccommons-plugin-proxy-2.0-SNAPSHOT.jar"/>
         </jar>
     </target>
 

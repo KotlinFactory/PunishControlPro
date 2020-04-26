@@ -56,9 +56,9 @@ public class PunishTemplateBrowser extends AbstractTemplateBrowser {
   public void registerActionHandlers() {
     registerActionHandler("Add", (add -> {
 
-      InventoryModule.closeAllInventories(getViewer());
+      InventoryModule.closeAllInventories(getPlayer());
       //TODO
-      //AddTemplateConversation.create().start(getViewer());
+      //AddTemplateConversation.create().start(getPlayer());
       return CallResult.DENY_GRABBING;
     }));
   }

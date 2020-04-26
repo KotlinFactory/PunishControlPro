@@ -18,8 +18,8 @@ public final class SettingsBrowser extends AbstractBrowser<SettingTypes> {
   }
 
   @Inject
-  public SettingsBrowser(final MainMenu mainMenu) {
-    super("SettingsBrowser",  mainMenu, Arrays.asList(SettingTypes.values()));
+  public SettingsBrowser(@NonNull final MainMenu mainMenu) {
+    super("SettingsBrowser", mainMenu, Arrays.asList(SettingTypes.values()));
     setTitle("&8Choose Settings");
   }
 

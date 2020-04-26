@@ -12,7 +12,7 @@ import org.mineacademy.punishcontrol.core.PunishControlManager;
 import org.mineacademy.punishcontrol.core.providers.TextureProvider;
 
 public final class ProxyTextureProvider extends Json
-    implements TextureProvider {
+    implements TextureProvider, org.mineacademy.burst.provider.TextureProvider {
 
   private ProxyTextureProvider() {
     super(
@@ -42,10 +42,12 @@ public final class ProxyTextureProvider extends Json
 
   @Override
   public List<String> listTextures() {
+    reloadIfNeeded();
     final val result = new ArrayList<String>();
     for (final val entry : fileData.toMap().entrySet()) {
       result.add(entry.getValue().toString());
     }
+
     return result;
   }
 }

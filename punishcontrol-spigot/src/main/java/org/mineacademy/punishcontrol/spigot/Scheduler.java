@@ -14,7 +14,7 @@ public class Scheduler {
   }
 
   public boolean isPrimaryThread() {
-    return Thread.currentThread().getName().equalsIgnoreCase("Main");
+    return Bukkit.isPrimaryThread();
   }
 
   public void runSync(final Runnable runnable) {

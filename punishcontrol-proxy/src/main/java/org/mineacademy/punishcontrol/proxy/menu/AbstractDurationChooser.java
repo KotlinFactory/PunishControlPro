@@ -27,7 +27,6 @@ public abstract class AbstractDurationChooser extends Menu {
 
   protected long ms;
 
-
   public AbstractDurationChooser(@NonNull final Menu parent) {
     this(parent, 0);
   }

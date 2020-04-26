@@ -9,7 +9,6 @@ import lombok.val;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import org.jetbrains.annotations.Nullable;
 import org.mineacademy.bfo.debug.LagCatcher;
-import org.mineacademy.bfo.settings.SimpleLocalization.Player;
 import org.mineacademy.burst.util.Scheduler;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.providers.TextureProvider;

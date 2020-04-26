@@ -111,6 +111,8 @@
                             <include>org.mineacademy:BungeeFoundation*</include>
                             <include>org.mineacademy:Protect*</include>
                             <include>org.mineacademy:Burst*</include>
+                            <include>de.exceptionflug:protocolize-lib:*</include>
+                            <include>de.exceptionflug:mccommons-plugin-proxy:*</include>
                             <include>de.leonhard:storage*</include>
                             <include>com.github.JavaFactoryDev:LightningStorage*</include>
                             <!-- Dependency Injection -->

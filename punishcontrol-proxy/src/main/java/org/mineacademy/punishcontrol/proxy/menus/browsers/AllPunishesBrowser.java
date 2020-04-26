@@ -32,5 +32,4 @@ public final class AllPunishesBrowser extends AbstractPunishBrowser {
     super("AllPunishesBrowser", parent, playerProvider, storageProvider.listPunishes());
     setTitle("&7Browse Punishes");
   }
-
 }

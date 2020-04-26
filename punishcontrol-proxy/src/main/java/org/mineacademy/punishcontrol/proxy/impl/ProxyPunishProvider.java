@@ -6,7 +6,6 @@ import lombok.NonNull;
 import lombok.SneakyThrows;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
-import net.md_5.bungee.api.plugin.Cancellable;
 import org.mineacademy.bfo.Common;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.PunishProvider;
@@ -83,10 +82,10 @@ public final class ProxyPunishProvider implements PunishProvider {
   @SneakyThrows
   @Override
   public boolean handlePunishEvent(final @NonNull Punish punish) {
-    final Cancellable event =
+    final PunishCreateEvent event =
         ProxyServer.getInstance()
             .getPluginManager()
             .callEvent(PunishCreateEvent.create(punish));
-    return event.isCancelled();
+    return !event.isCancelled();
   }
 }

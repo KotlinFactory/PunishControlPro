@@ -69,6 +69,8 @@ public final class ChooseActionMenu extends Menu {
     this.target = target;
     targetName = playerProvider.findNameUnsafe(target);
     setTitle("§8Action for " + targetName);
+
+    updateInventory();
   }
 
   // ----------------------------------------------------------------------------------------------------
@@ -161,7 +163,7 @@ public final class ChooseActionMenu extends Menu {
   @Override
   public void registerActionHandlers() {
     registerActionHandler("Punish", (punish) -> {
-      PunishCreatorMenu.showTo(getViewer(),
+      PunishCreatorMenu.showTo(getPlayer(),
           PunishBuilder
               .of(PunishType.BAN)
               .target(target));
@@ -169,7 +171,7 @@ public final class ChooseActionMenu extends Menu {
     });
 
     registerActionHandler("ListPunishes", (listPunishes -> {
-      PlayerPunishBrowser.showTo(getViewer(), target);
+      PlayerPunishBrowser.showTo(getPlayer(), target);
       return CallResult.DENY_GRABBING;
     }));
 
@@ -179,7 +181,7 @@ public final class ChooseActionMenu extends Menu {
         return CallResult.DENY_GRABBING;
       }
 
-      PlayerSettingsMenu.showTo(getViewer(), target);
+      PlayerSettingsMenu.showTo(getPlayer(), target);
       return CallResult.DENY_GRABBING;
     }));
 

@@ -171,6 +171,7 @@ public abstract class Punish {
 
   public void create() {
     if (!PUNISH_PROVIDER.handlePunishEvent(this)) {
+      System.out.println("CANCELED");
       return;
     }
 
