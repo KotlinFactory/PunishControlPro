@@ -46,7 +46,8 @@ public final class ProxyPlayerProvider
   }
 
   @Override
-  public boolean hasPermission(final @NonNull UUID uuid,
+  public boolean hasPermission(
+      final @NonNull UUID uuid,
       final @NonNull String permission) {
     final ProxiedPlayer player = proxyServer.getPlayer(uuid);
     if (player == null) {

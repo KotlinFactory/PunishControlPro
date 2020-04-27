@@ -23,7 +23,7 @@ public enum SettingTypes {
     public ItemCreator itemCreator() {
       return ItemCreator.of(CompMaterial.PLAYER_HEAD,
           "&6Player settings",
-          "&7Give permissions",
+          "&7Show permissions",
           "&7to apply punishes",
           "&7or view",
           "&7which permissions",

@@ -3,6 +3,7 @@ package org.mineacademy.punishcontrol.proxy.menus.punish;
 import de.exceptionflug.mccommons.inventories.api.CallResult;
 import de.exceptionflug.mccommons.inventories.api.ClickType;
 import de.exceptionflug.protocolize.items.ItemType;
+import java.util.Arrays;
 import java.util.UUID;
 import javax.inject.Inject;
 import lombok.NonNull;
@@ -22,6 +23,7 @@ import org.mineacademy.punishcontrol.proxy.DaggerProxyComponent;
 import org.mineacademy.punishcontrol.proxy.ItemUtil;
 import org.mineacademy.punishcontrol.proxy.menu.AbstractDurationChooser;
 import org.mineacademy.punishcontrol.proxy.menu.browser.AbstractPlayerBrowser;
+import org.mineacademy.punishcontrol.proxy.menu.browser.AbstractPunishTypeBrowser;
 import org.mineacademy.punishcontrol.proxy.menu.browser.AbstractTemplateBrowser;
 import org.mineacademy.punishcontrol.proxy.menus.MainMenu;
 
@@ -29,12 +31,14 @@ public final class PunishCreatorMenu extends Menu {
 
   public static final int SIZE = 9 * 5;
   public static final int CHOOSE_PLAYER_SLOT = 33;
+  public static final int CHOOSE_DURATION_SLOT = 29;
+  public static final int APPLY_SLOT = 22;
   public static final int CHOOSE_REASON_SLOT = 19;
   public static final int MAKE_SILENT_SLOT = 30;
   public static final int MAKE_SUPER_SILENT_SLOT = 32;
-  public static final int CHOOSE_TEMPLATE_SLOT = 4;
-  public static final int CHOOSE_DURATION_SLOT = 29;
-  public static final int APPLY_SLOT = 22;
+  public static final int CHOOSE_TYPE_SLOT = 4;
+  public static final int CHOOSE_TEMPLATE_SLOT = 25;
+
   private final TextureProvider textureProvider;
   private final PlayerProvider playerProvider;
 
@@ -43,7 +47,6 @@ public final class PunishCreatorMenu extends Menu {
   private PunishBuilder punishBuilder;
   private PunishTemplate punishTemplate;
   private final PunishType punishType = PunishType.BAN;
-
 
   public static void showTo(@NonNull final ProxiedPlayer player) {
     DaggerProxyComponent.create().punishCreatorMenu().displayTo(player);
@@ -129,6 +132,21 @@ public final class PunishCreatorMenu extends Menu {
       }
     }
 
+    //Type | "Type"
+    {
+      set(
+          Item
+              .of(ItemUtil.forPunishType(punishBuilder().punishType()))
+              .name("&6Change type")
+              .lore(Arrays.asList(
+                  "&7Change the type",
+                  "&7of the punish",
+                  "&7Currently: " + punishBuilder.punishType().localized()))
+              .slot(CHOOSE_TYPE_SLOT)
+              .actionHandler("Type")
+      );
+    }
+
     //Template | "Template"
     {
       if (punishTemplate != null) {
@@ -145,15 +163,17 @@ public final class PunishCreatorMenu extends Menu {
                 .actionHandler("Template")
         );
       } else {
-        Item
-            .of(ItemUtil.forPunishType(punishBuilder().punishType()))
-            .name("&6Choose action")
-            .lore(
-                "&7Create an punish",
-                "&7from an existing",
-                "&7template")
-            .slot(CHOOSE_TEMPLATE_SLOT)
-            .actionHandler("Template");
+        set(
+            Item
+                .of(ItemUtil.forPunishType(punishBuilder().punishType()))
+                .name("&6Choose action")
+                .lore(
+                    "&7Create an punish",
+                    "&7from an existing",
+                    "&7template")
+                .slot(CHOOSE_TEMPLATE_SLOT)
+                .actionHandler("Template")
+        );
       }
     }
 
@@ -301,6 +321,18 @@ public final class PunishCreatorMenu extends Menu {
         }
       }.displayTo(player);
 
+      return CallResult.DENY_GRABBING;
+    }));
+
+    //Type
+    registerActionHandler("Type", (type -> {
+      new AbstractPunishTypeBrowser(this) {
+        @Override
+        protected void onClick(final ClickType clickType, final PunishType punishType) {
+          showTo(player, punishBuilder().punishType(punishType));
+
+        }
+      }.displayTo(player);
       return CallResult.DENY_GRABBING;
     }));
 

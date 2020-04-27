@@ -20,7 +20,7 @@ import org.mineacademy.punishcontrol.core.settings.Localization;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
 import org.mineacademy.punishcontrol.spigot.Scheduler;
-import org.mineacademy.punishcontrol.spigot.conversation.KickConversation;
+import org.mineacademy.punishcontrol.spigot.conversations.KickConversation;
 import org.mineacademy.punishcontrol.spigot.menus.browsers.PlayerPunishBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.punish.PunishCreatorMenu;
 import org.mineacademy.punishcontrol.spigot.menus.settings.PlayerSettingsMenu;

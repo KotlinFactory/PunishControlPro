@@ -13,7 +13,7 @@ import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.fo.remain.CompMaterial;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
 import org.mineacademy.punishcontrol.spigot.Scheduler;
-import org.mineacademy.punishcontrol.spigot.conversation.AddTemplateConversation;
+import org.mineacademy.punishcontrol.spigot.conversations.AddTemplateConversation;
 import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractTemplateBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.MainMenu;
 

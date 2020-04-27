@@ -1,4 +1,4 @@
-package org.mineacademy.punishcontrol.spigot.conversation.template;
+package org.mineacademy.punishcontrol.spigot.conversations.template;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;
@@ -11,42 +11,41 @@ import org.mineacademy.fo.conversation.SimplePrompt;
 import org.mineacademy.punishcontrol.spigot.Scheduler;
 import org.mineacademy.punishcontrol.spigot.menus.template.PunishTemplateCreatorMenu;
 
-@RequiredArgsConstructor
-public class TemplateReasonConversation extends SimpleConversation {
+@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
+public class TemplatePermissionConversation extends SimpleConversation {
 
   private final PunishTemplateCreatorMenu menu;
 
-  public static TemplateReasonConversation create(
-      final PunishTemplateCreatorMenu menu) {
+  public static TemplateReasonConversation create(final PunishTemplateCreatorMenu menu) {
     return new TemplateReasonConversation(menu);
   }
 
   @Override
   protected Prompt getFirstPrompt() {
-    return ReasonPrompt.create(menu);
+    return PermissionPrompt.create(menu);
   }
 
   @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
-  private static class ReasonPrompt extends SimplePrompt {
+  private static class PermissionPrompt extends SimplePrompt {
 
     private final PunishTemplateCreatorMenu menu;
 
-    public static ReasonPrompt create(final PunishTemplateCreatorMenu menu) {
-      return new ReasonPrompt(menu);
+    public static PermissionPrompt create(
+        final PunishTemplateCreatorMenu menu) {
+      return new PermissionPrompt(menu);
     }
 
     @Override
     protected String getPrompt(final ConversationContext ctx) {
-      return "&7Type in a reason.";
+      return "&7Type in a permission.";
     }
 
     @Override
     protected @Nullable Prompt acceptValidatedInput(
         @NotNull final ConversationContext context,
         @NotNull final String input) {
-
       Scheduler.runAsync(() -> {
-        menu.punishTemplate().reason(input);
+        menu.punishTemplate().permission(input);
         menu.displayTo(getPlayer(context));
         menu.restartMenu();
       });

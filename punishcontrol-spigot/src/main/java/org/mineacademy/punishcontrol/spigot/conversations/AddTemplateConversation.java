@@ -1,4 +1,4 @@
-package org.mineacademy.punishcontrol.spigot.conversation;
+package org.mineacademy.punishcontrol.spigot.conversations;
 
 import lombok.AccessLevel;
 import lombok.RequiredArgsConstructor;

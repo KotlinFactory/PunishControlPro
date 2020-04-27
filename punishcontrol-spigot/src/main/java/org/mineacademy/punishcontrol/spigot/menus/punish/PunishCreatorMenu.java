@@ -21,7 +21,7 @@ import org.mineacademy.punishcontrol.core.punish.PunishType;
 import org.mineacademy.punishcontrol.core.punish.template.PunishTemplate;
 import org.mineacademy.punishcontrol.core.settings.Settings;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
-import org.mineacademy.punishcontrol.spigot.conversation.PunishReasonConversation;
+import org.mineacademy.punishcontrol.spigot.conversations.PunishReasonConversation;
 import org.mineacademy.punishcontrol.spigot.menu.AbstractDurationChooser;
 import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractPunishTypeBrowser;
 import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractTemplateBrowser;
@@ -36,7 +36,8 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
   public static final int CHOOSE_REASON_SLOT = 19;
   public static final int MAKE_SILENT_SLOT = 30;
   public static final int MAKE_SUPER_SILENT_SLOT = 32;
-  public static final int CHOOSE_TEMPLATE_SLOT = 4;
+  public static final int CHOOSE_TYPE_SLOT = 4;
+  public static final int CHOOSE_TEMPLATE_SLOT = 25;
   private final Button fromTemplate;
   private final Button chooseDuration;
   private final Button makeSilent;
@@ -379,7 +380,7 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
   @Override
   public ItemStack getItemAt(final int slot) {
 
-    if (slot == 4) {
+    if (slot == CHOOSE_TYPE_SLOT) {
       return ItemCreator
           .of(ItemStacks.forPunishType(punishBuilder().punishType()))
           .name("&6Change type")
@@ -414,7 +415,7 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
       return applyPunish.getItem();
     }
 
-    if (slot == 25) {
+    if (slot == CHOOSE_TEMPLATE_SLOT) {
       return fromTemplate.getItem();
     }
 
@@ -460,7 +461,7 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
       final Player player,
       final int slot,
       final ItemStack clicked) {
-    if (slot == CHOOSE_TEMPLATE_SLOT) {
+    if (slot == CHOOSE_TYPE_SLOT) {
       new AbstractPunishTypeBrowser(this) {
         @Override
         protected void onClick(final PunishType punishType) {

@@ -25,7 +25,7 @@ public enum SettingTypes {
     public Item itemCreator() {
       return Item.of(ItemType.PLAYER_HEAD,
           "&6Player settings",
-          "&7Give permissions",
+          "&7Show permissions",
           "&7to apply punishes",
           "&7or view",
           "&7which permissions",
@@ -52,8 +52,8 @@ public enum SettingTypes {
 
     @Override
     public boolean hasAccess(final ProxiedPlayer player) {
-      return player.hasPermission(
-          PunishControlPermissions.MENU_SETTINGS_PLAYER.permission());
+      return player
+          .hasPermission(PunishControlPermissions.MENU_SETTINGS_PLAYER.permission());
     }
   },
 
@@ -76,8 +76,8 @@ public enum SettingTypes {
 
     @Override
     public boolean hasAccess(final ProxiedPlayer player) {
-      return player.hasPermission(
-          PunishControlPermissions.MENU_SETTINGS_STORAGE.permission());
+      return player
+          .hasPermission(PunishControlPermissions.MENU_SETTINGS_STORAGE.permission());
     }
   },
 
