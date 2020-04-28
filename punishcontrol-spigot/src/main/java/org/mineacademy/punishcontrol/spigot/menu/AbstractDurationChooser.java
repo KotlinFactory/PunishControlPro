@@ -28,6 +28,9 @@ public abstract class AbstractDurationChooser
   public static final int MONTH_SLOT = 9;
   public static final int DAY_SLOT = 9 * 3;
   public static final int HOUR_SLOT = 9 * 4;
+  public static final int CONFIRM_SLOT = 22;
+  public static final int MAKE_PERMA_SLOT = 8;
+
 
   private final Button year, month, day, hour;
 
@@ -185,26 +188,26 @@ public abstract class AbstractDurationChooser
 
   @Override
   public final ItemStack getItemAt(final int slot) {
-    if (slot == 0) {
+    if (slot == AbstractDurationChooser.YEAR_SLOT) {
       return year.getItem();
     }
-    if (slot == 9) {
+    if (slot == AbstractDurationChooser.MONTH_SLOT) {
       return month.getItem();
     }
 
-    if (slot == 9 * 3) {
+    if (slot == AbstractDurationChooser.DAY_SLOT) {
       return day.getItem();
     }
 
-    if (slot == 9 * 4) {
+    if (slot == AbstractDurationChooser.HOUR_SLOT) {
       return hour.getItem();
     }
 
-    if (slot == 8) {
+    if (slot == MAKE_PERMA_SLOT) {
       return makePermanent.getItem();
     }
 
-    if (slot == 22) {
+    if (slot == CONFIRM_SLOT) {
       return confirm.getItem();
     }
 

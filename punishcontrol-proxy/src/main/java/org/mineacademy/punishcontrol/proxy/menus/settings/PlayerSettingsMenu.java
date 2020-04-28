@@ -1,5 +1,6 @@
 package org.mineacademy.punishcontrol.proxy.menus.settings;
 
+import de.exceptionflug.mccommons.inventories.api.CallResult;
 import de.exceptionflug.mccommons.inventories.api.ClickType;
 import de.exceptionflug.protocolize.items.ItemStack;
 import de.exceptionflug.protocolize.items.ItemType;
@@ -37,15 +38,17 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
    Make unpunishable
    */
 
-  public static void showTo(@NonNull final ProxiedPlayer player,
+  public static void showTo(
+      @NonNull final ProxiedPlayer player,
       @NonNull final UUID target) {
     new PlayerSettingsMenu(target).displayTo(player);
   }
 
   private PlayerSettingsMenu(final UUID target) {
-    super(DaggerProxyComponent.create().settingsBrowser());
+    super(DaggerProxyComponent.create().settingsBrowser(), 9*2);
     this.target = target;
     targetOnline = Players.find(target).isPresent();
+    setTitle("&8Settings for player");
   }
 
   @Override
@@ -93,6 +96,19 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
         );
       }
     }
+  }
+
+  @Override
+  public void registerActionHandlers() {
+    registerActionHandler("Groups", (groups -> {
+      GroupBrowser.showTo(getPlayer(), target, this);
+      return CallResult.DENY_GRABBING;
+    }));
+
+    registerActionHandler("Permissions", (permissions -> {
+      PermissionsBrowser.showTo(getPlayer(), target, this);
+      return CallResult.DENY_GRABBING;
+    }));
   }
 }
 

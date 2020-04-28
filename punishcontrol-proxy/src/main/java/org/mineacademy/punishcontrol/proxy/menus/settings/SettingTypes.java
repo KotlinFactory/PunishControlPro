@@ -6,7 +6,6 @@ import de.exceptionflug.protocolize.items.ItemType;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.experimental.Accessors;
-import lombok.val;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import org.mineacademy.burst.item.Item;
 import org.mineacademy.burst.util.Scheduler;
@@ -34,20 +33,18 @@ public enum SettingTypes {
 
     @Override
     public void showMenu(final ProxiedPlayer player) {
-      Scheduler.runAsync(() -> {
-        final val browser = new AbstractPlayerBrowser(
-            Providers.playerProvider(),
-            Providers.textureProvider(),
-            DaggerProxyComponent.create().menuMain(),
-            true) {
+      Scheduler.runAsync(() -> new AbstractPlayerBrowser(
+          Providers.playerProvider(),
+          Providers.textureProvider(),
+          DaggerProxyComponent.create().menuMain(),
+          true) {
 
-          @Override
-          protected void onClick(final ClickType clickType, final UUID uuid) {
-            PlayerSettingsMenu.showTo(getPlayer(), uuid);
-          }
-        };
-        browser.displayTo(player);
-      });
+        @Override
+        protected void onClick(final ClickType clickType, final UUID uuid) {
+          PlayerSettingsMenu.showTo(getPlayer(), uuid);
+        }
+
+      }.displayTo(player));
     }
 
     @Override

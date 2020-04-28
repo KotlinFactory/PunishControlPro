@@ -14,7 +14,7 @@ public final class MainCommand extends SimpleCommand {
     super(labels);
     setDescription("Main-Command of PunishControlPro");
     setPermission("punishcontrol.command.main");
-
+    setUsage("[?]");
   }
 
   public static MainCommand create(@NonNull final StrictList<String> labels) {
@@ -29,9 +29,9 @@ public final class MainCommand extends SimpleCommand {
   protected void onCommand() {
     checkConsole();
 
-    if(args.length == 1
-        && ("?".equalsIgnoreCase(args[0]) || "help".equalsIgnoreCase(args[0]))){
+    if(args.length == 1){
       doHelp();
+      return;
     }
 
     if (args.length != 0) {
@@ -45,8 +45,9 @@ public final class MainCommand extends SimpleCommand {
     tell(Common.chatLineSmooth());
     tell("&7"+ SimplePlugin.getNamed() + " v." + SimplePlugin.getVersion());
     tell("&7© MineAcademy 2020");
+    tell(" ");
     for (final SimpleCommand command : SimpleCommand.getRegisteredCommands()) {
-      tell("&7/" + command.getLabel() + " &8* " + command.getDescription());
+      tell("&7/" + command.getLabel() + " &8* &7" + command.getDescription());
     }
     tell(Common.chatLineSmooth());
   }

@@ -1,18 +1,24 @@
 package org.mineacademy.punishcontrol.proxy;
 
 import de.exceptionflug.mccommons.commands.proxy.Commands;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.NonNull;
+import lombok.val;
 import org.mineacademy.bfo.Common;
 import org.mineacademy.bfo.bungee.SimpleBungee;
+import org.mineacademy.bfo.command.SimpleCommand;
 import org.mineacademy.bfo.plugin.SimplePlugin;
 import org.mineacademy.burst.Burst;
 import org.mineacademy.punishcontrol.core.CoreComponent;
 import org.mineacademy.punishcontrol.core.DaggerCoreComponent;
 import org.mineacademy.punishcontrol.core.PunishControlPluginBootstrap;
+import org.mineacademy.punishcontrol.core.group.Group;
+import org.mineacademy.punishcontrol.core.group.Groups;
 import org.mineacademy.punishcontrol.core.permission.Permission;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.settings.Settings;
+import org.mineacademy.punishcontrol.proxy.commands.DevCommand;
 import org.mineacademy.punishcontrol.proxy.commands.MainCommand;
 import org.mineacademy.punishcontrol.proxy.impl.ProxyExceptionHandler;
 import org.mineacademy.punishcontrol.proxy.impl.ProxyPlayerProvider;
@@ -50,6 +56,7 @@ public final class PunishControl
   @Override
   public void registerCommands() {
     registerCommand(MainCommand.create(Settings.MAIN_COMMAND_ALIASES));
+    registerCommand(DevCommand.create());
 
     Commands.registerCommand(proxyModule.commandKick());
     Commands.registerCommand(proxyModule.commandBan());
@@ -89,6 +96,7 @@ public final class PunishControl
   // Overridden methods from SimplePlugin
   // ----------------------------------------------------------------------------------------------------
 
+
   @Override
   public int getFoundedYear() {
     return 2019; // 31.12.2019
@@ -100,7 +108,23 @@ public final class PunishControl
 
   @Override
   public List<Permission> permissions() {
-    return null;
+    final val result = new ArrayList<Permission>();
+    for (final SimpleCommand command : SimpleCommand.getRegisteredCommands()) {
+
+      if (command.getPermission() == null) {
+        continue;
+      }
+
+      result.add(Permission.of(command.getPermission(), command.getDescription()));
+    }
+
+    for (final Group group : Groups.registeredGroups()) {
+      result.add(
+          Permission.of(group.permission(), "The group " + group.name())
+      );
+    }
+
+    return result;
   }
 
   @Override

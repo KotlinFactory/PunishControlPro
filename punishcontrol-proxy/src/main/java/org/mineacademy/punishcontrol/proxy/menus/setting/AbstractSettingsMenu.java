@@ -7,7 +7,11 @@ import org.mineacademy.punishcontrol.proxy.menus.browsers.SettingsBrowser;
 public abstract class AbstractSettingsMenu extends Menu {
 
   protected AbstractSettingsMenu(final SettingsBrowser settingsBrowser) {
-    super("Settings", settingsBrowser, 9*4);
+    this(settingsBrowser, 9 * 4);
+  }
+
+  protected AbstractSettingsMenu(final SettingsBrowser settingsBrowser, final int size) {
+    super("Settings", settingsBrowser, size);
   }
 
   @Override

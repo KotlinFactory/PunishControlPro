@@ -3,7 +3,6 @@ package org.mineacademy.punishcontrol.proxy.menus.template;
 
 import de.exceptionflug.mccommons.inventories.api.CallResult;
 import de.exceptionflug.mccommons.inventories.api.ClickType;
-import de.exceptionflug.protocolize.inventory.InventoryModule;
 import de.exceptionflug.protocolize.items.ItemType;
 import java.io.File;
 import java.util.Arrays;
@@ -307,7 +306,6 @@ public final class PunishTemplateCreatorMenu extends Menu {
 
     // Reason
     registerActionHandler("Reason", (reason -> {
-      InventoryModule.closeAllInventories(getPlayer());
 
       //TODO
       //TemplateReasonConversation.create(this).start(getPlayer());
@@ -316,7 +314,6 @@ public final class PunishTemplateCreatorMenu extends Menu {
 
     // Permission
     registerActionHandler("Permission", (permission -> {
-      InventoryModule.closeAllInventories(getPlayer());
       //TODO
       //TemplatePermissionConversation.create(this).start(getPlayer());
       return CallResult.DENY_GRABBING;

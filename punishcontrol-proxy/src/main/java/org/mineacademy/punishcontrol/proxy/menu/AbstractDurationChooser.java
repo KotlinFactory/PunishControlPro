@@ -16,12 +16,14 @@ public abstract class AbstractDurationChooser extends Menu {
 
 
   public static final int SIZE = 9 * 5;
-  public static final int YEAR_SLOT = 0;
   public static final int PERMANENT_SLOT = 8;
+  public static final int YEAR_SLOT = 0;
   public static final int MONTH_SLOT = 9;
   public static final int DAY_SLOT = 9 * 3;
   public static final int HOUR_SLOT = 9 * 4;
   public static final int CLOCK_SLOT = 26;
+  public static final int APPLY_SLOT = 22;
+
 
   private ItemStack expirationClock;
 
@@ -52,6 +54,15 @@ public abstract class AbstractDurationChooser extends Menu {
   public final void updateInventory() {
     super.updateInventory();
     set(CLOCK_SLOT, expirationClock, "noAction");
+
+    set(
+        Item
+          .of(ItemType.EMERALD_BLOCK)
+          .name("&aApply")
+          .lore("")
+          .slot(APPLY_SLOT)
+          .actionHandler("Apply")
+    );
 
     set(
         Item
@@ -115,11 +126,17 @@ public abstract class AbstractDurationChooser extends Menu {
             .name("&4Make permanent")
             .lore("")
             .actionHandler("Perma")
+            .slot(PERMANENT_SLOT)
     );
   }
 
   @Override
   public void registerActionHandlers() {
+    registerActionHandler("Apply", (apply -> {
+      confirm();
+      return CallResult.DENY_GRABBING;
+    }));
+
     registerActionHandler("Perma", (perma) -> {
       makePermanent();
       return CallResult.DENY_GRABBING;

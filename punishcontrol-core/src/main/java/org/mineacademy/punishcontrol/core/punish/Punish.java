@@ -195,7 +195,7 @@ public abstract class Punish {
 
       PLAYER_PROVIDER.sendIfOnline(
           creator, "&cException while creating Punish!",
-          "Please check your console.");
+          "&7Please check your console.");
 
       if (punishType().shouldWarn()) {
         PLAYER_PROVIDER.sendIfOnline(
@@ -203,6 +203,8 @@ public abstract class Punish {
             Warn.messageType,
             "&eYou have been warned", "&7Reason: " + reason());
       }
+
+      throwable.printStackTrace();
     }
   }
 }
