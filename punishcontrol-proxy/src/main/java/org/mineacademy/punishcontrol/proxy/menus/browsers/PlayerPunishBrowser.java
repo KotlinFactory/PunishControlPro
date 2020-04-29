@@ -5,7 +5,7 @@ import lombok.NonNull;
 import lombok.val;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import org.mineacademy.bfo.debug.LagCatcher;
-import org.mineacademy.burst.menu.Menu;
+import org.mineacademy.burst.menu.AbstractMenu;
 import org.mineacademy.burst.util.Scheduler;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
@@ -39,7 +39,7 @@ public final class PlayerPunishBrowser extends AbstractPunishBrowser {
   }
 
   private PlayerPunishBrowser(
-      final Menu parent,
+      final AbstractMenu parent,
       final PlayerProvider playerProvider,
       final StorageProvider storageProvider,
       final UUID target) {
@@ -50,5 +50,10 @@ public final class PlayerPunishBrowser extends AbstractPunishBrowser {
         storageProvider.listPunishes(target));
     this.target = target;
     this.storageProvider = storageProvider;
+  }
+
+  @Override
+  public void reDisplay() {
+    showTo(getPlayer(), target);
   }
 }

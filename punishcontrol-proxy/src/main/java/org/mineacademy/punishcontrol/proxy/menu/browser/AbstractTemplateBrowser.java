@@ -59,4 +59,9 @@ public abstract class AbstractTemplateBrowser
     creator.lore(Arrays.asList(replacer.replacedMessage()));
     return creator.build();
   }
+
+  @Override
+  public void reDisplay() {
+    throw new AbstractMethodError("Not implemented");
+  }
 }

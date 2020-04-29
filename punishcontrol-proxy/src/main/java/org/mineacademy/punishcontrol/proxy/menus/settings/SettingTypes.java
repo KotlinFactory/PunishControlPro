@@ -36,7 +36,7 @@ public enum SettingTypes {
       Scheduler.runAsync(() -> new AbstractPlayerBrowser(
           Providers.playerProvider(),
           Providers.textureProvider(),
-          DaggerProxyComponent.create().menuMain(),
+          DaggerProxyComponent.create().settingsBrowser(),
           true) {
 
         @Override

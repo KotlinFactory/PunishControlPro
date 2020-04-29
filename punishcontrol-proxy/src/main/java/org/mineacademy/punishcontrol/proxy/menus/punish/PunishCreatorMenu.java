@@ -10,7 +10,7 @@ import lombok.NonNull;
 import lombok.val;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import org.mineacademy.burst.item.Item;
-import org.mineacademy.burst.menu.Menu;
+import org.mineacademy.burst.menu.AbstractMenu;
 import org.mineacademy.punishcontrol.core.group.Groups;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
@@ -27,7 +27,7 @@ import org.mineacademy.punishcontrol.proxy.menu.browser.AbstractPunishTypeBrowse
 import org.mineacademy.punishcontrol.proxy.menu.browser.AbstractTemplateBrowser;
 import org.mineacademy.punishcontrol.proxy.menus.MainMenu;
 
-public final class PunishCreatorMenu extends Menu {
+public final class PunishCreatorMenu extends AbstractMenu {
 
   public static final int SIZE = 9 * 5;
   public static final int CHOOSE_PLAYER_SLOT = 33;
@@ -305,6 +305,15 @@ public final class PunishCreatorMenu extends Menu {
               .slot(APPLY_SLOT)
               .actionHandler("Apply")
       );
+    }
+  }
+
+  @Override
+  public void reDisplay() {
+    if (punishTemplate == null) {
+      showTo(getPlayer(), punishBuilder());
+    } else {
+      showTo(getPlayer(), punishBuilder(), punishTemplate);
     }
   }
 

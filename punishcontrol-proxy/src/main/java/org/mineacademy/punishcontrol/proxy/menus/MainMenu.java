@@ -133,6 +133,11 @@ public final class MainMenu extends ChangingMenu {
   }
 
   @Override
+  public void reDisplay() {
+    showTo(getPlayer());
+  }
+
+  @Override
   public void registerActionHandlers() {
     super.registerActionHandlers();
 

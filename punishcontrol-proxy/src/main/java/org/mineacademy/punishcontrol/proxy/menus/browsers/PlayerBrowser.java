@@ -46,4 +46,9 @@ public final class PlayerBrowser extends AbstractPlayerBrowser {
   public void onClick(final ClickType clickType, final UUID data) {
     ChooseActionMenu.showTo(getPlayer(), data);
   }
+
+  @Override
+  public void reDisplay() {
+    showTo(getPlayer());
+  }
 }

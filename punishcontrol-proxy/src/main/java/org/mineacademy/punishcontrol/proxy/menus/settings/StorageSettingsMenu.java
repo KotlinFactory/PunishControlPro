@@ -24,4 +24,9 @@ public final class StorageSettingsMenu extends AbstractSettingsMenu {
   public static void showTo(@NonNull final ProxiedPlayer player) {
     DaggerProxyComponent.create().storageSettingsMenu().displayTo(player);
   }
+
+  @Override
+  public void reDisplay() {
+    showTo(getPlayer());
+  }
 }

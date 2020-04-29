@@ -6,10 +6,10 @@ import de.exceptionflug.protocolize.items.ItemType;
 import org.mineacademy.bfo.Common;
 import org.mineacademy.bfo.debug.Debugger;
 import org.mineacademy.burst.item.Item;
+import org.mineacademy.burst.menu.AbstractMenu;
 import org.mineacademy.burst.menu.BurstMenu;
-import org.mineacademy.burst.menu.Menu;
 
-public abstract class AbstractConfirmMenu extends Menu {
+public abstract class AbstractConfirmMenu extends AbstractMenu {
 
   public AbstractConfirmMenu() {
     super("Confirm", 9);
@@ -64,5 +64,10 @@ public abstract class AbstractConfirmMenu extends Menu {
   @Override
   protected String[] getInfo() {
     return new String[]{"&7Apply action"};
+  }
+
+  @Override
+  public void reDisplay() {
+
   }
 }

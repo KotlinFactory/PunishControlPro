@@ -53,6 +53,11 @@ public class PunishTemplateBrowser extends AbstractTemplateBrowser {
   }
 
   @Override
+  public void reDisplay() {
+    showTo(getPlayer());
+  }
+
+  @Override
   public void registerActionHandlers() {
     registerActionHandler("Add", (add -> {
 

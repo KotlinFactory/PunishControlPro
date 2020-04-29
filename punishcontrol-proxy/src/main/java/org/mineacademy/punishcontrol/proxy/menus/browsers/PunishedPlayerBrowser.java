@@ -45,4 +45,9 @@ public class PunishedPlayerBrowser extends AbstractPlayerBrowser {
   protected void onClick(final ClickType clickType, final UUID uuid) {
     ChooseActionMenu.showTo(getPlayer(), uuid);
   }
+
+  @Override
+  public void reDisplay() {
+    showTo(getPlayer());
+  }
 }

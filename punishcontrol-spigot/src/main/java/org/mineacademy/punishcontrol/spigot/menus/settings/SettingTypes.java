@@ -37,7 +37,7 @@ public enum SettingTypes {
         final val browser = new AbstractPlayerBrowser(
             Providers.playerProvider(),
             Providers.textureProvider(),
-            DaggerSpigotComponent.create().menuMain(),
+            DaggerSpigotComponent.create().settingsBrowser(),
             true) {
 
           @Override

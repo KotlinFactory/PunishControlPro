@@ -45,7 +45,7 @@ public class PlayerInfoCommand extends AbstractSimplePunishControlCommand {
       returnInvalidArgs();
     }
 
-    //Player INfo
+    //Player Info
 
     if ("?".equalsIgnoreCase(args[0]) || "help".equalsIgnoreCase(args[0])) {
       tell(getUsage());

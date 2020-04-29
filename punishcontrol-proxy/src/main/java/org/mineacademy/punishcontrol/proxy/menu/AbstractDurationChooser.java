@@ -7,12 +7,12 @@ import de.exceptionflug.protocolize.items.ItemType;
 import java.util.concurrent.TimeUnit;
 import lombok.NonNull;
 import org.mineacademy.burst.item.Item;
-import org.mineacademy.burst.menu.Menu;
+import org.mineacademy.burst.menu.AbstractMenu;
 import org.mineacademy.punishcontrol.core.settings.Localization.Time;
 import org.mineacademy.punishcontrol.core.settings.Settings;
 import org.mineacademy.punishcontrol.core.util.TimeUtil;
 
-public abstract class AbstractDurationChooser extends Menu {
+public abstract class AbstractDurationChooser extends AbstractMenu {
 
 
   public static final int SIZE = 9 * 5;
@@ -29,12 +29,12 @@ public abstract class AbstractDurationChooser extends Menu {
 
   protected long ms;
 
-  public AbstractDurationChooser(@NonNull final Menu parent) {
+  public AbstractDurationChooser(@NonNull final AbstractMenu parent) {
     this(parent, 0);
   }
 
   public AbstractDurationChooser(
-      @NonNull final Menu parent,
+      @NonNull final AbstractMenu parent,
       final long ms) {
     super("DurationChooser", parent, SIZE);
     this.ms = ms;
@@ -261,6 +261,11 @@ public abstract class AbstractDurationChooser extends Menu {
       animateTitle("&8Removed 1 hour");
     }
     updateClock();
+  }
+
+  @Override
+  public void reDisplay() {
+
   }
 }
 

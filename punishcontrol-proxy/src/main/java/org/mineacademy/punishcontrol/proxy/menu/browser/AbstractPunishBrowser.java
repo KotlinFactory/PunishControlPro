@@ -10,7 +10,7 @@ import lombok.val;
 import org.jetbrains.annotations.Nullable;
 import org.mineacademy.burst.item.Item;
 import org.mineacademy.burst.menu.AbstractBrowser;
-import org.mineacademy.burst.menu.Menu;
+import org.mineacademy.burst.menu.AbstractMenu;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.punish.Punish;
@@ -25,7 +25,7 @@ public abstract class AbstractPunishBrowser extends AbstractBrowser<Punish> {
 
   protected AbstractPunishBrowser(
       final String name,
-      final Menu parent,
+      final AbstractMenu parent,
       final PlayerProvider playerProvider,
       final Collection<Punish> content) {
     super(name, parent, content);

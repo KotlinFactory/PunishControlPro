@@ -36,7 +36,6 @@ public class KickConversation extends SimpleConversation {
 
   @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
   private final static class KickPrompt extends SimplePrompt {
-
     private final Menu menu;
     private final UUID target;
     private final String targetName;

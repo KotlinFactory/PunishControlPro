@@ -43,6 +43,17 @@ public final class MySQLStorageProvider extends SimpleDatabase implements
   public MySQLStorageProvider(final ExceptionHandler exceptionHandler) {
     this.exceptionHandler = exceptionHandler;
     addVariable("table", "Punishes");
+  }
+
+  private void handleMySQLException(final SQLException ex, final String name) {
+    exceptionHandler.saveError(
+        ex,
+        "Exception while updating mysql. Have you altered the database? (): ",
+        name);
+  }
+
+
+  public void connect() {
     connect(
         MySQL.HOST,
         MySQL.PORT,
@@ -51,13 +62,6 @@ public final class MySQLStorageProvider extends SimpleDatabase implements
         MySQL.PASSWORD,
         "PunishControl",
         true);
-  }
-
-  private void handleMySQLException(final SQLException ex, final String name) {
-    exceptionHandler.saveError(
-        ex,
-        "Exception while updating mysql. Have you altered the database? (): ",
-        name);
   }
 
   @Override

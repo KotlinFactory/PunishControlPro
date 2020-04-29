@@ -5,10 +5,15 @@ import de.exceptionflug.protocolize.items.ItemType;
 import java.util.UUID;
 import lombok.NonNull;
 import lombok.val;
+import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
+import net.md_5.bungee.api.event.ChatEvent;
+import net.md_5.bungee.api.plugin.Listener;
+import net.md_5.bungee.event.EventHandler;
 import org.mineacademy.bfo.Players;
+import org.mineacademy.bfo.plugin.SimplePlugin;
 import org.mineacademy.burst.item.Item;
-import org.mineacademy.burst.menu.Menu;
+import org.mineacademy.burst.menu.AbstractMenu;
 import org.mineacademy.burst.util.Scheduler;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
@@ -23,7 +28,7 @@ import org.mineacademy.punishcontrol.proxy.menus.browsers.PlayerPunishBrowser;
 import org.mineacademy.punishcontrol.proxy.menus.punish.PunishCreatorMenu;
 import org.mineacademy.punishcontrol.proxy.menus.settings.PlayerSettingsMenu;
 
-public final class ChooseActionMenu extends Menu {
+public final class ChooseActionMenu extends AbstractMenu implements Listener {
 
   private static final int PUNISH_SLOT = 1;
   private static final int LIST_PUNISHES_SLOT = 11;
@@ -68,10 +73,33 @@ public final class ChooseActionMenu extends Menu {
     this.storageProvider = storageProvider;
     this.target = target;
     targetName = playerProvider.findNameUnsafe(target);
-    setTitle("§8Action for " + targetName);
+    ProxyServer.getInstance().getPluginManager()
+        .registerListener(SimplePlugin.getInstance(),
+            this);
 
-    updateInventory();
+
+    setTitle("§8Action for " + targetName);
   }
+
+  // ----------------------------------------------------------------------------------------------------
+  // Handling our chat-event (reason-input)
+  // ----------------------------------------------------------------------------------------------------
+
+  @EventHandler
+  public void onChat(final ChatEvent chatEvent) {
+    if (chatEvent.isCommand()) {
+      return;
+    }
+    if (!(chatEvent.getSender() instanceof ProxiedPlayer)) {
+      return;
+    }
+
+    final ProxiedPlayer player = (ProxiedPlayer) chatEvent.getSender();
+
+
+
+  }
+
 
   // ----------------------------------------------------------------------------------------------------
   // Overridden methods from menu
@@ -161,6 +189,11 @@ public final class ChooseActionMenu extends Menu {
   }
 
   @Override
+  public void reDisplay() {
+    showTo(getPlayer(), target);
+  }
+
+  @Override
   public void registerActionHandlers() {
     registerActionHandler("Punish", (punish) -> {
       PunishCreatorMenu.showTo(getPlayer(),
@@ -203,4 +236,5 @@ public final class ChooseActionMenu extends Menu {
   protected String[] getInfo() {
     return new String[]{"&7Menu to select an", "&7Action for players"};
   }
+
 }

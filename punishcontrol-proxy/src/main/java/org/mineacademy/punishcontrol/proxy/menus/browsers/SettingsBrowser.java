@@ -42,4 +42,9 @@ public final class SettingsBrowser extends AbstractBrowser<SettingTypes> {
   protected String[] getInfo() {
     return new String[]{"&7Menu to choose", "&7a setting"};
   }
+
+  @Override
+  public void reDisplay() {
+    showTo(getPlayer());
+  }
 }

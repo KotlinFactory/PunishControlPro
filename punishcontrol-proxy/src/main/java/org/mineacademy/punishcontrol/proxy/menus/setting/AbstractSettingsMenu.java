@@ -1,10 +1,10 @@
 package org.mineacademy.punishcontrol.proxy.menus.setting;
 
 
-import org.mineacademy.burst.menu.Menu;
+import org.mineacademy.burst.menu.AbstractMenu;
 import org.mineacademy.punishcontrol.proxy.menus.browsers.SettingsBrowser;
 
-public abstract class AbstractSettingsMenu extends Menu {
+public abstract class AbstractSettingsMenu extends AbstractMenu {
 
   protected AbstractSettingsMenu(final SettingsBrowser settingsBrowser) {
     this(settingsBrowser, 9 * 4);

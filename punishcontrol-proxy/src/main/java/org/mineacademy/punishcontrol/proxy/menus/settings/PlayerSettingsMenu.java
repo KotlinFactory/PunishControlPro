@@ -45,7 +45,7 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
   }
 
   private PlayerSettingsMenu(final UUID target) {
-    super(DaggerProxyComponent.create().settingsBrowser(), 9*2);
+    super(DaggerProxyComponent.create().settingsBrowser(), 9 * 2);
     this.target = target;
     targetOnline = Players.find(target).isPresent();
     setTitle("&8Settings for player");
@@ -99,6 +99,11 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
   }
 
   @Override
+  public void reDisplay() {
+    showTo(getPlayer(), target);
+  }
+
+  @Override
   public void registerActionHandlers() {
     registerActionHandler("Groups", (groups -> {
       GroupBrowser.showTo(getPlayer(), target, this);
@@ -118,6 +123,9 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
 
 final class GroupBrowser extends AbstractBrowser<Group> {
 
+  private final PlayerSettingsMenu parent;
+  private final UUID target;
+
   public static void showTo(
       final ProxiedPlayer player,
       final UUID target,
@@ -129,6 +137,8 @@ final class GroupBrowser extends AbstractBrowser<Group> {
 
   protected GroupBrowser(final PlayerSettingsMenu parent, final UUID target) {
     super("GroupBrowser", parent, Groups.list(target));
+    this.parent = parent;
+    this.target = target;
     setTitle("&8Groups");
   }
 
@@ -183,12 +193,18 @@ final class GroupBrowser extends AbstractBrowser<Group> {
         "&7a player has"
     };
   }
+
+  @Override
+  public void reDisplay() {
+    showTo(getPlayer(), target, parent);
+  }
 }
 
 class PermissionsBrowser extends AbstractBrowser<Permission> {
 
   private final PlayerProvider playerProvider;
   private final UUID target;
+  private final PlayerSettingsMenu parent;
 
   public static void showTo(
       final ProxiedPlayer player,
@@ -206,6 +222,7 @@ class PermissionsBrowser extends AbstractBrowser<Permission> {
       final UUID target,
       final PlayerSettingsMenu parent) {
     super("PermissionBrowser", parent, Permissions.registeredPermissions());
+    this.parent = parent;
     this.target = target;
     playerProvider = Providers.playerProvider();
     setTitle("&8Permissions");
@@ -218,6 +235,11 @@ class PermissionsBrowser extends AbstractBrowser<Permission> {
         "&7the permissions",
         "&7a player has"
     };
+  }
+
+  @Override
+  public void reDisplay() {
+    showTo(getPlayer(), target, parent);
   }
 
   @Override

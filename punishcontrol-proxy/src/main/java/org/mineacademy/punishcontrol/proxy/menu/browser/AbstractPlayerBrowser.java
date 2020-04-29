@@ -8,7 +8,7 @@ import java.util.UUID;
 import org.jetbrains.annotations.Nullable;
 import org.mineacademy.burst.item.Item;
 import org.mineacademy.burst.menu.AbstractBrowser;
-import org.mineacademy.burst.menu.Menu;
+import org.mineacademy.burst.menu.BurstMenu;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.providers.TextureProvider;
 
@@ -20,14 +20,14 @@ public abstract class AbstractPlayerBrowser extends AbstractBrowser<UUID> {
   public AbstractPlayerBrowser(
       final PlayerProvider playerProvider,
       final TextureProvider textureProvider,
-      final Menu mainMenu) {
+      final BurstMenu mainMenu) {
     this(playerProvider, textureProvider, mainMenu, false);
   }
 
   public AbstractPlayerBrowser(
       final PlayerProvider playerProvider,
       final TextureProvider textureProvider,
-      final Menu mainMenu,
+      final BurstMenu mainMenu,
       final boolean onlineOnly) {
 
     this(
@@ -41,7 +41,7 @@ public abstract class AbstractPlayerBrowser extends AbstractBrowser<UUID> {
   protected AbstractPlayerBrowser(
       final PlayerProvider playerProvider,
       final TextureProvider textureProvider,
-      final Menu mainMenu,
+      final BurstMenu mainMenu,
       final Collection<UUID> players
   ) {
     super("Players", mainMenu, players);
@@ -81,5 +81,10 @@ public abstract class AbstractPlayerBrowser extends AbstractBrowser<UUID> {
         "&7Menu to select",
         "&7an player"
     };
+  }
+
+  @Override
+  public void reDisplay() {
+    throw new AbstractMethodError("Not implemented");
   }
 }
