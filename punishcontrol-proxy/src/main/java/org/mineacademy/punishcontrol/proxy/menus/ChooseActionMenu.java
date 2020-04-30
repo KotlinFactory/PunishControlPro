@@ -24,6 +24,7 @@ import org.mineacademy.punishcontrol.core.settings.Localization;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 import org.mineacademy.punishcontrol.proxy.DaggerProxyComponent;
 import org.mineacademy.punishcontrol.proxy.ItemUtil;
+import org.mineacademy.punishcontrol.proxy.conversations.KickConversation;
 import org.mineacademy.punishcontrol.proxy.menus.browsers.PlayerPunishBrowser;
 import org.mineacademy.punishcontrol.proxy.menus.punish.PunishCreatorMenu;
 import org.mineacademy.punishcontrol.proxy.menus.settings.PlayerSettingsMenu;
@@ -224,6 +225,7 @@ public final class ChooseActionMenu extends AbstractMenu implements Listener {
         return CallResult.DENY_GRABBING;
       }
 
+      KickConversation.create(getPlayer(), this, target, targetName).start();
       return CallResult.DENY_GRABBING;
     }));
   }

@@ -85,7 +85,7 @@ public interface PunishControlPluginBootstrap {
       log("Language: " + language);
 
     } catch (final Throwable throwable) {
-      log("Couldn't choose language StorageProvider");
+      log("Couldn't choose language");
       saveError(throwable);
     }
 
@@ -217,6 +217,13 @@ public interface PunishControlPluginBootstrap {
       );
 
       Groups.registerGroup(builder.build());
+    }
+
+    for (final Group group : Groups.registeredGroups()) {
+      System.out.println("Group: " + group.name());
+      Permissions.register(
+          Permission.of(group.permission(), "The group " + group.name())
+      );
     }
   }
 

@@ -1,199 +1,228 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xmlns="http://maven.apache.org/POM/4.0.0"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <parent>
-        <artifactId>PunishControlPro</artifactId>
-        <groupId>org.mineacademy</groupId>
-        <version>1.0-SNAPSHOT</version>
-    </parent>
-    <modelVersion>4.0.0</modelVersion>
-    <version>1.0.0</version>
-    <artifactId>punishcontrol-plugin</artifactId>
+  xmlns="http://maven.apache.org/POM/4.0.0"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <artifactId>PunishControlPro</artifactId>
+    <groupId>org.mineacademy</groupId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+  <version>1.0.0</version>
+  <artifactId>punishcontrol-plugin</artifactId>
 
 
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <author>leonhard</author>
-        <plugin.name>punishcontrol-pro</plugin.name>
+  <properties>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <author>leonhard</author>
+    <plugin.name>punishcontrol-pro</plugin.name>
 
-        <!-- Our main-classes-->
-        <proxy.main>
-            org.mineacademy.punishcontrol.proxy.PunishControl
-        </proxy.main>
-        <spigot.main>
-            org.mineacademy.punishcontrol.spigot.PunishControl
-        </spigot.main>
-        <mainClass>${project.groupId}.${plugin.name}.${project.artifactId}</mainClass>
-    </properties>
-
-
-    <repositories>
-        <repository>
-            <id>jitpack.io</id>
-            <url>https://jitpack.io</url>
-        </repository>
-    </repositories>
-
-    <dependencies>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.18.10</version>
-            <scope>provided</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.mineacademy</groupId>
-            <artifactId>punishcontrol-core</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.mineacademy</groupId>
-            <artifactId>punishcontrol-proxy</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.mineacademy</groupId>
-            <artifactId>punishcontrol-spigot</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-    </dependencies>
-
-    <build>
-        <defaultGoal>clean verify -U</defaultGoal>
-        <pluginManagement>
-            <plugins>
-
-                <plugin>
-                    <artifactId>maven-site-plugin</artifactId>
-                    <version>3.8.2</version>
-                </plugin>
-
-                <plugin>
-                    <artifactId>maven-javadoc-plugin</artifactId>
-                    <version>3.1.1</version>
-                </plugin>
-
-                <plugin>
-                    <artifactId>maven-scm-publish-plugin</artifactId>
-                    <version>1.1</version>
-                </plugin>
-            </plugins>
-        </pluginManagement>
-        <plugins>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.1</version>
-                <executions>
-                    <execution>
-                        <phase>package</phase>
-                        <goals>
-                            <goal>shade</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <createDependencyReducedPom>false</createDependencyReducedPom>
-                    <artifactSet>
-                        <includes>
-                            <!-- We want our other modules in our final jar-->
-                            <include>org.mineacademy:punishcontrol-spigot*</include>
-                            <include>org.mineacademy:punishcontrol-proxy*</include>
-                            <include>org.mineacademy:punishcontrol-core*</include>
+    <!-- Our main-classes-->
+    <proxy.main>
+      org.mineacademy.punishcontrol.proxy.PunishControl
+    </proxy.main>
+    <spigot.main>
+      org.mineacademy.punishcontrol.spigot.PunishControl
+    </spigot.main>
+    <mainClass>${project.groupId}.${plugin.name}.${project.artifactId}</mainClass>
+  </properties>
 
 
-                            <!-- We want our libraries in our final jar -->
-                            <include>org.mineacademy:Foundation*</include>
-                            <include>org.mineacademy:BungeeFoundation*</include>
-                            <include>org.mineacademy:Protect*</include>
-                            <include>org.mineacademy:Burst*</include>
-                            <include>de.exceptionflug:protocolize-lib:*</include>
-                            <include>de.exceptionflug:mccommons-plugin-proxy:*</include>
-                            <include>de.leonhard:storage*</include>
-                            <include>com.github.JavaFactoryDev:LightningStorage*</include>
-                            <!-- Dependency Injection -->
-                            <include>com.google.dagger*</include>
-                            <include>javax.inject:javax.inject*</include>
-                        </includes>
-                    </artifactSet>
-                    <!--                    <relocations>-->
-                    <!--                        <relocation>-->
-                    <!--                            <pattern>org.mineacademy</pattern>-->
-                    <!--                            <shadedPattern>org.mineacademy.${plugin.name}.lib</shadedPattern>-->
-                    <!--                            <excludes>-->
-                    <!--                                <exclude>org.mineacademy.${plugin.name}.*</exclude>-->
-                    <!--                            </excludes>-->
-                    <!--                        </relocation>-->
-                    <!--                    </relocations>-->
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-jar-plugin</artifactId>
-                <version>3.1.2</version>
-                <configuration>
-                    <archive>
-                        <addMavenDescriptor>false</addMavenDescriptor>
-                        <manifestEntries>
-                            <Manifest-Version>${project.version}</Manifest-Version>
-                            <Built-By>${project.name} Development Team</Built-By>
-                        </manifestEntries>
-                    </archive>
-                </configuration>
-            </plugin>
+  <repositories>
+    <repository>
+      <id>jitpack.io</id>
+      <url>https://jitpack.io</url>
+    </repository>
+  </repositories>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
-                <executions>
-                    <execution>
-                        <id>compile</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>compile</goal>
-                        </goals>
-                    </execution>
-                    <execution>
-                        <id>testCompile</id>
-                        <phase>test-compile</phase>
-                        <goals>
-                            <goal>testCompile</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                    <!--                    <compilerId>eclipse</compilerId>-->
-                </configuration>
-                <dependencies>
-                    <dependency>
-                        <groupId>org.codehaus.plexus</groupId>
-                        <artifactId>plexus-compiler-eclipse</artifactId>
-                        <version>2.8.1</version>
-                    </dependency>
-                </dependencies>
-            </plugin>
+  <dependencies>
+    <dependency>
+      <groupId>org.projectlombok</groupId>
+      <artifactId>lombok</artifactId>
+      <version>1.18.10</version>
+      <scope>provided</scope>
+    </dependency>
 
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-deploy-plugin</artifactId>
-                <version>3.0.0-M1</version>
-                <configuration>
-                    <skip>true</skip>
-                </configuration>
-            </plugin>
-        </plugins>
-        <resources>
-            <resource>
-                <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-            </resource>
-        </resources>
-    </build>
+    <dependency>
+      <groupId>org.mineacademy</groupId>
+      <artifactId>punishcontrol-core</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.mineacademy</groupId>
+      <artifactId>punishcontrol-proxy</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.mineacademy</groupId>
+      <artifactId>punishcontrol-spigot</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+  </dependencies>
+
+  <build>
+    <defaultGoal>clean verify -U</defaultGoal>
+    <pluginManagement>
+      <plugins>
+
+        <plugin>
+          <artifactId>maven-site-plugin</artifactId>
+          <version>3.8.2</version>
+        </plugin>
+
+        <plugin>
+          <artifactId>maven-javadoc-plugin</artifactId>
+          <version>3.1.1</version>
+        </plugin>
+
+        <plugin>
+          <artifactId>maven-scm-publish-plugin</artifactId>
+          <version>1.1</version>
+        </plugin>
+      </plugins>
+    </pluginManagement>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-shade-plugin</artifactId>
+        <version>3.2.1</version>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <createDependencyReducedPom>false</createDependencyReducedPom>
+          <artifactSet>
+            <includes>
+              <!-- We want our other modules in our final jar-->
+              <include>org.mineacademy:punishcontrol-spigot*</include>
+              <include>org.mineacademy:punishcontrol-proxy*</include>
+              <include>org.mineacademy:punishcontrol-core*</include>
+
+
+              <!-- We want our libraries in our final jar -->
+              <include>org.mineacademy:Foundation*</include>
+              <include>org.mineacademy:BungeeFoundation*</include>
+              <include>org.mineacademy:Protect*</include>
+              <include>org.mineacademy:Burst*</include>
+              <include>de.exceptionflug:protocolize-lib:*</include>
+              <include>de.exceptionflug:mccommons-plugin-proxy:*</include>
+              <include>de.leonhard:storage*</include>
+              <include>com.github.JavaFactoryDev:LightningStorage*</include>
+              <!-- Dependency Injection -->
+              <include>com.google.dagger*</include>
+              <include>javax.inject:javax.inject*</include>
+            </includes>
+          </artifactSet>
+          <!--                    <relocations>-->
+          <!--                        <relocation>-->
+          <!--                            <pattern>org.mineacademy</pattern>-->
+          <!--                            <shadedPattern>org.mineacademy.${plugin.name}.lib</shadedPattern>-->
+          <!--                            <excludes>-->
+          <!--                                <exclude>org.mineacademy.${plugin.name}.*</exclude>-->
+          <!--                            </excludes>-->
+          <!--                        </relocation>-->
+          <!--                    </relocations>-->
+        </configuration>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-jar-plugin</artifactId>
+        <version>3.1.2</version>
+        <configuration>
+          <archive>
+            <addMavenDescriptor>false</addMavenDescriptor>
+            <manifestEntries>
+              <Manifest-Version>${project.version}</Manifest-Version>
+              <Built-By>${project.name} Development Team</Built-By>
+            </manifestEntries>
+          </archive>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version>
+        <executions>
+          <execution>
+            <id>compile</id>
+            <phase>compile</phase>
+            <goals>
+              <goal>compile</goal>
+            </goals>
+          </execution>
+          <execution>
+            <id>testCompile</id>
+            <phase>test-compile</phase>
+            <goals>
+              <goal>testCompile</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <source>1.8</source>
+          <target>1.8</target>
+          <!--                    <compilerId>eclipse</compilerId>-->
+        </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.codehaus.plexus</groupId>
+            <artifactId>plexus-compiler-eclipse</artifactId>
+            <version>2.8.1</version>
+          </dependency>
+        </dependencies>
+      </plugin>
+
+
+      <plugin>
+        <groupId>com.github.wvengen</groupId>
+        <artifactId>proguard-maven-plugin</artifactId>
+        <version>2.2.0</version>
+        <dependencies>
+          <dependency>
+            <groupId>net.sf.proguard</groupId>
+            <artifactId>proguard-base</artifactId>
+            <version>6.3.0beta1</version>
+          </dependency>
+        </dependencies>
+        <executions>
+          <execution>
+            <phase>package</phase>
+            <goals>
+              <goal>proguard</goal>
+            </goals>
+          </execution>
+        </executions>
+        <configuration>
+          <libs>
+            <lib>${java.home}/lib/rt.jar</lib>
+            <lib>${java.home}/lib/jce.jar</lib>
+          </libs>
+        </configuration>
+      </plugin>
+
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-deploy-plugin</artifactId>
+        <version>3.0.0-M1</version>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
+    </plugins>
+
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
+  </build>
 </project>

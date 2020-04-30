@@ -2,6 +2,7 @@ package org.mineacademy.punishcontrol.proxy.menus.punish;
 
 import de.exceptionflug.mccommons.inventories.api.CallResult;
 import de.exceptionflug.mccommons.inventories.api.ClickType;
+import de.exceptionflug.protocolize.inventory.InventoryModule;
 import de.exceptionflug.protocolize.items.ItemType;
 import java.util.Arrays;
 import java.util.UUID;
@@ -21,6 +22,7 @@ import org.mineacademy.punishcontrol.core.punish.template.PunishTemplate;
 import org.mineacademy.punishcontrol.core.settings.Settings;
 import org.mineacademy.punishcontrol.proxy.DaggerProxyComponent;
 import org.mineacademy.punishcontrol.proxy.ItemUtil;
+import org.mineacademy.punishcontrol.proxy.conversations.PunishReasonConversation;
 import org.mineacademy.punishcontrol.proxy.menu.AbstractDurationChooser;
 import org.mineacademy.punishcontrol.proxy.menu.browser.AbstractPlayerBrowser;
 import org.mineacademy.punishcontrol.proxy.menu.browser.AbstractPunishTypeBrowser;
@@ -372,7 +374,8 @@ public final class PunishCreatorMenu extends AbstractMenu {
 
     //Reason
     registerActionHandler("Reason", (reason -> {
-      //TODO REASON!
+      InventoryModule.closeAllInventories(getPlayer());
+      PunishReasonConversation.create(getPlayer(), this).start();
       return CallResult.DENY_GRABBING;
     }));
 

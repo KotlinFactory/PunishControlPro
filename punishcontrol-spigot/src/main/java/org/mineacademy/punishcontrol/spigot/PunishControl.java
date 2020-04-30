@@ -9,8 +9,6 @@ import org.mineacademy.fo.MinecraftVersion.V;
 import org.mineacademy.fo.command.SimpleCommand;
 import org.mineacademy.fo.plugin.SimplePlugin;
 import org.mineacademy.punishcontrol.core.PunishControlPluginBootstrap;
-import org.mineacademy.punishcontrol.core.group.Group;
-import org.mineacademy.punishcontrol.core.group.Groups;
 import org.mineacademy.punishcontrol.core.permission.Permission;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.settings.Settings;
@@ -109,13 +107,6 @@ public final class PunishControl
 
       result.add(Permission.of(command.getPermission(), command.getDescription()));
     }
-
-    for (final Group group : Groups.registeredGroups()) {
-      result.add(
-          Permission.of(group.permission(), "The group " + group.name())
-      );
-    }
-
 
     return result;
   }

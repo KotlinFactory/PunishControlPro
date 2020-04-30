@@ -22,6 +22,8 @@ import org.mineacademy.punishcontrol.core.punish.template.PunishTemplates;
 import org.mineacademy.punishcontrol.core.settings.Settings;
 import org.mineacademy.punishcontrol.proxy.DaggerProxyComponent;
 import org.mineacademy.punishcontrol.proxy.ItemUtil;
+import org.mineacademy.punishcontrol.proxy.conversations.template.TemplatePermissionConversation;
+import org.mineacademy.punishcontrol.proxy.conversations.template.TemplateReasonConversation;
 import org.mineacademy.punishcontrol.proxy.menu.AbstractDurationChooser;
 import org.mineacademy.punishcontrol.proxy.menu.browser.AbstractPunishTypeBrowser;
 
@@ -311,15 +313,13 @@ public final class PunishTemplateCreatorMenu extends AbstractMenu {
     // Reason
     registerActionHandler("Reason", (reason -> {
 
-      //TODO
-      //TemplateReasonConversation.create(this).start(getPlayer());
+      TemplateReasonConversation.create(getPlayer(), this).start();
       return CallResult.DENY_GRABBING;
     }));
 
     // Permission
     registerActionHandler("Permission", (permission -> {
-      //TODO
-      //TemplatePermissionConversation.create(this).start(getPlayer());
+      TemplatePermissionConversation.create(getPlayer(), this).start();
       return CallResult.DENY_GRABBING;
     }));
 

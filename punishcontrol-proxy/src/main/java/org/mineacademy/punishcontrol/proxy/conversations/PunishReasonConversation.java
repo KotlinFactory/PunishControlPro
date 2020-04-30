@@ -55,7 +55,7 @@ public final class PunishReasonConversation extends SimpleConversation {
     @Override
     public @Nullable SimplePrompt acceptValidatedInput(@NotNull final String s) {
       menu.setReason(s);
-      menu.displayTo(getPlayer());
+      menu.reDisplay();
       return null;
     }
 

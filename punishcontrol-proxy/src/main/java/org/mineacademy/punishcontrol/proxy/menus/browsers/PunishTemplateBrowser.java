@@ -12,6 +12,7 @@ import org.mineacademy.burst.item.Item;
 import org.mineacademy.burst.util.Scheduler;
 import org.mineacademy.punishcontrol.core.punish.template.PunishTemplate;
 import org.mineacademy.punishcontrol.proxy.DaggerProxyComponent;
+import org.mineacademy.punishcontrol.proxy.conversations.AddTemplateConversation;
 import org.mineacademy.punishcontrol.proxy.menu.browser.AbstractTemplateBrowser;
 import org.mineacademy.punishcontrol.proxy.menus.MainMenu;
 
@@ -63,7 +64,7 @@ public class PunishTemplateBrowser extends AbstractTemplateBrowser {
 
       InventoryModule.closeAllInventories(getPlayer());
       //TODO
-      //AddTemplateConversation.create().start(getPlayer());
+      AddTemplateConversation.create(getPlayer()).start();
       return CallResult.DENY_GRABBING;
     }));
   }
