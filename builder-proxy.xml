@@ -35,6 +35,9 @@
             <zipgroupfileset
               dir="../mccommons/mccommons-plugin/mccommons-plugin-proxy/target"
               includes="**/*mccommons-plugin-proxy-2.0-SNAPSHOT.jar"/>
+            <zipgroupfileset
+              dir="${user.home}/.m2/repository/net/jcip/jcip-annotations/1.0"
+              includes="**/*jcip-annotations-1.0.jar"/>
         </jar>
     </target>
 

@@ -43,9 +43,9 @@ public final class ProxyPunishProvider implements PunishProvider {
             continue;
           }
 
-          Common
+          org.mineacademy.bfo.Common
               .tell(player, Localization.Punish.PUNISH_BROADCAST_MESSAGE.replace(
-                  Common.chatLine(),
+                  org.mineacademy.fo.Common.chatLine(),
                   Providers.playerProvider().findNameUnsafe(punish.target()),
                   punish.punishType().localized(),
                   punish.reason(),
@@ -68,7 +68,7 @@ public final class ProxyPunishProvider implements PunishProvider {
           continue;
         }
 
-        Common
+        org.mineacademy.bfo.Common
             .tell(player, Localization.Punish.PUNISH_BROADCAST_MESSAGE.replace(
                 Common.chatLine(),
                 Providers.playerProvider().findNameUnsafe(punish.target()),

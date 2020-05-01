@@ -115,6 +115,8 @@
               <include>de.exceptionflug:mccommons-plugin-proxy:*</include>
               <include>de.leonhard:storage*</include>
               <include>com.github.JavaFactoryDev:LightningStorage*</include>
+              <include>info.debatty:java-string-similarity*</include>
+              <include>net.jcip:jcip-annotations*</include>
               <!-- Dependency Injection -->
               <include>com.google.dagger*</include>
               <include>javax.inject:javax.inject*</include>

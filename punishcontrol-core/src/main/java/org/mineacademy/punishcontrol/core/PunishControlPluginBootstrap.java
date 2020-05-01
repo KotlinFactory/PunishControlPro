@@ -220,7 +220,6 @@ public interface PunishControlPluginBootstrap {
     }
 
     for (final Group group : Groups.registeredGroups()) {
-      System.out.println("Group: " + group.name());
       Permissions.register(
           Permission.of(group.permission(), "The group " + group.name())
       );

@@ -14,6 +14,7 @@ import org.mineacademy.fo.menu.button.Button;
 import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.fo.remain.CompMaterial;
 import org.mineacademy.punishcontrol.core.group.Groups;
+import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.providers.TextureProvider;
 import org.mineacademy.punishcontrol.core.punish.PunishBuilder;
@@ -23,6 +24,7 @@ import org.mineacademy.punishcontrol.core.settings.Settings;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
 import org.mineacademy.punishcontrol.spigot.conversations.PunishReasonConversation;
 import org.mineacademy.punishcontrol.spigot.menu.AbstractDurationChooser;
+import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractPlayerBrowser;
 import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractPunishTypeBrowser;
 import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractTemplateBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.MainMenu;
@@ -246,8 +248,20 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
     choosePlayer = new Button() {
       @Override
       public void onClickedInMenu(
-          final Player player, final Menu menu, final ClickType click) {
+          final Player player,
+          final Menu menu,
+          final ClickType click) {
 
+        new AbstractPlayerBrowser(
+            Providers.playerProvider(),
+            Providers.textureProvider(),
+            menu) {
+
+          @Override
+          public void onClick(final UUID data) {
+            PunishCreatorMenu.showTo(player, punishBuilder().target(data));
+          }
+        }.displayTo(player);
       }
 
       @Override

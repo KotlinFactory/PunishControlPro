@@ -1,6 +1,7 @@
 package org.mineacademy.punishcontrol.proxy.menus;
 
 import de.exceptionflug.mccommons.inventories.api.CallResult;
+import de.exceptionflug.mccommons.inventories.api.ClickType;
 import de.exceptionflug.protocolize.items.ItemType;
 import java.util.Collections;
 import javax.inject.Inject;
@@ -16,6 +17,7 @@ import org.mineacademy.punishcontrol.core.providers.TextureProvider;
 import org.mineacademy.punishcontrol.proxy.DaggerProxyComponent;
 import org.mineacademy.punishcontrol.proxy.menus.browsers.AllPunishesBrowser;
 import org.mineacademy.punishcontrol.proxy.menus.browsers.PlayerBrowser;
+import org.mineacademy.punishcontrol.proxy.menus.browsers.PunishedPlayerBrowser;
 import org.mineacademy.punishcontrol.proxy.menus.browsers.SettingsBrowser;
 import org.mineacademy.punishcontrol.proxy.menus.punish.PunishCreatorMenu;
 
@@ -157,6 +159,11 @@ public final class MainMenu extends ChangingMenu {
     }));
 
     registerActionHandler("ListPunishes", (listPunishes -> {
+      if (listPunishes.getClickType() == ClickType.RIGHT_CLICK) {
+        PunishedPlayerBrowser.showTo(getPlayer());
+        return CallResult.DENY_GRABBING;
+      }
+
       AllPunishesBrowser.showTo(getPlayer());
       return CallResult.DENY_GRABBING;
     }));

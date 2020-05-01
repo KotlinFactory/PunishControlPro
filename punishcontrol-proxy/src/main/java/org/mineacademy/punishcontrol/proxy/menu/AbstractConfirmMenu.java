@@ -1,7 +1,6 @@
 package org.mineacademy.punishcontrol.proxy.menu;
 
 import de.exceptionflug.mccommons.inventories.api.CallResult;
-import de.exceptionflug.protocolize.inventory.InventoryModule;
 import de.exceptionflug.protocolize.items.ItemType;
 import org.mineacademy.bfo.Common;
 import org.mineacademy.bfo.debug.Debugger;
@@ -58,7 +57,7 @@ public abstract class AbstractConfirmMenu extends AbstractMenu {
       return;
     }
 
-    async(() -> InventoryModule.sendInventory(getPlayer(), getParent().build()));
+    getParent().reDisplay();
   }
 
   @Override

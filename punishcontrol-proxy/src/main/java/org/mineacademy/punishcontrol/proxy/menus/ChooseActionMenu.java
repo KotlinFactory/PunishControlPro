@@ -1,15 +1,14 @@
 package org.mineacademy.punishcontrol.proxy.menus;
 
 import de.exceptionflug.mccommons.inventories.api.CallResult;
+import de.exceptionflug.protocolize.inventory.InventoryModule;
 import de.exceptionflug.protocolize.items.ItemType;
 import java.util.UUID;
 import lombok.NonNull;
 import lombok.val;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
-import net.md_5.bungee.api.event.ChatEvent;
 import net.md_5.bungee.api.plugin.Listener;
-import net.md_5.bungee.event.EventHandler;
 import org.mineacademy.bfo.Players;
 import org.mineacademy.bfo.plugin.SimplePlugin;
 import org.mineacademy.burst.item.Item;
@@ -81,26 +80,6 @@ public final class ChooseActionMenu extends AbstractMenu implements Listener {
 
     setTitle("§8Action for " + targetName);
   }
-
-  // ----------------------------------------------------------------------------------------------------
-  // Handling our chat-event (reason-input)
-  // ----------------------------------------------------------------------------------------------------
-
-  @EventHandler
-  public void onChat(final ChatEvent chatEvent) {
-    if (chatEvent.isCommand()) {
-      return;
-    }
-    if (!(chatEvent.getSender() instanceof ProxiedPlayer)) {
-      return;
-    }
-
-    final ProxiedPlayer player = (ProxiedPlayer) chatEvent.getSender();
-
-
-
-  }
-
 
   // ----------------------------------------------------------------------------------------------------
   // Overridden methods from menu
@@ -205,6 +184,7 @@ public final class ChooseActionMenu extends AbstractMenu implements Listener {
     });
 
     registerActionHandler("ListPunishes", (listPunishes -> {
+      System.out.println("Hey?");
       PlayerPunishBrowser.showTo(getPlayer(), target);
       return CallResult.DENY_GRABBING;
     }));
@@ -225,6 +205,7 @@ public final class ChooseActionMenu extends AbstractMenu implements Listener {
         return CallResult.DENY_GRABBING;
       }
 
+      InventoryModule.closeAllInventories(getPlayer());
       KickConversation.create(getPlayer(), this, target, targetName).start();
       return CallResult.DENY_GRABBING;
     }));
