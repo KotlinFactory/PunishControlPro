@@ -26,8 +26,4 @@ public abstract class PunishControlAPI {
 
     return instance;
   }
-  
-
-
-
 }

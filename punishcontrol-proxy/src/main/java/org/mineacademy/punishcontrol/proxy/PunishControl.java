@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.NonNull;
 import lombok.val;
+import net.md_5.bungee.api.ProxyServer;
 import org.mineacademy.bfo.Common;
 import org.mineacademy.bfo.bungee.SimpleBungee;
 import org.mineacademy.bfo.command.SimpleCommand;
@@ -44,6 +45,7 @@ public final class PunishControl
   @Override
   protected void onPluginStart() {
     Burst.setPlugin(this); // Set the plugin for our library
+    ProxyServer.getInstance().getConfig().isOnlineMode();
     onPunishControlPluginStart();
   }
 
@@ -65,6 +67,8 @@ public final class PunishControl
     Commands.registerCommand(proxyModule.commandUnMute());
     Commands.registerCommand(proxyModule.commandUnWarn());
     Commands.registerCommand(proxyModule.commandPlayerInfo());
+    Commands.registerCommand(proxyModule.searchCommand());
+    Commands.registerCommand(proxyModule.chooseActionCommand());
   }
 
   @Override

@@ -61,6 +61,8 @@ public final class PunishControl
     registerCommand(spigotModule.commandUnMute());
     registerCommand(spigotModule.commandUnWarn());
     registerCommand(spigotModule.commandPlayerInfo());
+    registerCommand(spigotModule.searchCommand());
+    registerCommand(spigotModule.chooseActionCommand());
   }
 
   @Override

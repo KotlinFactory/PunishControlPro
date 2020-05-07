@@ -26,6 +26,7 @@ import org.mineacademy.punishcontrol.proxy.conversations.template.TemplatePermis
 import org.mineacademy.punishcontrol.proxy.conversations.template.TemplateReasonConversation;
 import org.mineacademy.punishcontrol.proxy.menu.AbstractDurationChooser;
 import org.mineacademy.punishcontrol.proxy.menu.browser.AbstractPunishTypeBrowser;
+import org.mineacademy.punishcontrol.proxy.menus.browsers.PunishTemplateBrowser;
 
 @Accessors(fluent = true)
 public final class PunishTemplateCreatorMenu extends AbstractMenu {
@@ -281,6 +282,12 @@ public final class PunishTemplateCreatorMenu extends AbstractMenu {
 
   @Override
   public void registerActionHandlers() {
+
+    registerActionHandler("Apply", apply -> {
+      PunishTemplateBrowser.showTo(player);
+      return CallResult.DENY_GRABBING;
+    });
+
     // Duration
     registerActionHandler("Duration", (duration -> {
 

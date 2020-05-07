@@ -7,6 +7,7 @@ import java.util.UUID;
 import lombok.NonNull;
 import lombok.val;
 import org.mineacademy.punishcontrol.core.MessageType;
+import org.mineacademy.punishcontrol.core.Searcher.SearchResult;
 
 /**
  * Provide Data needed
@@ -17,10 +18,9 @@ public interface PlayerProvider {
       @NonNull final String ip);
 
   /**
-   * @return Players which are on the server & players joined the server
-   * earlier.
+   * @return Players which are on the server & players joined the server earlier.
    */
-  List<UUID> getOfflinePlayers();
+  List<UUID> offlinePlayers();
 
   List<UUID> getOnlinePlayers();
 
@@ -31,17 +31,19 @@ public interface PlayerProvider {
 
   Optional<String> findName(@NonNull UUID uuid);
 
- default String findNameUnsafe(@NonNull final UUID uuid){
-   final val result = findName(uuid).orElse(null);
-   Valid.notNull(result,
-       "Couldn't find '" + uuid + "' on Mojang side",
-       "Maybe we were banned?",
-       "Try restarting our server & join again");
-   return result;
- }
+  @Deprecated
+  default String findNameUnsafe(@NonNull final UUID uuid) {
+    final val result = findName(uuid).orElse(null);
+    Valid.notNull(result,
+        "Couldn't find '" + uuid + "' on Mojang side",
+        "Maybe we were banned?",
+        "Try restarting our server & join again");
+    return result;
+  }
 
   Optional<UUID> findUUID(@NonNull String name);
 
+  @Deprecated
   default UUID findUUIDUnsafe(@NonNull final String name) {
     final val result = findUUID(name).orElse(null);
     Valid.notNull(result,
@@ -51,7 +53,7 @@ public interface PlayerProvider {
     return result;
   }
 
-  Optional<String> getIp(@NonNull UUID uuid);
+  Optional<String> ip(@NonNull UUID uuid);
 
   void sendIfOnline(@NonNull UUID uuid, @NonNull String... messages);
 
@@ -67,4 +69,14 @@ public interface PlayerProvider {
       @NonNull boolean punishable);
 
   boolean punishable(@NonNull UUID target);
+
+  List<UUID> searchForUUIDsOfIp(@NonNull String hostAddress);
+
+  /**
+   * Search for a player by partial name
+   *
+   * @param partial
+   * @return
+   */
+  List<SearchResult> search(String partial);
 }

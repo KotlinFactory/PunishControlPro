@@ -89,7 +89,7 @@ public final class ChooseActionMenu extends AbstractMenu implements Listener {
   public void updateInventory() {
     super.updateInventory();
 
-    setTitle("§8Action for" + targetName);
+    setTitle("§8Action for " + targetName);
 
     set(
         Item

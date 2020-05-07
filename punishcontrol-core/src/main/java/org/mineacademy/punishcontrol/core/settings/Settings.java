@@ -15,7 +15,7 @@ public final class Settings extends SimpleSettings {
   public static StorageType STORAGE_TYPE;
 
   private static void init() {
-    STORAGE_TYPE = Enum.valueOf(StorageType.class, getString("Storage"));
+    STORAGE_TYPE = Enum.valueOf(StorageType.class, getString("Storage").toUpperCase());
     COMMAND_ALIASES = getStringList("Command_Aliases");
   }
 
@@ -35,11 +35,11 @@ public final class Settings extends SimpleSettings {
 
     private static void init() {
       pathPrefix("MySQL");
-      HOST = getString("Host");
-      PORT = getInteger("Port");
-      DATABASE = getString("Database");
-      USER = getString("User");
-      PASSWORD = getString("Password");
+      HOST = getOrDefault("Host", "Not set");
+      PORT = getOrDefault("Port", 3306);
+      DATABASE = getOrDefault("Database", "Not set");
+      USER = getOrDefault("User", "Not set");
+      PASSWORD = getOrDefault("Password", "*");
     }
   }
 
@@ -113,10 +113,12 @@ public final class Settings extends SimpleSettings {
 
     public static Boolean CACHE_RESULTS;
     public static String DATE_FORMAT = "MM/dd/yyyy/hh";
+    public static Double MIN_SIMILARITY;
 
     private static void init() {
       pathPrefix("Advanced");
       CACHE_RESULTS = getBoolean("Cache_Results");
+      MIN_SIMILARITY = getDouble("Min_Similarity_Needed");
     }
 
     public static String formatDate(final long ms) {

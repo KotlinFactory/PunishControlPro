@@ -65,7 +65,7 @@ public class PlayerInfoCommand extends AbstractSimplePunishControlCommand {
 
       tell("&7" + Common.chatLineSmooth());
       tell("&7Data for: &6" + playerProvider.findNameUnsafe(target));
-      tell("&7IP: " + playerProvider.getIp(target).orElse("unknown"));
+      tell("&7IP: " + playerProvider.ip(target).orElse("unknown"));
       tell(" ");
       for (final Punish punish : punishes) {
         final String isActive = punish.isOld() ? "&7[&cI&7]" : "&7[&2A&7]";

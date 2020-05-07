@@ -93,7 +93,7 @@ public final class PunishBuilder {
     Valid.notNull(reason, "Forgot to set reason in builder!");
 
     if (ip == null) {
-      ip = Providers.playerProvider().getIp(target).orElse("Unknown");
+      ip = Providers.playerProvider().ip(target).orElse("Unknown");
     }
 
     switch (punishType) {

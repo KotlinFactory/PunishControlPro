@@ -60,12 +60,11 @@ public class PlayerInfoCommand extends AbstractSimplePunishControlCommand {
     Scheduler.runAsync(() -> {
       final List<Punish> punishes = storageProvider.listPunishes(target);
       //Sorting by creation
-
       punishes.sort((o1, o2) -> o1.creation() > o2.creation() ? 1 : -1);
 
       tell("&7" + Common.chatLineSmooth());
       tell("&7Data for: &6" + playerProvider.findNameUnsafe(target));
-      tell("&7IP: " + playerProvider.getIp(target).orElse("unknown"));
+      tell("&7IP: " + playerProvider.ip(target).orElse("unknown"));
       tell(" ");
       for (final Punish punish : punishes) {
         final String isActive = punish.isOld() ? "&7[&cI&7]" : "&7[&2A&7]";

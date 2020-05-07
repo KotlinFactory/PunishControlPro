@@ -47,11 +47,9 @@ public abstract class YamlStaticConfig {
     return temporaryInstance().getPathPrefix();
   }
 
-  protected static void set(final String path, final Object value) {
+  public static void set(final String path, final Object value) {
     temporaryInstance().set(path, value);
-    temporaryInstance().setHeader(
-        Arrays.asList(FoConstants.Header.UPDATED_FILE)
-    );
+    temporaryInstance().setHeader(FoConstants.Header.UPDATED_FILE);
   }
 
   // ----------------------------------------------------------------------------------------------------
@@ -156,7 +154,8 @@ public abstract class YamlStaticConfig {
   }
 
   protected static Yaml temporaryInstance() {
-    Valid.notNull(TEMPORARY_INSTANCE, "Temporary instance is null",
+    Valid.notNull(TEMPORARY_INSTANCE,
+        "Temporary instance is null",
         "Make sure to set your temporaryInstance.");
     return TEMPORARY_INSTANCE;
   }
@@ -268,10 +267,6 @@ public abstract class YamlStaticConfig {
    */
   private void invokeMethodsIn(final Class<?> clazz) throws Exception {
     for (final Method method : clazz.getDeclaredMethods()) {
-
-//      if (!SimplePlugin.getInstance().isEnabled()) {
-//        return;
-//      }
 
       final int mod = method.getModifiers();
 

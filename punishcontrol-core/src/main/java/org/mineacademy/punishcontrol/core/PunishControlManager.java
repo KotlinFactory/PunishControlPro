@@ -1,6 +1,7 @@
 package org.mineacademy.punishcontrol.core;
 
 import de.leonhard.storage.util.Valid;
+import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -18,6 +19,8 @@ import org.mineacademy.punishcontrol.core.storage.StorageType;
 public class PunishControlManager {
   @Setter @NonNull private StorageType storageType;
   @Setter @NonNull private String language;
+  @Setter @Getter
+  private boolean onlineMode = true;
 
   /*
   	TODO:

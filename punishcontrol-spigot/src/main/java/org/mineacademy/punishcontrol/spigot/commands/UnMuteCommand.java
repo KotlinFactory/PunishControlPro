@@ -17,5 +17,4 @@ public final class UnMuteCommand extends AbstractUnPunishCommand {
     setDescription("Unmute a player");
     setPermission("punishcontrol.command.unmute");
   }
-
 }

@@ -15,6 +15,7 @@ public final class MainCommand extends SimpleCommand {
     setDescription("Main-Command of PunishControlPro");
     setPermission("punishcontrol.command.main");
     setUsage("[?]");
+    setAutoHandleHelp(false);
   }
 
   public static MainCommand create(@NonNull final StrictList<String> labels) {
@@ -38,17 +39,18 @@ public final class MainCommand extends SimpleCommand {
       returnInvalidArgs();
     }
 
+
     MainMenu.showTo(getPlayer());
   }
 
   private void doHelp() {
-    tell(Common.chatLineSmooth());
+    tell("&8" + Common.chatLineSmooth());
     tell("&7"+ SimplePlugin.getNamed() + " v." + SimplePlugin.getVersion());
     tell("&7© MineAcademy 2020");
     tell(" ");
     for (final SimpleCommand command : SimpleCommand.getRegisteredCommands()) {
-      tell("&7/" + command.getLabel() + " &8* &7" + command.getDescription());
+      tell("&e/" + command.getLabel() + " &8* &7" + command.getDescription());
     }
-    tell(Common.chatLineSmooth());
+    tell("&8" + Common.chatLineSmooth());
   }
 }

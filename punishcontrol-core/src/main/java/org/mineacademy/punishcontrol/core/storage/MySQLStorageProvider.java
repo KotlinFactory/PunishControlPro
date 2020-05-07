@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import javax.inject.Inject;
+import lombok.Getter;
 import lombok.NonNull;
+import lombok.experimental.Accessors;
 import org.mineacademy.punishcontrol.core.providers.ExceptionHandler;
 import org.mineacademy.punishcontrol.core.punish.Punish;
 import org.mineacademy.punishcontrol.core.punish.PunishType;
@@ -15,14 +17,18 @@ import org.mineacademy.punishcontrol.core.punishes.Mute;
 import org.mineacademy.punishcontrol.core.punishes.Warn;
 import org.mineacademy.punishcontrol.core.settings.Settings.MySQL;
 
-public final class MySQLStorageProvider extends SimpleDatabase implements
-    StorageProvider {
+@Getter
+@Accessors(fluent = true)
+public final class MySQLStorageProvider
+    extends SimpleDatabase
+    implements StorageProvider {
 
   //
 
   private static final String INSERT_QUERY =
-      "INSERT INTO {table} (Type, Target, Creator, Reason, IP, Duration, Creation, Removed) VALUES({type}, {target}, {creator}, {reason}, {ip}, {duration}, {creation}, {removed})";
+      "INSERT INTO {table} (Type, Target, Creator, Reason, IP, Duration, Creation, Removed) VALUES('{type}', '{target}', '{creator}', '{reason}', '{ip}', {duration}, {creation}, {removed})";
   private final ExceptionHandler exceptionHandler;
+  private boolean connected;
 
   // We need the mysql config here
 
@@ -76,6 +82,42 @@ public final class MySQLStorageProvider extends SimpleDatabase implements
             + "Duration bigint, "
             + "Creation bigint, "
             + "Removed boolean, PRIMARY KEY (Creation))");
+
+    connected = true;
+  }
+
+  public boolean connected() {
+    return connected;
+  }
+
+  private Ban banFromResultSet(final ResultSet resultSet) throws SQLException {
+    return Ban.of(
+        resultSet.getString("Target"),
+        resultSet.getString("Creator"),
+        resultSet.getLong("Duration"))
+        .ip(resultSet.getString("IP"))
+        .creation(resultSet.getLong("Creation"))
+        .removed(resultSet.getBoolean("Removed"));
+  }
+
+    private Mute muteFromResultSet(final ResultSet resultSet) throws SQLException {
+      return Mute.of(
+          resultSet.getString("Target"),
+          resultSet.getString("Creator"),
+          resultSet.getLong("Duration"))
+          .ip(resultSet.getString("IP"))
+          .creation(resultSet.getLong("Creation"))
+          .removed(resultSet.getBoolean("Removed"));
+    }
+
+  private Warn warnFromResultSet(final ResultSet resultSet) throws SQLException {
+    return Warn.of(
+        resultSet.getString("Target"),
+        resultSet.getString("Creator"),
+        resultSet.getLong("Duration"))
+        .ip(resultSet.getString("IP"))
+        .creation(resultSet.getLong("Creation"))
+        .removed(resultSet.getBoolean("Removed"));
   }
 
   @Override
@@ -89,11 +131,7 @@ public final class MySQLStorageProvider extends SimpleDatabase implements
       }
 
       while (resultSet.next()) {
-        result.add(
-            Ban.of(
-                resultSet.getString("Target"),
-                resultSet.getString("Creator"),
-                resultSet.getLong("Duration")));
+        result.add(banFromResultSet(resultSet));
       }
     } catch (final SQLException ex) {
       handleMySQLException(ex, "ListBans");
@@ -113,10 +151,7 @@ public final class MySQLStorageProvider extends SimpleDatabase implements
 
       while (resultSet.next()) {
         result.add(
-            Mute.of(
-                resultSet.getString("Target"),
-                resultSet.getString("Creator"),
-                resultSet.getLong("Duration")));
+            muteFromResultSet(resultSet));
       }
     } catch (final SQLException ex) {
       handleMySQLException(ex, "ListMutes");
@@ -128,18 +163,14 @@ public final class MySQLStorageProvider extends SimpleDatabase implements
   public List<Warn> listWarns() {
     final List<Warn> result = new ArrayList<>();
     try (final ResultSet resultSet = query(
-        "SELECT * FROM {table} WHERE PUNISHTYPE='WARN'")) {
+        "SELECT * FROM {table} WHERE TYPE='WARN'")) {
       // No bans found
       if (resultSet == null) {
         return result;
       }
 
       while (resultSet.next()) {
-        result.add(
-            Warn.of(
-                resultSet.getString("Target"),
-                resultSet.getString("Creator"),
-                resultSet.getLong("Duration")));
+        result.add(warnFromResultSet(resultSet));
       }
     } catch (final SQLException ex) {
       handleMySQLException(ex, "ListWarns");
@@ -159,11 +190,7 @@ public final class MySQLStorageProvider extends SimpleDatabase implements
       }
 
       while (resultSet.next()) {
-        result.add(
-            Ban.of(
-                resultSet.getString("Target"),
-                resultSet.getString("Creator"),
-                resultSet.getLong("Duration")));
+        result.add(banFromResultSet(resultSet));
       }
     } catch (final SQLException ex) {
       handleMySQLException(ex, "ListBans-UUID");
@@ -183,11 +210,7 @@ public final class MySQLStorageProvider extends SimpleDatabase implements
       }
 
       while (resultSet.next()) {
-        result.add(
-            Mute.of(
-                resultSet.getString("Target"),
-                resultSet.getString("Creator"),
-                resultSet.getLong("Duration")));
+        result.add(muteFromResultSet(resultSet));
       }
     } catch (final SQLException ex) {
       handleMySQLException(ex, "ListMutes-UUID");
@@ -207,11 +230,7 @@ public final class MySQLStorageProvider extends SimpleDatabase implements
       }
 
       while (resultSet.next()) {
-        result.add(
-            Warn.of(
-                resultSet.getString("Target"),
-                resultSet.getString("Creator"),
-                resultSet.getLong("Duration")));
+        result.add(warnFromResultSet(resultSet));
       }
     } catch (final SQLException ex) {
       handleMySQLException(ex, "ListWarns-UUID");

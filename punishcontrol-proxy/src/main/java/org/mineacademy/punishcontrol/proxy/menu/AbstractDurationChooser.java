@@ -2,12 +2,12 @@ package org.mineacademy.punishcontrol.proxy.menu;
 
 import de.exceptionflug.mccommons.inventories.api.CallResult;
 import de.exceptionflug.mccommons.inventories.api.ClickType;
-import de.exceptionflug.protocolize.items.ItemStack;
 import de.exceptionflug.protocolize.items.ItemType;
 import java.util.concurrent.TimeUnit;
 import lombok.NonNull;
 import org.mineacademy.burst.item.Item;
 import org.mineacademy.burst.menu.AbstractMenu;
+import org.mineacademy.burst.menu.BurstMenu;
 import org.mineacademy.punishcontrol.core.settings.Localization.Time;
 import org.mineacademy.punishcontrol.core.settings.Settings;
 import org.mineacademy.punishcontrol.core.util.TimeUtil;
@@ -23,18 +23,14 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
   public static final int HOUR_SLOT = 9 * 4;
   public static final int CLOCK_SLOT = 26;
   public static final int APPLY_SLOT = 22;
-
-
-  private ItemStack expirationClock;
-
   protected long ms;
 
-  public AbstractDurationChooser(@NonNull final AbstractMenu parent) {
+  public AbstractDurationChooser(@NonNull final BurstMenu parent) {
     this(parent, 0);
   }
 
   public AbstractDurationChooser(
-      @NonNull final AbstractMenu parent,
+      @NonNull final BurstMenu parent,
       final long ms) {
     super("DurationChooser", parent, SIZE);
     this.ms = ms;
@@ -53,8 +49,6 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
   @Override
   public final void updateInventory() {
     super.updateInventory();
-    set(CLOCK_SLOT, expirationClock, "noAction");
-
     set(
         Item
           .of(ItemType.EMERALD_BLOCK)
@@ -134,6 +128,7 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
   public void registerActionHandlers() {
     registerActionHandler("Apply", (apply -> {
       confirm();
+      getParent().reDisplay();
       return CallResult.DENY_GRABBING;
     }));
 
@@ -265,7 +260,7 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
 
   @Override
   public void reDisplay() {
-
+    throw new AbstractMethodError("Not implemented");
   }
 }
 

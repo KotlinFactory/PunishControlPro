@@ -1,11 +1,13 @@
 package org.mineacademy.punishcontrol.proxy.commands;
 
 import lombok.val;
-import org.mineacademy.bfo.command.SimpleCommand;
+import net.md_5.bungee.api.CommandSender;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
+import net.md_5.bungee.api.plugin.Command;
 import org.mineacademy.punishcontrol.core.permission.Permission;
 import org.mineacademy.punishcontrol.core.permission.Permissions;
 
-public class DevCommand extends SimpleCommand {
+public class DevCommand extends Command {
 
 
   public static DevCommand create() {
@@ -14,24 +16,15 @@ public class DevCommand extends SimpleCommand {
 
   public DevCommand() {
     super("dev");
-    setPermission(null);
   }
+
 
   @Override
-  protected void onCommand() {
-
-
-    final val player = getPlayer();
+  public void execute(final CommandSender sender, final String[] args) {
+    final val player = (ProxiedPlayer) sender;
 
     for (final Permission perm : Permissions.registeredPermissions()) {
-      tellPerm(perm.permission());
       player.setPermission(perm.permission(), true);
     }
-  }
-
-  private void tellPerm(final String perm) {
-    tell("Has permission: [" + perm + "] " + (getPlayer().hasPermission(perm)
-        ? "&ayes"
-        : "&cno"));
   }
 }

@@ -1,12 +1,15 @@
 package org.mineacademy.punishcontrol.core.storage;
 
 import de.leonhard.storage.util.Valid;
-import lombok.RequiredArgsConstructor;
-
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
+import lombok.RequiredArgsConstructor;
 
 /**
  * Represents a simple MySQL database
@@ -23,7 +26,7 @@ public class SimpleDatabase {
   /** Map of variables you can use with the {} syntax in SQL */
   private final Map<String, String> sqlVariables = new HashMap<>();
   /** The established connection, or null if none */
-  private Connection connection;
+  Connection connection;
   /** The last credentials from the connect function, or null if never called */
   private LastCredentials lastCredentials;
 
@@ -118,10 +121,10 @@ public class SimpleDatabase {
    */
   public final void connect(
       final String url, final String user, final String password, final String table) {
-    this.lastCredentials = new LastCredentials(url, user, password, table);
+    lastCredentials = new LastCredentials(url, user, password, table);
 
     try {
-      this.connection = DriverManager.getConnection(url, user, password);
+      connection = DriverManager.getConnection(url, user, password);
 
       onConnected();
 
@@ -138,7 +141,7 @@ public class SimpleDatabase {
    * Attempts to connect using last known credentials. Fails gracefully if those are not provided
    * i.e. connect function was never called
    */
-  private final void connectUsingLastCredentials() {
+  private void connectUsingLastCredentials() {
     if (lastCredentials != null) {
       connect(
           lastCredentials.url,
@@ -268,7 +271,7 @@ public class SimpleDatabase {
    *
    * @return whether the connection driver was set
    */
-  protected final boolean isConnected() {
+  public final boolean isConnected() {
     if (!isLoaded()) {
       return false;
     }

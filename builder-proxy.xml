@@ -38,6 +38,9 @@
             <zipgroupfileset
               dir="${user.home}/.m2/repository/net/jcip/jcip-annotations/1.0"
               includes="**/*jcip-annotations-1.0.jar"/>
+            <zipgroupfileset
+              dir="${user.home}/.m2/repository/info/debatty/java-string-similarity/1.2.1"
+              includes="**/*java-string-similarity-1.2.1.jar"/>
         </jar>
     </target>
 

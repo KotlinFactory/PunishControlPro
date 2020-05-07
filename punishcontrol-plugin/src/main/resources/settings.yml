@@ -121,6 +121,9 @@ Groups:
 #
 Advanced:
 
+  # Define how similar-strings need to be using the /search command
+  Min_Similarity_Needed: 0.85
+
   Cache_Results: true
   API:
     #You can disable the API for security reasons

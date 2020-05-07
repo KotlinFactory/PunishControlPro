@@ -1,6 +1,7 @@
 package org.mineacademy.punishcontrol.core;
 
 import de.leonhard.storage.Yaml;
+import de.leonhard.storage.internal.exceptions.LightningValidationException;
 import java.io.File;
 import java.util.List;
 import java.util.Map;
@@ -14,11 +15,13 @@ import org.mineacademy.punishcontrol.core.listener.Listeners;
 import org.mineacademy.punishcontrol.core.listeners.PunishQueue;
 import org.mineacademy.punishcontrol.core.permission.Permission;
 import org.mineacademy.punishcontrol.core.permission.Permissions;
+import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.punish.PunishDuration;
 import org.mineacademy.punishcontrol.core.punish.template.PunishTemplates;
 import org.mineacademy.punishcontrol.core.setting.YamlStaticConfig;
 import org.mineacademy.punishcontrol.core.settings.Localization;
 import org.mineacademy.punishcontrol.core.settings.Settings;
+import org.mineacademy.punishcontrol.core.storage.MySQLStorageProvider;
 import org.mineacademy.punishcontrol.core.util.PunishControlPermissions;
 
 /**
@@ -91,7 +94,6 @@ public interface PunishControlPluginBootstrap {
 
     try {
       PunishControlManager.setStorageType(Settings.STORAGE_TYPE);
-
       log("Storage: " + Settings.STORAGE_TYPE.name());
     } catch (final Throwable throwable) {
       log("Couldn't choose StorageProvider");
@@ -172,13 +174,28 @@ public interface PunishControlPluginBootstrap {
 
     log();
 
+
+    if (Providers.storageProvider() instanceof MySQLStorageProvider) {
+      try {
+        ((MySQLStorageProvider) Providers.storageProvider()).connect();
+      } catch (final Throwable throwable) {
+        throw new LightningValidationException(
+            throwable,
+            "Exception while connecting to MySQL!",
+            "Likewise this is caused be wrong or missing credentials.");
+      }
+    }
+
     // Logging an random message
     final int index = getRandomNumberInRange(0,
         getStartupFinishedMessages().length - 1);
 
     log(getStartupFinishedMessages()[index]);
 
-    log("§7*----------------------------------------------------------------*");
+
+
+
+    log("§7*-----------------------------------------------------------------*");
   }
 
   default void loadGroups() {

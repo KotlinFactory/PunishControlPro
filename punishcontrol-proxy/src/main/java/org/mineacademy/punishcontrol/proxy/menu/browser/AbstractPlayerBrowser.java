@@ -34,7 +34,7 @@ public abstract class AbstractPlayerBrowser extends AbstractBrowser<UUID> {
         playerProvider, textureProvider, mainMenu,
         onlineOnly
             ? playerProvider.getOnlinePlayers()
-            : playerProvider.getOfflinePlayers()
+            : playerProvider.offlinePlayers()
     );
   }
 

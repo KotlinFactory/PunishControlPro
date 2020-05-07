@@ -42,13 +42,13 @@ public final class MainCommand extends SimpleCommand {
   }
 
   private void doHelp() {
-    tell(Common.chatLineSmooth());
+    tell("&8" + Common.chatLineSmooth());
     tell("&7"+ SimplePlugin.getNamed() + " v." + SimplePlugin.getVersion());
     tell("&7© MineAcademy 2020");
     tell(" ");
     for (final SimpleCommand command : SimpleCommand.getRegisteredCommands()) {
-      tell("&7/" + command.getLabel() + " &8* &7" + command.getDescription());
+      tell("&e/" + command.getLabel() + " &8* &7" + command.getDescription());
     }
-    tell(Common.chatLineSmooth());
+    tell("&8" + Common.chatLineSmooth());
   }
 }

@@ -3,9 +3,11 @@ package org.mineacademy.punishcontrol.proxy;
 import dagger.Component;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.proxy.commands.BanCommand;
+import org.mineacademy.punishcontrol.proxy.commands.ChooseActionCommand;
 import org.mineacademy.punishcontrol.proxy.commands.KickCommand;
 import org.mineacademy.punishcontrol.proxy.commands.MuteCommand;
 import org.mineacademy.punishcontrol.proxy.commands.PlayerInfoCommand;
+import org.mineacademy.punishcontrol.proxy.commands.SearchCommand;
 import org.mineacademy.punishcontrol.proxy.commands.UnBanCommand;
 import org.mineacademy.punishcontrol.proxy.commands.UnMuteCommand;
 import org.mineacademy.punishcontrol.proxy.commands.UnWarnCommand;
@@ -51,6 +53,10 @@ public interface ProxyComponent {
   UnWarnCommand commandUnWarn();
 
   PlayerInfoCommand commandPlayerInfo();
+
+  SearchCommand searchCommand();
+
+  ChooseActionCommand chooseActionCommand();
 
   // ----------------------------------------------------------------------------------------------------
   // Menus

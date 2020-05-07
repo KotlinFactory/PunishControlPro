@@ -3,9 +3,11 @@ package org.mineacademy.punishcontrol.spigot;
 import dagger.Component;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.spigot.commands.BanCommand;
+import org.mineacademy.punishcontrol.spigot.commands.ChooseActionCommand;
 import org.mineacademy.punishcontrol.spigot.commands.KickCommand;
 import org.mineacademy.punishcontrol.spigot.commands.MuteCommand;
 import org.mineacademy.punishcontrol.spigot.commands.PlayerInfoCommand;
+import org.mineacademy.punishcontrol.spigot.commands.SearchCommand;
 import org.mineacademy.punishcontrol.spigot.commands.UnBanCommand;
 import org.mineacademy.punishcontrol.spigot.commands.UnMuteCommand;
 import org.mineacademy.punishcontrol.spigot.commands.UnWarnCommand;
@@ -52,6 +54,10 @@ public interface SpigotComponent {
   UnWarnCommand commandUnWarn();
 
   PlayerInfoCommand commandPlayerInfo();
+
+  SearchCommand searchCommand();
+
+  ChooseActionCommand chooseActionCommand();
 
   // ----------------------------------------------------------------------------------------------------
   // Menus

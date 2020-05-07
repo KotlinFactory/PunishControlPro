@@ -158,7 +158,7 @@ public abstract class AbstractPunishCommand
                   ? getPlayer().getUniqueId()
                   : FoConstants.CONSOLE)
               .target(target)
-              .ip(playerProvider.getIp(target).orElse("unknown"))
+              .ip(playerProvider.ip(target).orElse("unknown"))
               .creation(System.currentTimeMillis())
               .build();
 

@@ -1,5 +1,6 @@
 package org.mineacademy.punishcontrol.proxy.menu.browser;
 
+import de.exceptionflug.mccommons.inventories.api.ClickType;
 import de.exceptionflug.protocolize.items.ItemStack;
 import java.util.Arrays;
 import lombok.val;
@@ -10,6 +11,8 @@ import org.mineacademy.punishcontrol.core.punish.template.PunishTemplate;
 import org.mineacademy.punishcontrol.core.punish.template.PunishTemplates;
 import org.mineacademy.punishcontrol.core.settings.Replacer;
 import org.mineacademy.punishcontrol.proxy.ItemUtil;
+import org.mineacademy.punishcontrol.proxy.menu.AbstractConfirmMenu;
+import org.mineacademy.punishcontrol.proxy.menus.template.PunishTemplateCreatorMenu;
 
 public abstract class AbstractTemplateBrowser
     extends AbstractBrowser<PunishTemplate> {
@@ -58,6 +61,28 @@ public abstract class AbstractTemplateBrowser
 
     creator.lore(Arrays.asList(replacer.replacedMessage()));
     return creator.build();
+  }
+
+
+  @Override
+  protected void onClick(final ClickType clickType,
+      final PunishTemplate punishTemplate) {
+    if (clickType == ClickType.RIGHT_CLICK) {
+      new AbstractConfirmMenu(this) {
+        @Override
+        public void onConfirm() {
+          //Unregistering
+          PunishTemplates.unregister(punishTemplate);
+          //Deleting file so it won't be re-registered after a server-restart
+          punishTemplate.getFile().delete();
+        }
+      }.displayTo(getPlayer());
+      return;
+    }
+
+    PunishTemplateCreatorMenu
+        .fromExisting(punishTemplate)
+        .displayTo(getPlayer());
   }
 
   @Override

@@ -1,7 +1,6 @@
 package org.mineacademy.punishcontrol.proxy.menus.browsers;
 
 import de.exceptionflug.mccommons.inventories.api.CallResult;
-import de.exceptionflug.mccommons.inventories.api.ClickType;
 import de.exceptionflug.protocolize.inventory.InventoryModule;
 import de.exceptionflug.protocolize.items.ItemType;
 import javax.inject.Inject;
@@ -10,11 +9,9 @@ import lombok.val;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import org.mineacademy.burst.item.Item;
 import org.mineacademy.burst.util.Scheduler;
-import org.mineacademy.punishcontrol.core.punish.template.PunishTemplate;
 import org.mineacademy.punishcontrol.proxy.DaggerProxyComponent;
 import org.mineacademy.punishcontrol.proxy.conversations.AddTemplateConversation;
 import org.mineacademy.punishcontrol.proxy.menu.browser.AbstractTemplateBrowser;
-import org.mineacademy.punishcontrol.proxy.menus.MainMenu;
 
 public class PunishTemplateBrowser extends AbstractTemplateBrowser {
 
@@ -27,8 +24,8 @@ public class PunishTemplateBrowser extends AbstractTemplateBrowser {
   }
 
   @Inject
-  public PunishTemplateBrowser(final MainMenu mainMenu) {
-    super(mainMenu);
+  public PunishTemplateBrowser(final SettingsBrowser settingsBrowser) {
+    super(settingsBrowser);
     setTitle("&8PunishTemplates");
   }
 
@@ -47,10 +44,11 @@ public class PunishTemplateBrowser extends AbstractTemplateBrowser {
               .of(ItemType.EMERALD)
               .name("&aAdd template")
               .lore("&7Click here to", "&7Add custom templates")
-              .slot(getInfoItemSlot() + 4)
+              .slot(getMaxSize() - 5)
               .actionHandler("Add")
       );
     }
+
   }
 
   @Override
@@ -63,15 +61,9 @@ public class PunishTemplateBrowser extends AbstractTemplateBrowser {
     registerActionHandler("Add", (add -> {
 
       InventoryModule.closeAllInventories(getPlayer());
-      //TODO
       AddTemplateConversation.create(getPlayer()).start();
       return CallResult.DENY_GRABBING;
     }));
-  }
-
-  @Override
-  protected void onClick(final ClickType clickType, final PunishTemplate punishTemplate) {
-
   }
 
   @Override

@@ -76,6 +76,10 @@ public abstract class AbstractSimplePunishControlCommand extends SimpleCommand {
   protected UUID findTarget(final List<String> args) {
     final String name = args.get(0);
 
+    return findTarget(name);
+  }
+
+  protected UUID findTarget(final String name) {
     //UUID!
     if (name.length() == 36) {
       try {
