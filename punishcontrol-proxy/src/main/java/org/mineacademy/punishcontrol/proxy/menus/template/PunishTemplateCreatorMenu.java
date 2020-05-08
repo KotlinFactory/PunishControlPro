@@ -3,6 +3,7 @@ package org.mineacademy.punishcontrol.proxy.menus.template;
 
 import de.exceptionflug.mccommons.inventories.api.CallResult;
 import de.exceptionflug.mccommons.inventories.api.ClickType;
+import de.exceptionflug.protocolize.inventory.InventoryModule;
 import de.exceptionflug.protocolize.items.ItemType;
 import java.io.File;
 import java.util.Arrays;
@@ -105,9 +106,12 @@ public final class PunishTemplateCreatorMenu extends AbstractMenu {
   public void updateInventory() {
     super.updateInventory();
 
+    if (cancelled){
+      return;
+    }
     // Duration | "Duration"
     {
-      if (punishTemplate.duration() != null) {
+      if (punishTemplate().duration() != null) {
         set(
             Item.of(ItemType.CLOCK,
                 "&6Duration",
@@ -320,12 +324,14 @@ public final class PunishTemplateCreatorMenu extends AbstractMenu {
     // Reason
     registerActionHandler("Reason", (reason -> {
 
+      InventoryModule.closeAllInventories(getPlayer());
       TemplateReasonConversation.create(getPlayer(), this).start();
       return CallResult.DENY_GRABBING;
     }));
 
     // Permission
     registerActionHandler("Permission", (permission -> {
+      InventoryModule.closeAllInventories(getPlayer());
       TemplatePermissionConversation.create(getPlayer(), this).start();
       return CallResult.DENY_GRABBING;
     }));

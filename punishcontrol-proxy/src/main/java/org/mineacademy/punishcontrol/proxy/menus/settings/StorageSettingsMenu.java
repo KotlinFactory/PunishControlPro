@@ -9,24 +9,31 @@ import lombok.NonNull;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import org.mineacademy.bfo.debug.Debugger;
 import org.mineacademy.burst.item.Item;
+import org.mineacademy.punishcontrol.core.PunishControlManager;
+import org.mineacademy.punishcontrol.core.conversation.SimpleMySQLStorageConversation;
+import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.settings.Settings.MySQL;
 import org.mineacademy.punishcontrol.core.storage.MySQLStorageProvider;
+import org.mineacademy.punishcontrol.core.storage.StorageType;
 import org.mineacademy.punishcontrol.proxy.DaggerProxyComponent;
 import org.mineacademy.punishcontrol.proxy.conversations.MySQLStorageConversation;
 import org.mineacademy.punishcontrol.proxy.menus.browsers.SettingsBrowser;
 import org.mineacademy.punishcontrol.proxy.menus.setting.AbstractSettingsMenu;
 
-public final class StorageSettingsMenu extends AbstractSettingsMenu {
+public final class StorageSettingsMenu
+    extends AbstractSettingsMenu
+    implements SimpleMySQLStorageConversation {
 
-  private final MySQLStorageProvider mySQLStorageProvider;
+  private static final MySQLStorageProvider mySQLStorageProvider =
+      Providers.storageProvider() instanceof MySQLStorageProvider
+          ? (MySQLStorageProvider) Providers.storageProvider()
+          : new MySQLStorageProvider(Providers.exceptionHandler());
+
   private boolean isConnecting;
 
   @Inject
-  public StorageSettingsMenu(
-      @NonNull final MySQLStorageProvider mySQLStorageProvider,
-      @NonNull final SettingsBrowser settingsBrowser) {
+  public StorageSettingsMenu(@NonNull final SettingsBrowser settingsBrowser) {
     super(settingsBrowser, 9 * 2);
-    this.mySQLStorageProvider = mySQLStorageProvider;
     setTitle("&8MySQL");
   }
 
@@ -47,12 +54,12 @@ public final class StorageSettingsMenu extends AbstractSettingsMenu {
     {
       try {
 
-        if(isConnecting){
+        if (isConnecting) {
           set(
               Item
                   .of(ItemType.EMERALD_BLOCK)
                   .name("&7Connecting...")
-                  .slot(13)
+                  .slot(12)
                   .actionHandler("noAction")
           );
         } else if (mySQLStorageProvider.isConnected()) {
@@ -65,7 +72,7 @@ public final class StorageSettingsMenu extends AbstractSettingsMenu {
                       "&7to MySQL using",
                       "&7these settings",
                       "&7Current state: &aSucceeded")
-                  .slot(13)
+                  .slot(12)
                   .actionHandler("Connect")
           );
 
@@ -79,11 +86,42 @@ public final class StorageSettingsMenu extends AbstractSettingsMenu {
                       "&7to MySQL using",
                       "&7these settings",
                       "&7Current state: &cNot connected")
-                  .slot(13)
+                  .slot(12)
                   .actionHandler("Connect")
           );
         }
       } catch (final Throwable throwable) {
+      }
+    }
+
+    // Use | "Use"
+    {
+      if (PunishControlManager.storageType() == StorageType.JSON) {
+        set(
+            Item
+                .of(ItemType.COMMAND_BLOCK)
+                .name("&6Storage-Type")
+                .lore(
+                    "",
+                    "&7Click to use",
+                    "&7MySQL as storage"
+                )
+                .slot(14)
+                .actionHandler("Use")
+        );
+      } else {
+        set(
+            Item
+                .of(ItemType.COMMAND_BLOCK)
+                .name("&6Storage-Type")
+                .lore(
+                    "",
+                    "&7Click to use",
+                    "&7JSON as storage"
+                )
+                .slot(14)
+                .actionHandler("Use")
+        );
       }
     }
 
@@ -175,6 +213,26 @@ public final class StorageSettingsMenu extends AbstractSettingsMenu {
   public void registerActionHandlers() {
     super.registerActionHandlers();
 
+    registerActionHandler("Use", (use -> {
+      if (PunishControlManager.storageType() == StorageType.JSON) {
+        if (!mySQLStorageProvider.isConnected()) {
+          animateTitle("&cNot connected!");
+          return CallResult.DENY_GRABBING;
+        }
+        //Switching to json
+        setToConfig("Storage", "MYSQL");
+        PunishControlManager.setStorageType(StorageType.MYSQL);
+        Providers.storageProvider(mySQLStorageProvider);
+      } else {
+        //Switching to json
+        setToConfig("Storage", "JSON");
+        PunishControlManager.setStorageType(StorageType.JSON);
+        Providers.storageProvider(StorageType.JSON.getStorageProvider());
+      }
+      build();
+      return CallResult.DENY_GRABBING;
+    }));
+
     registerActionHandler("Connect", (connect -> {
       if (isConnecting) {
         animateTitle("&cAlready connecting");
@@ -191,11 +249,13 @@ public final class StorageSettingsMenu extends AbstractSettingsMenu {
       async(() -> {
         try {
           mySQLStorageProvider.connect();
+          isConnecting = false;
+          Debugger.debug("MySQL", "Connected");
           build();
         } catch (final Throwable throwable) {
           animateTitle("&cCan't connect - See console");
           Debugger.saveError(throwable);
-        }finally {
+        } finally {
           isConnecting = false;
         }
       });

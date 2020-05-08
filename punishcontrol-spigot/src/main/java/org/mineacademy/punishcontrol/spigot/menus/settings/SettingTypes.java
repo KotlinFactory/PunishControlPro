@@ -62,9 +62,9 @@ public enum SettingTypes {
       return ItemCreator
           .of(CompMaterial.ENDER_CHEST,
               "&6Punish Storage",
-              "&7Click here to",
-              "&7change how punishes",
-              "&7are stored")
+              "&7Click to setup MySQL",
+              "&7or to change the",
+              "&7storage-type")
           .build();
     }
 

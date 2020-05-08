@@ -31,7 +31,6 @@ public abstract class AbstractDurationChooser
   public static final int CONFIRM_SLOT = 22;
   public static final int MAKE_PERMA_SLOT = 8;
 
-
   private final Button year, month, day, hour;
 
   private final Button makePermanent;
@@ -268,11 +267,12 @@ public abstract class AbstractDurationChooser
   }
 
   private void normalizeIfNeeded() {
-    if (!isPermanent()) {
-      return;
+    if (ms < 0 && !isPermanent()) {
+      ms = 0;
     }
     ms = 0;
   }
+
 
   private void updateClock() {
     laterAsync(() -> {

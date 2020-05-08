@@ -12,7 +12,6 @@ import org.mineacademy.punishcontrol.core.group.Group;
 import org.mineacademy.punishcontrol.core.group.Groups;
 import org.mineacademy.punishcontrol.core.listener.Listener;
 import org.mineacademy.punishcontrol.core.listener.Listeners;
-import org.mineacademy.punishcontrol.core.listeners.PunishQueue;
 import org.mineacademy.punishcontrol.core.permission.Permission;
 import org.mineacademy.punishcontrol.core.permission.Permissions;
 import org.mineacademy.punishcontrol.core.provider.Providers;
@@ -130,7 +129,6 @@ public interface PunishControlPluginBootstrap {
 
     try {
       //Our core-listeners
-      registerEvents(PunishQueue.create());
       registerEvents(coreModule.banListener());
       registerEvents(coreModule.muteListener());
       registerEvents(coreModule.banIpListener());

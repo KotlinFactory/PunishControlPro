@@ -180,13 +180,15 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
   }
 
   private void normalizeIfNeeded() {
-    if (!isPermanent()) {
-      return;
+    if (ms < 0 && !isPermanent()) {
+      ms = 0;
     }
     ms = 0;
   }
 
   private void updateClock() {
+    normalizeIfNeeded();
+    System.out.println("Ms: " + ms);
     laterAsync(this::build, 20);
   }
 
@@ -200,7 +202,6 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
   }
 
   private void addOrRemoveYear(final ClickType clickType) {
-    normalizeIfNeeded();
     if (clickType == de.exceptionflug.mccommons.inventories.api.ClickType.LEFT_CLICK) {
       ms += TimeUnit.DAYS.toMillis(1) * 365;
       setTitle(TimeUtil.formatMenuDate(ms));
@@ -214,7 +215,6 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
   }
 
   private void addOrRemoveMonth(final ClickType clickType) {
-    normalizeIfNeeded();
 
     if (clickType == ClickType.LEFT_CLICK) {
       ms += TimeUnit.DAYS.toMillis(1) * 30;
@@ -229,8 +229,6 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
   }
 
   private void addOrRemoveDay(final ClickType clickType) {
-    normalizeIfNeeded();
-
     if (clickType == ClickType.LEFT_CLICK) {
       ms += TimeUnit.DAYS.toMillis(1);
       setTitle(TimeUtil.formatMenuDate(ms));
@@ -244,7 +242,6 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
   }
 
   private void addOrRemoveHour(final ClickType clickType) {
-    normalizeIfNeeded();
 
     if (clickType == ClickType.LEFT_CLICK) {
       ms += TimeUnit.HOURS.toMillis(1);
@@ -255,6 +252,7 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
       setTitle(TimeUtil.formatMenuDate(ms));
       animateTitle("&8Removed 1 hour");
     }
+    normalizeIfNeeded();
     updateClock();
   }
 

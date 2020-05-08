@@ -42,7 +42,8 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
    */
 
 
-  public static void showTo(@NonNull final Player player,
+  public static void showTo(
+      @NonNull final Player player,
       @NonNull final UUID target) {
     new PlayerSettingsMenu(target).displayTo(player, true);
   }
@@ -51,6 +52,7 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
     super(DaggerSpigotComponent.create().settingsBrowser());
     this.target = target;
     targetOnline = Players.find(target).isPresent();
+    setTitle("&8Settings for player");
 
     groupBrowser = new Button() {
       @Override

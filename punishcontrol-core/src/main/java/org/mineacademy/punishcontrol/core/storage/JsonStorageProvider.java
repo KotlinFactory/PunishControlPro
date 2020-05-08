@@ -41,7 +41,8 @@ public final class JsonStorageProvider extends SecureJson implements StorageProv
   //
 
   @Inject
-  public JsonStorageProvider(final ExceptionHandler exceptionHandler,
+  public JsonStorageProvider(
+      final ExceptionHandler exceptionHandler,
       final PluginDataProvider workingDirectoryProvider) {
     super(
         PunishControlManager.FILES.JSON_DATA_FILE_NAME,

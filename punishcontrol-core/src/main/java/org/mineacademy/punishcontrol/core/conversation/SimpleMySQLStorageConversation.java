@@ -17,7 +17,7 @@ public interface SimpleMySQLStorageConversation {
         .setDataType(DataType.SORTED)
         .createConfig();
 
-  default void set(final String key, final Object value) {
+  default void setToConfig(final String key, final Object value) {
     yaml.set(key, value);
     yaml.setHeader(Header.UPDATED_FILE);
   }

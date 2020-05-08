@@ -45,13 +45,11 @@ public final class Providers {
   @Setter
   @NonNull
   private static ExceptionHandler exceptionHandler;
-
-
-
-  // StorageProvider can't be set.
-  public static StorageProvider storageProvider() {
-    return PunishControlManager.storageType().getStorageProvider();
-  }
+  @Setter
+  @NonNull
+  // Will be used from multiple
+  // threads
+  private volatile static StorageProvider storageProvider;
 
   @Provides
   public static PlayerProvider playerProvider() {
@@ -95,24 +93,16 @@ public final class Providers {
   @Provides
   public static MySQLConfig config(
       @NonNull final PluginDataProvider workingDirectoryProvider) {
-    Valid
-        .notNull(workingDirectoryProvider, "Working directoryProvider is null");
+    Valid.notNull(workingDirectoryProvider, "Working directoryProvider is null");
 
     return MySQLConfig.newInstance(workingDirectoryProvider);
   }
 
+  //Lazy loading our storage provider & allowing to reset it
   @Provides
-  public static StorageProvider provider() {
-    return PunishControlManager.storageType().getStorageProvider();
+  public static StorageProvider storageProvider() {
+    return storageProvider == null
+        ? storageProvider = PunishControlManager.storageType().getStorageProvider()
+        : storageProvider;
   }
-
-  //	@Provides
-  //	public static MySQLStorageProvider mySQLStorageProvider() {
-  //		return (MySQLStorageProvider) StorageType.MYSQL.getStorageProvider();
-  //	}
-  //
-  //	@Provides
-  //	public static JsonStorageProvider jsonStorageProvider() {
-  //		return (JsonStorageProvider) StorageType.JSON.getStorageProvider();
-  //	}
 }

@@ -72,7 +72,7 @@ public class Punishes {
             .replacedMessageJoined();
       case MUTE:
         return Localization.Punish.MUTE_MESSAGE.replace(
-            punish.reason(),
+            punish.reason() == null ? "unknown" : punish.reason(),
             Settings.Advanced.formatDate(punish.getEndTime()))
             .replacedMessageJoined();
       case WARN:
@@ -88,9 +88,6 @@ public class Punishes {
   }
 
   public String formPunishedMessage(final Punish punish) {
-
-    throw new LightningValidationException(
-        "Exception while fetching ban-message",
-        "Have you altered the data?");
+    return formOnPunishMessage(punish);
   }
 }

@@ -17,6 +17,14 @@ import org.mineacademy.punishcontrol.core.punishes.Warn;
 
 public interface StorageProvider {
 
+  default void setup() {
+
+  }
+
+  default boolean isSetup() {
+    return true;
+  }
+
   default PlayerCache getCacheFor(@NonNull final UUID uuid) {
     return new PlayerCache(this, uuid);
   }

@@ -34,8 +34,9 @@ public final class MuteListener implements Listener<ChatEvent> {
   public void handleEvent(final ChatEvent event) {
     final UUID target = event.targetUUID();
     final Optional<Mute> optionalMute = storageProvider.currentMute(target);
-
+    System.out.println("hey");
     optionalMute.ifPresent((mute -> {
+      System.out.println("test");
       //TODO format
       if (Punish.Mute.DISABLED_COMMANDS.contains("*")) {
         return;
@@ -43,6 +44,8 @@ public final class MuteListener implements Listener<ChatEvent> {
 
       //Is a allowed commands
       if (canByPass(event.message())) {
+        System.out.println("byass");
+
         return;
       }
 

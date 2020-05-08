@@ -1,11 +1,10 @@
 package org.mineacademy.punishcontrol.core;
 
+import java.util.UUID;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
-
-import java.util.UUID;
 
 @UtilityClass
 public class Menus {

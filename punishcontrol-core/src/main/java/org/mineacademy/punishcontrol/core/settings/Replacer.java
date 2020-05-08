@@ -40,11 +40,14 @@ public final class Replacer {
   }
 
   public Replacer find(@NonNull final String... variables) {
+    this.variables.clear();
     this.variables.addAll(Arrays.asList(variables));
     return this;
   }
 
   public Replacer replace(@NonNull final Object... replacements) {
+    this.replacements.clear();
+
     this.replacements.addAll(Arrays.asList(replacements));
     return this;
   }
@@ -53,6 +56,8 @@ public final class Replacer {
    * Attempts to replace key:value pairs automatically
    */
   public Replacer replaceAll(@NonNull final Object... associativeArray) {
+    variables.clear();
+    replacements.clear();
 
     for (int i = 0; i < associativeArray.length; i++) {
 

@@ -7,19 +7,13 @@ public enum StorageType {
   MYSQL {
     @Override
     public StorageProvider getStorageProvider() {
-      if (storageProvider != null) {
-        return storageProvider;
-      }
-      return storageProvider = DaggerCoreComponent.create().mySQLStorageProvider();
+      return DaggerCoreComponent.create().mySQLStorageProvider();
     }
   },
   JSON {
     @Override
     public StorageProvider getStorageProvider() {
-      if (storageProvider != null) {
-        return storageProvider;
-      }
-      return storageProvider = DaggerCoreComponent.create().jsonStorageProvider();
+      return DaggerCoreComponent.create().jsonStorageProvider();
     }
   };
 

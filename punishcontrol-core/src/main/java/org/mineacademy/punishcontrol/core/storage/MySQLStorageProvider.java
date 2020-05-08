@@ -59,6 +59,16 @@ public final class MySQLStorageProvider
   }
 
 
+  @Override
+  public void setup() {
+    connect();
+  }
+
+  @Override
+  public boolean isSetup() {
+    return isConnected();
+  }
+
   public void connect() {
     connect(
         MySQL.HOST,
@@ -97,18 +107,20 @@ public final class MySQLStorageProvider
         resultSet.getLong("Duration"))
         .ip(resultSet.getString("IP"))
         .creation(resultSet.getLong("Creation"))
-        .removed(resultSet.getBoolean("Removed"));
+        .removed(resultSet.getBoolean("Removed"))
+        .reason(resultSet.getString("Reason"));
   }
 
-    private Mute muteFromResultSet(final ResultSet resultSet) throws SQLException {
-      return Mute.of(
-          resultSet.getString("Target"),
-          resultSet.getString("Creator"),
-          resultSet.getLong("Duration"))
-          .ip(resultSet.getString("IP"))
-          .creation(resultSet.getLong("Creation"))
-          .removed(resultSet.getBoolean("Removed"));
-    }
+  private Mute muteFromResultSet(final ResultSet resultSet) throws SQLException {
+    return Mute.of(
+        resultSet.getString("Target"),
+        resultSet.getString("Creator"),
+        resultSet.getLong("Duration"))
+        .ip(resultSet.getString("IP"))
+        .creation(resultSet.getLong("Creation"))
+        .removed(resultSet.getBoolean("Removed"))
+        .reason(resultSet.getString("Reason"));
+  }
 
   private Warn warnFromResultSet(final ResultSet resultSet) throws SQLException {
     return Warn.of(
@@ -117,7 +129,8 @@ public final class MySQLStorageProvider
         resultSet.getLong("Duration"))
         .ip(resultSet.getString("IP"))
         .creation(resultSet.getLong("Creation"))
-        .removed(resultSet.getBoolean("Removed"));
+        .removed(resultSet.getBoolean("Removed"))
+        .reason(resultSet.getString("Reason"));
   }
 
   @Override
@@ -130,9 +143,9 @@ public final class MySQLStorageProvider
         return result;
       }
 
-      while (resultSet.next()) {
+      do {
         result.add(banFromResultSet(resultSet));
-      }
+      } while (resultSet.next());
     } catch (final SQLException ex) {
       handleMySQLException(ex, "ListBans");
     }
@@ -149,10 +162,10 @@ public final class MySQLStorageProvider
         return result;
       }
 
-      while (resultSet.next()) {
+      do {
         result.add(
             muteFromResultSet(resultSet));
-      }
+      } while (resultSet.next());
     } catch (final SQLException ex) {
       handleMySQLException(ex, "ListMutes");
     }
@@ -169,9 +182,9 @@ public final class MySQLStorageProvider
         return result;
       }
 
-      while (resultSet.next()) {
+      do {
         result.add(warnFromResultSet(resultSet));
-      }
+      } while (resultSet.next());
     } catch (final SQLException ex) {
       handleMySQLException(ex, "ListWarns");
     }
@@ -189,9 +202,9 @@ public final class MySQLStorageProvider
         return result;
       }
 
-      while (resultSet.next()) {
+      do {
         result.add(banFromResultSet(resultSet));
-      }
+      } while (resultSet.next());
     } catch (final SQLException ex) {
       handleMySQLException(ex, "ListBans-UUID");
     }
@@ -209,9 +222,9 @@ public final class MySQLStorageProvider
         return result;
       }
 
-      while (resultSet.next()) {
+      do {
         result.add(muteFromResultSet(resultSet));
-      }
+      } while (resultSet.next());
     } catch (final SQLException ex) {
       handleMySQLException(ex, "ListMutes-UUID");
     }
@@ -228,10 +241,10 @@ public final class MySQLStorageProvider
       if (resultSet == null) {
         return result;
       }
-
-      while (resultSet.next()) {
+      do {
         result.add(warnFromResultSet(resultSet));
-      }
+      } while (resultSet.next());
+
     } catch (final SQLException ex) {
       handleMySQLException(ex, "ListWarns-UUID");
     }

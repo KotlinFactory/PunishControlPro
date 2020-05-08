@@ -61,9 +61,10 @@ public enum SettingTypes {
           .of(ItemType.ENDER_CHEST)
           .name("&6Punish Storage")
           .lore(
-              "&7Click here to",
-              "&7change how punishes",
-              "&7are stored");
+              "&7Click to setup MySQL",
+              "&7or to change the",
+              "&7storage-type"
+          );
     }
 
     @Override

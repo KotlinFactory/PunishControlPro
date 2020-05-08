@@ -47,13 +47,31 @@ public abstract class AbstractTemplateBrowser
         "super-silent",
         "access");
 
+//    if (item.name().equalsIgnoreCase("default-ban")) {
+//      Common.log(
+//          Common.chatLineSmooth(),
+//          "Name: " + item.name(),
+//          "Duration: " + item.duration().toMs(),
+//          "Generic: " + TimeUtil.formatTimeDays(item.duration().toMs() / 1000),
+//          "toString(): " + item.duration().toString(),
+//          "file: " + item.getFilePath(),
+//          Common.chatLineSmooth(),
+//          " "
+//      );
+//    }
+
+
     replacer.replace(
         item.punishType(),
         item.reason(),
-        item.duration(),
+        item.duration().toString(),
         item.permission(),
-        item.silent() ? "&aYes" : "&cNo",
-        item.superSilent() ? "&aYes" : "&cNo",
+        item.silent()
+            ? "&aYes"
+            : "&cNo",
+        item.superSilent()
+            ? "&aYes"
+            : "&cNo",
         PunishTemplates.hasAccess(getPlayer().getUniqueId(), item)
             ? "&aYes"
             : "&cNo"

@@ -230,11 +230,11 @@ public class TimeUtil {
     }
 
     long years = TimeUnit.MILLISECONDS.toDays(duration) / 365;
-    duration -= (TimeUnit.DAYS.toMillis(years) * 365);
+    duration -= TimeUnit.DAYS.toMillis(years) * 365;
     long month = TimeUnit.MILLISECONDS.toDays(duration) / 30;
-    duration -= TimeUnit.DAYS.toMillis(years) * 30;
+    duration -= TimeUnit.DAYS.toMillis(month) * 30;
     long days = TimeUnit.MILLISECONDS.toDays(duration);
-    duration -= TimeUnit.DAYS.toMillis(years);
+    duration -= TimeUnit.DAYS.toMillis(days);
     long hours = TimeUnit.MILLISECONDS.toHours(duration);
 
     if (years < 0) {
@@ -253,19 +253,26 @@ public class TimeUtil {
       hours = 0;
     }
 
-    String preResult = "{years} years {month} month {days} days {hours} hours"
+    String preResult = " {years} years {month} month {days} days {hours} hours"
         .replace("{years}", years + "")
         .replace("{month}", month + "")
         .replace("{days}", days + "")
         .replace("{hours}", hours + "");
 
     preResult = preResult
-        .replace("0 years ", "")
-        .replace("0 month ", "")
-        .replace("0 days ", "")
-        .replace("0 hours", "");
+        .replace(" 0 years", "")
+        .replace(" 0 month", "")
+        .replace(" 0 days", "")
+        .replace(" 0 hours", "");
 
-    return preResult;
+    //shortening
+
+    //we don't need years & hours
+    if (years != 0 && hours != 0) {
+      preResult = preResult.replace(hours + " hours", "");
+    }
+
+    return preResult.startsWith(" ") ? preResult.substring(1) : preResult ;
   }
 
 }

@@ -45,19 +45,19 @@ public final class MySQLStorageConversation
         final String input) {
 
       if ("Host".equalsIgnoreCase(type)) {
-        set("MySQL.Host", input);
+        setToConfig("MySQL.Host", input);
         MySQL.HOST = input;
       } else if ("Port".equalsIgnoreCase(type)) {
-        set("MySQL.Port", input);
+        setToConfig("MySQL.Port", input);
         MySQL.PORT = ClassWrapper.INTEGER.getInt(input);
       } else if ("Database".equalsIgnoreCase(type)) {
-        set("MySQL.Database", input);
+        setToConfig("MySQL.Database", input);
         MySQL.DATABASE = input;
       } else if ("User".equalsIgnoreCase(type)) {
-        set("MySQL.User", input);
+        setToConfig("MySQL.User", input);
         MySQL.USER = input;
       } else if ("Password".equalsIgnoreCase(type)) {
-        set("MySQL.Password", input);
+        setToConfig("MySQL.Password", input);
         MySQL.PASSWORD = input;
       }
 
