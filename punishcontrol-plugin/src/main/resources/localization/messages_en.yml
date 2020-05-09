@@ -16,23 +16,22 @@ Punish:
 
   Ban_Message:
     - ""
-    - "&7You have been banned"
-    - "&7Reason {reason}"
-    - "&7Expiration {expiration}"
+    - "&eYou have been banned"
+    - "&eReason: {reason}"
+    - "&eExpiration: {expiration}"
     - ""
 
   Mute_Message:
+    - "&eYou have been muted"
+    - "&eReason: {reason}"
+    - "&eExpiration: {expiration}"
     - ""
-    - "&7You have been muted"
-    - "&7Reason {reason}"
-    - "&7Duration {duration}"
-    - ""
-
   Warn_Message:
     - ""
-    - "&7You have been warned"
-    - "&7Reason {reason}"
-    - "&7Duration {duration}"
+    - "&eYou have been warned"
+    - "&eReason: {reason}"
+    - "&eExpiration: {expiration}"
     - ""
+
 
 Version: 1

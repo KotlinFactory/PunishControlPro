@@ -1,20 +1,28 @@
 package org.mineacademy.punishcontrol.core.permission;
 
+import de.leonhard.storage.util.FileUtils;
+import java.io.File;
 import java.lang.reflect.Field;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import lombok.experimental.UtilityClass;
+import lombok.val;
+import org.mineacademy.punishcontrol.core.provider.Providers;
+import org.mineacademy.punishcontrol.core.providers.PluginDataProvider;
 
 /**
  * Manager class for your {@link Permission}
- *
+ * <p>
  * With this class you can store & registered permissions
  */
 @UtilityClass
 public class Permissions {
+
+  private final PluginDataProvider PLUGIN_DATA_PROVIDER = Providers.pluginDataProvider();
 
   private final List<Permission> registeredPermissions = new ArrayList<>();
 
@@ -44,4 +52,29 @@ public class Permissions {
       register(perm);
     }
   }
+
+
+  public void writeToFile() {
+    final File dataFile = FileUtils.getAndMake(
+        PLUGIN_DATA_PROVIDER.getNamed() + ".perms",
+        PLUGIN_DATA_PROVIDER.getDataFolder().getAbsolutePath());
+
+    final List<String> out = new ArrayList<>(Arrays.asList(
+        "# " + PLUGIN_DATA_PROVIDER.getNamed() + " v." + PLUGIN_DATA_PROVIDER
+            .getVersion(),
+        "# All Permissions are listed in this file ",
+        "# You can also view them using our menu-system",
+        "# Change them via the settings.yml not using this file",
+        ""
+    ));
+
+    for (final val perm : registeredPermissions()) {
+      out.add(perm.permission() + ";" + perm.type() + ";" + String
+          .join(",", perm.description()));
+    }
+
+    FileUtils.write(dataFile, out);
+  }
+
+
 }

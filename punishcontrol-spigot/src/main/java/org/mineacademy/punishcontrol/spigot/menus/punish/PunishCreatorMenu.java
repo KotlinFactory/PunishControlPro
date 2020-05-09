@@ -222,11 +222,24 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
           return;
         }
 
-        if (!Groups.hasAccess(getViewer().getUniqueId(),
-            punishBuilder.punishType(),
-            punishBuilder.duration())) {
-          animateTitle("&cYou would exceed your limits");
-          return;
+        //Checking access
+
+        //Not from template
+        if (punishTemplate == null) {
+          if (!Groups.hasAccess(
+              getViewer().getUniqueId(),
+              punishBuilder.punishType(),
+              punishBuilder.duration())) {
+            animateTitle("&cYou would exceed your limits");
+            return;
+          }
+        } else {
+          if (!Groups.hasAccess(
+              getViewer().getUniqueId(),
+              punishTemplate)) {
+            animateTitle("&cYou would exceed your limits");
+            return;
+          }
         }
 
         animateTitle("&7Created punish");

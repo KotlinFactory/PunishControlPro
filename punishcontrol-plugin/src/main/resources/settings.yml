@@ -121,6 +121,11 @@ Groups:
 #
 Advanced:
 
+  # Set to true if your server if effectively in offline mode
+  # If your server is only set to offline-mode because you are using BungeeCord,
+  # let this set to true.
+  Online_Mode: true
+
   # Define how similar-strings need to be using the /search command
   Min_Similarity_Needed: 0.85
 

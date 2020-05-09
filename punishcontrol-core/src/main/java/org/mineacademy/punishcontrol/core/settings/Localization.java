@@ -56,12 +56,12 @@ public final class Localization extends SimpleLocalization {
           .find("chat_line", "player", "type", "reason", "ip");
 
       BAN_MESSAGE = getReplacer("Ban_Message")
-          .find("reason", "duration");
+          .find("reason", "expiration");
       MUTE_MESSAGE = getReplacer("Mute_Message")
-          .find("reason", "duration");
+          .find("reason", "expiration");
 
       WARN_MESSAGE = getReplacer("Warn_Message")
-          .find("reason", "duration");
+          .find("reason", "expiration");
     }
   }
 }

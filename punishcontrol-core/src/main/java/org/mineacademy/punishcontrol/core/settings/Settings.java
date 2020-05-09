@@ -111,12 +111,14 @@ public final class Settings extends SimpleSettings {
 
   public static final class Advanced {
 
+    public static Boolean ONLINE_MODE;
     public static Boolean CACHE_RESULTS;
     public static String DATE_FORMAT = "MM/dd/yyyy/hh";
     public static Double MIN_SIMILARITY;
 
     private static void init() {
       pathPrefix("Advanced");
+      ONLINE_MODE = getBoolean("Online_Mode");
       CACHE_RESULTS = getBoolean("Cache_Results");
       MIN_SIMILARITY = getDouble("Min_Similarity_Needed");
     }

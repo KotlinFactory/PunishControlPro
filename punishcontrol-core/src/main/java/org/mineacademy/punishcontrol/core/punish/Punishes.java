@@ -69,17 +69,20 @@ public class Punishes {
         return Localization.Punish.BAN_MESSAGE.replace(
             punish.reason(),
             Settings.Advanced.formatDate(punish.getEndTime()))
-            .replacedMessageJoined();
+            .replacedMessageJoined()
+            .replace("&", "§");
       case MUTE:
         return Localization.Punish.MUTE_MESSAGE.replace(
             punish.reason() == null ? "unknown" : punish.reason(),
             Settings.Advanced.formatDate(punish.getEndTime()))
-            .replacedMessageJoined();
+            .replacedMessageJoined()
+            .replace("&", "§");
       case WARN:
         return Localization.Punish.WARN_MESSAGE.replace(
             punish.reason(),
             Settings.Advanced.formatDate(punish.getEndTime()))
-            .replacedMessageJoined();
+            .replacedMessageJoined()
+            .replace("&", "§");
     }
 
     throw new LightningValidationException(

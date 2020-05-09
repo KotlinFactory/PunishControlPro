@@ -172,7 +172,6 @@ public interface PunishControlPluginBootstrap {
 
     log();
 
-
     if (Providers.storageProvider() instanceof MySQLStorageProvider) {
       try {
         ((MySQLStorageProvider) Providers.storageProvider()).connect();
@@ -190,8 +189,11 @@ public interface PunishControlPluginBootstrap {
 
     log(getStartupFinishedMessages()[index]);
 
-
-
+    try {
+      Permissions.writeToFile();
+    } catch (final Throwable throwable) {
+      saveError(throwable);
+    }
 
     log("§7*-----------------------------------------------------------------*");
   }

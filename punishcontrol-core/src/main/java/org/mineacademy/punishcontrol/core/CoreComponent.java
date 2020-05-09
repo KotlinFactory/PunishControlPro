@@ -7,7 +7,6 @@ import org.mineacademy.punishcontrol.core.listeners.MuteIpListener;
 import org.mineacademy.punishcontrol.core.listeners.MuteListener;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.storage.JsonStorageProvider;
-import org.mineacademy.punishcontrol.core.storage.MySQLConfig;
 import org.mineacademy.punishcontrol.core.storage.MySQLStorageProvider;
 
 /**
@@ -15,8 +14,6 @@ import org.mineacademy.punishcontrol.core.storage.MySQLStorageProvider;
  */
 @Component(modules = Providers.class)
 public interface CoreComponent {
-
-  MySQLConfig buildConfig();
 
   MySQLStorageProvider mySQLStorageProvider();
 

@@ -7,6 +7,7 @@ import org.mineacademy.punishcontrol.core.events.JoinEvent;
 import org.mineacademy.punishcontrol.core.listener.Listener;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.providers.TextureProvider;
+import org.mineacademy.punishcontrol.core.settings.Settings.Advanced;
 import org.mineacademy.punishcontrol.spigot.Scheduler;
 
 public final class SpigotDataSetter implements Listener<JoinEvent> {
@@ -33,13 +34,15 @@ public final class SpigotDataSetter implements Listener<JoinEvent> {
     final String name = event.name();
 
     System.out.println("Saved textures");
-//    final String name = playerProvider.getName(uuid);
-    final String ip = event.targetAddress() == null ? "unknown"
+    final String ip = event.targetAddress() == null
+        ? "unknown"
         : event.targetAddress().getHostAddress();
     Scheduler.runAsync(
         () -> {
           playerProvider.saveData(uuid, name, ip);
-          textureProvider.saveSkinTexture(uuid);
+          if(Advanced.ONLINE_MODE) {
+            textureProvider.saveSkinTexture(uuid);
+          }
         });
   }
 }

@@ -11,6 +11,7 @@ import lombok.NonNull;
 import lombok.experimental.Accessors;
 import org.mineacademy.punishcontrol.core.providers.ExceptionHandler;
 import org.mineacademy.punishcontrol.core.punish.Punish;
+import org.mineacademy.punishcontrol.core.punish.PunishDuration;
 import org.mineacademy.punishcontrol.core.punish.PunishType;
 import org.mineacademy.punishcontrol.core.punishes.Ban;
 import org.mineacademy.punishcontrol.core.punishes.Mute;
@@ -104,7 +105,7 @@ public final class MySQLStorageProvider
     return Ban.of(
         resultSet.getString("Target"),
         resultSet.getString("Creator"),
-        resultSet.getLong("Duration"))
+        PunishDuration.of(resultSet.getLong("Duration")))
         .ip(resultSet.getString("IP"))
         .creation(resultSet.getLong("Creation"))
         .removed(resultSet.getBoolean("Removed"))
@@ -115,7 +116,7 @@ public final class MySQLStorageProvider
     return Mute.of(
         resultSet.getString("Target"),
         resultSet.getString("Creator"),
-        resultSet.getLong("Duration"))
+        PunishDuration.of(resultSet.getLong("Duration")))
         .ip(resultSet.getString("IP"))
         .creation(resultSet.getLong("Creation"))
         .removed(resultSet.getBoolean("Removed"))
@@ -126,7 +127,7 @@ public final class MySQLStorageProvider
     return Warn.of(
         resultSet.getString("Target"),
         resultSet.getString("Creator"),
-        resultSet.getLong("Duration"))
+        PunishDuration.of(resultSet.getLong("Duration")))
         .ip(resultSet.getString("IP"))
         .creation(resultSet.getLong("Creation"))
         .removed(resultSet.getBoolean("Removed"))
@@ -143,9 +144,9 @@ public final class MySQLStorageProvider
         return result;
       }
 
-      do {
+      while (resultSet.next()) {
         result.add(banFromResultSet(resultSet));
-      } while (resultSet.next());
+      }
     } catch (final SQLException ex) {
       handleMySQLException(ex, "ListBans");
     }
@@ -162,10 +163,9 @@ public final class MySQLStorageProvider
         return result;
       }
 
-      do {
-        result.add(
-            muteFromResultSet(resultSet));
-      } while (resultSet.next());
+      while (resultSet.next()) {
+        result.add(muteFromResultSet(resultSet));
+      }
     } catch (final SQLException ex) {
       handleMySQLException(ex, "ListMutes");
     }
@@ -182,9 +182,9 @@ public final class MySQLStorageProvider
         return result;
       }
 
-      do {
+      while (resultSet.next()) {
         result.add(warnFromResultSet(resultSet));
-      } while (resultSet.next());
+      }
     } catch (final SQLException ex) {
       handleMySQLException(ex, "ListWarns");
     }
@@ -202,9 +202,9 @@ public final class MySQLStorageProvider
         return result;
       }
 
-      do {
+      while (resultSet.next()) {
         result.add(banFromResultSet(resultSet));
-      } while (resultSet.next());
+      }
     } catch (final SQLException ex) {
       handleMySQLException(ex, "ListBans-UUID");
     }
@@ -222,9 +222,9 @@ public final class MySQLStorageProvider
         return result;
       }
 
-      do {
+      while (resultSet.next()) {
         result.add(muteFromResultSet(resultSet));
-      } while (resultSet.next());
+      }
     } catch (final SQLException ex) {
       handleMySQLException(ex, "ListMutes-UUID");
     }
@@ -241,9 +241,9 @@ public final class MySQLStorageProvider
       if (resultSet == null) {
         return result;
       }
-      do {
+      while (resultSet.next()) {
         result.add(warnFromResultSet(resultSet));
-      } while (resultSet.next());
+      }
 
     } catch (final SQLException ex) {
       handleMySQLException(ex, "ListWarns-UUID");

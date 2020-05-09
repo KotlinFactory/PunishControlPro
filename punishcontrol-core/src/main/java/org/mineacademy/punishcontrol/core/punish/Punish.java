@@ -66,8 +66,7 @@ public abstract class Punish {
     this(
         UUID.fromString((String) banRawData.get("target")),
         UUID.fromString((String) banRawData.get("creator")),
-        PunishDuration
-            .of(ClassWrapper.LONG.getLong(banRawData.get("duration"))),
+        PunishDuration.of(ClassWrapper.LONG.getLong(banRawData.get("duration"))),
         punishType,
         creation);
     validateRaWData(banRawData);

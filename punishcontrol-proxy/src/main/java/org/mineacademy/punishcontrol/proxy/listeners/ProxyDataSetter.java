@@ -9,6 +9,8 @@ import org.mineacademy.punishcontrol.core.events.JoinEvent;
 import org.mineacademy.punishcontrol.core.listener.Listener;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.providers.TextureProvider;
+import org.mineacademy.punishcontrol.core.settings.Settings.Advanced;
+import org.mineacademy.punishcontrol.core.uuid.UUIDs;
 
 public final class ProxyDataSetter implements Listener<JoinEvent>, Schedulable {
 
@@ -34,17 +36,21 @@ public final class ProxyDataSetter implements Listener<JoinEvent>, Schedulable {
   @Override
   public void handleEvent(final JoinEvent event) {
     final UUID uuid = event.targetUUID();
-    final String name = playerProvider.findNameUnsafe(uuid);
+    final String name = event.name();
     final String ip = event.targetAddress().getHostAddress();
     async(() -> {
       try {
         playerProvider.saveData(uuid, name, ip);
+        System.out.println("Received UUID: " + uuid);
+        System.out.println("Fetcher: " + UUIDs.find(name).orElse(null));
       } catch (final Throwable throwable) {
         Debugger.saveError(throwable, "Exception while saving UUID");
       }
 
       try {
-        textureProvider.saveSkinTexture(uuid);
+        if(Advanced.ONLINE_MODE) {
+          textureProvider.saveSkinTexture(uuid);
+        }
       } catch (final Throwable throwable) {
         Debugger.saveError(throwable, "Exception while saving Textures");
       }

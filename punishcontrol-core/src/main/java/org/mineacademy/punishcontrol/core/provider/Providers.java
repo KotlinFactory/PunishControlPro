@@ -12,7 +12,6 @@ import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.providers.PluginDataProvider;
 import org.mineacademy.punishcontrol.core.providers.PunishProvider;
 import org.mineacademy.punishcontrol.core.providers.TextureProvider;
-import org.mineacademy.punishcontrol.core.storage.MySQLConfig;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 
 /**
@@ -89,14 +88,6 @@ public final class Providers {
   // ----------------------------------------------------------------------------------------------------
   // Dagger only
   // ----------------------------------------------------------------------------------------------------
-
-  @Provides
-  public static MySQLConfig config(
-      @NonNull final PluginDataProvider workingDirectoryProvider) {
-    Valid.notNull(workingDirectoryProvider, "Working directoryProvider is null");
-
-    return MySQLConfig.newInstance(workingDirectoryProvider);
-  }
 
   //Lazy loading our storage provider & allowing to reset it
   @Provides

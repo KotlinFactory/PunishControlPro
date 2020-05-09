@@ -238,7 +238,7 @@ public abstract class AbstractPunishCommand
 
           punishMessage.replaceAll(
               "target",
-              playerProvider.findNameUnsafe(target),
+              playerProvider.findName(target).orElse("unknown"),
               "duration",
               punishDuration.toString(),
               "reason",

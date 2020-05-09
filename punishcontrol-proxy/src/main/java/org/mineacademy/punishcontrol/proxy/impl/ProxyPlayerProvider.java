@@ -101,7 +101,7 @@ public final class ProxyPlayerProvider
       return;
     }
 
-    player.disconnect(String.join("\n", reason));
+    player.disconnect(Common.colorize(String.join("\n", reason)));
   }
 
   @Override

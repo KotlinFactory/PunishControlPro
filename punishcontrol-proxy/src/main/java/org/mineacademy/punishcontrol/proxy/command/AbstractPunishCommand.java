@@ -213,6 +213,8 @@ public abstract class AbstractPunishCommand
             reason.append(finalArgs.get(i)).append(" ");
           }
 
+          System.out.println("HEY");
+
           final Punish punish =
               PunishBuilder.of(punishType)
                   .target(target)
@@ -235,7 +237,7 @@ public abstract class AbstractPunishCommand
 
           punishMessage.replaceAll(
               "target",
-              playerProvider.findNameUnsafe(target),
+              playerProvider.findName(target).orElse("unknown"),
               "duration",
               punishDuration.toString(),
               "reason",

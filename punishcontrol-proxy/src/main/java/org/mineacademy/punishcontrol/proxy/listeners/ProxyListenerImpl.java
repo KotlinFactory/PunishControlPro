@@ -18,7 +18,6 @@ public class ProxyListenerImpl implements Listener {
   }
 
   @EventHandler
-  //TODO: TEST! / UNSAFE!
   public void login(final PostLoginEvent playerPostLoginEvent) {
     final JoinEvent joinEvent = Events.call(
         JoinEvent.create(

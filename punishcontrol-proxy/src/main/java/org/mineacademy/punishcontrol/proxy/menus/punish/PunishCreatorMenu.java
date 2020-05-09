@@ -323,6 +323,7 @@ public final class PunishCreatorMenu extends AbstractMenu {
   public void registerActionHandlers() {
     //Duration
     registerActionHandler("Duration", (duration -> {
+      punishTemplate = null;
       new AbstractDurationChooser(PunishCreatorMenu.this) {
 
         @Override
@@ -337,6 +338,7 @@ public final class PunishCreatorMenu extends AbstractMenu {
 
     //Type
     registerActionHandler("Type", (type -> {
+      punishTemplate = null;
       new AbstractPunishTypeBrowser(this) {
         @Override
         protected void onClick(final ClickType clickType, final PunishType punishType) {
@@ -374,6 +376,7 @@ public final class PunishCreatorMenu extends AbstractMenu {
 
     //Reason
     registerActionHandler("Reason", (reason -> {
+      punishTemplate = null;
       InventoryModule.closeAllInventories(getPlayer());
       PunishReasonConversation.create(getPlayer(), this).start();
       return CallResult.DENY_GRABBING;
@@ -381,7 +384,7 @@ public final class PunishCreatorMenu extends AbstractMenu {
 
     //Player
     registerActionHandler("Player", (player -> {
-
+      punishTemplate = null;
       new AbstractPlayerBrowser(
           Providers.playerProvider(),
           Providers.textureProvider(),
@@ -451,11 +454,24 @@ public final class PunishCreatorMenu extends AbstractMenu {
         return CallResult.DENY_GRABBING;
       }
 
-      if (!Groups.hasAccess(getPlayer().getUniqueId(),
-          punishBuilder.punishType(),
-          punishBuilder.duration())) {
-        animateTitle("&cYou would exceed your limits");
-        return CallResult.DENY_GRABBING;
+      //Checking access
+
+      //Not from template
+      if (punishTemplate == null) {
+        if (!Groups.hasAccess(
+            getPlayer().getUniqueId(),
+            punishBuilder.punishType(),
+            punishBuilder.duration())) {
+          animateTitle("&cYou would exceed your limits");
+          return CallResult.DENY_GRABBING;
+        }
+      } else {
+        if (!Groups.hasAccess(
+            getPlayer().getUniqueId(),
+            punishTemplate)) {
+          animateTitle("&cYou would exceed your limits");
+          return CallResult.DENY_GRABBING;
+        }
       }
 
       animateTitle("&7Created punish");

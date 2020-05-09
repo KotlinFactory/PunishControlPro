@@ -184,7 +184,6 @@ public final class ChooseActionMenu extends AbstractMenu implements Listener {
     });
 
     registerActionHandler("ListPunishes", (listPunishes -> {
-      System.out.println("Hey?");
       PlayerPunishBrowser.showTo(getPlayer(), target);
       return CallResult.DENY_GRABBING;
     }));

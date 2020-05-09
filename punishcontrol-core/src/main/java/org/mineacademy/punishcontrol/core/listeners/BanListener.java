@@ -5,6 +5,7 @@ import java.util.UUID;
 import javax.inject.Inject;
 import org.mineacademy.punishcontrol.core.events.JoinEvent;
 import org.mineacademy.punishcontrol.core.listener.Listener;
+import org.mineacademy.punishcontrol.core.punish.Punishes;
 import org.mineacademy.punishcontrol.core.punishes.Ban;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 
@@ -30,7 +31,7 @@ public final class BanListener implements Listener<JoinEvent> {
     optionalBan.ifPresent((ban -> {
       event.canceled(true);
       //TODO format
-      event.cancelReason(ban.reason());
+      event.cancelReason(Punishes.formPunishedMessage(ban));
     }));
   }
 }

@@ -74,6 +74,10 @@ public class Groups {
 
     final val group = optionalGroup.get();
 
+    if (group.templateOnly()) {
+      return false;
+    }
+
     switch (punishType) {
       case BAN:
         return group.banLimit().lessThan(punishDuration);

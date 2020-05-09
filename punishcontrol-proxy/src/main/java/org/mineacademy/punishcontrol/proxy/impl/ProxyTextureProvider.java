@@ -28,7 +28,7 @@ public final class ProxyTextureProvider extends Json
   public void saveSkinTexture(final UUID uuid) {
     final String textureHash = MojangUtils.getTextureHash(uuid);
 
-    Debugger.debug("hash","Received hash: '" + textureHash + "'");
+    Debugger.debug("hash", "Received hash: '" + textureHash + "'");
 
     if (textureHash != null) {
       set(uuid.toString(), textureHash);
