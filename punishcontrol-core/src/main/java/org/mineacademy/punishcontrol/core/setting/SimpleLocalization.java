@@ -115,7 +115,8 @@ public abstract class SimpleLocalization extends YamlStaticConfig {
         .addInputStreamFromResource("localization/" + name + ".yml")
         .setConfigSettings(ConfigSettings.PRESERVE_COMMENTS)
         .setDataType(DataType.SORTED)
-        .createConfig();
+        .createConfig()
+        .addDefaultsFromInputStream();
   }
 
   /**

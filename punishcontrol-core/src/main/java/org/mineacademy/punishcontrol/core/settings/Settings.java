@@ -15,6 +15,7 @@ public final class Settings extends SimpleSettings {
   public static StorageType STORAGE_TYPE;
 
   private static void init() {
+    final Object test = getString("Test");
     STORAGE_TYPE = Enum.valueOf(StorageType.class, getString("Storage").toUpperCase());
     COMMAND_ALIASES = getStringList("Command_Aliases");
   }

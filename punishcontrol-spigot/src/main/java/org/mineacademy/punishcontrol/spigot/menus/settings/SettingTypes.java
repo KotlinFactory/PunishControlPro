@@ -83,7 +83,7 @@ public enum SettingTypes {
   PUNISH_TEMPLATE {
     @Override
     public ItemCreator itemCreator() {
-      return ItemCreator.of(CompMaterial.PAPER, "&6Punish-Templates", "&7View and add",
+      return ItemCreator.of(CompMaterial.PAPER, "&6Punish templates", "&7View and add",
           "&7Punish-Templates").build();
     }
 

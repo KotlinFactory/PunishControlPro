@@ -46,8 +46,8 @@ public class PunishControlManager {
   @UtilityClass
   @FieldDefaults(makeFinal = true)
   public static class FILES {
-    public String JSON_DATA_FILE_NAME = "Punishes";
-    public String SKIN_STORAGE = "Textures";
-    public String UUID_STORAGE = "UUIDs";
+    public String JSON_DATA_FILE_NAME = "punishes";
+    public String SKIN_STORAGE = "textures";
+    public String UUID_STORAGE = "uuids";
   }
 }

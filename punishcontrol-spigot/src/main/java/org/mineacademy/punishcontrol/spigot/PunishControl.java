@@ -4,14 +4,17 @@ import java.util.ArrayList;
 import java.util.List;
 import lombok.NonNull;
 import lombok.val;
+import org.bukkit.Bukkit;
 import org.mineacademy.fo.Common;
 import org.mineacademy.fo.MinecraftVersion.V;
 import org.mineacademy.fo.command.SimpleCommand;
 import org.mineacademy.fo.plugin.SimplePlugin;
 import org.mineacademy.punishcontrol.core.PunishControlPluginBootstrap;
+import org.mineacademy.punishcontrol.core.conversation.StorageSettable;
 import org.mineacademy.punishcontrol.core.permission.Permission;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.settings.Settings;
+import org.mineacademy.punishcontrol.spigot.commands.BackupCommand;
 import org.mineacademy.punishcontrol.spigot.commands.MainCommand;
 import org.mineacademy.punishcontrol.spigot.impl.SpigotExceptionHandler;
 import org.mineacademy.punishcontrol.spigot.impl.SpigotPlayerProvider;
@@ -20,10 +23,12 @@ import org.mineacademy.punishcontrol.spigot.impl.SpigotPunishProvider;
 import org.mineacademy.punishcontrol.spigot.impl.SpigotTextureProvider;
 import org.mineacademy.punishcontrol.spigot.listeners.SpigotListenerImpl;
 import org.mineacademy.punishcontrol.spigot.settings.SimpleSettingsInjector;
+import org.spigotmc.SpigotConfig;
 
 public final class PunishControl
     extends SimplePlugin
-    implements PunishControlPluginBootstrap {
+    implements PunishControlPluginBootstrap, StorageSettable {
+
   private final SpigotComponent spigotModule = DaggerSpigotComponent.create();
 
 
@@ -39,6 +44,12 @@ public final class PunishControl
   protected void onPluginStart() {
     Common.ADD_LOG_PREFIX = false;
 
+    //Auto enabling offline-mode
+    if (!SpigotConfig.bungee && !Bukkit.getServer().getOnlineMode()) {
+      setToConfig("Advanced.Online_Mode", false);
+      log("[PCP-Prestart] your server is in offline-mode");
+    }
+
     onPunishControlPluginStart();
     SimpleSettingsInjector.inject();
 
@@ -52,6 +63,8 @@ public final class PunishControl
   @Override
   public void registerCommands() {
     registerCommand(MainCommand.create(Settings.MAIN_COMMAND_ALIASES));
+    registerCommand(BackupCommand.create());
+
     registerCommand(spigotModule.commandKick());
     registerCommand(spigotModule.commandBan());
     registerCommand(spigotModule.commandMute());

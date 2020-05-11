@@ -7,7 +7,7 @@ import de.leonhard.storage.internal.settings.DataType;
 import org.mineacademy.punishcontrol.core.fo.constants.FoConstants.Header;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 
-public interface SimpleMySQLStorageConversation {
+public interface StorageSettable {
 
     Yaml yaml =  LightningBuilder
         .fromPath("settings.yml",

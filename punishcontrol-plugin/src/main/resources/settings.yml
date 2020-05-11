@@ -32,9 +32,10 @@ Prefix: '&8&lPUNISHCONTROL &8//&7'
 Locale: en
 
 Command_Aliases: [punishcontrol,phc, pun, pc]
-
 # JSON/MYSQL
 Storage: JSON
+
+Test: true
 
 MySQL:
   Host: ''
@@ -121,7 +122,7 @@ Groups:
 #
 Advanced:
 
-  # Set to true if your server if effectively in offline mode
+  # Set to false if your server if effectively in offline mode
   # If your server is only set to offline mode because you are using BungeeCord,
   # let this set to true.
   Online_Mode: true

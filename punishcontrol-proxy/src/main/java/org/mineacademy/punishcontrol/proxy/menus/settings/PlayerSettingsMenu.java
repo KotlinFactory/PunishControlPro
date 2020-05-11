@@ -190,7 +190,9 @@ final class GroupBrowser extends AbstractBrowser<Group> {
     return new String[]{
         "&7Menu to view",
         "&7the groups",
-        "&7a player has"
+        "&7a player has",
+        "&7changes can't",
+        "&7be yet made"
     };
   }
 
@@ -233,7 +235,9 @@ class PermissionsBrowser extends AbstractBrowser<Permission> {
     return new String[]{
         "&7Menu to view",
         "&7the permissions",
-        "&7a player has"
+        "&7a player has",
+        "&7changes will ",
+        "&7be temporary"
     };
   }
 

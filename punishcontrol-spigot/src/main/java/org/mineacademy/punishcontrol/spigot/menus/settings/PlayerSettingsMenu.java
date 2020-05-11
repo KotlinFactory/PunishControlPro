@@ -9,13 +9,10 @@ import lombok.val;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.permissions.PermissionAttachment;
-import org.mineacademy.fo.Players;
 import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.fo.menu.button.Button;
 import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.fo.model.Replacer;
-import org.mineacademy.fo.plugin.SimplePlugin;
 import org.mineacademy.fo.remain.CompMaterial;
 import org.mineacademy.punishcontrol.core.group.Group;
 import org.mineacademy.punishcontrol.core.group.Groups;
@@ -24,6 +21,7 @@ import org.mineacademy.punishcontrol.core.permission.Permissions;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
+import org.mineacademy.punishcontrol.spigot.Players;
 import org.mineacademy.punishcontrol.spigot.Scheduler;
 import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.setting.AbstractSettingsMenu;
@@ -56,6 +54,7 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
     targetOnline = Players.find(target).isPresent();
     setTitle("&8Settings for player");
 
+    setSize(9);
     groupBrowser = new Button() {
       @Override
       public void onClickedInMenu(
@@ -193,7 +192,9 @@ final class GroupBrowser extends AbstractBrowser<Group> {
     return new String[]{
         "&7Menu to view",
         "&7the groups",
-        "&7a player has"
+        "&7a player has",
+        "&7changes can't",
+        "&7be yet made"
     };
   }
 
@@ -236,7 +237,9 @@ class PermissionsBrowser extends AbstractBrowser<Permission> {
     return new String[]{
         "&7Menu to view",
         "&7the permissions",
-        "&7a player has"
+        "&7a player has",
+        "&7You can't give",
+        "&7permissions here" // Don't mess around with spigot
     };
   }
 
@@ -281,17 +284,11 @@ class PermissionsBrowser extends AbstractBrowser<Permission> {
       final Player player,
       final Permission item,
       final ClickType click) {
-    Players.find(target).ifPresent((target -> {
-      setPermission(target, item.permission(), !target.hasPermission(item.permission()));
-    }));
   }
 
   private void setPermission(
       final Player player,
       final String permission,
       final boolean boo) {
-    final PermissionAttachment attachment = new PermissionAttachment(
-        SimplePlugin.getInstance(), player);
-    attachment.setPermission(permission, boo);
   }
 }

@@ -83,7 +83,7 @@ public enum SettingTypes {
     @Override
     public Item itemCreator() {
       return Item.of(ItemType.PAPER)
-          .name("&6Punish-Templates")
+          .name("&6Punish templates")
           .lore(
               "&7View and add",
               "&7Punish templates");

@@ -188,7 +188,6 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
 
   private void updateClock() {
     normalizeIfNeeded();
-    System.out.println("Ms: " + ms);
     laterAsync(this::build, 20);
   }
 

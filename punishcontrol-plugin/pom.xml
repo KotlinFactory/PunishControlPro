@@ -11,7 +11,6 @@
   <version>1.0.0</version>
   <artifactId>punishcontrol-plugin</artifactId>
 
-
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <author>leonhard</author>
@@ -26,7 +25,6 @@
     </spigot.main>
     <mainClass>${project.groupId}.${plugin.name}.${project.artifactId}</mainClass>
   </properties>
-
 
   <repositories>
     <repository>
@@ -122,15 +120,14 @@
               <include>javax.inject:javax.inject*</include>
             </includes>
           </artifactSet>
-          <!--                    <relocations>-->
-          <!--                        <relocation>-->
-          <!--                            <pattern>org.mineacademy</pattern>-->
-          <!--                            <shadedPattern>org.mineacademy.${plugin.name}.lib</shadedPattern>-->
-          <!--                            <excludes>-->
-          <!--                                <exclude>org.mineacademy.${plugin.name}.*</exclude>-->
-          <!--                            </excludes>-->
-          <!--                        </relocation>-->
-          <!--                    </relocations>-->
+          <relocations>
+            <relocation>
+              <pattern>org.mineacademy.fo</pattern>
+              <shadedPattern>org.mineacademy.${plugin.name}.lib</shadedPattern>
+              <pattern>org.mineacademy.bfo</pattern>
+              <shadedPattern>org.mineacademy.${plugin.name}.lib</shadedPattern>
+            </relocation>
+          </relocations>
         </configuration>
       </plugin>
       <plugin>
@@ -223,9 +220,9 @@
     <resources>
       <resource>
         <directory>src/main/resources</directory>
-        <excludes>
-          <exclude>**/*.txt</exclude>
-        </excludes>
+        <includes>
+          <include>**/*.yml</include>
+        </includes>
         <filtering>true</filtering>
       </resource>
     </resources>

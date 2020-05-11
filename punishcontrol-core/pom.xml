@@ -23,8 +23,6 @@
     </properties>
 
     <repositories>
-
-
         <!-- JitPack-Repo -->
         <repository>
             <id>jitpack.io</id>
@@ -47,19 +45,11 @@
             <scope>provided</scope>
         </dependency>
 
-        <!-- Our api-->
-
-        <dependency>
-            <groupId>org.mineacademy</groupId>
-            <artifactId>punishcontrol-api</artifactId>
-            <version>1.0.0</version>
-        </dependency>
-
         <!-- Libraries -->
         <dependency>
             <groupId>com.github.JavaFactoryDev</groupId>
             <artifactId>LightningStorage</artifactId>
-            <version>3.1.1</version>
+            <version>3.1.2</version>
         </dependency>
 
         <dependency>

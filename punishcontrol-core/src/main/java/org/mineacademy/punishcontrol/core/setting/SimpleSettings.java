@@ -194,7 +194,8 @@ public abstract class SimpleSettings extends YamlStaticConfig {
         .addInputStreamFromResource("settings.yml")
         .setConfigSettings(ConfigSettings.PRESERVE_COMMENTS)
         .setDataType(DataType.SORTED)
-        .createConfig();
+        .createConfig()
+        .addDefaultsFromInputStream();
   }
 
   /**

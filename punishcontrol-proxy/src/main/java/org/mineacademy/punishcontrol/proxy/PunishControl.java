@@ -17,6 +17,7 @@ import org.mineacademy.punishcontrol.core.PunishControlPluginBootstrap;
 import org.mineacademy.punishcontrol.core.permission.Permission;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.settings.Settings;
+import org.mineacademy.punishcontrol.proxy.commands.BackupCommand;
 import org.mineacademy.punishcontrol.proxy.commands.MainCommand;
 import org.mineacademy.punishcontrol.proxy.impl.ProxyExceptionHandler;
 import org.mineacademy.punishcontrol.proxy.impl.ProxyPlayerProvider;
@@ -55,6 +56,7 @@ public final class PunishControl
   @Override
   public void registerCommands() {
     registerCommand(MainCommand.create(Settings.MAIN_COMMAND_ALIASES));
+    registerCommand(BackupCommand.create());
 
     Commands.registerCommand(proxyModule.commandKick());
     Commands.registerCommand(proxyModule.commandBan());

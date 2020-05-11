@@ -10,7 +10,7 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import org.mineacademy.bfo.debug.Debugger;
 import org.mineacademy.burst.item.Item;
 import org.mineacademy.punishcontrol.core.PunishControlManager;
-import org.mineacademy.punishcontrol.core.conversation.SimpleMySQLStorageConversation;
+import org.mineacademy.punishcontrol.core.conversation.StorageSettable;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.settings.Settings.MySQL;
 import org.mineacademy.punishcontrol.core.storage.MySQLStorageProvider;
@@ -22,7 +22,7 @@ import org.mineacademy.punishcontrol.proxy.menus.setting.AbstractSettingsMenu;
 
 public final class StorageSettingsMenu
     extends AbstractSettingsMenu
-    implements SimpleMySQLStorageConversation {
+    implements StorageSettable {
 
   private static final MySQLStorageProvider mySQLStorageProvider =
       Providers.storageProvider() instanceof MySQLStorageProvider

@@ -10,10 +10,10 @@ import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import org.mineacademy.fo.Common;
-import org.mineacademy.fo.Players;
 import org.mineacademy.fo.conversation.SimpleConversation;
 import org.mineacademy.fo.conversation.SimplePrompt;
 import org.mineacademy.fo.menu.Menu;
+import org.mineacademy.punishcontrol.spigot.Players;
 
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public class KickConversation extends SimpleConversation {

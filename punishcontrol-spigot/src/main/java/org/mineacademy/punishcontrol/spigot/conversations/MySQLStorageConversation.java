@@ -5,13 +5,13 @@ import org.bukkit.conversations.ConversationContext;
 import org.jetbrains.annotations.Nullable;
 import org.mineacademy.fo.conversation.SimpleConversation;
 import org.mineacademy.fo.conversation.SimplePrompt;
-import org.mineacademy.punishcontrol.core.conversation.SimpleMySQLStorageConversation;
+import org.mineacademy.punishcontrol.core.conversation.StorageSettable;
 import org.mineacademy.punishcontrol.core.settings.Settings.MySQL;
 import org.mineacademy.punishcontrol.spigot.menus.settings.StorageSettingsMenu;
 
 public final class MySQLStorageConversation
     extends SimpleConversation
-    implements SimpleMySQLStorageConversation {
+    implements StorageSettable {
 
   private final String type;
 
