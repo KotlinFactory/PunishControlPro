@@ -15,6 +15,7 @@ public final class ChooseActionCommand extends AbstractSimplePunishControlComman
     super(playerProvider, new StrictList<>("chooseaction", "action", "acttion"));
     setPermission("punishcontrol.command.action");
     setDescription("Choose an action for players");
+    setUsage("<player>");
   }
 
   @Override

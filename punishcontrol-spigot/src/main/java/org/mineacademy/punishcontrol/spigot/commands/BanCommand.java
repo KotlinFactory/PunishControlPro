@@ -16,5 +16,6 @@ public final class BanCommand extends AbstractPunishCommand {
     super(storageProvider, playerProvider, PunishType.BAN, "ban");
     setPermission("punishcontrol.command.ban");
     setDescription("Ban a player");
+    setUsage("[-s|-ss] [player] [duration] [reason]");
   }
 }

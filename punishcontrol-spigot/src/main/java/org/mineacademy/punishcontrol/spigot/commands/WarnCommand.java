@@ -16,6 +16,6 @@ public final class WarnCommand extends AbstractPunishCommand {
     super(storageProvider, playerProvider, PunishType.WARN, "warn");
     setDescription("Warn a player");
     setPermission("punishcontrol.command.warn");
+    setUsage("[-s|-ss] [player] [duration] [reason]");
   }
-
 }

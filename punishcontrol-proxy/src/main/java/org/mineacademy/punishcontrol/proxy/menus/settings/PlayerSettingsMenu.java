@@ -239,7 +239,11 @@ class PermissionsBrowser extends AbstractBrowser<Permission> {
 
   @Override
   public void reDisplay() {
-    showTo(getPlayer(), target, parent);
+    async(() -> {
+      final PermissionsBrowser menu = new PermissionsBrowser(target, parent);
+      menu.setCurrentPage(getCurrentPageIndex());
+      menu.displayTo(getPlayer());
+    });
   }
 
   @Override
@@ -276,6 +280,11 @@ class PermissionsBrowser extends AbstractBrowser<Permission> {
 
   @Override
   protected void onClick(final ClickType clickType, final Permission permission) {
-    // Do nothing
+    Players.find(target).ifPresent((player -> {
+      player.setPermission(
+          permission.permission(),
+          !player.hasPermission(permission.permission()));
+      reDisplay();
+    }));
   }
 }

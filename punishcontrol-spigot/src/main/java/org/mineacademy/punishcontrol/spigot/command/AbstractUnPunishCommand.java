@@ -1,8 +1,5 @@
 package org.mineacademy.punishcontrol.spigot.command;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.NonNull;
@@ -41,11 +38,8 @@ public abstract class AbstractUnPunishCommand extends
       returnTell(INVALID_SILENCE_USAGE);
     }
 
-    final List<String> finalArgs = new ArrayList<>(Arrays.asList(args));
-    // Args without params
-    finalArgs.removeAll(Arrays.asList("-S", "-s", "-silent", "-super-slient"));
 
-    switch (finalArgs.size()) {
+    switch (args.length) {
       case 0:
         if (!isPlayer()) {
           returnTell(MORE_ARGUMENTS_AS_CONSOLE_MESSAGE);
@@ -53,7 +47,7 @@ public abstract class AbstractUnPunishCommand extends
         AllPunishesBrowser.showTo(getPlayer());
         break;
       case 1:
-        final UUID target = findTarget(finalArgs);
+        final UUID target = findTarget(args[0]);
 
         //TODO: Async
         switch (punishType) {

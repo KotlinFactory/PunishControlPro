@@ -16,7 +16,6 @@ public final class KickCommand extends AbstractSimplePunishControlCommand {
     setUsage("kick <player>");
     setDescription("Kick a player");
     setPermission("punishcontrol.command.kick");
-
   }
 
   @Override

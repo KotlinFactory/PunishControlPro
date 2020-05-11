@@ -1,5 +1,0 @@
-#Change me to use the maven properties
-main: org.mineacademy.punishcontrol.spigot.PunishControl
-author: Leonhard
-version: 1.0.0
-name: PunishControlPro

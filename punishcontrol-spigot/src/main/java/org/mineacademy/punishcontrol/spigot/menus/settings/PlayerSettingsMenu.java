@@ -9,11 +9,13 @@ import lombok.val;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.permissions.PermissionAttachment;
 import org.mineacademy.fo.Players;
 import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.fo.menu.button.Button;
 import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.fo.model.Replacer;
+import org.mineacademy.fo.plugin.SimplePlugin;
 import org.mineacademy.fo.remain.CompMaterial;
 import org.mineacademy.punishcontrol.core.group.Group;
 import org.mineacademy.punishcontrol.core.group.Groups;
@@ -276,6 +278,20 @@ class PermissionsBrowser extends AbstractBrowser<Permission> {
 
   @Override
   protected void onPageClick(
-      final Player player, final Permission item, final ClickType click) {
+      final Player player,
+      final Permission item,
+      final ClickType click) {
+    Players.find(target).ifPresent((target -> {
+      setPermission(target, item.permission(), !target.hasPermission(item.permission()));
+    }));
+  }
+
+  private void setPermission(
+      final Player player,
+      final String permission,
+      final boolean boo) {
+    final PermissionAttachment attachment = new PermissionAttachment(
+        SimplePlugin.getInstance(), player);
+    attachment.setPermission(permission, boo);
   }
 }

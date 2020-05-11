@@ -98,9 +98,12 @@ public abstract class AbstractPunishCommand
       returnTell(INVALID_SILENCE_USAGE);
     }
 
+
     final List<String> finalArgs = new ArrayList<>(Arrays.asList(args));
     // Args without params
-    finalArgs.removeAll(Arrays.asList("-S", "-s", "-silent", "-super-slient"));
+    finalArgs.removeAll(Arrays.asList("-S", "-s", "-ss", "-SS", "-sS", "-Ss", "-silent",
+        "-super"
+            + "-slient"));
 
     final int size = Math.min(finalArgs.size(), 3);
 

@@ -50,7 +50,7 @@ public abstract class AbstractSimplePunishControlCommand extends SimpleCommand {
 
   protected boolean checkSilent() {
     for (final String arg : args) {
-      if (arg.equals("-s") || arg.equals("-silent")) {
+      if (arg.equalsIgnoreCase("-s") || arg.equalsIgnoreCase("-silent")) {
         return true;
       }
     }
@@ -60,13 +60,12 @@ public abstract class AbstractSimplePunishControlCommand extends SimpleCommand {
   protected boolean checkSuperSilent() {
     for (final String arg : args) {
       // TODO Rework
-      if (arg.equals("-S") || arg.equals("-Super-Silent")) {
+      if (arg.equalsIgnoreCase("-ss") || arg.equalsIgnoreCase("-Super-Silent")) {
         return true;
       }
     }
     return false;
   }
-
 
   protected UUID findTarget() {
     return findTarget(Arrays.asList(args));

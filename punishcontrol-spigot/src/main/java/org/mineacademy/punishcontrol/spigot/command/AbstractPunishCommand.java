@@ -8,7 +8,6 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.val;
 import org.mineacademy.fo.Common;
-import org.mineacademy.fo.Players;
 import org.mineacademy.fo.collection.StrictList;
 import org.mineacademy.fo.debug.LagCatcher;
 import org.mineacademy.fo.model.Replacer;
@@ -22,6 +21,7 @@ import org.mineacademy.punishcontrol.core.punish.PunishType;
 import org.mineacademy.punishcontrol.core.punish.Punishes;
 import org.mineacademy.punishcontrol.core.punish.template.PunishTemplates;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
+import org.mineacademy.punishcontrol.spigot.Players;
 import org.mineacademy.punishcontrol.spigot.Scheduler;
 import org.mineacademy.punishcontrol.spigot.menus.punish.PunishCreatorMenu;
 
@@ -101,7 +101,9 @@ public abstract class AbstractPunishCommand
 
     final List<String> finalArgs = new ArrayList<>(Arrays.asList(args));
     // Args without params
-    finalArgs.removeAll(Arrays.asList("-S", "-s", "-silent", "-super-slient"));
+    finalArgs.removeAll(Arrays.asList("-S", "-s", "-ss", "-SS", "-sS", "-Ss", "-silent",
+        "-super"
+            + "-slient"));
 
     final int size = Math.min(finalArgs.size(), 3);
 
@@ -180,8 +182,7 @@ public abstract class AbstractPunishCommand
         break;
       case 3:
 
-        final PunishDuration punishDuration = PunishDuration
-            .of(finalArgs.get(1));
+        final PunishDuration punishDuration = PunishDuration.of(finalArgs.get(1));
 
         //PunishDuration mustn't be empty: If its empty the given string had the wrong format
         checkBoolean(!punishDuration.isEmpty(),

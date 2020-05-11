@@ -27,7 +27,9 @@ public final class Mute extends Punish {
   // ----------------------------------------------------------------------------------------------------
 
   public static Mute of(
-      @NonNull final String creator, @NonNull final String target, final long ms) {
+      @NonNull final String creator,
+      @NonNull final String target,
+      final long ms) {
     return Mute.of(UUID.fromString(creator), UUID.fromString(target), ms);
   }
 

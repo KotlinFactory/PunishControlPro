@@ -14,7 +14,7 @@ public final class MainCommand extends SimpleCommand {
     super(labels);
     setDescription("Main-Command of PunishControlPro");
     setPermission("punishcontrol.command.main");
-
+    setUsage("[?]");
   }
 
   public static MainCommand create(@NonNull final StrictList<String> labels) {

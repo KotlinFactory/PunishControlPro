@@ -25,6 +25,7 @@ public final class SearchCommand
     this.storageProvider = storageProvider;
     setPermission("punishcontrol.command.search");
     setDescription("Search for players or ips");
+    setUsage("[?]");
   }
 
   @Override

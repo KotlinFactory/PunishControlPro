@@ -16,6 +16,7 @@ public final class MuteCommand extends AbstractPunishCommand {
     super(storageProvider, playerProvider, PunishType.MUTE, "mute");
     setDescription("Mute a player");
     setPermission("punishcontrol.command.mute");
+    setUsage("[-s|-ss] [player] [duration] [reason]");
 
   }
 }

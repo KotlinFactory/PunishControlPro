@@ -24,6 +24,7 @@ public final class SearchCommand
     super(playerProvider, "search");
     this.storageProvider = storageProvider;
     setPermission("punishcontrol.command.search");
+    setUsage("[?]");
   }
 
   @Override
