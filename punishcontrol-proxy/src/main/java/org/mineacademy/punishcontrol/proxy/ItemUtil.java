@@ -33,7 +33,7 @@ public class ItemUtil {
     }
 
     throw new IllegalStateException(
-        "Invalid punishtype: '" + punishType.getClass().getSimpleName() + "'"
+        "Invalid punish type: '" + punishType.getClass().getSimpleName() + "'"
     );
   }
 

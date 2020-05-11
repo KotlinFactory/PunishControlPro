@@ -54,10 +54,10 @@ public abstract class AbstractPunishCommand
         " ",
         "&2[] &7= Optional arguments (use only 1 at once)",
         "&6<> &7= Required arguments",
-        "&7/" + getLabel() + " &8* &7See a list of players",
-        "&7/" + getLabel() + " &6<player> &8* &7View options for player",
+        "&7/" + getLabel() + " &8* &7See a list of all players",
+        "&7/" + getLabel() + " &6<player> &8* &7View options for a player",
         "&7/" + getLabel() + " &2[-s] [-S] &6<player> <duration> <reason>",
-        "&7/" + getLabel() + " &2[-s] [-S] &6<player> &6<punish-template>",
+        "&7/" + getLabel() + " &2[-s] [-S] &6<player> &6<template>",
         " ",
     };
   }
@@ -146,7 +146,7 @@ public abstract class AbstractPunishCommand
 
         checkBoolean(
             template.punishType() == punishType,
-            "&cThis punish-template can't be applied to a &6" + punishType
+            "&cThis template can't be applied to a &6" + punishType
                 .localized()
         );
 
@@ -213,8 +213,6 @@ public abstract class AbstractPunishCommand
             reason.append(finalArgs.get(i)).append(" ");
           }
 
-          System.out.println("HEY");
-
           final Punish punish =
               PunishBuilder.of(punishType)
                   .target(target)
@@ -232,7 +230,7 @@ public abstract class AbstractPunishCommand
 
           final Replacer punishMessage =
               Replacer.of(
-                  "&7You &asuccessfully &7punished &6{target} &7for &6{duration}",
+                  "&7You have &asuccessfully &7punished &6{target} &7for &6{duration}",
                   "&6Reason: &6{reason}");
 
           punishMessage.replaceAll(

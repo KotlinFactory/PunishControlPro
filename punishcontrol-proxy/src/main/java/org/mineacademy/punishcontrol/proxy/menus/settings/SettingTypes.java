@@ -28,7 +28,7 @@ public enum SettingTypes {
           "&7to apply punishes",
           "&7or view",
           "&7which permissions",
-          "&7a player has");
+          "&7the player has");
     }
 
     @Override
@@ -86,7 +86,7 @@ public enum SettingTypes {
           .name("&6Punish-Templates")
           .lore(
               "&7View and add",
-              "&7Punish-Templates");
+              "&7Punish templates");
     }
 
     @Override

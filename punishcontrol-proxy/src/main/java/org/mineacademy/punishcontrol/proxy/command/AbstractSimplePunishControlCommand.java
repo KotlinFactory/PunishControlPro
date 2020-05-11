@@ -21,7 +21,7 @@ public abstract class AbstractSimplePunishControlCommand extends SimpleCommand {
           "You need to provide more information to run this command from console",
           "Please provide 3 arguments",
           "Usage: " + getLabel() + " [duration] [reason]",
-          "Or: " + getLabel() + " <punish-template>"
+          "Or: " + getLabel() + " <template>"
       };
 
   protected final PlayerProvider playerProvider;
@@ -85,7 +85,7 @@ public abstract class AbstractSimplePunishControlCommand extends SimpleCommand {
       try {
         return UUID.fromString(name);
       } catch (final Throwable throwable) {
-        returnTell("UUID-String is invalidly formatted!");
+        returnTell("UUID-String is malformatted!");
       }
     }
 

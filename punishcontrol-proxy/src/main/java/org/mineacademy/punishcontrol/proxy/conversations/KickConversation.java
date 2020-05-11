@@ -70,7 +70,7 @@ public final class KickConversation extends SimpleConversation implements Schedu
 
     @Override
     public String getPrompt() {
-      return "&7Type in the reason to kick &6" + targetName;
+      return "&7Type the reason to kick &6" + targetName;
     }
 
     @Override

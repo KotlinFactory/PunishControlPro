@@ -12,7 +12,7 @@ public final class MainCommand extends SimpleCommand {
 
   private MainCommand(@NonNull final StrictList<String> labels) {
     super(labels);
-    setDescription("Main-Command of PunishControlPro");
+    setDescription("Main command of PunishControlPro");
     setPermission("punishcontrol.command.main");
     setUsage("[?]");
     setAutoHandleHelp(false);

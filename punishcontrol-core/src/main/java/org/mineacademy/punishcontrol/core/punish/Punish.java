@@ -187,13 +187,13 @@ public abstract class Punish {
       EXCEPTION_HANDLER.saveError(
           throwable,
           "org.mineacademy.core.Punish.create()",
-          "Failed to create punish!",
+          "Failed to create a punishment!",
           "Data: " + toString());
 
       // Sending messages
 
       PLAYER_PROVIDER.sendIfOnline(
-          creator, "&cException while creating Punish!",
+          creator, "&cException while creating a punishment!",
           "&7Please check your console.");
 
       if (punishType().shouldWarn()) {

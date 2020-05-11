@@ -100,7 +100,7 @@ public final class StorageSettingsMenu
         set(
             Item
                 .of(ItemType.COMMAND_BLOCK)
-                .name("&6Storage-Type")
+                .name("&6Storage Type")
                 .lore(
                     "",
                     "&7Click to use",
@@ -113,7 +113,7 @@ public final class StorageSettingsMenu
         set(
             Item
                 .of(ItemType.COMMAND_BLOCK)
-                .name("&6Storage-Type")
+                .name("&6Storage Type")
                 .lore(
                     "",
                     "&7Click to use",

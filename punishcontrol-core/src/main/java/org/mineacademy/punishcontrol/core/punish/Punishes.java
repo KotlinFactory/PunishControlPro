@@ -86,7 +86,7 @@ public class Punishes {
     }
 
     throw new LightningValidationException(
-        "Exception while fetching ban-message",
+        "Exception while fetching the ban message",
         "Have you altered the data?");
   }
 

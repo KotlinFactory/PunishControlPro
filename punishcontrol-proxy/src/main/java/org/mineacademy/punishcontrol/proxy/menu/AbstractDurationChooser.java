@@ -75,8 +75,8 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
             .of(Time.YEAR.hash())
             .name("&6" + Time.YEAR.localized())
             .lore(
-                "&7Left-Click to add",
-                "&7Right-Click to remove")
+                "&7Left click to add",
+                "&7Right click to remove")
             .slot(YEAR_SLOT)
             .actionHandler("Year")
     );
@@ -86,8 +86,8 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
             .of(Time.MONTH.hash())
             .name("&6" + Time.MONTH.localized())
             .lore(
-                "&7Left-Click to add",
-                "&7Right-Click to remove")
+                "&7Left click to add",
+                "&7Right click to remove")
             .slot(MONTH_SLOT)
             .actionHandler("Month")
     );
@@ -97,8 +97,8 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
             .of(Time.DAY.hash())
             .name("&6" + Time.DAY.localized())
             .lore(
-                "&7Left-Click to add",
-                "&7Right-Click to remove")
+                "&7Left click to add",
+                "&7Right click to remove")
             .slot(DAY_SLOT)
             .actionHandler("Day")
     );
@@ -108,8 +108,8 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
             .of(Time.HOUR.hash())
             .name("&6" + Time.HOUR.localized())
             .lore(
-                "&7Left-Click to add",
-                "&7Right-Click to remove")
+                "&7Left click to add",
+                "&7Right click to remove")
             .slot(HOUR_SLOT)
             .actionHandler("Hour")
     );

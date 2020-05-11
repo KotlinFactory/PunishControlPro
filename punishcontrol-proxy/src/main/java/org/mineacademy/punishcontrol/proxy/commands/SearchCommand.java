@@ -101,7 +101,7 @@ public final class SearchCommand
           //paritial name
         } else {
           tell("&7" + Common.chatLineSmooth());
-          tell("&7Similar-Names");
+          tell("&7Similar names");
           for (final SearchResult result : playerProvider.search(data)) {
             SimpleComponent
                 .of("&7[&8" + Math.round(result.similarity() * 100.0) / 100.0 + "&7]")
@@ -131,9 +131,9 @@ public final class SearchCommand
         "&7/" + getLabel() + " player <partial-name> &8* &7search for an "
             + "player by its partial name",
         "&7" + getLabel() + " player <ip> &8*&7 search for players by ip",
-        "&7/" + getLabel() + " ip <player>  &8*&7 get ip of player",
-        "&7/" + getLabel() + " uuid <uuid>  &8*&7 get uuid of an player by its name",
-        "&7/" + getLabel() + " name <player>  &8*&7 get name of an player by its uuid",
+        "&7/" + getLabel() + " ip <player>  &8*&7 get a player's IP",
+        "&7/" + getLabel() + " uuid <uuid>  &8*&7 get a player's UUID",
+        "&7/" + getLabel() + " name <player>  &8*&7 get a player's name from UUID",
         Common.chatLineSmooth()
     };
   }

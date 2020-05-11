@@ -46,7 +46,7 @@ public final class TemplateReasonConversation extends SimpleConversation {
 
     @Override
     public String getPrompt() {
-      return "&7Type in a reason.";
+      return "&7Type a reason.";
     }
 
     @Override

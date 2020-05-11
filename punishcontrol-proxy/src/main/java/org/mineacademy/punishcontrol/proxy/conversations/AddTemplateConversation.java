@@ -34,7 +34,7 @@ public final class AddTemplateConversation extends SimpleConversation {
 
     @Override
     public String getPrompt() {
-      return "&8Please select an name for the punish-template";
+      return "&8Please select a name for the punish template";
     }
 
     @Override

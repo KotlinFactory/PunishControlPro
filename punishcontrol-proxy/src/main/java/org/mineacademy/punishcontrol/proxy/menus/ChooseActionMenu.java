@@ -216,7 +216,7 @@ public final class ChooseActionMenu extends AbstractMenu implements Listener {
 
   @Override
   protected String[] getInfo() {
-    return new String[]{"&7Menu to select an", "&7Action for players"};
+    return new String[]{"&7Menu to select ", "&7Action for players"};
   }
 
 }

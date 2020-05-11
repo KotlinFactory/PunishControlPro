@@ -62,9 +62,10 @@ public class Permissions {
     final List<String> out = new ArrayList<>(Arrays.asList(
         "# " + PLUGIN_DATA_PROVIDER.getNamed() + " v." + PLUGIN_DATA_PROVIDER
             .getVersion(),
-        "# All Permissions are listed in this file ",
-        "# You can also view them using our menu-system",
-        "# Change them via the settings.yml not using this file",
+        "# This file lists all permissions we use.",
+        "# You can also view them using our menu system.",
+        "# ",
+        "# Do not change them! Please use the settings.yml instead.", 
         ""
     ));
 

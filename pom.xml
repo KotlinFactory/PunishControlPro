@@ -17,17 +17,12 @@
     <plugin.name>punishcontrol-pro</plugin.name>
 
     <!-- Our main-classes-->
-    <proxy.main>
-      org.mineacademy.punishcontrol.proxy.PunishControl
-    </proxy.main>
-    <spigot.main>
-      PunishControl
-    </spigot.main>
+    <proxy.main>org.mineacademy.punishcontrol.proxy.PunishControl</proxy.main>
+    <spigot.main>PunishControl</spigot.main>
     <mainClass>${project.groupId}.${plugin.name}.${project.artifactId}</mainClass>
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven.compiler.source>1.8</maven.compiler.source>
   </properties>
-
 
   <groupId>org.mineacademy</groupId>
   <artifactId>PunishControlPro</artifactId>
@@ -39,6 +34,5 @@
     <module>punishcontrol-proxy</module>
     <module>punishcontrol-plugin</module>
   </modules>
-
 
 </project>

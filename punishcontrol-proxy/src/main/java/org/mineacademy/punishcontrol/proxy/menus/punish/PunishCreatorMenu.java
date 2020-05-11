@@ -157,7 +157,7 @@ public final class PunishCreatorMenu extends AbstractMenu {
                 .of(ItemUtil.forPunishType(punishBuilder().punishType()))
                 .name("&6Choose action")
                 .lore(
-                    "&7Create an punish",
+                    "&7Create a punish",
                     "&7from an existing",
                     "&7template",
                     "&7Current: &6" + punishTemplate.name())
@@ -170,7 +170,7 @@ public final class PunishCreatorMenu extends AbstractMenu {
                 .of(ItemUtil.forPunishType(punishBuilder().punishType()))
                 .name("&6Choose action")
                 .lore(
-                    "&7Create an punish",
+                    "&7Create a punish",
                     "&7from an existing",
                     "&7template")
                 .slot(CHOOSE_TEMPLATE_SLOT)
@@ -270,7 +270,7 @@ public final class PunishCreatorMenu extends AbstractMenu {
         set(
             Item
                 .of(ItemType.GREEN_STAINED_GLASS_PANE)
-                .name("&6Super-Silent")
+                .name("&6Super Silent")
                 .lore(
                     "",
                     "&7Click to make",
@@ -284,7 +284,7 @@ public final class PunishCreatorMenu extends AbstractMenu {
         set(
             Item
                 .of(ItemType.RED_STAINED_GLASS_PANE)
-                .name("&6Make Super-Silent")
+                .name("&6Make Super Silent")
                 .lore(
                     "",
                     "&7Click to make",

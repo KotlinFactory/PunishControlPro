@@ -49,7 +49,7 @@ public final class PunishReasonConversation extends SimpleConversation {
 
     @Override
     public String getPrompt() {
-      return "&7Please choose a punish-reason";
+      return "&7Please choose a punish reason";
     }
 
     @Override
