@@ -43,14 +43,14 @@ public final class MainMenu extends ChangingMenu {
   public MainMenu(final TextureProvider textureProvider) {
     super(null,
         Collections.singletonList(
-        ChangingButton
-            .fromCustomHashes(
-                textureProvider.listTextures())
-            .name("&6Players")
-            .slot(24)
-            .lore("&7View players", "&7to select", "&7one for more",
-                "&7actions")
-    ));
+            ChangingButton
+                .fromCustomHashes(
+                    textureProvider.listTextures())
+                .name("&6Players")
+                .slot(24)
+                .lore("&7View players", "&7to select", "&7one for more",
+                    "&7actions")
+        ));
 
     setSize(9 * 5);
     setTitle("§3Punish§bControl");
@@ -149,7 +149,9 @@ public final class MainMenu extends ChangingMenu {
   }
 
   @Override
-  protected void onMenuClick(final Player player, final int slot,
+  protected void onMenuClick(
+      final Player player,
+      final int slot,
       final ItemStack clicked) {
 
     if (slot != PLAYER_BROWSER_SLOT) {

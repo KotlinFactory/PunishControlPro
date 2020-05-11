@@ -104,7 +104,7 @@ public interface PunishControlPluginBootstrap {
     // Startup
     try {
       downloadDependencies();
-      log("Dependencies §l§adone");
+      log("Dependencies §l§aOK");
     } catch (final Throwable throwable) {
       log("Dependencies §l§cfailed");
       saveError(throwable);
@@ -112,7 +112,7 @@ public interface PunishControlPluginBootstrap {
 
     try {
       registerProviders();
-      log("Providers §l§adone");
+      log("Providers §l§aOK");
     } catch (final Throwable throwable) {
       log("Providers §l§cfailed");
       saveError(throwable);
@@ -121,7 +121,7 @@ public interface PunishControlPluginBootstrap {
     //Settings! Must be loaded after providers
     try {
       registerCommands();
-      log("Commands §l§adone");
+      log("Commands §l§aOK");
     } catch (final Throwable throwable) {
       log("Commands §l§cfailed");
       saveError(throwable);
@@ -147,7 +147,7 @@ public interface PunishControlPluginBootstrap {
         Permissions.registerAll(permissions());
       }
       Permissions.addFromClass(PunishControlPermissions.class);
-      log("Permissions §l§adone");
+      log("Permissions §l§aOK");
     } catch (final Throwable throwable) {
       log("Permissions §l§cfailed");
       saveError(throwable);
@@ -155,18 +155,18 @@ public interface PunishControlPluginBootstrap {
 
     try {
       loadGroups();
-      log("Groups §l§aok");
+      log("Groups... §l§aOK");
     } catch (final Throwable throwable) {
-      log("Groups §l§cfailed");
+      log("Groups... §l§cfailed");
       saveError(throwable);
     }
 
     try {
       PunishTemplates
           .load(new File(getWorkingDirectory() + "/templates"));
-      log("Templates §l§a✔ ");
+      log("Templates... §l§aOK");
     } catch (final Throwable throwable) {
-      log("Templates §l§c✘");
+      log("Templates... §l§cfailed");
       saveError(throwable);
     }
 

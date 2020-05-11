@@ -48,7 +48,7 @@ public final class PunishCreatorMenu extends AbstractMenu {
 
   private PunishBuilder punishBuilder;
   private PunishTemplate punishTemplate;
-  private final PunishType punishType = PunishType.BAN;
+  private static final PunishType DEFAULT_PUNISH_TYPE = PunishType.BAN;
 
   public static void showTo(@NonNull final ProxiedPlayer player) {
     DaggerProxyComponent.create().punishCreatorMenu().displayTo(player);
@@ -499,7 +499,7 @@ public final class PunishCreatorMenu extends AbstractMenu {
       return punishBuilder;
     }
 
-    return punishBuilder = PunishBuilder.of(punishType);
+    return punishBuilder = PunishBuilder.of(DEFAULT_PUNISH_TYPE);
   }
 
   public void setReason(final String reason) {
