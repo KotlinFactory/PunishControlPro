@@ -1,5 +1,5 @@
 #Change me to use the maven properties
 main: org.mineacademy.punishcontrol.proxy.PunishControl
 version: ${project.version}
-name: PunishControlPro
+name: PunishControl
 author: ${author}
