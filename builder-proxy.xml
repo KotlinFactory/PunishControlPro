@@ -17,8 +17,8 @@
       basedir="punishcontrol-core/target/classes/"
       includes="**/*">
       <zipgroupfileset
-        dir="${user.home}/.m2/repository/com/github/JavaFactoryDev/LightningStorage/3.1.1"
-        includes="**/*lightningstorage-3.1.1.jar"/>
+        dir="${user.home}/.m2/repository/com/github/JavaFactoryDev/LightningStorage/3.1.2"
+        includes="**/*lightningstorage-3.1.2.jar"/>
       <!--            <zipgroupfileset dir="${user.home}/.m2/repository/org/mineacademy/Burst/1.0.7/"-->
       <!--              includes="**/*Burst-1.0.7.jar"/>-->
       <zipgroupfileset dir="${user.home}/.m2/repository/com/google/dagger/dagger/2.26"

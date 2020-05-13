@@ -54,7 +54,7 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
     targetOnline = Players.find(target).isPresent();
     setTitle("&8Settings for player");
 
-    setSize(9);
+    setSize(9*2);
     groupBrowser = new Button() {
       @Override
       public void onClickedInMenu(

@@ -5,13 +5,17 @@ import de.exceptionflug.mccommons.inventories.api.ClickType;
 import de.exceptionflug.protocolize.items.ItemType;
 import java.util.concurrent.TimeUnit;
 import lombok.NonNull;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.mineacademy.burst.item.Item;
 import org.mineacademy.burst.menu.AbstractMenu;
 import org.mineacademy.burst.menu.BurstMenu;
 import org.mineacademy.punishcontrol.core.settings.Localization.Time;
 import org.mineacademy.punishcontrol.core.settings.Settings;
 import org.mineacademy.punishcontrol.core.util.TimeUtil;
+import org.mineacademy.punishcontrol.proxy.conversations.DurationChooseConversation;
 
+@Accessors(fluent = true)
 public abstract class AbstractDurationChooser extends AbstractMenu {
 
 
@@ -23,6 +27,7 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
   public static final int HOUR_SLOT = 9 * 4;
   public static final int CLOCK_SLOT = 26;
   public static final int APPLY_SLOT = 22;
+  @Setter
   protected long ms;
 
   public AbstractDurationChooser(@NonNull final BurstMenu parent) {
@@ -51,11 +56,11 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
     super.updateInventory();
     set(
         Item
-          .of(ItemType.EMERALD_BLOCK)
-          .name("&aApply")
-          .lore("")
-          .slot(APPLY_SLOT)
-          .actionHandler("Apply")
+            .of(ItemType.EMERALD_BLOCK)
+            .name("&aApply")
+            .lore("")
+            .slot(APPLY_SLOT)
+            .actionHandler("Apply")
     );
 
     set(
@@ -126,6 +131,12 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
 
   @Override
   public void registerActionHandlers() {
+
+    registerActionHandler("Clock", (clock -> {
+      DurationChooseConversation.create(getPlayer(), this).start();
+      return CallResult.DENY_GRABBING;
+    }));
+
     registerActionHandler("Apply", (apply -> {
       confirm();
       getParent().reDisplay();
@@ -183,7 +194,6 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
     if (ms < 0 && !isPermanent()) {
       ms = 0;
     }
-    ms = 0;
   }
 
   private void updateClock() {

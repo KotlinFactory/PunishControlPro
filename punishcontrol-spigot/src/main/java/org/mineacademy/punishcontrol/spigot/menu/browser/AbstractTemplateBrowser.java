@@ -19,6 +19,7 @@ public abstract class AbstractTemplateBrowser
 
   protected AbstractTemplateBrowser(final Menu parent) {
     super(parent, PunishTemplates.list());
+    setTitle("&8Choose template");
   }
 
   @Override

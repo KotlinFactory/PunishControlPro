@@ -14,7 +14,6 @@ public final class MainCommand extends SimpleCommand {
     super(labels);
     setDescription("Main-Command of PunishControlPro");
     setPermission("punishcontrol.command.main");
-    setUsage("[?]");
   }
 
   public static MainCommand create(@NonNull final StrictList<String> labels) {
@@ -40,6 +39,8 @@ public final class MainCommand extends SimpleCommand {
 
     MainMenu.showTo(getPlayer());
   }
+
+
 
   private void doHelp() {
     tell("&8" + Common.chatLineSmooth());

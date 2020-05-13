@@ -14,7 +14,6 @@ import lombok.NonNull;
 import lombok.SneakyThrows;
 import lombok.val;
 import org.jetbrains.annotations.Nullable;
-import org.mineacademy.punishcontrol.core.fo.constants.FoConstants;
 import org.mineacademy.punishcontrol.core.fo.constants.FoConstants.Header;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.PluginDataProvider;
@@ -49,7 +48,7 @@ public abstract class YamlStaticConfig {
 
   public static void set(final String path, final Object value) {
     temporaryInstance().set(path, value);
-    temporaryInstance().setHeader(FoConstants.Header.UPDATED_FILE);
+//    temporaryInstance().setHeader(FoConstants.Header.UPDATED_FILE);
   }
 
   // ----------------------------------------------------------------------------------------------------

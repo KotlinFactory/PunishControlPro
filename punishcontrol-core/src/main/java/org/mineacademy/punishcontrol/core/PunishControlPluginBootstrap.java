@@ -104,26 +104,26 @@ public interface PunishControlPluginBootstrap {
     // Startup
     try {
       downloadDependencies();
-      log("Dependencies §l§aOK");
+      log("Dependencies... §l§aOK");
     } catch (final Throwable throwable) {
-      log("Dependencies §l§cfailed");
+      log("Dependencies... §l§cfailed");
       saveError(throwable);
     }
 
     try {
       registerProviders();
-      log("Providers §l§aOK");
+      log("Providers... §l§aOK");
     } catch (final Throwable throwable) {
-      log("Providers §l§cfailed");
+      log("Providers... §l§cfailed");
       saveError(throwable);
     }
 
     //Settings! Must be loaded after providers
     try {
       registerCommands();
-      log("Commands §l§aOK");
+      log("Commands... §l§aOK");
     } catch (final Throwable throwable) {
-      log("Commands §l§cfailed");
+      log("Commands... §l§cfailed");
       saveError(throwable);
     }
 
@@ -135,9 +135,9 @@ public interface PunishControlPluginBootstrap {
       registerEvents(coreModule.muteIpListener());
       //Spigot-Listeners
       registerListener();
-      log("Listener §l§aok");
+      log("Listener... §l§aok");
     } catch (final Throwable throwable) {
-      log("Commands §l§cdone");
+      log("Listener... §l§cdone");
       saveError(throwable);
     }
 
@@ -147,9 +147,9 @@ public interface PunishControlPluginBootstrap {
         Permissions.registerAll(permissions());
       }
       Permissions.addFromClass(PunishControlPermissions.class);
-      log("Permissions §l§aOK");
+      log("Permissions... §l§aOK");
     } catch (final Throwable throwable) {
-      log("Permissions §l§cfailed");
+      log("Permissions... §l§cfailed");
       saveError(throwable);
     }
 

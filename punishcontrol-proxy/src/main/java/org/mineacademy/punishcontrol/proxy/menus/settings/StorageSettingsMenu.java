@@ -28,6 +28,13 @@ public final class StorageSettingsMenu
       Providers.storageProvider() instanceof MySQLStorageProvider
           ? (MySQLStorageProvider) Providers.storageProvider()
           : new MySQLStorageProvider(Providers.exceptionHandler());
+  public static final int CONNECT_SLOT = 12;
+  public static final int USE_SLOT = 14;
+  public static final int HOST_SLOT = 2;
+  public static final int PORT_SLOT = 3;
+  public static final int DATABASE_SLOT = 4;
+  public static final int USER_SLOT = 5;
+  public static final int PASSWORD_SLOT = 6;
 
   private boolean isConnecting;
 
@@ -59,7 +66,7 @@ public final class StorageSettingsMenu
               Item
                   .of(ItemType.EMERALD_BLOCK)
                   .name("&7Connecting...")
-                  .slot(12)
+                  .slot(CONNECT_SLOT)
                   .actionHandler("noAction")
           );
         } else if (mySQLStorageProvider.isConnected()) {
@@ -72,7 +79,7 @@ public final class StorageSettingsMenu
                       "&7to MySQL using",
                       "&7these settings",
                       "&7Current state: &aSucceeded")
-                  .slot(12)
+                  .slot(CONNECT_SLOT)
                   .actionHandler("Connect")
           );
 
@@ -86,7 +93,7 @@ public final class StorageSettingsMenu
                       "&7to MySQL using",
                       "&7these settings",
                       "&7Current state: &cNot connected")
-                  .slot(12)
+                  .slot(CONNECT_SLOT)
                   .actionHandler("Connect")
           );
         }
@@ -106,7 +113,7 @@ public final class StorageSettingsMenu
                     "&7Click to use",
                     "&7MySQL as storage"
                 )
-                .slot(14)
+                .slot(USE_SLOT)
                 .actionHandler("Use")
         );
       } else {
@@ -119,7 +126,7 @@ public final class StorageSettingsMenu
                     "&7Click to use",
                     "&7JSON as storage"
                 )
-                .slot(14)
+                .slot(USE_SLOT)
                 .actionHandler("Use")
         );
       }
@@ -137,7 +144,7 @@ public final class StorageSettingsMenu
                   "&7set the host",
                   "&7Currently: " + (MySQL.HOST.isEmpty() ? "&cNot set" : MySQL.HOST))
               .actionHandler("Host")
-              .slot(2)
+              .slot(HOST_SLOT)
       );
     }
 
@@ -153,7 +160,7 @@ public final class StorageSettingsMenu
                   "&7set the port",
                   "&7Currently: " + MySQL.PORT)
               .actionHandler("Port")
-              .slot(3)
+              .slot(PORT_SLOT)
       );
     }
 
@@ -170,7 +177,7 @@ public final class StorageSettingsMenu
                   "&7Currently: " + (MySQL.DATABASE.isEmpty() ? "&cNot set"
                       : MySQL.DATABASE))
               .actionHandler("Database")
-              .slot(4)
+              .slot(DATABASE_SLOT)
       );
     }
 
@@ -186,7 +193,7 @@ public final class StorageSettingsMenu
                   "&7set the user",
                   "&7Currently: " + (MySQL.USER.isEmpty() ? "&cNot set" : MySQL.USER))
               .actionHandler("User")
-              .slot(5)
+              .slot(USER_SLOT)
       );
     }
 
@@ -204,7 +211,7 @@ public final class StorageSettingsMenu
                       ? "&cnot set" :
                       "****"))
               .actionHandler("Password")
-              .slot(6)
+              .slot(PASSWORD_SLOT)
       );
     }
   }

@@ -57,11 +57,9 @@ Punishes:
     Allowed_Commands:
       - /msg
       - /r
-    Permission: punishcontrol.command.mute
     Enabled: true
     Apply_On_Ip: false
   Warn:
-    Permission: punishcontrol.command.warn
     Enabled: true
     # Types: ACTION_BAR, TITLE, CHAT
     Message_Type: TITLE

@@ -11,9 +11,13 @@ import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.fo.menu.button.Button;
 import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.fo.remain.CompMaterial;
+import org.mineacademy.punishcontrol.core.PunishControlManager;
+import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.settings.Settings.MySQL;
 import org.mineacademy.punishcontrol.core.storage.MySQLStorageProvider;
+import org.mineacademy.punishcontrol.core.storage.StorageType;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
+import org.mineacademy.punishcontrol.spigot.Scheduler;
 import org.mineacademy.punishcontrol.spigot.conversations.MySQLStorageConversation;
 import org.mineacademy.punishcontrol.spigot.menus.browsers.SettingsBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.setting.AbstractSettingsMenu;
@@ -23,20 +27,78 @@ public final class StorageSettingsMenu
     extends AbstractSettingsMenu
     implements Schedulable {
 
-  private final MySQLStorageProvider mySQLStorageProvider;
+  public static final int CONNECT_SLOT = 12;
+  public static final int USE_SLOT = 14;
+  public static final int HOST_SLOT = 2;
+  public static final int PORT_SLOT = 3;
+  public static final int DATABASE_SLOT = 4;
+  public static final int USER_SLOT = 5;
+  public static final int PASSWORD_SLOT = 6;
+
+  private static final MySQLStorageProvider mySQLStorageProvider =
+      Providers.storageProvider() instanceof MySQLStorageProvider
+          ? (MySQLStorageProvider) Providers.storageProvider()
+          : new MySQLStorageProvider(Providers.exceptionHandler());
+
   private final Button connect;
   private final Button host;
   private final Button port;
   private final Button database;
   private final Button user;
   private final Button password;
+  private final Button useButton;
+
+
+  private boolean isConnecting;
+
 
   @Inject
-  public StorageSettingsMenu(
-      @NonNull final MySQLStorageProvider mySQLStorageProvider,
-      @NonNull final SettingsBrowser settingsBrowser) {
+  public StorageSettingsMenu(@NonNull final SettingsBrowser settingsBrowser) {
     super(settingsBrowser);
-    this.mySQLStorageProvider = mySQLStorageProvider;
+
+    setSize(9*2);
+    useButton = new Button() {
+      @Override
+      public void onClickedInMenu(
+          final Player player,
+          final Menu menu,
+          final ClickType click) {
+
+      }
+
+      @Override
+      public ItemStack getItem() {
+        if (PunishControlManager.storageType() == StorageType.JSON) {
+          return
+              ItemCreator
+                  .of(CompMaterial.COMMAND_BLOCK)
+                  .name("&6Storage Type")
+                  .lores(
+                      Arrays.asList(
+                          "",
+                          "&7Click to use",
+                          "&7MySQL as storage"
+                      )
+                  )
+                  .build()
+                  .makeMenuTool();
+        } else {
+          return ItemCreator
+              .of(CompMaterial.COMMAND_BLOCK)
+              .name("&6Storage Type")
+              .lores(
+                  Arrays.asList(
+                      "",
+                      "&7Click to use",
+                      "&7JSON as storage"
+                  )
+              )
+              .build()
+              .makeMenuTool();
+        }
+      }
+    };
+
     connect = new Button() {
       @Override
       public void onClickedInMenu(
@@ -44,9 +106,33 @@ public final class StorageSettingsMenu
           final Menu menu,
           final ClickType click) {
 
-
         try {
-          mySQLStorageProvider.connect();
+          if (isConnecting) {
+            animateTitle("&cAlready connecting");
+            return;
+          }
+
+          if (mySQLStorageProvider.isConnected()) {
+            animateTitle("&cAlready connected");
+            return;
+          }
+
+          isConnecting = true;
+          restartMenu();
+          async(() -> {
+            try {
+              mySQLStorageProvider.connect();
+              isConnecting = false;
+              Debugger.debug("MySQL", "Connected");
+              restartMenu();
+            } catch (final Throwable throwable) {
+              animateTitle("&cCan't connect - See console");
+              Debugger.saveError(throwable);
+            } finally {
+              isConnecting = false;
+            }
+          });
+          return;
         } catch (final Throwable throwable) {
           animateTitle("&cCan't connect - See console");
           Debugger.saveError(throwable);
@@ -55,6 +141,19 @@ public final class StorageSettingsMenu
 
       @Override
       public ItemStack getItem() {
+        if (mySQLStorageProvider.isConnected()) {
+          return ItemCreator
+              .of(CompMaterial.GREEN_STAINED_GLASS_PANE)
+              .name("&7Connect")
+              .lores(Arrays.asList(
+                  " ",
+                  "&7Try to connect ",
+                  "&7to MySQL using",
+                  "&7these settings",
+                  "&7Current state: &aSucceeded"))
+              .build()
+              .makeMenuTool();
+        }
         return ItemCreator
             .of(CompMaterial.GREEN_STAINED_GLASS_PANE)
             .name("&7Connect")
@@ -63,7 +162,7 @@ public final class StorageSettingsMenu
                 "&7Try to connect ",
                 "&7to MySQL using",
                 "&7these settings",
-                "&7Current state: &aSucceeded"))
+                "&7Current state: &cfailed"))
             .build()
             .makeMenuTool();
       }
@@ -82,13 +181,12 @@ public final class StorageSettingsMenu
       public ItemStack getItem() {
         return ItemCreator
             .of(CompMaterial.GREEN_STAINED_GLASS_PANE)
-            .name("&7Connect")
+            .name("&7Host")
             .lores(Arrays.asList(
                 " ",
-                "&7Try to connect ",
-                "&7to MySQL using",
-                "&7these settings",
-                "&7Current state: &cFailed"
+                "&7Click to",
+                "&7set the host",
+                "&7Currently: " + (MySQL.HOST.isEmpty() ? "&cNot set" : MySQL.HOST)
             ))
             .build()
             .makeMenuTool();
@@ -103,18 +201,17 @@ public final class StorageSettingsMenu
           final ClickType click) {
 
         MySQLStorageConversation.create("Port").start(player);
-
       }
 
       @Override
       public ItemStack getItem() {
         return ItemCreator
             .of(CompMaterial.YELLOW_STAINED_GLASS_PANE)
-            .name("&7Host")
+            .name("&7Port")
             .lores(Arrays.asList(
                 " ",
                 "&7Click to",
-                "&7set the host",
+                "&7set the port",
                 "&7Currently: " + (MySQL.HOST.isEmpty() ? "&cNot set" : MySQL.HOST)
             ))
             .build()
@@ -202,7 +299,42 @@ public final class StorageSettingsMenu
     };
   }
 
+  @Override
+  public ItemStack getItemAt(final int slot) {
+    if (slot == USE_SLOT) {
+      return useButton.getItem();
+    }
+
+    if (slot == CONNECT_SLOT) {
+      return connect.getItem();
+    }
+
+    if (slot == HOST_SLOT) {
+      return host.getItem();
+    }
+
+    if (slot == PORT_SLOT) {
+      return port.getItem();
+    }
+
+    if (slot == DATABASE_SLOT) {
+      return database.getItem();
+    }
+
+    if (slot == USER_SLOT) {
+      return user.getItem();
+    }
+
+    if (slot == PASSWORD_SLOT) {
+      return password.getItem();
+    }
+
+    return super.getItemAt(slot);
+  }
+
   public static void showTo(@NonNull final Player player) {
-    DaggerSpigotComponent.create().storageMenu().displayTo(player, true);
+    Scheduler.runAsync(() -> {
+      DaggerSpigotComponent.create().storageMenu().displayTo(player, true);
+    });
   }
 }

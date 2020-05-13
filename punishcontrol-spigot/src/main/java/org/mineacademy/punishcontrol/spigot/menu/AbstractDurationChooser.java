@@ -3,19 +3,25 @@ package org.mineacademy.punishcontrol.spigot.menu;
 import java.util.Arrays;
 import java.util.concurrent.TimeUnit;
 import lombok.NonNull;
+import lombok.Setter;
+import lombok.experimental.Accessors;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.inventory.ItemStack;
+import org.mineacademy.fo.PlayerUtil;
 import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.fo.menu.button.Button;
+import org.mineacademy.fo.menu.model.InventoryDrawer;
 import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.fo.remain.CompMaterial;
 import org.mineacademy.punishcontrol.core.settings.Localization.Time;
 import org.mineacademy.punishcontrol.core.settings.Settings;
 import org.mineacademy.punishcontrol.core.util.TimeUtil;
+import org.mineacademy.punishcontrol.spigot.conversations.DurationChooseConversation;
 import org.mineacademy.punishcontrol.spigot.util.Schedulable;
 
+@Accessors(fluent = true)
 public abstract class AbstractDurationChooser
     extends Menu
     implements Schedulable {
@@ -38,6 +44,7 @@ public abstract class AbstractDurationChooser
   private final Button confirm;
   private ItemStack expirationClock;
 
+  @Setter
   protected long ms;
 
 
@@ -51,7 +58,7 @@ public abstract class AbstractDurationChooser
     super(parent);
     setSize(SIZE);
     this.ms = ms;
-    setTitle(TimeUtil.formatMenuDate(ms));
+    changeTitle(TimeUtil.formatMenuDate(ms));
 
     expirationClock = ItemCreator
         .of(CompMaterial.CLOCK,
@@ -172,10 +179,6 @@ public abstract class AbstractDurationChooser
             .makeMenuTool();
       }
     };
-
-    //Initial update
-    updateClock();
-
   }
 
 
@@ -184,6 +187,12 @@ public abstract class AbstractDurationChooser
   // ----------------------------------------------------------------------------------------------------
   // Overridden methods from Menu
   // ----------------------------------------------------------------------------------------------------
+
+
+  @Override
+  protected void onDisplay(final InventoryDrawer drawer) {
+    updateClock();
+  }
 
   @Override
   public final ItemStack getItemAt(final int slot) {
@@ -224,6 +233,10 @@ public abstract class AbstractDurationChooser
       final boolean cancelled) {
     super.onMenuClick(player, slot, action, click, cursor, clicked, cancelled);
 
+    if (slot == EXPIRATION_CLOCK_SLOT) {
+      DurationChooseConversation.create(this).start(getViewer());
+    }
+
     if (slot == YEAR_SLOT) {
       addOrRemoveYear(click);
     }
@@ -261,7 +274,7 @@ public abstract class AbstractDurationChooser
     }
 
     ms = -1;
-    setTitle("&cPermanent");
+    changeTitle("&cPermanent");
     animateTitle("&7Made the punishment permanent");
     updateTitle();
   }
@@ -270,11 +283,10 @@ public abstract class AbstractDurationChooser
     if (ms < 0 && !isPermanent()) {
       ms = 0;
     }
-    ms = 0;
   }
 
 
-  private void updateClock() {
+  public void updateClock() {
     laterAsync(() -> {
       final String expiration = isPermanent()
           ? "&cnever &7- permanent"
@@ -297,9 +309,9 @@ public abstract class AbstractDurationChooser
 
   private void updateTitle() {
     if (ms == -1) {
-      setTitle("&cPermanent");
+      changeTitle("&cPermanent");
     } else {
-      setTitle(TimeUtil.formatMenuDate(ms));
+      changeTitle(TimeUtil.formatMenuDate(ms));
     }
     updateClock();
   }
@@ -308,13 +320,13 @@ public abstract class AbstractDurationChooser
     normalizeIfNeeded();
     if (clickType.isLeftClick()) {
       ms += TimeUnit.DAYS.toMillis(1) * 365;
-      setTitle(TimeUtil.formatMenuDate(ms));
-      animateTitle("&8Added 1 year");
+      changeTitle(TimeUtil.formatMenuDate(ms));
     } else {
       ms -= TimeUnit.DAYS.toMillis(1) * 365;
-      setTitle(TimeUtil.formatMenuDate(ms));
-      animateTitle("&8Removed 1 year");
+      changeTitle(TimeUtil.formatMenuDate(ms));
     }
+    System.out.println(getTitle());
+
     updateClock();
   }
 
@@ -323,12 +335,10 @@ public abstract class AbstractDurationChooser
 
     if (clickType.isLeftClick()) {
       ms += TimeUnit.DAYS.toMillis(1) * 30;
-      setTitle(TimeUtil.formatMenuDate(ms));
-      animateTitle("&8Added 1 month");
+      changeTitle(TimeUtil.formatMenuDate(ms));
     } else {
       ms -= TimeUnit.DAYS.toMillis(1) * 30;
-      setTitle(TimeUtil.formatMenuDate(ms));
-      animateTitle("&8Removed 1 month");
+      changeTitle(TimeUtil.formatMenuDate(ms));
     }
     updateClock();
   }
@@ -338,12 +348,10 @@ public abstract class AbstractDurationChooser
 
     if (clickType.isLeftClick()) {
       ms += TimeUnit.DAYS.toMillis(1);
-      setTitle(TimeUtil.formatMenuDate(ms));
-      animateTitle("&8Added 1 day");
+      PlayerUtil.updateInventoryTitle(getViewer(), getTitle());
     } else {
       ms -= TimeUnit.DAYS.toMillis(1);
-      setTitle(TimeUtil.formatMenuDate(ms));
-      animateTitle("&8Removed 1 day");
+      changeTitle(TimeUtil.formatMenuDate(ms));
     }
     updateClock();
   }
@@ -353,14 +361,19 @@ public abstract class AbstractDurationChooser
 
     if (clickType.isLeftClick()) {
       ms += TimeUnit.HOURS.toMillis(1);
-      setTitle(TimeUtil.formatMenuDate(ms));
-      animateTitle("&8Added 1 hour");
+      changeTitle(TimeUtil.formatMenuDate(ms));
+//      animateTitle("&8Added 1 hour");
     } else {
       ms -= TimeUnit.HOURS.toMillis(1);
-      setTitle(TimeUtil.formatMenuDate(ms));
-      animateTitle("&8Removed 1 hour");
+      changeTitle(TimeUtil.formatMenuDate(ms));
+//      animateTitle("&8Removed 1 hour");
     }
     updateClock();
+  }
+
+  private void changeTitle(final String title) {
+    setTitle(title);
+    PlayerUtil.updateInventoryTitle(getViewer(), title);
   }
 }
 

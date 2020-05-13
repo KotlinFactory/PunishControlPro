@@ -1,6 +1,9 @@
 package org.mineacademy.punishcontrol.proxy;
 
 import de.exceptionflug.mccommons.commands.proxy.Commands;
+import de.leonhard.storage.LightningBuilder;
+import de.leonhard.storage.internal.settings.ConfigSettings;
+import de.leonhard.storage.internal.settings.DataType;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.NonNull;
@@ -33,7 +36,6 @@ public final class PunishControl
   private final ProxyComponent proxyModule = DaggerProxyComponent.create();
   private final CoreComponent coreModule = DaggerCoreComponent.create();
 
-
   /**
    * Setting providers needed before the start
    */
@@ -44,6 +46,20 @@ public final class PunishControl
 
   @Override
   protected void onPluginStart() {
+    if (!ProxyServer.getInstance().getConfig().isOnlineMode()) {
+      // TODO: find a better way doing this!
+      final val cfg = LightningBuilder
+          .fromPath("settings.yml",
+              Providers.pluginDataProvider().getDataFolder().getAbsolutePath())
+          .addInputStreamFromResource("settings.yml")
+          .setConfigSettings(ConfigSettings.PRESERVE_COMMENTS)
+          .setDataType(DataType.SORTED)
+          .createConfig()
+          .addDefaultsFromInputStream();
+      cfg.set("Advanced.Online_Mode", false);
+      log("[PCP-Prestart] your server is in offline-mode");
+    }
+
     Burst.setPlugin(this); // Set the plugin for our library
     ProxyServer.getInstance().getConfig().isOnlineMode();
     onPunishControlPluginStart();
@@ -98,7 +114,6 @@ public final class PunishControl
   // Overridden methods from SimplePlugin
   // ----------------------------------------------------------------------------------------------------
 
-
   @Override
   public int getFoundedYear() {
     return 2019; // 31.12.2019
@@ -112,11 +127,11 @@ public final class PunishControl
   public List<Permission> permissions() {
     final val result = new ArrayList<Permission>();
     for (final SimpleCommand command : SimpleCommand.getRegisteredCommands()) {
-
       if (command.getPermission() == null) {
         continue;
       }
 
+      System.out.println("jdkd");
       result.add(Permission.of(command.getPermission(), command.getDescription()));
     }
 

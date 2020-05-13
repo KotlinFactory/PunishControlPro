@@ -148,10 +148,6 @@ public class TimeUtil {
     return seconds;
   }
 
-  public long toMS(final String humanReadableTime) {
-    return toTicks(humanReadableTime) * 50;
-  }
-
   /**
    * Formats the given time from seconds into the following format:
    *

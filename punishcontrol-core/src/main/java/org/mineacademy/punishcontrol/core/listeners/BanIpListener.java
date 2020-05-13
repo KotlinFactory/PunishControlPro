@@ -6,7 +6,7 @@ import javax.inject.Inject;
 import org.mineacademy.punishcontrol.core.events.JoinEvent;
 import org.mineacademy.punishcontrol.core.listener.Listener;
 import org.mineacademy.punishcontrol.core.punish.Punishes;
-import org.mineacademy.punishcontrol.core.punishes.Mute;
+import org.mineacademy.punishcontrol.core.punishes.Ban;
 import org.mineacademy.punishcontrol.core.settings.Settings;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 
@@ -31,8 +31,8 @@ public class BanIpListener implements Listener<JoinEvent> {
     }
 
     final InetAddress targetAddress = event.targetAddress();
-    final Optional<Mute> optionalBan = storageProvider
-        .currentMute(targetAddress);
+    final Optional<Ban> optionalBan = storageProvider
+        .currentBan(targetAddress);
 
     optionalBan.ifPresent((ban -> {
       //TODO format

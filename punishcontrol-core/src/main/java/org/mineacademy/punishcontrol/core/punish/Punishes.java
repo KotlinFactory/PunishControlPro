@@ -66,24 +66,25 @@ public class Punishes {
     switch (punish.punishType()) {
 
       case BAN:
-        return Localization.Punish.BAN_MESSAGE.replace(
+        return "\n"+ Localization.Punish.BAN_MESSAGE.replace(
             punish.reason(),
             Settings.Advanced.formatDate(punish.getEndTime()))
             .replacedMessageJoined()
             .replace("&", "§");
       case MUTE:
-        return Localization.Punish.MUTE_MESSAGE.replace(
+        return "\n"+ Localization.Punish.MUTE_MESSAGE.replace(
             punish.reason() == null ? "unknown" : punish.reason(),
             Settings.Advanced.formatDate(punish.getEndTime()))
             .replacedMessageJoined()
             .replace("&", "§");
       case WARN:
-        return Localization.Punish.WARN_MESSAGE.replace(
+        return "\n"+ Localization.Punish.WARN_MESSAGE.replace(
             punish.reason(),
             Settings.Advanced.formatDate(punish.getEndTime()))
             .replacedMessageJoined()
             .replace("&", "§");
     }
+
 
     throw new LightningValidationException(
         "Exception while fetching the ban message",

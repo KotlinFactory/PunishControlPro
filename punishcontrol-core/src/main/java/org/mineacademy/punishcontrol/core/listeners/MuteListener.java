@@ -42,8 +42,6 @@ public final class MuteListener implements Listener<ChatEvent> {
 
       //Is a allowed commands
       if (canByPass(event.message())) {
-        System.out.println("byass");
-
         return;
       }
 

@@ -1,5 +1,8 @@
 package org.mineacademy.punishcontrol.spigot;
 
+import de.leonhard.storage.LightningBuilder;
+import de.leonhard.storage.internal.settings.ConfigSettings;
+import de.leonhard.storage.internal.settings.DataType;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.NonNull;
@@ -10,7 +13,6 @@ import org.mineacademy.fo.MinecraftVersion.V;
 import org.mineacademy.fo.command.SimpleCommand;
 import org.mineacademy.fo.plugin.SimplePlugin;
 import org.mineacademy.punishcontrol.core.PunishControlPluginBootstrap;
-import org.mineacademy.punishcontrol.core.conversation.StorageSettable;
 import org.mineacademy.punishcontrol.core.permission.Permission;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.settings.Settings;
@@ -27,7 +29,7 @@ import org.spigotmc.SpigotConfig;
 
 public final class PunishControl
     extends SimplePlugin
-    implements PunishControlPluginBootstrap, StorageSettable {
+    implements PunishControlPluginBootstrap {
 
   private final SpigotComponent spigotModule = DaggerSpigotComponent.create();
 
@@ -46,8 +48,17 @@ public final class PunishControl
 
     //Auto enabling offline-mode
     if (!SpigotConfig.bungee && !Bukkit.getServer().getOnlineMode()) {
-      setToConfig("Advanced.Online_Mode", false);
-      log("[PCP-Prestart] your server is in offline-mode");
+      // TODO: find a better way doing this!
+      final val cfg = LightningBuilder
+          .fromPath("settings.yml",
+              Providers.pluginDataProvider().getDataFolder().getAbsolutePath())
+          .addInputStreamFromResource("settings.yml")
+          .setConfigSettings(ConfigSettings.PRESERVE_COMMENTS)
+          .setDataType(DataType.SORTED)
+          .createConfig()
+          .addDefaultsFromInputStream();
+      cfg.set("Advanced.Online_Mode", false);
+      log("[PCP-Prestart] your server is in offline-mode - Changed config");
     }
 
     onPunishControlPluginStart();
