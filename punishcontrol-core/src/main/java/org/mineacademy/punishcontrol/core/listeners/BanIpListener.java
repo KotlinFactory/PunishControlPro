@@ -26,7 +26,7 @@ public class BanIpListener implements Listener<JoinEvent> {
 
   @Override
   public void handleEvent(final JoinEvent event) {
-    if (!Settings.Punish.Ban.applyOnIp) {
+    if (!Settings.Punish.Ban.APPLY_ON_IP) {
       return;
     }
 

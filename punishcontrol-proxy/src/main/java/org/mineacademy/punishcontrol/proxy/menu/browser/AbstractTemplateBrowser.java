@@ -19,6 +19,7 @@ public abstract class AbstractTemplateBrowser
 
   protected AbstractTemplateBrowser(final BurstMenu parent) {
     super("TemplateBrowser", parent, PunishTemplates.list());
+    setTitle("&8Punish templates");
   }
 
   @Override

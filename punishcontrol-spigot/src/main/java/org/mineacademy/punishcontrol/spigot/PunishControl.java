@@ -12,7 +12,10 @@ import org.mineacademy.fo.Common;
 import org.mineacademy.fo.MinecraftVersion.V;
 import org.mineacademy.fo.command.SimpleCommand;
 import org.mineacademy.fo.plugin.SimplePlugin;
+import org.mineacademy.fo.remain.CompMaterial;
 import org.mineacademy.punishcontrol.core.PunishControlPluginBootstrap;
+import org.mineacademy.punishcontrol.core.notification.Notification;
+import org.mineacademy.punishcontrol.core.notification.Notifications;
 import org.mineacademy.punishcontrol.core.permission.Permission;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.settings.Settings;
@@ -39,6 +42,21 @@ public final class PunishControl
    */
   @Override
   protected void onPluginPreStart() {
+    if (!getDataFolder().exists()) {
+      Notifications.register(
+          Notification
+              .of("&6Take a tour")
+              .text(
+                  "",
+                  "&7It seems like",
+                  "&7This is the first-time",
+                  "&7you use " + SimplePlugin.getNamed(),
+                  "&7on this server. &7Documentation:",
+                  "&7github.com/kangarko/punishcontrol/wiki"
+              )
+              .itemType(CompMaterial.ENCHANTED_GOLDEN_APPLE)
+      );
+    }
     Providers.pluginDataProvider(SpigotPluginDataProvider.create());
   }
 

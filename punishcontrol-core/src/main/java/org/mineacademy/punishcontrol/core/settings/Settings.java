@@ -15,7 +15,6 @@ public final class Settings extends SimpleSettings {
   public static StorageType STORAGE_TYPE;
 
   private static void init() {
-    final Object test = getString("Test");
     STORAGE_TYPE = Enum.valueOf(StorageType.class, getString("Storage").toUpperCase());
     COMMAND_ALIASES = getStringList("Command_Aliases");
   }
@@ -49,11 +48,14 @@ public final class Settings extends SimpleSettings {
 
     public static final class Ban {
 
-      public static Boolean applyOnIp;
+      public static Boolean APPLY_ON_IP;
+      public static Boolean ENABLED;
 
       private static void init() {
         pathPrefix("Punishes.Ban");
-        applyOnIp = getBoolean("Apply_On_Ip");
+        APPLY_ON_IP = getBoolean("Apply_On_Ip");
+        ENABLED = getBoolean("Enabled");
+        System.out.println("Loaded: " + APPLY_ON_IP);
       }
     }
 
@@ -61,11 +63,13 @@ public final class Settings extends SimpleSettings {
 
       public static List<String> DISABLED_COMMANDS;
       public static Boolean APPLY_ON_IP;
+      public static Boolean ENABLED;
 
       private static void init() {
         pathPrefix("Punishes.Mute");
         DISABLED_COMMANDS = getStringList("Disabled_Commands");
         APPLY_ON_IP = getBoolean("Apply_On_Ip");
+
       }
     }
 
@@ -132,12 +136,9 @@ public final class Settings extends SimpleSettings {
 
     public static final class API {
 
-      public static Boolean ENABLED;
-
       private static void init() {
 
         pathPrefix("Advanced.API");
-        ENABLED = getBoolean("Enabled");
       }
     }
   }

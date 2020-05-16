@@ -12,6 +12,7 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import org.mineacademy.bfo.Common;
 import org.mineacademy.bfo.PlayerUtil;
 import org.mineacademy.burst.provider.UUIDNameProvider;
+import org.mineacademy.fo.debug.Debugger;
 import org.mineacademy.punishcontrol.core.MessageType;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.AbstractPlayerProvider;
@@ -87,6 +88,7 @@ public final class ProxyPlayerProvider
       case TITLE:
         final String title = messages.length >= 1 ? messages[0] : "";
         final String subTitle = messages.length >= 2 ? messages[1] : "";
+        Debugger.debug("Warn", "Title: '" + title + "'", "SubTitle: '" + subTitle + "'");
         PlayerUtil.sendTitle(player, title, subTitle);
         return;
       case ACTION_BAR:

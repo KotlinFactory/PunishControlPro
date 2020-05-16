@@ -4,7 +4,6 @@ import de.leonhard.storage.LightningBuilder;
 import de.leonhard.storage.Yaml;
 import de.leonhard.storage.internal.settings.ConfigSettings;
 import de.leonhard.storage.internal.settings.DataType;
-import org.mineacademy.punishcontrol.core.fo.constants.FoConstants.Header;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 
 public interface StorageSettable {
@@ -19,6 +18,6 @@ public interface StorageSettable {
 
   default void setToConfig(final String key, final Object value) {
     yaml.set(key, value);
-    yaml.setHeader(Header.UPDATED_FILE);
+//    yaml.setHeader(Header.UPDATED_FILE);
   }
 }

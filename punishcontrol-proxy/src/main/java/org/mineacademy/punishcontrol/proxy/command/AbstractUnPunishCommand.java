@@ -41,7 +41,7 @@ public abstract class AbstractUnPunishCommand extends
     switch (args.length) {
       case 0:
         if (!isPlayer()) {
-          returnTell(MORE_ARGUMENTS_AS_CONSOLE_MESSAGE);
+          returnTell("&c/" + getLabel() + " " + getUsage());
         }
         AllPunishesBrowser.showTo(getPlayer());
         break;
@@ -61,7 +61,8 @@ public abstract class AbstractUnPunishCommand extends
                 "Player is not warned");
             break;
         }
-        tell("&7Successfully unpunished &6" + playerProvider.findNameUnsafe(target));
+        tell("&7Successfully unpunished &6" + playerProvider.findName(target).orElse(
+            "unknown"));
         break;
       default:
         returnInvalidArgs();

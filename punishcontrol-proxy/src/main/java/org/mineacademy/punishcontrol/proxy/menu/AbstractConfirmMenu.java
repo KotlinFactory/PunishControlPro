@@ -53,6 +53,7 @@ public abstract class AbstractConfirmMenu extends AbstractMenu {
     if (getParent() == null) {
       return;
     }
+
     if (getPlayer() == null) {
       return;
     }

@@ -192,6 +192,7 @@ public abstract class AbstractDurationChooser
   @Override
   protected void onDisplay(final InventoryDrawer drawer) {
     updateClock();
+    changeTitle("&8Select duration");
   }
 
   @Override
@@ -320,12 +321,10 @@ public abstract class AbstractDurationChooser
     normalizeIfNeeded();
     if (clickType.isLeftClick()) {
       ms += TimeUnit.DAYS.toMillis(1) * 365;
-      changeTitle(TimeUtil.formatMenuDate(ms));
     } else {
       ms -= TimeUnit.DAYS.toMillis(1) * 365;
-      changeTitle(TimeUtil.formatMenuDate(ms));
     }
-    System.out.println(getTitle());
+    changeTitle(TimeUtil.formatMenuDate(ms));
 
     updateClock();
   }
@@ -335,11 +334,10 @@ public abstract class AbstractDurationChooser
 
     if (clickType.isLeftClick()) {
       ms += TimeUnit.DAYS.toMillis(1) * 30;
-      changeTitle(TimeUtil.formatMenuDate(ms));
     } else {
       ms -= TimeUnit.DAYS.toMillis(1) * 30;
-      changeTitle(TimeUtil.formatMenuDate(ms));
     }
+    changeTitle(TimeUtil.formatMenuDate(ms));
     updateClock();
   }
 
@@ -348,11 +346,10 @@ public abstract class AbstractDurationChooser
 
     if (clickType.isLeftClick()) {
       ms += TimeUnit.DAYS.toMillis(1);
-      PlayerUtil.updateInventoryTitle(getViewer(), getTitle());
     } else {
       ms -= TimeUnit.DAYS.toMillis(1);
-      changeTitle(TimeUtil.formatMenuDate(ms));
     }
+    changeTitle(TimeUtil.formatMenuDate(ms));
     updateClock();
   }
 
@@ -361,19 +358,20 @@ public abstract class AbstractDurationChooser
 
     if (clickType.isLeftClick()) {
       ms += TimeUnit.HOURS.toMillis(1);
-      changeTitle(TimeUtil.formatMenuDate(ms));
-//      animateTitle("&8Added 1 hour");
+      //      animateTitle("&8Added 1 hour");
     } else {
       ms -= TimeUnit.HOURS.toMillis(1);
-      changeTitle(TimeUtil.formatMenuDate(ms));
-//      animateTitle("&8Removed 1 hour");
+      //      animateTitle("&8Removed 1 hour");
     }
+    changeTitle(TimeUtil.formatMenuDate(ms));
     updateClock();
   }
 
   private void changeTitle(final String title) {
     setTitle(title);
-    PlayerUtil.updateInventoryTitle(getViewer(), title);
+    if (getViewer() != null) {
+      PlayerUtil.updateInventoryTitle(getViewer(), title);
+    }
   }
 }
 

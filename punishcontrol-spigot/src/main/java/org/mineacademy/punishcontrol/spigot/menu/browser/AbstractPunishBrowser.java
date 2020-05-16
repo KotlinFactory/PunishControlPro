@@ -61,12 +61,12 @@ public abstract class AbstractPunishBrowser extends AbstractBrowser<Punish> {
 
     lore.find("target", "reason", "creation", "duration", "end", "creator");
     lore.replace(
-        playerProvider.findNameUnsafe(punish.target()),
+        playerProvider.findName(punish.target()).orElse("unknown"),
         punish.reason(),
         Settings.Advanced.formatDate(punish.creation()),
         punish.punishDuration().toString(),
         end,
-        playerProvider.findNameUnsafe(punish.creator()));
+        playerProvider.findName(punish.creator()).orElse("unknown"));
 
     final List<String> lores = new ArrayList<>(
         Arrays.asList(lore.getReplacedMessage()));
@@ -101,7 +101,9 @@ public abstract class AbstractPunishBrowser extends AbstractBrowser<Punish> {
 
   @Override
   protected final void onPageClick(
-      final Player player, final Punish punish, final ClickType click) {
+      final Player player,
+      final Punish punish,
+      final ClickType click) {
 
     if (!click.isRightClick()) {
       return;
@@ -115,7 +117,7 @@ public abstract class AbstractPunishBrowser extends AbstractBrowser<Punish> {
     new AbstractConfirmMenu(this){
       @Override
       public void onConfirm() {
-        Providers.storageProvider().removePunish(punish);
+        async(() -> Providers.storageProvider().removePunish(punish));
       }
 
       @Override

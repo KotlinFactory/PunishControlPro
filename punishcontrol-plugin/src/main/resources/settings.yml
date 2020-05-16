@@ -1,9 +1,9 @@
 # !-------------------------------------------------------------------------------------------------!
-#                       Welcome to the main configuration of PunishControl PRO
+#                       Welcome to the main configuration of PunishControl
 # !-------------------------------------------------------------------------------------------------!
 #
 #    For support and documentation, please visit:
-#    - https://github.com/kangarko/PunishControl-Pro/wiki
+#    - https://github.com/kangarko/PunishControl/wiki
 #
 # !-------------------------------------------------------------------------------------------------!
 #
@@ -11,32 +11,43 @@
 #       - http://minecraftwiki.net/wiki/Formatting_codes
 #       [!] When you use them, omit the message with " " or ' '.
 #
-#    2) TO HIDE a message, set it to 'none'.
-#
-#    3) For UNICODE CHARACTERS (smileys, symbols, ..), save the file in UTF-8 encoding. See
-#       - https://github.com/kangarko/ChatControl-Pro/wiki/Use-Right-Encoding
-#
-#    4) SOUND NAMES had changed as per Minecraft 1.9, compare:
-#       - 1.9 and newer: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Sound.html
-#       - 1.8 and older: https://goo.gl/ArzbZA
+#    2) For UNICODE CHARACTERS (smileys, symbols, ..), save the file in UTF-8 encoding. See
+#       - https://github.com/kangarko/ChatControl/wiki/Use-Right-Encoding
 #
 #    PS: The information above applies for all files within the PunishControl folder.
 #
 #    !! Messages (e.g. 'Please wait 2 seconds [...]') are stored in localization, see:
-#       - https://github.com/kangarko/PunishControl-Pro/wiki/Localization
+#       - https://github.com/kangarko/PunishControl/wiki/Localization
 #
 # !-------------------------------------------------------------------------------------------------!
 
+
+# -------------------------------------------------------------------------------------------
+# You can change the prefix in front of chat or console messages here:
+# -------------------------------------------------------------------------------------------
 Prefix: '&8&lPUNISHCONTROL &8//&7'
 
+# -------------------------------------------------------------------------------------------
+# Currently available: en (English), de (German)
+# Read https://github.com/kangarko/PunishControl/wiki/Localization for tutorial on custom localization.
+# -------------------------------------------------------------------------------------------
 Locale: en
 
+# -------------------------------------------------------------------------------------------
+# What commands should trigger the punishcontrol menu (separated by a comma ,)?
+# * THE FIRST ALIAS IS THE MAIN LABEL, PLEASE DO NOT REMOVE IT. *
+# -------------------------------------------------------------------------------------------
 Command_Aliases: [punishcontrol,phc, pun, pc]
-# JSON/MYSQL
+
+# -------------------------------------------------------------------------------------------
+# Change how your data is going to be stored
+# Currently available: JSON/MYSQL
+# -------------------------------------------------------------------------------------------
 Storage: JSON
 
-Test: true
-
+# -----------------------------------------------------------------------------------------------------
+# MySQL connection allows to store same information over multiple servers.
+# -----------------------------------------------------------------------------------------------------
 MySQL:
   Host: ''
   Database: ''
@@ -113,11 +124,11 @@ Groups:
       Warn: 3 month
     Template_Bypasses: ['*']
 
-#
+# -----------------------------------------------------------------------------------------------------
 # Advanced settings for PunishControl Pro
 #
 # -> Don't change them unless you really know what you are doing.
-#
+# -----------------------------------------------------------------------------------------------------
 Advanced:
 
   # Set to false if your server if effectively in offline mode
@@ -128,12 +139,16 @@ Advanced:
   # Define how similar strings need to be using the /search command
   Min_Similarity_Needed: 0.85
 
-  Cache_Results: true
-  API:
-    # You can disable the API for security reasons
-    Enabled: True
 
-Debug: ['*']
+  Cache_Results: true
+
+# -----------------------------------------------------------------------------------------------------
+# Print more informative messages about the plugin and its features?
+#
+# You normally don't need to edit this unless you have problems or been navigated by the dev.
+# Specify sections to debug.
+# -----------------------------------------------------------------------------------------------------
+Debug: []
 
 # Do not change this value, otherwise it will corrupt your plugin installation!
 Version: 2

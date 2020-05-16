@@ -12,6 +12,7 @@ import org.mineacademy.punishcontrol.core.util.PunishControlPermissions;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
 import org.mineacademy.punishcontrol.spigot.Scheduler;
 import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractPlayerBrowser;
+import org.mineacademy.punishcontrol.spigot.menus.browsers.NotificationBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.browsers.PunishTemplateBrowser;
 
 @Getter
@@ -61,7 +62,7 @@ public enum SettingTypes {
     public ItemCreator itemCreator() {
       return ItemCreator
           .of(CompMaterial.ENDER_CHEST,
-              "&6Punish Storage",
+              "&6Punish storage",
               "&7Click to setup MySQL",
               "&7or to change the",
               "&7storage-type")
@@ -83,8 +84,11 @@ public enum SettingTypes {
   PUNISH_TEMPLATE {
     @Override
     public ItemCreator itemCreator() {
-      return ItemCreator.of(CompMaterial.PAPER, "&6Punish templates", "&7View and add",
-          "&7Punish-Templates").build();
+      return ItemCreator.of(CompMaterial.PAPER,
+          "&6Punish templates",
+          "&7View and add",
+          "&7Punish-Templates")
+          .build();
     }
 
     @Override
@@ -96,6 +100,28 @@ public enum SettingTypes {
     public boolean hasAccess(final Player player) {
       return player.hasPermission(
           PunishControlPermissions.MENU_SETTINGS_TEMPLATES.permission());
+    }
+  },
+
+  NOTIFICATION {
+    @Override
+    public ItemCreator itemCreator() {
+      return ItemCreator.of(CompMaterial.FIREWORK_ROCKET,
+          "&6Notifications",
+          "&7",
+          "&7View notifications")
+          .build();
+    }
+
+    @Override
+    public void showMenu(final Player player) {
+      NotificationBrowser.showTo(player);
+    }
+
+    @Override
+    public boolean hasAccess(final Player player) {
+      return player.hasPermission(
+          PunishControlPermissions.MENU_SETTINGS_NOTIFICATIONS.permission());
     }
   };
 

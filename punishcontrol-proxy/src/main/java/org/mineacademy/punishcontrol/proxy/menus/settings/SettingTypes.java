@@ -13,6 +13,7 @@ import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.util.PunishControlPermissions;
 import org.mineacademy.punishcontrol.proxy.DaggerProxyComponent;
 import org.mineacademy.punishcontrol.proxy.menu.browser.AbstractPlayerBrowser;
+import org.mineacademy.punishcontrol.proxy.menus.browsers.NotificationBrowser;
 import org.mineacademy.punishcontrol.proxy.menus.browsers.PunishTemplateBrowser;
 
 @Getter
@@ -59,7 +60,7 @@ public enum SettingTypes {
     public Item itemCreator() {
       return Item
           .of(ItemType.ENDER_CHEST)
-          .name("&6Punish Storage")
+          .name("&6Punish storage")
           .lore(
               "&7Click to setup MySQL",
               "&7or to change the",
@@ -98,6 +99,28 @@ public enum SettingTypes {
     public boolean hasAccess(final ProxiedPlayer player) {
       return player.hasPermission(
           PunishControlPermissions.MENU_SETTINGS_TEMPLATES.permission());
+    }
+  },
+
+  NOTIFICATION {
+    @Override
+    public Item itemCreator() {
+      return Item
+          .of(ItemType.FIREWORK_ROCKET,
+          "&6Notifications",
+          "&7",
+          "&7Notifications");
+    }
+
+    @Override
+    public void showMenu(final ProxiedPlayer player) {
+      NotificationBrowser.showTo(player);
+    }
+
+    @Override
+    public boolean hasAccess(final ProxiedPlayer player) {
+      return player.hasPermission(
+          PunishControlPermissions.MENU_SETTINGS_NOTIFICATIONS.permission());
     }
   };
 

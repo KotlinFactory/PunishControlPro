@@ -1,6 +1,7 @@
 package org.mineacademy.punishcontrol.proxy;
 
 import de.exceptionflug.mccommons.commands.proxy.Commands;
+import de.exceptionflug.protocolize.items.ItemType;
 import de.leonhard.storage.LightningBuilder;
 import de.leonhard.storage.internal.settings.ConfigSettings;
 import de.leonhard.storage.internal.settings.DataType;
@@ -17,6 +18,8 @@ import org.mineacademy.burst.Burst;
 import org.mineacademy.punishcontrol.core.CoreComponent;
 import org.mineacademy.punishcontrol.core.DaggerCoreComponent;
 import org.mineacademy.punishcontrol.core.PunishControlPluginBootstrap;
+import org.mineacademy.punishcontrol.core.notification.Notification;
+import org.mineacademy.punishcontrol.core.notification.Notifications;
 import org.mineacademy.punishcontrol.core.permission.Permission;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.settings.Settings;
@@ -41,6 +44,22 @@ public final class PunishControl
    */
   @Override
   protected void onPluginPreStart() {
+    if (!getDataFolder().exists()) {
+      Notifications.register(
+          Notification
+              .of("&6Take a tour")
+              .text(
+                  "",
+                  "&7It seems like",
+                  "&7This is the first-time",
+                  "&7you use " + SimplePlugin.getNamed(),
+                  "&7on this server. &7Documentation:",
+                  "&7github.com/kangarko/punishcontrol/wiki"
+              )
+              .itemType(ItemType.ENCHANTED_GOLDEN_APPLE)
+      );
+    }
+
     Providers.pluginDataProvider(ProxyPluginDataProvider.create());
   }
 
@@ -131,7 +150,6 @@ public final class PunishControl
         continue;
       }
 
-      System.out.println("jdkd");
       result.add(Permission.of(command.getPermission(), command.getDescription()));
     }
 

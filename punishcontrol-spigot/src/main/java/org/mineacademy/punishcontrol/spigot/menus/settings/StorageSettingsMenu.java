@@ -56,6 +56,8 @@ public final class StorageSettingsMenu
   public StorageSettingsMenu(@NonNull final SettingsBrowser settingsBrowser) {
     super(settingsBrowser);
 
+
+    setTitle("&8Storage settings");
     setSize(9*2);
     useButton = new Button() {
       @Override
@@ -180,7 +182,7 @@ public final class StorageSettingsMenu
       @Override
       public ItemStack getItem() {
         return ItemCreator
-            .of(CompMaterial.GREEN_STAINED_GLASS_PANE)
+            .of(CompMaterial.YELLOW_STAINED_GLASS_PANE)
             .name("&7Host")
             .lores(Arrays.asList(
                 " ",
@@ -232,7 +234,7 @@ public final class StorageSettingsMenu
       public ItemStack getItem() {
         return ItemCreator
             .of(CompMaterial.YELLOW_STAINED_GLASS_PANE)
-            .name("&7Database")
+            .name("&7Database") 
             .lores(Arrays.asList(
                 " ",
                 "&7Click to",

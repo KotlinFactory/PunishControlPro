@@ -14,6 +14,7 @@ public class SpigotExceptionHandler implements ExceptionHandler {
 
   @Override
   public void saveError(final Throwable throwable, final String... messages) {
+//    Notifications.register();
     Common.error(throwable, messages);
   }
 }

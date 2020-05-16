@@ -23,4 +23,11 @@ public class PunishControlPermissions {
       .of("punishcontrol.menu.settings.templates",
           "Access the template-settings")
       .type(PermissionType.MENU);
+
+  public Permission MENU_SETTINGS_NOTIFICATIONS = Permission
+      .of("punishcontrol.menu.settings.notifications",
+          "Access the notifications")
+      .type(PermissionType.MENU);
+
+
 }

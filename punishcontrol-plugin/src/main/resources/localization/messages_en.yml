@@ -26,12 +26,10 @@ Punish:
     - "&eReason: {reason}"
     - "&eExpiration: {expiration}"
     - ""
-  Warn_Message:
-    - ""
-    - "&eYou have been warned"
-    - "&eReason: {reason}"
-    - "&eExpiration: {expiration}"
-    - ""
 
+  #
+  Warn_Message:
+    - "&eYou have been warned: {reason}"
+    - "&eExpiration: {expiration}"
 
 Version: 1
