@@ -35,6 +35,7 @@ public abstract class AbstractSimplePunishControlCommand extends SimpleCommand {
       @NonNull final String label) {
     super(label);
     this.playerProvider = playerProvider;
+    addTellPrefix(false);
   }
 
   protected AbstractSimplePunishControlCommand(

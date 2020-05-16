@@ -26,7 +26,7 @@ public abstract class AbstractUnPunishCommand extends
     this.provider = provider;
     this.punishType = punishType;
     setTellPrefix(Settings.PLUGIN_PREFIX);
-    addTellPrefix(true);
+    addTellPrefix(false);
   }
 
   @Override

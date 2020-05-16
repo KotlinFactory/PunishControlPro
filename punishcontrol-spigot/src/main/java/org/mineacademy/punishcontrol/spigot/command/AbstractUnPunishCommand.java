@@ -26,7 +26,7 @@ public abstract class AbstractUnPunishCommand extends
     this.provider = provider;
     this.punishType = punishType;
     setTellPrefix(Settings.PLUGIN_PREFIX);
-    addTellPrefix(true);
+    addTellPrefix(false);
   }
 
   @Override
@@ -42,7 +42,7 @@ public abstract class AbstractUnPunishCommand extends
     switch (args.length) {
       case 0:
         if (!isPlayer()) {
-          returnTell(MORE_ARGUMENTS_AS_CONSOLE_MESSAGE);
+          returnTell("&c/" + getLabel() + " " + getUsage());
         }
         AllPunishesBrowser.showTo(getPlayer());
         break;

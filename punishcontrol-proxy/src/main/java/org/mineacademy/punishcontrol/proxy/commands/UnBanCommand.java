@@ -1,6 +1,5 @@
 package org.mineacademy.punishcontrol.proxy.commands;
 
-import java.util.ArrayList;
 import javax.inject.Inject;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.punish.PunishType;
@@ -13,8 +12,6 @@ public final class UnBanCommand extends AbstractUnPunishCommand {
   public UnBanCommand(final PlayerProvider playerProvider, final StorageProvider storageProvider) {
     super(storageProvider, playerProvider, PunishType.BAN, "unban", "uban");
     setUsage("[player]");
-    setLabel("unwarn");
-    setAliases(new ArrayList<>());
     setDescription("Unban a player");
     setPermission("punishcontrol.command.unban");
   }
