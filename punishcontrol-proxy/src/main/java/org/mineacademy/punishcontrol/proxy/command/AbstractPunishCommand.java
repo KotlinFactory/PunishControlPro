@@ -98,7 +98,6 @@ public abstract class AbstractPunishCommand
       returnTell(INVALID_SILENCE_USAGE);
     }
 
-
     final List<String> finalArgs = new ArrayList<>(Arrays.asList(args));
     // Args without params
     finalArgs.removeAll(Arrays.asList("-S", "-s", "-ss", "-SS", "-sS", "-Ss", "-silent",
@@ -142,9 +141,7 @@ public abstract class AbstractPunishCommand
         final val template = optionalTemplate.get();
 
         checkBoolean(Groups.hasAccess(
-            isPlayer()
-                ? getPlayer().getUniqueId()
-                : FoConstants.CONSOLE,
+            senderUUID(),
             template), "&cYou can't access this template.");
 
         checkBoolean(
@@ -155,10 +152,7 @@ public abstract class AbstractPunishCommand
 
         Scheduler.runAsync(() -> {
           final UUID target = findTarget(finalArgs);
-          final Punish punish = template.toPunishBuilder()
-              .creator(isPlayer()
-                  ? getPlayer().getUniqueId()
-                  : FoConstants.CONSOLE)
+          final Punish punish = template.toPunishBuilder().creator(senderUUID())
               .target(target)
               .ip(playerProvider.ip(target).orElse("unknown"))
               .creation(System.currentTimeMillis())
@@ -187,22 +181,19 @@ public abstract class AbstractPunishCommand
         checkBoolean(!punishDuration.isEmpty(),
             "&cInvalid time format! Example: 10days");
 
-        checkBoolean(Groups.hasAccess(
-            (isPlayer()
-                ? getPlayer().getUniqueId()
-                : FoConstants.CONSOLE),
+        checkBoolean(Groups.hasAccess((senderUUID()),
             punishType,
             punishDuration),
             "&cThis action would exceed your limits."
         );
 
         Scheduler.runAsync(() -> {
-          LagCatcher.start("spigot-cmd-save-async");
+          LagCatcher.start("proxy-cmd-save-async");
 
           final UUID target = findTarget(finalArgs);
 
           if (storageProvider.isPunished(target, punishType) && !Groups
-              .canOverride(target)) {
+              .canOverride(senderUUID())) {
             tell("&cYou are not allowed to override punishes");
             return;
           }
@@ -219,9 +210,7 @@ public abstract class AbstractPunishCommand
           final Punish punish =
               PunishBuilder.of(punishType)
                   .target(target)
-                  .creator(isPlayer()
-                      ? getPlayer().getUniqueId()
-                      : FoConstants.CONSOLE) //The uuid of the player called "Console"
+                  .creator(senderUUID()) //The uuid of the player called "Console"
                   .duration(punishDuration)
                   .creation(System.currentTimeMillis())
                   .reason(reason.toString())
@@ -254,9 +243,15 @@ public abstract class AbstractPunishCommand
             targetPlayer.disconnect(Punishes.formOnPunishMessage(punish));
           });
 
-          LagCatcher.end("spigot-cmd-save-async");
+          LagCatcher.end("proxy-cmd-save-async");
         });
         break;
     }
+  }
+
+  private UUID senderUUID() {
+    return isPlayer()
+        ? getPlayer().getUniqueId()
+        : FoConstants.CONSOLE;
   }
 }

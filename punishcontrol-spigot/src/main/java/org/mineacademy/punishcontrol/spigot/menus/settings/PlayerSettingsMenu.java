@@ -9,6 +9,7 @@ import lombok.val;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.permissions.PermissionAttachment;
 import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.fo.menu.button.Button;
 import org.mineacademy.fo.menu.model.ItemCreator;
@@ -54,7 +55,7 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
     targetOnline = Players.find(target).isPresent();
     setTitle("&8Settings for player");
 
-    setSize(9*2);
+    setSize(9 * 2);
     groupBrowser = new Button() {
       @Override
       public void onClickedInMenu(
@@ -238,8 +239,8 @@ class PermissionsBrowser extends AbstractBrowser<Permission> {
         "&7Menu to view",
         "&7the permissions",
         "&7a player has",
-        "&7You can't give",
-        "&7permissions here" // Don't mess around with spigot
+        "&7changes will ",
+        "&7be temporary"
     };
   }
 
@@ -284,11 +285,28 @@ class PermissionsBrowser extends AbstractBrowser<Permission> {
       final Player player,
       final Permission item,
       final ClickType click) {
+    changePerm(item.permission());
+    showTo(getViewer(), target, (PlayerSettingsMenu) getParent());
   }
 
-  private void setPermission(
-      final Player player,
-      final String permission,
-      final boolean boo) {
+  private void changePerm(
+      final String permission) {
+
+    Players.find(target).ifPresent((target -> {
+      final boolean hasPerm = target.hasPermission(permission);
+
+      for (final val perm : target.getEffectivePermissions()) {
+        final PermissionAttachment attachment = perm.getAttachment();
+        if (attachment == null) {
+          continue;
+        }
+
+        if (hasPerm) {
+          attachment.unsetPermission(permission);
+        } else {
+          attachment.setPermission(permission, true);
+        }
+      }
+    }));
   }
 }

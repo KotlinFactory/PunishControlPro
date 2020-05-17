@@ -9,6 +9,7 @@ import lombok.val;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
+import org.mineacademy.fo.Common;
 import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.fo.menu.button.Button;
 import org.mineacademy.fo.menu.model.ItemCreator;
@@ -21,6 +22,7 @@ import org.mineacademy.punishcontrol.core.punish.PunishBuilder;
 import org.mineacademy.punishcontrol.core.punish.PunishType;
 import org.mineacademy.punishcontrol.core.punish.template.PunishTemplate;
 import org.mineacademy.punishcontrol.core.settings.Settings;
+import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
 import org.mineacademy.punishcontrol.spigot.conversations.PunishReasonConversation;
 import org.mineacademy.punishcontrol.spigot.menu.AbstractDurationChooser;
@@ -48,6 +50,7 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
   private final Button choosePlayer;
   private final Button applyPunish;
   private final TextureProvider textureProvider;
+  private final StorageProvider storageProvider;
   private final PlayerProvider playerProvider;
 
   //Silent & Super silent
@@ -87,8 +90,10 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
   public PunishCreatorMenu(
       final TextureProvider textureProvider,
       final PlayerProvider playerProvider,
+      final StorageProvider storageProvider,
       final MainMenu mainMenu) {
     super(mainMenu);
+    this.storageProvider = storageProvider;
     this.textureProvider = textureProvider;
     this.playerProvider = playerProvider;
     setSize(SIZE);
@@ -243,7 +248,20 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
         }
 
         animateTitle("&7Created punish");
-        async(() -> punishBuilder().build().create());
+        async(() -> {
+
+          if (storageProvider.isPunished(punishBuilder.target(), punishBuilder.punishType()) && !Groups
+              .canOverride(getViewer().getUniqueId())) {
+            animateTitle("&cCan't override punishes");
+            return;
+          }
+
+          punishBuilder().build().create();
+
+          if (getParent() != null) {
+            Common.runLater(() -> getParent().displayTo(getViewer()));
+          }
+        });
         getParent().displayTo(getViewer());
       }
 

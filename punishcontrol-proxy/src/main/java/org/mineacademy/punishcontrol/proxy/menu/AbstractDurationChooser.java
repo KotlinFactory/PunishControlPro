@@ -39,7 +39,7 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
       final long ms) {
     super("DurationChooser", parent, SIZE);
     this.ms = ms;
-    setTitle(TimeUtil.formatMenuDate(ms));
+    setTitle("&8Choose duration");
 
     //Initial update
     updateClock();
@@ -143,6 +143,7 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
       return CallResult.DENY_GRABBING;
     }));
 
+
     registerActionHandler("Perma", (perma) -> {
       makePermanent();
       return CallResult.DENY_GRABBING;
@@ -198,7 +199,9 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
 
   private void updateClock() {
     normalizeIfNeeded();
-    laterAsync(this::build, 20);
+    if (getViewer().isPresent()) {
+      build();
+    }
   }
 
   private void updateTitle() {
@@ -210,16 +213,14 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
     updateClock();
   }
 
+
   private void addOrRemoveYear(final ClickType clickType) {
     if (clickType == de.exceptionflug.mccommons.inventories.api.ClickType.LEFT_CLICK) {
       ms += TimeUnit.DAYS.toMillis(1) * 365;
-      setTitle(TimeUtil.formatMenuDate(ms));
-      animateTitle("&8Added 1 year");
     } else {
       ms -= TimeUnit.DAYS.toMillis(1) * 365;
-      setTitle(TimeUtil.formatMenuDate(ms));
-      animateTitle("&8Removed 1 year");
     }
+    setTitle(TimeUtil.formatMenuDate(ms));
     updateClock();
   }
 
@@ -227,26 +228,20 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
 
     if (clickType == ClickType.LEFT_CLICK) {
       ms += TimeUnit.DAYS.toMillis(1) * 30;
-      setTitle(TimeUtil.formatMenuDate(ms));
-      animateTitle("&8Added 1 month");
     } else {
       ms -= TimeUnit.DAYS.toMillis(1) * 30;
-      setTitle(TimeUtil.formatMenuDate(ms));
-      animateTitle("&8Removed 1 month");
     }
+    setTitle(TimeUtil.formatMenuDate(ms));
     updateClock();
   }
 
   private void addOrRemoveDay(final ClickType clickType) {
     if (clickType == ClickType.LEFT_CLICK) {
       ms += TimeUnit.DAYS.toMillis(1);
-      setTitle(TimeUtil.formatMenuDate(ms));
-      animateTitle("&8Added 1 day");
     } else {
       ms -= TimeUnit.DAYS.toMillis(1);
-      setTitle(TimeUtil.formatMenuDate(ms));
-      animateTitle("&8Removed 1 day");
     }
+    setTitle(TimeUtil.formatMenuDate(ms));
     updateClock();
   }
 
@@ -254,13 +249,10 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
 
     if (clickType == ClickType.LEFT_CLICK) {
       ms += TimeUnit.HOURS.toMillis(1);
-      setTitle(TimeUtil.formatMenuDate(ms));
-      animateTitle("&8Added 1 hour");
     } else {
       ms -= TimeUnit.HOURS.toMillis(1);
-      setTitle(TimeUtil.formatMenuDate(ms));
-      animateTitle("&8Removed 1 hour");
     }
+    setTitle(TimeUtil.formatMenuDate(ms));
     normalizeIfNeeded();
     updateClock();
   }

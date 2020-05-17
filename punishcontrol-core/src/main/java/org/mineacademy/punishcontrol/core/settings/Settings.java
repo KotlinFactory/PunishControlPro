@@ -55,7 +55,6 @@ public final class Settings extends SimpleSettings {
         pathPrefix("Punishes.Ban");
         APPLY_ON_IP = getBoolean("Apply_On_Ip");
         ENABLED = getBoolean("Enabled");
-        System.out.println("Loaded: " + APPLY_ON_IP);
       }
     }
 
@@ -123,6 +122,7 @@ public final class Settings extends SimpleSettings {
 
     private static void init() {
       pathPrefix("Advanced");
+      DATE_FORMAT = getString("Date_Format");
       ONLINE_MODE = getBoolean("Online_Mode");
       CACHE_RESULTS = getBoolean("Cache_Results");
       MIN_SIMILARITY = getDouble("Min_Similarity_Needed");

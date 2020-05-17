@@ -20,6 +20,7 @@ import org.mineacademy.punishcontrol.core.punish.PunishBuilder;
 import org.mineacademy.punishcontrol.core.punish.PunishType;
 import org.mineacademy.punishcontrol.core.punish.template.PunishTemplate;
 import org.mineacademy.punishcontrol.core.settings.Settings;
+import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 import org.mineacademy.punishcontrol.proxy.DaggerProxyComponent;
 import org.mineacademy.punishcontrol.proxy.ItemUtil;
 import org.mineacademy.punishcontrol.proxy.conversations.PunishReasonConversation;
@@ -43,6 +44,7 @@ public final class PunishCreatorMenu extends AbstractMenu {
 
   private final TextureProvider textureProvider;
   private final PlayerProvider playerProvider;
+  private final StorageProvider storageProvider;
 
   //Silent & Super silent
 
@@ -80,10 +82,12 @@ public final class PunishCreatorMenu extends AbstractMenu {
   public PunishCreatorMenu(
       final TextureProvider textureProvider,
       final PlayerProvider playerProvider,
+      final StorageProvider storageProvider,
       final MainMenu mainMenu) {
     super("PunishCreator", mainMenu, SIZE);
     this.textureProvider = textureProvider;
     this.playerProvider = playerProvider;
+    this.storageProvider = storageProvider;
     if (punishBuilder().target() != null) {
       setTitle("&8Punish " + playerProvider
           .findNameUnsafe(punishBuilder().target()));
@@ -475,10 +479,20 @@ public final class PunishCreatorMenu extends AbstractMenu {
       }
 
       animateTitle("&7Created punish");
-      async(() -> punishBuilder().build().create());
-      if (getParentMenu() != null) {
-        getParentMenu().displayTo(getPlayer());
-      }
+      async(() -> {
+
+        if (storageProvider.isPunished(punishBuilder.target(), punishBuilder.punishType()) && !Groups
+            .canOverride(getPlayer().getUniqueId())) {
+          animateTitle("&cCan't override punishes");
+          return;
+        }
+
+        punishBuilder().build().create();
+        if (getParentMenu() != null) {
+          getParentMenu().displayTo(getPlayer());
+        }
+
+      });
 
       return CallResult.DENY_GRABBING;
     }));

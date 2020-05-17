@@ -131,6 +131,9 @@ Groups:
 # -----------------------------------------------------------------------------------------------------
 Advanced:
 
+  # Change how the date should be formatted in our menus & commands
+  Date_Format: hh:mm MM/dd/yyyy
+
   # Set to false if your server if effectively in offline mode
   # If your server is only set to offline mode because you are using BungeeCord,
   # let this set to true.

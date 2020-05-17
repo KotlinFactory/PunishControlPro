@@ -7,10 +7,8 @@ import java.util.UUID;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.val;
-import org.mineacademy.fo.Common;
 import org.mineacademy.fo.collection.StrictList;
 import org.mineacademy.fo.debug.LagCatcher;
-import org.mineacademy.fo.model.Replacer;
 import org.mineacademy.punishcontrol.core.fo.constants.FoConstants;
 import org.mineacademy.punishcontrol.core.group.Groups;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
@@ -20,6 +18,7 @@ import org.mineacademy.punishcontrol.core.punish.PunishDuration;
 import org.mineacademy.punishcontrol.core.punish.PunishType;
 import org.mineacademy.punishcontrol.core.punish.Punishes;
 import org.mineacademy.punishcontrol.core.punish.template.PunishTemplates;
+import org.mineacademy.punishcontrol.core.settings.Replacer;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 import org.mineacademy.punishcontrol.spigot.Players;
 import org.mineacademy.punishcontrol.spigot.Scheduler;
@@ -55,7 +54,7 @@ public abstract class AbstractPunishCommand
         " ",
         "&2[] &7= Optional arguments (use only 1 at once)",
         "&6<> &7= Required arguments",
-        "&7/" + getLabel() + " &8* &7See a list of players",
+        "&7/" + getLabel() + " &8* &7See a list of all players",
         "&7/" + getLabel() + " &6<player> &8* &7View options for a player",
         "&7/" + getLabel() + " &2[-s] [-S] &6<player> <duration> <reason>",
         "&7/" + getLabel() + " &2[-s] [-S] &6<player> &6<template>",
@@ -119,8 +118,8 @@ public abstract class AbstractPunishCommand
         break;
       case 1:
 
-        if ("?".equalsIgnoreCase(finalArgs.get(0))
-            || "help".equalsIgnoreCase(finalArgs.get(0))) {
+        if ("?".equalsIgnoreCase(finalArgs.get(0)) || "help"
+            .equalsIgnoreCase(finalArgs.get(0))) {
           returnTell(getMultilineUsageMessage());
         }
 
@@ -142,23 +141,18 @@ public abstract class AbstractPunishCommand
         final val template = optionalTemplate.get();
 
         checkBoolean(Groups.hasAccess(
-            isPlayer()
-                ? getPlayer().getUniqueId()
-                : FoConstants.CONSOLE,
+            senderUUID(),
             template), "&cYou can't access this template.");
 
         checkBoolean(
             template.punishType() == punishType,
-            "&cThis punish-template can't be applied to a &6" + punishType
+            "&cThis template can't be applied to a &6" + punishType
                 .localized()
         );
 
         Scheduler.runAsync(() -> {
           final UUID target = findTarget(finalArgs);
-          final Punish punish = template.toPunishBuilder()
-              .creator(isPlayer()
-                  ? getPlayer().getUniqueId()
-                  : FoConstants.CONSOLE)
+          final Punish punish = template.toPunishBuilder().creator(senderUUID())
               .target(target)
               .ip(playerProvider.ip(target).orElse("unknown"))
               .creation(System.currentTimeMillis())
@@ -170,40 +164,36 @@ public abstract class AbstractPunishCommand
             return;
           }
 
-          Scheduler.runSync(() -> {
-            Players.find(target).ifPresent((player -> {
+          Players.find(target).ifPresent((player -> {
 //          TODO: Format Reason!
-              player.kickPlayer(Punishes.formOnPunishMessage(punish));
-            }));
-          });
+            player.kickPlayer(reason.toString());
+          }));
         });
 
         // Open inv
         break;
       case 3:
 
-        final PunishDuration punishDuration = PunishDuration.of(finalArgs.get(1));
+        final PunishDuration punishDuration = PunishDuration
+            .of(finalArgs.get(1));
 
         //PunishDuration mustn't be empty: If its empty the given string had the wrong format
         checkBoolean(!punishDuration.isEmpty(),
             "&cInvalid time format! Example: 10days");
 
-        checkBoolean(Groups.hasAccess(
-            (isPlayer()
-                ? getPlayer().getUniqueId()
-                : FoConstants.CONSOLE),
+        checkBoolean(Groups.hasAccess((senderUUID()),
             punishType,
             punishDuration),
             "&cThis action would exceed your limits."
         );
 
         Scheduler.runAsync(() -> {
-          LagCatcher.start("spigot-cmd-save-async");
+          LagCatcher.start("proxy-cmd-save-async");
 
           final UUID target = findTarget(finalArgs);
 
           if (storageProvider.isPunished(target, punishType) && !Groups
-              .canOverride(target)) {
+              .canOverride(senderUUID())) {
             tell("&cYou are not allowed to override punishes");
             return;
           }
@@ -220,9 +210,7 @@ public abstract class AbstractPunishCommand
           final Punish punish =
               PunishBuilder.of(punishType)
                   .target(target)
-                  .creator(isPlayer()
-                      ? getPlayer().getUniqueId()
-                      : FoConstants.CONSOLE) //The uuid of the player called "Console"
+                  .creator(senderUUID()) //The uuid of the player called "Console"
                   .duration(punishDuration)
                   .creation(System.currentTimeMillis())
                   .reason(reason.toString())
@@ -234,7 +222,7 @@ public abstract class AbstractPunishCommand
 
           final Replacer punishMessage =
               Replacer.of(
-                  "&7You &asuccessfully &7punished &6{target} &7for &6{duration}",
+                  "&7You have &asuccessfully &7punished &6{target} &7for &6{duration}",
                   "&6Reason: &6{reason}");
 
           punishMessage.replaceAll(
@@ -245,7 +233,7 @@ public abstract class AbstractPunishCommand
               "reason",
               reason.toString());
 
-          tell(punishMessage.getReplacedMessage());
+          tell(punishMessage.replacedMessage());
 
           if (!punishType.shouldKick()) {
             return;
@@ -254,15 +242,16 @@ public abstract class AbstractPunishCommand
           Players.find(target).ifPresent(targetPlayer -> {
             targetPlayer.kickPlayer(Punishes.formOnPunishMessage(punish));
           });
-          LagCatcher.end("spigot-cmd-save-async");
+
+          LagCatcher.end("proxy-cmd-save-async");
         });
         break;
     }
   }
 
-
-  @Override
-  protected List<String> tabComplete() {
-    return Common.getPlayerNames();
+  private UUID senderUUID() {
+    return isPlayer()
+        ? getPlayer().getUniqueId()
+        : FoConstants.CONSOLE;
   }
 }

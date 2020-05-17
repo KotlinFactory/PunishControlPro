@@ -58,7 +58,7 @@ public abstract class AbstractDurationChooser
     super(parent);
     setSize(SIZE);
     this.ms = ms;
-    changeTitle(TimeUtil.formatMenuDate(ms));
+    changeTitle("&8Choose duration");
 
     expirationClock = ItemCreator
         .of(CompMaterial.CLOCK,

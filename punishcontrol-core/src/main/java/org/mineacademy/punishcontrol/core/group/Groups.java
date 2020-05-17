@@ -80,11 +80,11 @@ public class Groups {
 
     switch (punishType) {
       case BAN:
-        return group.banLimit().lessThan(punishDuration);
+        return group.banLimit().moreThan(punishDuration);
       case MUTE:
-        return group.muteLimit().lessThan(punishDuration);
+        return group.muteLimit().moreThan(punishDuration);
       case WARN:
-        return group.warnLimit().lessThan(punishDuration);
+        return group.warnLimit().moreThan(punishDuration);
     }
     return false;
   }
