@@ -215,7 +215,7 @@ public final class PunishCreatorMenu extends AbstractMenu {
             Item
                 .of(textureProvider.getSkinTexture(target))
                 .name("&6Choose player")
-                .lore("&7Current : " + playerProvider.findNameUnsafe(target))
+                .lore("&7Current: " + playerProvider.findNameUnsafe(target))
                 .slot(CHOOSE_PLAYER_SLOT)
                 .actionHandler("Player")
         );
