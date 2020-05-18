@@ -46,8 +46,7 @@ public final class PunishCreatorMenu extends AbstractMenu {
   private final PlayerProvider playerProvider;
   private final StorageProvider storageProvider;
 
-  //Silent & Super silent
-
+  // Silent & Super silent
   private PunishBuilder punishBuilder;
   private PunishTemplate punishTemplate;
   private static final PunishType DEFAULT_PUNISH_TYPE = PunishType.BAN;

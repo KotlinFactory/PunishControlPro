@@ -1,0 +1,35 @@
+Commands:
+  Player:
+    Never_Played: "&cO jogador {player} nunca jogou no servidor."
+    Not_Online: "&cO jogador {player} &cnão está conectado neste servidor."
+    Not_Exists: "&cO jogador {player} &cnão existe."
+
+Punish:
+  #Placeholders: {console_line}, {player}, {type}, {reason}, {duration}, {expiration}, {ip}
+  Message_To_Broadcast:
+    - "&7{chat_line}"
+    - "&7O jogador {player} foi castigado."
+    - "&7Tipo: &6{type}"
+    - "&7Razão: {reason}"
+    - "&7IP: {ip}"
+    - "&7{chat_line}"
+
+  Ban_Message:
+    - ""
+    - "&eFoste banido"
+    - "&eRazão: {reason}"
+    - "&ePrazo de validade: {expiration}"
+    - ""
+
+  Mute_Message:
+    - "&eVocê foi silenciado"
+    - "&eRazão: {reason}"
+    - "&ePrazo de validade: {expiration}"
+    - ""
+
+  #
+  Warn_Message:
+    - "&eVocê foi avisado: {reason}"
+    - "&ePrazo de validade: {expiration}"
+
+Version: 1
