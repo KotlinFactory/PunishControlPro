@@ -27,9 +27,6 @@ import org.mineacademy.punishcontrol.proxy.menus.punish.PunishCreatorMenu;
 /**
  * Command to handle (Un) banning, muting, warning, reporting & kicking players
  */
-/*
-TODO: Put in core & work with type parameters
- */
 
 @Getter
 public abstract class AbstractPunishCommand
