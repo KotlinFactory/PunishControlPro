@@ -1,7 +1,10 @@
 package org.mineacademy.punishcontrol.proxy.menu.browser;
 
+import de.exceptionflug.mccommons.inventories.api.CallResult;
 import de.exceptionflug.mccommons.inventories.proxy.utils.ItemUtils;
+import de.exceptionflug.protocolize.inventory.InventoryModule;
 import de.exceptionflug.protocolize.items.ItemStack;
+import de.exceptionflug.protocolize.items.ItemType;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
@@ -12,6 +15,7 @@ import org.mineacademy.burst.menu.AbstractBrowser;
 import org.mineacademy.burst.menu.BurstMenu;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.providers.TextureProvider;
+import org.mineacademy.punishcontrol.proxy.conversations.SearchPlayerConversation;
 
 public abstract class AbstractPlayerBrowser extends AbstractBrowser<UUID> {
 
@@ -49,6 +53,12 @@ public abstract class AbstractPlayerBrowser extends AbstractBrowser<UUID> {
     this.playerProvider = playerProvider;
     this.textureProvider = textureProvider;
     setTitle("&8Players");
+
+    registerActionHandler("apply", (apply -> {
+      InventoryModule.closeAllInventories(getPlayer());
+      SearchPlayerConversation.create(getPlayer(), this).start();
+      return CallResult.DENY_GRABBING;
+    }));
   }
 
   // ----------------------------------------------------------------------------------------------------
@@ -60,10 +70,22 @@ public abstract class AbstractPlayerBrowser extends AbstractBrowser<UUID> {
   public void updateInventory() {
     super.updateInventory();
 
-    if (isSearchable()) {
-
+    if (!isSearchable()) {
+      return;
     }
 
+    set(
+        Item
+            .of(ItemType.COMPASS)
+            .name("&6Search")
+            .lore(
+                "&7Search for player by its",
+                "67partial name"
+            )
+            .actionHandler("Search")
+            .slot(getParentItemSlot() - 5)
+
+    );
   }
 
   @Nullable
