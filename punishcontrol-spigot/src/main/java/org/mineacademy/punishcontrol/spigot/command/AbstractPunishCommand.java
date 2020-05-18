@@ -56,7 +56,10 @@ public abstract class AbstractPunishCommand
         "&6<> &7= Required arguments",
         "&7/" + getLabel() + " &8* &7See a list of all players",
         "&7/" + getLabel() + " &6<player> &8* &7View options for a player",
-        "&7/" + getLabel() + " &2[-s] [-S] &6<player> <duration> <reason>",
+        "&7/" + getLabel() + " &2[-s] [-S] &6<player"
+            + ""
+            + ""
+            + "> <duration> <reason>",
         "&7/" + getLabel() + " &2[-s] [-S] &6<player> &6<template>",
         " ",
     };

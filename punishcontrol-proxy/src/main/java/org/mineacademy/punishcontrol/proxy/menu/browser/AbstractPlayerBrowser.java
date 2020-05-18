@@ -5,6 +5,7 @@ import de.exceptionflug.protocolize.items.ItemStack;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
+import lombok.NonNull;
 import org.jetbrains.annotations.Nullable;
 import org.mineacademy.burst.item.Item;
 import org.mineacademy.burst.menu.AbstractBrowser;
@@ -54,6 +55,17 @@ public abstract class AbstractPlayerBrowser extends AbstractBrowser<UUID> {
   // Overridden methods
   // ----------------------------------------------------------------------------------------------------
 
+
+  @Override
+  public void updateInventory() {
+    super.updateInventory();
+
+    if (isSearchable()) {
+
+    }
+
+  }
+
   @Nullable
   protected List<String> lore(final UUID uuid) {
     return null;
@@ -61,7 +73,7 @@ public abstract class AbstractPlayerBrowser extends AbstractBrowser<UUID> {
 
   @Override
   protected final ItemStack convertToItemStack(final UUID uuid) {
-    final String name = playerProvider.findNameUnsafe(uuid);
+    final String name = playerProvider.findName(uuid).orElse("unknown");
     final String hash = textureProvider.getSkinTexture(uuid);
 
     final Item item = Item.of(hash).name("§3" + name);
@@ -83,8 +95,20 @@ public abstract class AbstractPlayerBrowser extends AbstractBrowser<UUID> {
     };
   }
 
+  // ----------------------------------------------------------------------------------------------------
+  // Methods that might be overridden
+  // ----------------------------------------------------------------------------------------------------
+
   @Override
   public void reDisplay() {
     throw new AbstractMethodError("Not implemented");
+  }
+
+  public void redisplay(@NonNull List<UUID> newContent) {
+    throw new AbstractMethodError("Not implemented");
+  }
+
+  protected boolean isSearchable() {
+    return false;
   }
 }
