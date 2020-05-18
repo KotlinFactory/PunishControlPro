@@ -12,7 +12,7 @@ import net.md_5.bungee.api.connection.ProxiedPlayer;
 import org.mineacademy.bfo.Common;
 import org.mineacademy.bfo.PlayerUtil;
 import org.mineacademy.burst.provider.UUIDNameProvider;
-import org.mineacademy.fo.debug.Debugger;
+import org.mineacademy.bfo.debug.Debugger;
 import org.mineacademy.punishcontrol.core.MessageType;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.AbstractPlayerProvider;

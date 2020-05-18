@@ -32,6 +32,10 @@ public final class MuteListener implements Listener<ChatEvent> {
 
   @Override
   public void handleEvent(final ChatEvent event) {
+    if (!Punish.Mute.ENABLED) {
+      return;
+    }
+
     final UUID target = event.targetUUID();
     final Optional<Mute> optionalMute = storageProvider.currentMute(target);
     optionalMute.ifPresent((mute -> {

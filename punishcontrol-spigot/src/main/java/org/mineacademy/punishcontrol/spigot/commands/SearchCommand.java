@@ -83,7 +83,7 @@ public final class SearchCommand
                 ? "&cbanned"
                 : "&7not banned";
 
-            final String name = playerProvider.findNameUnsafe(uuid);
+            final String name = playerProvider.findName(uuid).orElse("unknown");
             SimpleComponent
                 .of("&8" + name + "&7")
                 .onHover("&7Click to copy")
@@ -97,7 +97,7 @@ public final class SearchCommand
           }
 
           tell("&7" + Common.chatLineSmooth());
-          //paritial name
+          //partial name
         } else {
           tell("&7" + Common.chatLineSmooth());
           tell("&7Similar-Names");

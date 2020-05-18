@@ -10,7 +10,7 @@ import org.mineacademy.punishcontrol.core.MessageType;
 import org.mineacademy.punishcontrol.core.Searcher.SearchResult;
 
 /**
- * Provide Data needed
+ * Provide data needed
  */
 public interface PlayerProvider {
 
@@ -26,7 +26,8 @@ public interface PlayerProvider {
 
   boolean isOnline(@NonNull UUID uuid);
 
-  boolean hasPermission(@NonNull final UUID uuid,
+  boolean hasPermission(
+      @NonNull final UUID uuid,
       @NonNull final String permission);
 
   Optional<String> findName(@NonNull UUID uuid);

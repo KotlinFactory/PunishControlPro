@@ -7,6 +7,7 @@ import org.mineacademy.punishcontrol.core.events.JoinEvent;
 import org.mineacademy.punishcontrol.core.listener.Listener;
 import org.mineacademy.punishcontrol.core.punish.Punishes;
 import org.mineacademy.punishcontrol.core.punishes.Ban;
+import org.mineacademy.punishcontrol.core.settings.Settings.Punish;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 
 public final class BanListener implements Listener<JoinEvent> {
@@ -25,6 +26,9 @@ public final class BanListener implements Listener<JoinEvent> {
 
   @Override
   public void handleEvent(final JoinEvent event) {
+    if (!Punish.Ban.ENABLED) {
+      return;
+    }
     final UUID target = event.targetUUID();
     final Optional<Ban> optionalBan = storageProvider.currentBan(target);
 

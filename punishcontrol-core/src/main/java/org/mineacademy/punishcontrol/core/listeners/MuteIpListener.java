@@ -33,6 +33,11 @@ public final class MuteIpListener implements Listener<ChatEvent> {
 
   @Override
   public void handleEvent(final ChatEvent event) {
+
+    if (!Punish.Mute.ENABLED) {
+      return;
+    }
+
     if (!Punish.Mute.APPLY_ON_IP) {
       return;
     }
@@ -42,17 +47,14 @@ public final class MuteIpListener implements Listener<ChatEvent> {
 
     optionalMute.ifPresent((mute -> {
       //TODO format
-      if(Punish.Mute.DISABLED_COMMANDS.contains("*")) {
+      if (Punish.Mute.DISABLED_COMMANDS.contains("*")) {
         return;
       }
-
 
       //Is a allowed commands
       if (canByPass(event.message())) {
         return;
       }
-
-
 
       event.canceled(true);
       event.cancelReason(Punishes.formPunishedMessage(mute));

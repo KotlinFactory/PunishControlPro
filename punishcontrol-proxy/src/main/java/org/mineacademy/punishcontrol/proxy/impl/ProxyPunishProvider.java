@@ -49,8 +49,10 @@ public final class ProxyPunishProvider implements PunishProvider {
       }));
     }
 
-    final val targetName = Providers.playerProvider().findName(punish.target()).orElse("");
-    final val creatorName = Providers.playerProvider().findName(punish.creator()).orElse("");
+    final val targetName = Providers.playerProvider().findName(punish.target())
+        .orElse("");
+    final val creatorName = Providers.playerProvider().findName(punish.creator())
+        .orElse("");
 
     switch (punish.punishType()) {
       case BAN:
@@ -108,7 +110,7 @@ public final class ProxyPunishProvider implements PunishProvider {
 
         org.mineacademy.bfo.Common
             .tell(player, Localization.Punish.PUNISH_BROADCAST_MESSAGE.replace(
-                org.mineacademy.fo.Common.chatLine(),
+                org.mineacademy.bfo.Common.chatLine(),
                 Providers.playerProvider().findNameUnsafe(punish.target()),
                 punish.punishType().localized(),
                 punish.reason(),
@@ -131,7 +133,7 @@ public final class ProxyPunishProvider implements PunishProvider {
         continue;
       }
 
-      org.mineacademy.bfo.Common
+      Common
           .tell(player, Localization.Punish.PUNISH_BROADCAST_MESSAGE.replace(
               Common.chatLine(),
               Providers.playerProvider().findNameUnsafe(punish.target()),

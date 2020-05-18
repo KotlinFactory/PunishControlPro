@@ -8,6 +8,7 @@ import org.mineacademy.punishcontrol.core.listener.Listener;
 import org.mineacademy.punishcontrol.core.punish.Punishes;
 import org.mineacademy.punishcontrol.core.punishes.Ban;
 import org.mineacademy.punishcontrol.core.settings.Settings;
+import org.mineacademy.punishcontrol.core.settings.Settings.Punish;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 
 public class BanIpListener implements Listener<JoinEvent> {
@@ -26,6 +27,10 @@ public class BanIpListener implements Listener<JoinEvent> {
 
   @Override
   public void handleEvent(final JoinEvent event) {
+    if (!Punish.Ban.ENABLED) {
+      return;
+    }
+
     if (!Settings.Punish.Ban.APPLY_ON_IP) {
       return;
     }

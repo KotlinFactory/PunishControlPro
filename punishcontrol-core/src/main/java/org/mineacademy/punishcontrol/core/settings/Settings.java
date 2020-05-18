@@ -66,9 +66,9 @@ public final class Settings extends SimpleSettings {
 
       private static void init() {
         pathPrefix("Punishes.Mute");
+        ENABLED = getBoolean("Enabled");
         DISABLED_COMMANDS = getStringList("Disabled_Commands");
         APPLY_ON_IP = getBoolean("Apply_On_Ip");
-
       }
     }
 
