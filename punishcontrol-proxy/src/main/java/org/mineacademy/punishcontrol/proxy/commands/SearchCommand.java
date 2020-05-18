@@ -133,8 +133,8 @@ public final class SearchCommand
             + "player by its partial name",
         "&7" + getLabel() + " player <ip> &8*&7 search for players by ip",
         "&7/" + getLabel() + " ip <player>  &8*&7 get a player's IP",
-        "&7/" + getLabel() + " uuid <uuid>  &8*&7 get a player's UUID",
-        "&7/" + getLabel() + " name <player>  &8*&7 get a player's name from UUID",
+        "&7/" + getLabel() + " uuid <player>  &8*&7 get a player's UUID",
+        "&7/" + getLabel() + " name <uuid>  &8*&7 get a player's name from UUID",
         Common.chatLineSmooth()
     };
   }
