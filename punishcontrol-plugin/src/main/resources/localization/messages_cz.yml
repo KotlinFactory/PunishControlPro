@@ -1,0 +1,35 @@
+Commands:
+  Player:
+    Never_Played: "&cHráč {player} nikdy nehrál na tomto serveru"
+    Not_Online: "&cHráč {player} &cnení online na tomto serveru."
+    Not_Exists: "&cHráč {player} &cbohužel neexistuje"
+
+Punish:
+  #Placeholders: {console_line}, {player}, {type}, {reason}, {duration}, {expiration}, {ip}
+  Message_To_Broadcast:
+    - "&7{chat_line}"
+    - "&7Hráč {player} byl potrestán."
+    - "&7Typ: &6{type}"
+    - "&7Důvod: {reason}"
+    - "&7IP: {ip}"
+    - "&7{chat_line}"
+
+  Ban_Message:
+    - ""
+    - "&eByl jste zabanován"
+    - "&eDůvod: {reason}"
+    - "&eExpirace: {expiration}"
+    - ""
+
+  Mute_Message:
+    - "&eByl jste umlčen"
+    - "&eDůvod: {reason}"
+    - "&eExpirace: {expiration}"
+    - ""
+
+  #
+  Warn_Message:
+    - "&eByl jste varován: {reason}"
+    - "&eExpirace: {expiration}"
+
+Version: 1

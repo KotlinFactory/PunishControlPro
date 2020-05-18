@@ -1,0 +1,35 @@
+Commands:
+  Player:
+    Never_Played: "&cIgrač {player} nikad nije igrao na serveru."
+    Not_Online: "&cIgrač {player} &cnije na serveru."
+    Not_Exists: "&cIgrač {player} &cne postoji.."
+
+Punish:
+  #Placeholders: {console_line}, {player}, {type}, {reason}, {duration}, {expiration}, {ip}
+  Message_To_Broadcast:
+    - "&7{chat_line}"
+    - "&7Igrač {player} je bio kažnjen."
+    - "&7Tip: &6{type}"
+    - "&7Razlog: {reason}"
+    - "&7IP: {ip}"
+    - "&7{chat_line}"
+
+  Ban_Message:
+    - ""
+    - "&eZabranjen Vam je pristup serveru"
+    - "&eRazlog: {reason}"
+    - "&eIstiče dana: {expiration}"
+    - ""
+
+  Mute_Message:
+    - "&eBili ste utišani"
+    - "&eRazlog: {reason}"
+    - "&eIstiče dana: {expiration}"
+    - ""
+
+  #
+  Warn_Message:
+    - "&eBili ste upozoreni: {reason}"
+    - "&eIstiče dana: {expiration}"
+
+Version: 1

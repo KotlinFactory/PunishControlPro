@@ -1,0 +1,35 @@
+Commands:
+  Игрок:
+    Never_Played: "&cИгрок {player} никогда не играл на этом сервере."
+    Not_Online: "&cИгрок {player} &cне в сети на этом сервере."
+    Not_Exists: "&cИгрок {player} &cне существует."
+
+Punish:
+  #Placeholders: {console_line}, {player}, {type}, {reason}, {duration}, {expiration}, {ip}
+  Message_To_Broadcast:
+    - "&7{chat_line}"
+    - "&7Игрок {player} был наказан."
+    - "&7Тип: &6{type}"
+    - "&7Причина: {reason}"
+    - "&7IP: {ip}"
+    - "&7{chat_line}"
+
+  Ban_Message:
+    - ""
+    - "&eВы были забанены"
+    - "&eПричина: {reason}"
+    - "&eИстекает: {expiration}"
+    - ""
+
+  Mute_Message:
+    - "&eВас заглушили в чате"
+    - "&eПричина: {reason}"
+    - "&eИстекает: {expiration}"
+    - ""
+
+  #
+  Warn_Message:
+    - "&eВы полчили предупреждение: {reason}"
+    - "&eИстекает: {expiration}"
+
+Version: 1
