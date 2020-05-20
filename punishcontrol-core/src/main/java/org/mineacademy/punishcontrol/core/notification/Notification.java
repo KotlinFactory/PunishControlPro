@@ -36,7 +36,6 @@ public class Notification {
     return text;
   }
 
-
   private final long creation = System.currentTimeMillis();
 
   @SuppressWarnings("unchecked")

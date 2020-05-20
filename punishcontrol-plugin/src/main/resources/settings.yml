@@ -28,7 +28,8 @@
 Prefix: '&8&lPUNISHCONTROL &8//&7'
 
 # -------------------------------------------------------------------------------------------
-# Currently available: en (English), de (German)
+# Currently available: en (English), de (German), cz Czech (with exclusive cases support (pády)(
+# fr(French), nl (Dutch), pt (Portuguese), rs (Serbian), es (Spanish), sk (Slovak)
 # Read https://github.com/kangarko/PunishControl/wiki/Localization for tutorial on custom localization.
 # -------------------------------------------------------------------------------------------
 Locale: en
@@ -37,7 +38,7 @@ Locale: en
 # What commands should trigger the punishcontrol menu (separated by a comma ,)?
 # * THE FIRST ALIAS IS THE MAIN LABEL, PLEASE DO NOT REMOVE IT. *
 # -------------------------------------------------------------------------------------------
-Command_Aliases: [punishcontrol,phc, pun, pc]
+Command_Aliases: [punishcontrol, phc, pun, pc]
 
 # -------------------------------------------------------------------------------------------
 # Change how your data is going to be stored
@@ -153,5 +154,5 @@ Advanced:
 # -----------------------------------------------------------------------------------------------------
 Debug: []
 
-# Do not change this value, otherwise it will corrupt your plugin installation!
+# Do not change this value, otherwise, it will corrupt your plugin installation!
 Version: 2

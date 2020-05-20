@@ -218,7 +218,7 @@ public final class PunishTemplateCreatorMenu extends Menu {
         }
         punishTemplate.superSilent(!punishTemplate.superSilent());
         restartMenu(punishTemplate.superSilent()
-            ? "&8asuper-silent"
+            ? "&8super-silent"
             : "&cnot super-silent");
       }
 

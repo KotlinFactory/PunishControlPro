@@ -1,14 +1,16 @@
 package org.mineacademy.punishcontrol.core.punish.importer;
 
-import lombok.AccessLevel;
 import lombok.Getter;
-import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
 
 @Getter
 @Accessors(fluent = true)
-@RequiredArgsConstructor(access = AccessLevel.PROTECTED)
-public class AbstractImporter {
+public abstract class AbstractImporter implements PunishImporter {
 
   private final String name;
+
+  protected AbstractImporter(String name) {
+    this.name = name;
+    PunishImporters.register(this);
+  }
 }

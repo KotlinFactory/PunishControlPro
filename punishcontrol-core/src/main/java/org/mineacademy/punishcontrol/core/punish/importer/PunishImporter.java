@@ -6,6 +6,8 @@ import org.mineacademy.punishcontrol.core.punish.Punish;
 
 public interface PunishImporter {
 
+  String name();
+
   List<Punish> listPunishesToImport();
 
   Notification notificationOnSuccess();

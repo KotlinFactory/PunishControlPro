@@ -5,7 +5,7 @@ Commands:
     Not_Exists: "&cHráč {player} &cbohužel neexistuje"
 
 Punish:
-  #Placeholders: {console_line}, {player}, {type}, {reason}, {duration}, {expiration}, {ip}
+  # Placeholders: {console_line}, {player}, {type}, {reason}, {duration}, {expiration}, {ip}
   Message_To_Broadcast:
     - "&7{chat_line}"
     - "&7Hráč {player} byl potrestán."

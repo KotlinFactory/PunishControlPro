@@ -127,7 +127,7 @@ public final class SearchCommand
   @Override
   protected String[] getMultilineUsageMessage() {
     return new String[]{
-        Common.chatLineSmooth(),
+        "&8" + Common.chatLineSmooth(),
         "&eSearch-Command",
         "&7/" + getLabel() + " player <partial-name> &8* &7search for an "
             + "player by its partial name",
@@ -135,7 +135,7 @@ public final class SearchCommand
         "&7/" + getLabel() + " ip <player>  &8*&7 get a player's IP",
         "&7/" + getLabel() + " uuid <player>  &8*&7 get a player's UUID",
         "&7/" + getLabel() + " name <uuid>  &8*&7 get a player's name from UUID",
-        Common.chatLineSmooth()
+        "&8" + Common.chatLineSmooth()
     };
   }
 

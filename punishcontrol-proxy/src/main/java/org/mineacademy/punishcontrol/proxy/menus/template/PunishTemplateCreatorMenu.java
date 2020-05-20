@@ -361,7 +361,7 @@ public final class PunishTemplateCreatorMenu extends AbstractMenu {
       }
       punishTemplate.superSilent(!punishTemplate.superSilent());
       animateTitle(punishTemplate.superSilent()
-          ? "&8asuper-silent"
+          ? "&8super-silent"
           : "&cnot super-silent");
       build();
       return CallResult.DENY_GRABBING;

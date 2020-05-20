@@ -1,3 +1,8 @@
+#
+# PunishControl German localization file
+# Wie schön es doch ist Deutscher zu sein^^
+#
+
 Commands:
   Player:
     Never_Played: "&cEin Spieler namens {player} war noch nie auf diesem server."
@@ -5,7 +10,8 @@ Commands:
     Not_Exists: "&cDer Spieler {player} &cexistiert nicht"
 
 Punish:
-  #Placeholders: {console_line}, {player}, {type}, {reason}, {duration}, {expiration}, {ip}
+  # Placeholders: {console_line}, {player}, {type}, {reason}, {duration}, {expiration}, {ip}
+  #
   Message_To_Broadcast:
     - "&7{chat_line}"
     - "&7Der Spieler {player} wurde gepunished."

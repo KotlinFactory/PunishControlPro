@@ -30,6 +30,6 @@ public final class ProxyPluginDataProvider implements PluginDataProvider {
 
   @Override
   public String getVersion() {
-    return SimplePlugin.getNamed();
+    return SimplePlugin.getVersion();
   }
 }
