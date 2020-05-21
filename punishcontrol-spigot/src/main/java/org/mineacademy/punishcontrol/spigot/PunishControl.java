@@ -36,7 +36,6 @@ public final class PunishControl
 
   private final SpigotComponent spigotModule = DaggerSpigotComponent.create();
 
-
   /**
    * Setting providers needed before the start
    */
