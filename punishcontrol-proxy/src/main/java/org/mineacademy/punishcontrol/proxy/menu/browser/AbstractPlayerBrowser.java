@@ -13,6 +13,7 @@ import org.jetbrains.annotations.Nullable;
 import org.mineacademy.burst.item.Item;
 import org.mineacademy.burst.menu.AbstractBrowser;
 import org.mineacademy.burst.menu.BurstMenu;
+import org.mineacademy.punishcontrol.core.fo.constants.FoConstants;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.providers.TextureProvider;
 import org.mineacademy.punishcontrol.proxy.conversations.SearchPlayerConversation;
@@ -59,6 +60,7 @@ public abstract class AbstractPlayerBrowser extends AbstractBrowser<UUID> {
       SearchPlayerConversation.create(getPlayer(), this).start();
       return CallResult.DENY_GRABBING;
     }));
+    players.remove(FoConstants.CONSOLE);
   }
 
   // ----------------------------------------------------------------------------------------------------

@@ -10,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
 import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.fo.menu.model.ItemCreator;
+import org.mineacademy.punishcontrol.core.fo.constants.FoConstants;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.providers.TextureProvider;
 import org.mineacademy.punishcontrol.spigot.util.ItemStacks;
@@ -52,6 +53,7 @@ public abstract class AbstractPlayerBrowser extends AbstractBrowser<UUID> {
     this.playerProvider = playerProvider;
     this.textureProvider = textureProvider;
     setTitle("&8Players");
+    players.remove(FoConstants.CONSOLE);
   }
 
   @Nullable
