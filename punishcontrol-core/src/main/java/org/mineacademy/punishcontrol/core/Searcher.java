@@ -47,5 +47,4 @@ public class Searcher {
 
     double similarity();
   }
-
 }

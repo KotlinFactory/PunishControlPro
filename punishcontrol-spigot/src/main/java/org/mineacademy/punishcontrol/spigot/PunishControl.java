@@ -41,22 +41,42 @@ public final class PunishControl
    */
   @Override
   protected void onPluginPreStart() {
-    if (!getDataFolder().exists()) {
+    Providers.pluginDataProvider(SpigotPluginDataProvider.create());
+
+    if (getDataFolder().exists()) {
+      return;
+    }
+
+    Notifications.register(
+        Notification
+            .of("&6Take a tour")
+            .text(
+                "",
+                "&7It seems like",
+                "&7This is the first-time",
+                "&7you use " + SimplePlugin.getNamed(),
+                "&7on this server. &7Documentation:",
+                "&7github.com/kangarko/punishcontrol/wiki"
+            )
+            .itemType(CompMaterial.ENCHANTED_GOLDEN_APPLE)
+    );
+
+    if (SpigotConfig.bungee) {
       Notifications.register(
           Notification
-              .of("&6Take a tour")
+              .of("&6Use on Bungee")
               .text(
                   "",
                   "&7It seems like",
-                  "&7This is the first-time",
-                  "&7you use " + SimplePlugin.getNamed(),
-                  "&7on this server. &7Documentation:",
-                  "&7github.com/kangarko/punishcontrol/wiki"
+                  "&7You are running an BungeeCord server",
+                  "&7PunishControl works brilliantly on BungeeCord",
+                  "&7Make sure to install PunishControl on",
+                  "&7the BungeeCord to make use of all its abilities"
               )
-              .itemType(CompMaterial.ENCHANTED_GOLDEN_APPLE)
+              .itemType(CompMaterial.GREEN_STAINED_GLASS)
       );
     }
-    Providers.pluginDataProvider(SpigotPluginDataProvider.create());
+
   }
 
   @Override
