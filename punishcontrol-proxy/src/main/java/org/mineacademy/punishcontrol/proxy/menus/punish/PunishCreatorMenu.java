@@ -457,6 +457,11 @@ public final class PunishCreatorMenu extends AbstractMenu {
         return CallResult.DENY_GRABBING;
       }
 
+      if (punishBuilder().duration() == null) {
+        animateTitle("&cMissing duration!");
+        return CallResult.DENY_GRABBING;
+      }
+
       //Checking access
 
       //Not from template

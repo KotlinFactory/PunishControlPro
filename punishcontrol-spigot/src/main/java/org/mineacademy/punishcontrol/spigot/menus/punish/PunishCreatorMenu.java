@@ -227,14 +227,19 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
           return;
         }
 
+        if (punishBuilder().duration() == null) {
+          animateTitle("&cMissing duration!");
+          return;
+        }
+
         //Checking access
 
         //Not from template
         if (punishTemplate == null) {
           if (!Groups.hasAccess(
               getViewer().getUniqueId(),
-              punishBuilder.punishType(),
-              punishBuilder.duration())) {
+              punishBuilder().punishType(),
+              punishBuilder().duration())) {
             animateTitle("&cYou would exceed your limits");
             return;
           }
