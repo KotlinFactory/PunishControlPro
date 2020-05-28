@@ -13,8 +13,8 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <author>leonhard</author>
-    <plugin.name>punishcontrol-pro</plugin.name>
+    <author>kangarko</author>
+    <plugin.name>punishcontrol</plugin.name>
 
     <!-- Our main-classes-->
     <proxy.main>
@@ -126,6 +126,10 @@
               <shadedPattern>org.mineacademy.${plugin.name}.lib</shadedPattern>
               <pattern>org.mineacademy.bfo</pattern>
               <shadedPattern>org.mineacademy.${plugin.name}.lib</shadedPattern>
+              <pattern>de.exceptionflug.protocolize</pattern>
+              <shadedPattern>org.mineacademy.lib.proto</shadedPattern>
+              <pattern>de.exceptionflug.mccommons</pattern>
+              <shadedPattern>org.mineacademy.lib.mcc</shadedPattern>
             </relocation>
           </relocations>
         </configuration>

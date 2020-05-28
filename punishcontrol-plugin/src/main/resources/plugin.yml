@@ -1,4 +1,3 @@
-#Change me to use the maven properties
 main: org.mineacademy.punishcontrol.spigot.PunishControl
 version: ${project.version}
 name: PunishControl
@@ -7,4 +6,6 @@ author: ${author}
 api-version: 1.13
 softdepend:
   - Essentials
-  - UltraPunishments
+
+commands:
+# The command are built at runtime so you can change them easily within the settings.

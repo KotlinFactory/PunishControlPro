@@ -45,7 +45,6 @@ public class DurationChooseConversation extends SimpleConversation {
         final SimpleConversation conversation,
         final ConversationAbandonedEvent event) {
       menu.displayTo(getPlayer(event.getContext()), true);
-
     }
 
     @Override

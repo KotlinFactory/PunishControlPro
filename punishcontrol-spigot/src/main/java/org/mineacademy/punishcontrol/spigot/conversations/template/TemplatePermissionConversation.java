@@ -47,7 +47,6 @@ public class TemplatePermissionConversation extends SimpleConversation {
       Scheduler.runAsync(() -> {
         menu.punishTemplate().permission(input);
         menu.displayTo(getPlayer(context));
-        menu.restartMenu();
       });
       return null;
     }

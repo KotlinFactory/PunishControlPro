@@ -2,23 +2,10 @@ package org.mineacademy.punishcontrol.proxy;
 
 import dagger.Component;
 import org.mineacademy.punishcontrol.core.provider.Providers;
-import org.mineacademy.punishcontrol.proxy.commands.BanCommand;
-import org.mineacademy.punishcontrol.proxy.commands.ChooseActionCommand;
-import org.mineacademy.punishcontrol.proxy.commands.KickCommand;
-import org.mineacademy.punishcontrol.proxy.commands.MuteCommand;
-import org.mineacademy.punishcontrol.proxy.commands.PlayerInfoCommand;
-import org.mineacademy.punishcontrol.proxy.commands.SearchCommand;
-import org.mineacademy.punishcontrol.proxy.commands.UnBanCommand;
-import org.mineacademy.punishcontrol.proxy.commands.UnMuteCommand;
-import org.mineacademy.punishcontrol.proxy.commands.UnWarnCommand;
-import org.mineacademy.punishcontrol.proxy.commands.WarnCommand;
+import org.mineacademy.punishcontrol.proxy.commands.*;
 import org.mineacademy.punishcontrol.proxy.listeners.ProxyDataSetter;
 import org.mineacademy.punishcontrol.proxy.menus.MainMenu;
-import org.mineacademy.punishcontrol.proxy.menus.browsers.AllPunishesBrowser;
-import org.mineacademy.punishcontrol.proxy.menus.browsers.PlayerBrowser;
-import org.mineacademy.punishcontrol.proxy.menus.browsers.PunishTemplateBrowser;
-import org.mineacademy.punishcontrol.proxy.menus.browsers.PunishedPlayerBrowser;
-import org.mineacademy.punishcontrol.proxy.menus.browsers.SettingsBrowser;
+import org.mineacademy.punishcontrol.proxy.menus.browsers.*;
 import org.mineacademy.punishcontrol.proxy.menus.punish.PunishCreatorMenu;
 import org.mineacademy.punishcontrol.proxy.menus.settings.LanguageSettingsMenu;
 import org.mineacademy.punishcontrol.proxy.menus.settings.StorageSettingsMenu;
@@ -29,58 +16,58 @@ import org.mineacademy.punishcontrol.proxy.menus.settings.StorageSettingsMenu;
 @Component(modules = {Providers.class, ProxyModule.class})
 public interface ProxyComponent {
 
-  // ----------------------------------------------------------------------------------------------------
-  // Listener
-  // ----------------------------------------------------------------------------------------------------
-  ProxyDataSetter proxyDataSetter();
+    // ----------------------------------------------------------------------------------------------------
+    // Listener
+    // ----------------------------------------------------------------------------------------------------
+    ProxyDataSetter proxyDataSetter();
 
-  // ----------------------------------------------------------------------------------------------------
-  // Commands
-  // ----------------------------------------------------------------------------------------------------
+    // ----------------------------------------------------------------------------------------------------
+    // Commands
+    // ----------------------------------------------------------------------------------------------------
 
-  KickCommand commandKick();
+    KickCommand commandKick();
 
-  BanCommand commandBan();
+    BanCommand commandBan();
 
-  MuteCommand commandMute();
+    MuteCommand commandMute();
 
-  WarnCommand commandWarn();
+    WarnCommand commandWarn();
 
-  UnBanCommand commandUnBan();
+    UnBanCommand commandUnBan();
 
-  UnMuteCommand commandUnMute();
+    UnMuteCommand commandUnMute();
 
-  UnWarnCommand commandUnWarn();
+    UnWarnCommand commandUnWarn();
 
-  PlayerInfoCommand commandPlayerInfo();
+    PlayerInfoCommand commandPlayerInfo();
 
-  SearchCommand searchCommand();
+    SearchCommand searchCommand();
 
-  ChooseActionCommand chooseActionCommand();
+    ChooseActionCommand chooseActionCommand();
 
-  // ----------------------------------------------------------------------------------------------------
-  // Menus
-  // ----------------------------------------------------------------------------------------------------
+    // ----------------------------------------------------------------------------------------------------
+    // Menus
+    // ----------------------------------------------------------------------------------------------------
 
-  MainMenu menuMain();
+    MainMenu menuMain();
 
-  PlayerBrowser playerBrowserMenu();
+    PlayerBrowser playerBrowserMenu();
 
-  AllPunishesBrowser punishBrowserMenu();
+    AllPunishesBrowser punishBrowserMenu();
 
-  PunishTemplateBrowser punishTemplateBrowser();
+    PunishTemplateBrowser punishTemplateBrowser();
 
-  PunishCreatorMenu punishCreatorMenu();
+    PunishCreatorMenu punishCreatorMenu();
 
-  PunishedPlayerBrowser punishedPlayerBrowser();
+    PunishedPlayerBrowser punishedPlayerBrowser();
 
-  //Settings - Menus
+    //Settings - Menus
 
-  SettingsBrowser settingsBrowser();
+    SettingsBrowser settingsBrowser();
 
-  StorageSettingsMenu mySqlSettingsMenu();
+    StorageSettingsMenu mySqlSettingsMenu();
 
-  LanguageSettingsMenu languageSettingsMenu();
+    LanguageSettingsMenu languageSettingsMenu();
 
-  StorageSettingsMenu storageSettingsMenu();
+    StorageSettingsMenu storageSettingsMenu();
 }

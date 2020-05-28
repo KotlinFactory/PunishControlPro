@@ -135,7 +135,7 @@ public interface PunishControlPluginBootstrap {
       registerEvents(coreModule.muteIpListener());
       //Spigot-Listeners
       registerListener();
-      log("Listener... §l§aok");
+      log("Listener... §l§aOK");
     } catch (final Throwable throwable) {
       log("Listener... §l§cdone");
       saveError(throwable);

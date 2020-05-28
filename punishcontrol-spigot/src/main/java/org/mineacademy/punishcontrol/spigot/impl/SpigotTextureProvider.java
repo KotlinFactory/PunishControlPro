@@ -1,6 +1,5 @@
 package org.mineacademy.punishcontrol.spigot.impl;
 
-import de.leonhard.storage.Json;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -8,11 +7,14 @@ import lombok.val;
 import org.mineacademy.fo.debug.Debugger;
 import org.mineacademy.fo.plugin.SimplePlugin;
 import org.mineacademy.punishcontrol.core.PunishControlManager;
+import org.mineacademy.punishcontrol.core.flatfiles.SecureJson;
+import org.mineacademy.punishcontrol.core.provider.Providers;
+import org.mineacademy.punishcontrol.core.providers.ExceptionHandler;
 import org.mineacademy.punishcontrol.core.providers.TextureProvider;
 import org.mineacademy.punishcontrol.spigot.util.MojangUtils;
 
 public final class SpigotTextureProvider
-    extends Json
+    extends SecureJson
     implements TextureProvider {
 
   private SpigotTextureProvider() {
@@ -47,5 +49,10 @@ public final class SpigotTextureProvider
       result.add(entry.getValue().toString());
     }
     return result;
+  }
+
+  @Override
+  public ExceptionHandler exceptionHandler() {
+    return Providers.exceptionHandler();
   }
 }

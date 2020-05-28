@@ -56,7 +56,7 @@ public final class SpigotListenerImpl implements Listener {
               asyncPlayerChatEvent.getPlayer().getAddress().getAddress(),
               asyncPlayerChatEvent.getMessage()));
       asyncPlayerChatEvent.setCancelled(chatEvent.canceled());
-      asyncPlayerChatEvent.setMessage(Common.colorize(chatEvent.message()));
+      asyncPlayerChatEvent.setMessage(chatEvent.message());
     } catch (final Throwable throwable) {
       Debugger.saveError(throwable, "Exception while calling chat-event!");
     }

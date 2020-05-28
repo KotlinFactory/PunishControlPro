@@ -26,6 +26,7 @@ public class Players {
 
   public Optional<OfflinePlayer> findOffline(@NonNull final UUID uuid) {
     // Can be null. @NonNull is not correct here
+
     return Optional.ofNullable(Bukkit.getOfflinePlayer(uuid));
   }
 }

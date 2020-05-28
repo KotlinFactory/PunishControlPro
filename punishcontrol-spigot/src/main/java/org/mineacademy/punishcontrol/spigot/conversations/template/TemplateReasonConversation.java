@@ -48,11 +48,6 @@ public class TemplateReasonConversation extends SimpleConversation {
       Scheduler.runAsync(() -> {
         menu.punishTemplate().reason(input);
         menu.displayTo(getPlayer(context));
-        try {
-          menu.restartMenu();
-        } catch (final Throwable ignored) {
-
-        }
       });
       return null;
     }

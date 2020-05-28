@@ -97,9 +97,13 @@ public final class PunishControl
       cfg.set("Advanced.Online_Mode", false);
       log("[PCP-Prestart] your server is in offline-mode - Changed config");
     }
-
     onPunishControlPluginStart();
     SimpleSettingsInjector.inject();
+
+    // Initializing legacy material support
+    spigotModule.menuMain();
+    CompMaterial.fromLegacy("STONE", 1);
+    val mat = CompMaterial.ACACIA_DOOR;
 
 //    Common.ADD_TELL_PREFIX = true;
   }

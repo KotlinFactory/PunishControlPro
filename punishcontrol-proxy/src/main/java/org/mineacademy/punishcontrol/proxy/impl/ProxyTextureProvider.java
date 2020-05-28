@@ -1,6 +1,5 @@
 package org.mineacademy.punishcontrol.proxy.impl;
 
-import de.leonhard.storage.Json;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -9,9 +8,12 @@ import org.mineacademy.bfo.debug.Debugger;
 import org.mineacademy.bfo.plugin.SimplePlugin;
 import org.mineacademy.burst.util.MojangUtils;
 import org.mineacademy.punishcontrol.core.PunishControlManager;
+import org.mineacademy.punishcontrol.core.flatfiles.SecureJson;
+import org.mineacademy.punishcontrol.core.provider.Providers;
+import org.mineacademy.punishcontrol.core.providers.ExceptionHandler;
 import org.mineacademy.punishcontrol.core.providers.TextureProvider;
 
-public final class ProxyTextureProvider extends Json
+public final class ProxyTextureProvider extends SecureJson
     implements TextureProvider, org.mineacademy.burst.provider.TextureProvider {
 
   private ProxyTextureProvider() {
@@ -49,5 +51,10 @@ public final class ProxyTextureProvider extends Json
     }
 
     return result;
+  }
+
+  @Override
+  public ExceptionHandler exceptionHandler() {
+    return Providers.exceptionHandler();
   }
 }
