@@ -1,24 +1,28 @@
 package org.mineacademy.punishcontrol.proxy.menu.browser;
 
-import de.exceptionflug.mccommons.inventories.api.CallResult;
+import de.exceptionflug.mccommons.inventories.api.ClickType;
 import de.exceptionflug.mccommons.inventories.proxy.utils.ItemUtils;
-import de.exceptionflug.protocolize.inventory.InventoryModule;
 import de.exceptionflug.protocolize.items.ItemStack;
-import de.exceptionflug.protocolize.items.ItemType;
 import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import lombok.NonNull;
+import lombok.val;
 import org.jetbrains.annotations.Nullable;
 import org.mineacademy.burst.item.Item;
-import org.mineacademy.burst.menu.AbstractBrowser;
+import org.mineacademy.burst.menu.AbstractSearchableBrowser;
 import org.mineacademy.burst.menu.BurstMenu;
 import org.mineacademy.punishcontrol.core.fo.constants.FoConstants;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.providers.TextureProvider;
-import org.mineacademy.punishcontrol.proxy.conversations.SearchPlayerConversation;
 
-public abstract class AbstractPlayerBrowser extends AbstractBrowser<UUID> {
+/**
+ * Abstract class for our PlayerBrowser
+ * Implementations mustn't have any particular constructor-logic or they must override
+ * {@link #reDisplay()} and {@link #redisplay(Collection)}
+ */
+public abstract class AbstractPlayerBrowser extends AbstractSearchableBrowser<UUID> {
 
   protected final PlayerProvider playerProvider;
   protected final TextureProvider textureProvider;
@@ -26,8 +30,8 @@ public abstract class AbstractPlayerBrowser extends AbstractBrowser<UUID> {
   public AbstractPlayerBrowser(
       final PlayerProvider playerProvider,
       final TextureProvider textureProvider,
-      final BurstMenu mainMenu) {
-    this(playerProvider, textureProvider, mainMenu, false);
+      final BurstMenu parent) {
+    this(playerProvider, textureProvider, parent, false);
   }
 
   public AbstractPlayerBrowser(
@@ -50,45 +54,20 @@ public abstract class AbstractPlayerBrowser extends AbstractBrowser<UUID> {
       final BurstMenu mainMenu,
       final Collection<UUID> players
   ) {
-    super("Players", mainMenu, players);
+    super(
+        "Players",
+        mainMenu,
+        players);
     this.playerProvider = playerProvider;
     this.textureProvider = textureProvider;
     setTitle("&8Players");
 
-    registerActionHandler("apply", (apply -> {
-      InventoryModule.closeAllInventories(getPlayer());
-      SearchPlayerConversation.create(getPlayer(), this).start();
-      return CallResult.DENY_GRABBING;
-    }));
     players.remove(FoConstants.CONSOLE);
   }
 
   // ----------------------------------------------------------------------------------------------------
   // Overridden methods
   // ----------------------------------------------------------------------------------------------------
-
-
-  @Override
-  public void updateInventory() {
-    super.updateInventory();
-
-    if (!isSearchable()) {
-      return;
-    }
-
-    set(
-        Item
-            .of(ItemType.COMPASS)
-            .name("&6Search")
-            .lore(
-                "&7Search for player by its",
-                "67partial name"
-            )
-            .actionHandler("Search")
-            .slot(getParentItemSlot() - 5)
-
-    );
-  }
 
   @Nullable
   protected List<String> lore(final UUID uuid) {
@@ -119,20 +98,51 @@ public abstract class AbstractPlayerBrowser extends AbstractBrowser<UUID> {
     };
   }
 
-  // ----------------------------------------------------------------------------------------------------
-  // Methods that might be overridden
-  // ----------------------------------------------------------------------------------------------------
 
   @Override
   public void reDisplay() {
-    throw new AbstractMethodError("Not implemented");
   }
 
-  public void redisplay(@NonNull List<UUID> newContent) {
-    throw new AbstractMethodError("Not implemented");
+  public void redisplay(@NonNull Collection<UUID> newContent) {
+    async(() -> {
+      val menu = new AbstractPlayerBrowser(
+          playerProvider,
+          textureProvider,
+          AbstractPlayerBrowser.this,
+          newContent) {
+
+        @Override
+        protected void onClick(ClickType clickType, UUID uuid) {
+          AbstractPlayerBrowser.this.onClick(clickType, uuid);
+        }
+
+        @Override
+        public Collection<UUID> searchByPartialString(String partial) {
+          return AbstractPlayerBrowser.this.searchByPartialString(partial);
+        }
+      };
+
+      menu.displayTo(AbstractPlayerBrowser.this.getPlayer());
+
+      if (newContent.size() == 1) {
+        menu.animateTitle("&8Found " + newContent.size() + " result");
+      } else {
+        menu.animateTitle("&8Found " + newContent.size() + " results");
+      }
+    });
   }
 
-  protected boolean isSearchable() {
-    return false;
+  @Override
+  public Collection<UUID> searchByPartialString(String partial) {
+    return playerProvider
+        .search(partial)
+        .stream()
+        .map((uuid -> playerProvider.findUUID(uuid.result()).orElse(UUID.randomUUID())))
+        .collect(Collectors.toList());
+  }
+
+  @Override
+  protected String[] compassLore() {
+    return new String[]{"&7Search for a player"};
   }
 }

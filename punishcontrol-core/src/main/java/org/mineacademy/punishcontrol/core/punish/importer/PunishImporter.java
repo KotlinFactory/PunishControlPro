@@ -11,4 +11,8 @@ public interface PunishImporter {
   List<Punish> listPunishesToImport();
 
   Notification notificationOnSuccess();
+
+  boolean isApplicable();
+
+  String[] description();
 }

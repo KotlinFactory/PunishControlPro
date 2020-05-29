@@ -3,6 +3,9 @@ package org.mineacademy.punishcontrol.core.provider;
 import dagger.Module;
 import dagger.Provides;
 import de.leonhard.storage.util.Valid;
+import java.util.Collection;
+import java.util.UUID;
+import javax.inject.Named;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.Accessors;
@@ -10,6 +13,7 @@ import org.mineacademy.punishcontrol.core.PunishControlManager;
 import org.mineacademy.punishcontrol.core.providers.ExceptionHandler;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.providers.PluginDataProvider;
+import org.mineacademy.punishcontrol.core.providers.PluginManager;
 import org.mineacademy.punishcontrol.core.providers.PunishProvider;
 import org.mineacademy.punishcontrol.core.providers.TextureProvider;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
@@ -46,9 +50,11 @@ public final class Providers {
   private static ExceptionHandler exceptionHandler;
   @Setter
   @NonNull
-  // Will be used from multiple
-  // threads
-  private volatile static StorageProvider storageProvider;
+  private static StorageProvider storageProvider;
+
+  @Setter
+  @NonNull
+  private static PluginManager pluginManager;
 
   @Provides
   public static PlayerProvider playerProvider() {
@@ -85,9 +91,22 @@ public final class Providers {
     return exceptionHandler;
   }
 
+  @Provides
+  public static PluginManager pluginManager() {
+    Valid.notNull(pluginManager, "PluginManager not yet set");
+
+    return pluginManager;
+  }
+
   // ----------------------------------------------------------------------------------------------------
   // Dagger only
   // ----------------------------------------------------------------------------------------------------
+
+  @Provides
+  @Named("offline-players")
+  public Collection<UUID> offlinePlayers() {
+    return playerProvider().offlinePlayers();
+  }
 
   //Lazy loading our storage provider & allowing to reset it
   @Provides

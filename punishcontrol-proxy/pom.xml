@@ -51,17 +51,10 @@
             <version>1.14-SNAPSHOT</version>
         </dependency>
 
-        <!--        <dependency>-->
-        <!--            <groupId>org.mineacademy.server</groupId>-->
-        <!--            <artifactId>BungeeCord</artifactId>-->
-        <!--            <version>SNAPSHOT-1417</version>-->
-        <!--            <scope>provided</scope>-->
-        <!--        </dependency>-->
-
         <dependency>
             <groupId>org.mineacademy</groupId>
             <artifactId>Burst</artifactId>
-            <version>1.0.0</version>
+            <version>1.0.1</version>
         </dependency>
 
         <dependency>

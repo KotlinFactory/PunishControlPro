@@ -8,7 +8,7 @@ import org.mineacademy.punishcontrol.core.providers.ExceptionHandler;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class SpigotExceptionHandler implements ExceptionHandler {
 
-  public static SpigotExceptionHandler newInstance() {
+  public static SpigotExceptionHandler create() {
     return new SpigotExceptionHandler();
   }
 

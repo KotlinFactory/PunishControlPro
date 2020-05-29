@@ -24,7 +24,7 @@ import org.mineacademy.punishcontrol.proxy.events.PunishCreateEvent;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ProxyPunishProvider implements PunishProvider {
 
-  public static ProxyPunishProvider newInstance() {
+  public static ProxyPunishProvider create() {
     return new ProxyPunishProvider();
   }
 

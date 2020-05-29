@@ -24,6 +24,7 @@ import org.mineacademy.punishcontrol.spigot.commands.MainCommand;
 import org.mineacademy.punishcontrol.spigot.impl.SpigotExceptionHandler;
 import org.mineacademy.punishcontrol.spigot.impl.SpigotPlayerProvider;
 import org.mineacademy.punishcontrol.spigot.impl.SpigotPluginDataProvider;
+import org.mineacademy.punishcontrol.spigot.impl.SpigotPluginManager;
 import org.mineacademy.punishcontrol.spigot.impl.SpigotPunishProvider;
 import org.mineacademy.punishcontrol.spigot.impl.SpigotTextureProvider;
 import org.mineacademy.punishcontrol.spigot.listeners.SpigotListenerImpl;
@@ -140,9 +141,10 @@ public final class PunishControl
   public void registerProviders() {
     Providers.playerProvider(SpigotPlayerProvider.newInstance());
     Providers.textureProvider(SpigotTextureProvider.newInstance());
-    Providers.punishProvider(SpigotPunishProvider.newInstance());
+    Providers.punishProvider(SpigotPunishProvider.create());
 
-    Providers.exceptionHandler(SpigotExceptionHandler.newInstance());
+    Providers.exceptionHandler(SpigotExceptionHandler.create());
+    Providers.pluginManager(SpigotPluginManager.create());
   }
 
   @Override

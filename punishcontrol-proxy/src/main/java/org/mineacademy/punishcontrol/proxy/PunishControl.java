@@ -121,9 +121,10 @@ public final class PunishControl
         org.mineacademy.burst.provider.Providers
             .setTextureProvider(ProxyTextureProvider.newInstance());
         // Broadcaster
-        Providers.punishProvider(ProxyPunishProvider.newInstance());
+        Providers.punishProvider(ProxyPunishProvider.create());
 
-        Providers.exceptionHandler(ProxyExceptionHandler.newInstance());
+        Providers.exceptionHandler(ProxyExceptionHandler.create());
+        Providers.pluginManager(ProxyPluginManager.create());
     }
 
     // ----------------------------------------------------------------------------------------------------

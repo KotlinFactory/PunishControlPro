@@ -60,12 +60,12 @@ public abstract class AbstractPunishBrowser extends AbstractBrowser<Punish> {
 
     lore.find("target", "reason", "creation", "duration", "end", "creator");
     lore.replace(
-        playerProvider.findNameUnsafe(punish.target()),
+        playerProvider.findName(punish.target()).orElse("unknown"),
         punish.reason(),
         Settings.Advanced.formatDate(punish.creation()),
         punish.punishDuration().toString(),
         end,
-        playerProvider.findNameUnsafe(punish.creator()));
+        playerProvider.findName(punish.creator()).orElse("unknown"));
 
     final List<String> lores = new ArrayList<>(
         Arrays.asList(lore.replacedMessage()));

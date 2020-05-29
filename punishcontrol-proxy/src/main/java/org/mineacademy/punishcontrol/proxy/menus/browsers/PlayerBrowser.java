@@ -1,9 +1,11 @@
 package org.mineacademy.punishcontrol.proxy.menus.browsers;
 
 import de.exceptionflug.mccommons.inventories.api.ClickType;
+import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 import javax.inject.Inject;
+import javax.inject.Named;
 import lombok.NonNull;
 import lombok.val;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -23,8 +25,9 @@ public final class PlayerBrowser extends AbstractPlayerBrowser {
   public PlayerBrowser(
       final PlayerProvider playerProvider,
       final TextureProvider textureProvider,
-      final MainMenu parent) {
-    super(playerProvider, textureProvider, parent);
+      final MainMenu parent,
+      @Named("offline-players") final Collection<UUID> content) {
+    super(playerProvider, textureProvider, parent, content);
     setTitle("§3Player-Browser");
   }
 
@@ -32,6 +35,7 @@ public final class PlayerBrowser extends AbstractPlayerBrowser {
     Scheduler.runAsync(() -> {
       LagCatcher.start("async-show-up-player-browser");
       final val browser = DaggerProxyComponent.create().playerBrowserMenu();
+      browser.setTitle("§3Player-Browser");
       browser.displayTo(player);
       LagCatcher.end("async-show-up-player-browser");
     });
@@ -50,5 +54,11 @@ public final class PlayerBrowser extends AbstractPlayerBrowser {
   @Override
   public void reDisplay() {
     showTo(getPlayer());
+  }
+
+  @Override
+  public void updateInventory() {
+    super.updateInventory();
+    setTitle("§3Player-Browser");
   }
 }

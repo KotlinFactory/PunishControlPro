@@ -103,7 +103,6 @@
               <include>org.mineacademy:punishcontrol-proxy*</include>
               <include>org.mineacademy:punishcontrol-core*</include>
 
-
               <!-- We want our libraries in our final jar -->
               <include>org.mineacademy:Foundation*</include>
               <include>org.mineacademy:BungeeFoundation*</include>

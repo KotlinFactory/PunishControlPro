@@ -23,7 +23,7 @@ import org.mineacademy.punishcontrol.spigot.events.AsyncPunishCreateEvent;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class SpigotPunishProvider implements PunishProvider {
 
-  public static SpigotPunishProvider newInstance() {
+  public static SpigotPunishProvider create() {
     return new SpigotPunishProvider();
   }
 

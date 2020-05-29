@@ -1,12 +1,17 @@
 package org.mineacademy.punishcontrol.proxy.menus.browsers;
 
 import de.exceptionflug.mccommons.inventories.api.ClickType;
+import java.util.Collection;
 import java.util.List;
+import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import javax.inject.Inject;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import org.jetbrains.annotations.Nullable;
+import org.mineacademy.bfo.debug.Debugger;
 import org.mineacademy.burst.util.Scheduler;
+import org.mineacademy.punishcontrol.core.Searcher;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.providers.TextureProvider;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
@@ -48,6 +53,27 @@ public class PunishedPlayerBrowser extends AbstractPlayerBrowser {
 
   @Override
   public void reDisplay() {
-    showTo(getPlayer());
+    try {
+      showTo(getPlayer());
+    } catch (Throwable throwable) {
+      Debugger.saveError(
+          throwable,
+          "Exception while reDisplaying PunishedPlayerBrowser");
+    }
+  }
+
+  @Override
+  public Collection<UUID> searchByPartialString(String partial) {
+    return Searcher
+        .search(
+            partial,
+            getContent()
+                .stream()
+                .map(uuid -> playerProvider.findName(uuid).orElse("unknown"))
+                .collect(Collectors.toList()))
+        .stream()
+        .map(result -> playerProvider.findUUID(result.result()).orElse(null))
+        .filter(Objects::nonNull)
+        .collect(Collectors.toList());
   }
 }

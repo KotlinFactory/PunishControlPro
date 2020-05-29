@@ -120,12 +120,15 @@ public final class Settings extends SimpleSettings {
     public static String DATE_FORMAT = "MM/dd/yyyy/hh";
     public static Double MIN_SIMILARITY;
 
+    public static Boolean STARTS_WITH;
+
     private static void init() {
       pathPrefix("Advanced");
       DATE_FORMAT = getString("Date_Format");
       ONLINE_MODE = getBoolean("Online_Mode");
       CACHE_RESULTS = getBoolean("Cache_Results");
-      MIN_SIMILARITY = getDouble("Min_Similarity_Needed");
+      MIN_SIMILARITY = getDouble("Searcher.Min_Similarity_Needed");
+      STARTS_WITH = getBoolean("Searcher.Use_Starts_With");
     }
 
     public static String formatDate(final long ms) {

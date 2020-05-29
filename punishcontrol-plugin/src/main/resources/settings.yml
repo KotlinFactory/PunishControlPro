@@ -126,7 +126,8 @@ Groups:
     Template_Bypasses: ['*']
 
 # -----------------------------------------------------------------------------------------------------
-# Advanced settings for PunishControl Pro
+# Advanced settings for PunishControl
+# In most cases it is absolutly unnecessary to touch them.
 #
 # -> Don't change them unless you really know what you are doing.
 # -----------------------------------------------------------------------------------------------------
@@ -140,11 +141,22 @@ Advanced:
   # let this set to true.
   Online_Mode: true
 
-  # Define how similar strings need to be using the /search command
-  Min_Similarity_Needed: 0.85
-
-
   Cache_Results: true
+
+  #
+  # Define how names and other stuff should be searched for
+  #
+  Searcher:
+    #
+    # Define how similar strings need to be using the /search command
+    #
+    Min_Similarity_Needed: 0.85
+
+    #
+    # If our value starts with the same letters as our search-input.
+    # Should we then return it as a result?
+    #
+    Use_Starts_With: true
 
 # -----------------------------------------------------------------------------------------------------
 # Print more informative messages about the plugin and its features?
