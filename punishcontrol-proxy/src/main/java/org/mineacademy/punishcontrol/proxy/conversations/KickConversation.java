@@ -1,6 +1,7 @@
 package org.mineacademy.punishcontrol.proxy.conversations;
 
 import de.exceptionflug.mccommons.inventories.proxy.utils.Schedulable;
+import de.exceptionflug.protocolize.inventory.InventoryModule;
 import java.util.UUID;
 import lombok.val;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -25,6 +26,7 @@ public final class KickConversation extends SimpleConversation implements Schedu
       final UUID target,
       final String targetName) {
     super(player);
+    InventoryModule.closeAllInventories(player);
     this.menu = menu;
     this.target = target;
     this.targetName = targetName;

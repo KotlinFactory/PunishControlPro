@@ -1,5 +1,6 @@
 package org.mineacademy.punishcontrol.proxy.conversations.template;
 
+import de.exceptionflug.protocolize.inventory.InventoryModule;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -16,6 +17,7 @@ public final class TemplateReasonConversation extends SimpleConversation {
       final ProxiedPlayer player,
       final PunishTemplateCreatorMenu menu) {
     super(player);
+    InventoryModule.closeAllInventories(player);
     this.menu = menu;
   }
 

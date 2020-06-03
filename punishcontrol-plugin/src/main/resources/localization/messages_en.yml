@@ -26,7 +26,6 @@ Punish:
     - "&eReason: {reason}"
     - "&eExpiration: {expiration}"
     - ""
-
   #
   Warn_Message:
     - "&eYou have been warned: {reason}"

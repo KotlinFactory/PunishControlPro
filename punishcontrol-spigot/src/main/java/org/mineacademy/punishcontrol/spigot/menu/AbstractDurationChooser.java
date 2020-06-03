@@ -303,7 +303,7 @@ public abstract class AbstractDurationChooser
           .build()
           .make();
       if (getViewer() != null) {
-        redraw();
+        later(this::redraw, 1);
       }
     }, 20);
   }

@@ -60,7 +60,6 @@ public final class PunishTemplateCreatorMenu extends Menu {
       @NonNull final String name) {
     Scheduler.runAsync(() -> {
       final val menu = create(name);
-
       menu.displayTo(player);
     });
   }
@@ -107,7 +106,7 @@ public final class PunishTemplateCreatorMenu extends Menu {
           protected void confirm() {
             PunishTemplateCreatorMenu.this.punishTemplate
                 .duration(PunishDuration.of(ms));
-            PunishTemplateCreatorMenu.this.redraw();
+            PunishTemplateCreatorMenu.this.redisplay();
           }
         }.displayTo(player);
       }
@@ -252,6 +251,10 @@ public final class PunishTemplateCreatorMenu extends Menu {
     };
   }
 
+
+  public void redisplay() {
+    showTo(getViewer(), punishTemplate);
+  }
 
   @Override
   protected String[] getInfo() {

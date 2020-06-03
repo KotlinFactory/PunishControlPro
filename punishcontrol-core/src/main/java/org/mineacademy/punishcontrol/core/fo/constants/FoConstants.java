@@ -12,9 +12,9 @@ import org.mineacademy.punishcontrol.core.util.TimeUtil;
 @UtilityClass
 public class FoConstants {
 
-  private static final PluginDataProvider DATA = Providers
+  private final PluginDataProvider DATA = Providers
       .pluginDataProvider();
-  public static final UUID CONSOLE = UUID.fromString("f78a4d8d-d51b-4b39-98a3-230f2de0c670");
+  public final UUID CONSOLE = UUID.fromString("f78a4d8d-d51b-4b39-98a3-230f2de0c670");
 
   public String configLine() {
     return "-------------------------------------------------------------------------------------------";

@@ -11,7 +11,7 @@ import org.mineacademy.punishcontrol.core.settings.Settings;
 import org.mineacademy.punishcontrol.core.settings.Settings.Punish;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 
-public class BanIpListener implements Listener<JoinEvent> {
+public final class BanIpListener implements Listener<JoinEvent> {
 
   private final StorageProvider storageProvider;
 
@@ -45,5 +45,4 @@ public class BanIpListener implements Listener<JoinEvent> {
       event.cancelReason(Punishes.formOnPunishMessage(ban));
     }));
   }
-
 }

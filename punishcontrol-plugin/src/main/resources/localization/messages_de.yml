@@ -17,7 +17,7 @@ Punish:
     - "&7Der Spieler {player} wurde gepunished."
     - "&7Typ: &6{type}"
     - "&7Grund: {reason}"
-    - "&7IP: {ip}"
+    - "&7Ip: {ip}"
     - "&7{chat_line}"
 
   Ban_Message:
@@ -32,11 +32,10 @@ Punish:
     - "&eGrund: {reason}"
     - "&eEnde: {expiration}"
     - ""
+
+  #
   Warn_Message:
-    - "&eDu wurdest gewarnt"
-    - "&eGrund: {reason}"
-    - "&eEnde: {expiration}"
-    - ""
-
-
+    - "&eYou have been warned: {reason}"
+    - "&eExpiration: {expiration}"
+    - "
 Version: 1

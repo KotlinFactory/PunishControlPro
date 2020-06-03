@@ -142,7 +142,7 @@ public interface PunishControlPluginBootstrap {
     }
 
     try {
-      //Your custom stuff.
+      // Your custom stuff.
       if (permissions() != null) {
         Permissions.registerAll(permissions());
       }

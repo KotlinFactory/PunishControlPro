@@ -144,6 +144,12 @@ Advanced:
   Cache_Results: true
 
   #
+  # Only applies on spigot. If a notification will be display in the menu
+  # if BungeeCord is detected and PunishControl is used on Spigot.
+  #
+  Encourage_Bungee_Usage: true
+
+  #
   # Define how names and other stuff should be searched for
   #
   Searcher:

@@ -12,6 +12,7 @@ import org.mineacademy.punishcontrol.spigot.commands.UnBanCommand;
 import org.mineacademy.punishcontrol.spigot.commands.UnMuteCommand;
 import org.mineacademy.punishcontrol.spigot.commands.UnWarnCommand;
 import org.mineacademy.punishcontrol.spigot.commands.WarnCommand;
+import org.mineacademy.punishcontrol.spigot.importers.BukkitPunishImporter;
 import org.mineacademy.punishcontrol.spigot.listeners.SpigotDataSetter;
 import org.mineacademy.punishcontrol.spigot.menus.MainMenu;
 import org.mineacademy.punishcontrol.spigot.menus.browsers.AllPunishesBrowser;
@@ -84,4 +85,10 @@ public interface SpigotComponent {
   LanguageSettingsMenu languageSettingsMenu();
 
   StorageSettingsMenu storageMenu();
+
+  // ----------------------------------------------------------------------------------------------------
+  // PunishImporters
+  // ----------------------------------------------------------------------------------------------------
+
+  BukkitPunishImporter bukkitPunishImporter();
 }

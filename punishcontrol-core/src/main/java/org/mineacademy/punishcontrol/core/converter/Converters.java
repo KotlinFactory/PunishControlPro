@@ -20,7 +20,8 @@ public class Converters {
       converter = getMultiConverter(source.getClass(), to);
     }
 
-    Valid.notNull(converter,
+    Valid.notNull(
+        converter,
         "No converter available to convert " + source.getClass().getName() + " to " + to
             .getName());
     return (T) converter.convert(source);

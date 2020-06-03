@@ -1,16 +1,16 @@
-package org.mineacademy.punishcontrol.proxy.conversations;
+package org.mineacademy.punishcontrol.spigot.conversations;
 
-import de.exceptionflug.mccommons.inventories.proxy.utils.Schedulable;
 import java.util.stream.Collectors;
 import lombok.NonNull;
-import net.md_5.bungee.api.connection.ProxiedPlayer;
+import org.bukkit.conversations.ConversationContext;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import org.mineacademy.bfo.conversation.SimpleConversation;
-import org.mineacademy.bfo.conversation.SimplePrompt;
+import org.mineacademy.fo.conversation.SimpleConversation;
+import org.mineacademy.fo.conversation.SimplePrompt;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
-import org.mineacademy.punishcontrol.proxy.menu.browser.AbstractPlayerBrowser;
+import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractPlayerBrowser;
+import org.mineacademy.punishcontrol.spigot.util.Schedulable;
 
 /**
  * Conversation to search for players by their partial name
@@ -27,36 +27,28 @@ public final class SearchPlayerConversation
   private final AbstractPlayerBrowser abstractPlayerBrowser;
 
   public static SearchPlayerConversation create(
-      @NonNull final ProxiedPlayer player,
       @NonNull final AbstractPlayerBrowser abstractPlayerBrowser) {
-    return new SearchPlayerConversation(player, abstractPlayerBrowser);
+    return new SearchPlayerConversation(abstractPlayerBrowser);
   }
 
-  private SearchPlayerConversation(
-      @NonNull final ProxiedPlayer player,
-      @NonNull final AbstractPlayerBrowser abstractPlayerBrowser) {
-    super(player);
+  private SearchPlayerConversation(@NonNull final AbstractPlayerBrowser abstractPlayerBrowser) {
     this.abstractPlayerBrowser = abstractPlayerBrowser;
   }
 
   @Override
   protected SimplePrompt getFirstPrompt() {
-    return new SearchPlayerPrompt(this);
+    return new SearchPlayerPrompt();
   }
 
   private class SearchPlayerPrompt extends SimplePrompt {
 
-    private SearchPlayerPrompt(SimpleConversation parent) {
-      super(parent);
-    }
-
     @Override
-    public @NotNull String getPrompt() {
+    public @NotNull String getPrompt(ConversationContext conversationContext) {
       return "&7Please type in a partial name to search for.";
     }
 
     @Override
-    protected @Nullable SimplePrompt acceptValidatedInput(@NonNull String input) {
+    protected @Nullable SimplePrompt acceptValidatedInput(@NotNull ConversationContext conversationContext, @NonNull String input) {
 
       async(() -> abstractPlayerBrowser.redisplay(
           playerProvider.search(input)

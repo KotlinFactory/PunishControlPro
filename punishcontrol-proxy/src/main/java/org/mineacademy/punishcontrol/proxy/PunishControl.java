@@ -28,6 +28,7 @@ import org.mineacademy.punishcontrol.proxy.listeners.ProxyListenerImpl;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.mineacademy.punishcontrol.proxy.menus.settings.SimpleSettingsInjector;
 
 public final class PunishControl
     extends SimplePlugin
@@ -77,6 +78,10 @@ public final class PunishControl
         }
 
         Burst.setPlugin(this); // Set the plugin for our library
+
+        // TODO: As long as CoreFoundation wasn't implemented we need to do this
+        SimpleSettingsInjector.inject();
+
         ProxyServer.getInstance().getConfig().isOnlineMode();
         onPunishControlPluginStart();
     }

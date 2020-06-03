@@ -1,5 +1,6 @@
 package org.mineacademy.punishcontrol.proxy.conversations;
 
+import de.exceptionflug.protocolize.inventory.InventoryModule;
 import de.leonhard.storage.util.ClassWrapper;
 import lombok.NonNull;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
@@ -28,6 +29,7 @@ public final class MySQLStorageConversation
       @NonNull final ProxiedPlayer player,
       final String type) {
     super(player);
+    InventoryModule.closeAllInventories(player);
     this.type = type;
   }
 

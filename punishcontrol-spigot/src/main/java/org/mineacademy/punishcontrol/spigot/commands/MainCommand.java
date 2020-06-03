@@ -40,8 +40,6 @@ public final class MainCommand extends SimpleCommand {
     MainMenu.showTo(getPlayer());
   }
 
-
-
   private void doHelp() {
     tell("&8" + Common.chatLineSmooth());
     tell("&7"+ SimplePlugin.getNamed() + " v." + SimplePlugin.getVersion());

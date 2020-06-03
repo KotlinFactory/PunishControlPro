@@ -1,5 +1,6 @@
 package org.mineacademy.punishcontrol.proxy.conversations;
 
+import de.exceptionflug.protocolize.inventory.InventoryModule;
 import lombok.NonNull;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import org.jetbrains.annotations.NotNull;
@@ -23,6 +24,7 @@ public class DurationChooseConversation extends SimpleConversation {
       @NonNull final ProxiedPlayer player,
       @NonNull final AbstractDurationChooser menu) {
     super(player);
+    InventoryModule.closeAllInventories(player);
     this.menu = menu;
   }
 

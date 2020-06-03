@@ -18,7 +18,9 @@ import org.mineacademy.punishcontrol.core.notification.Notification;
 import org.mineacademy.punishcontrol.core.notification.Notifications;
 import org.mineacademy.punishcontrol.core.permission.Permission;
 import org.mineacademy.punishcontrol.core.provider.Providers;
+import org.mineacademy.punishcontrol.core.punish.importer.PunishImporters;
 import org.mineacademy.punishcontrol.core.settings.Settings;
+import org.mineacademy.punishcontrol.core.settings.Settings.Advanced;
 import org.mineacademy.punishcontrol.spigot.commands.BackupCommand;
 import org.mineacademy.punishcontrol.spigot.commands.MainCommand;
 import org.mineacademy.punishcontrol.spigot.impl.SpigotExceptionHandler;
@@ -61,24 +63,8 @@ public final class PunishControl
             )
             .itemType(CompMaterial.ENCHANTED_GOLDEN_APPLE)
     );
-
-    if (SpigotConfig.bungee) {
-      Notifications.register(
-          Notification
-              .of("&6Use on Bungee")
-              .text(
-                  "",
-                  "&7It seems like",
-                  "&7You are running an BungeeCord server",
-                  "&7PunishControl works brilliantly on BungeeCord",
-                  "&7Make sure to install PunishControl on",
-                  "&7the BungeeCord to make use of all its abilities"
-              )
-              .itemType(CompMaterial.GREEN_STAINED_GLASS)
-      );
-    }
-
   }
+
 
   @Override
   protected void onPluginStart() {
@@ -101,12 +87,25 @@ public final class PunishControl
     onPunishControlPluginStart();
     SimpleSettingsInjector.inject();
 
-    // Initializing legacy material support
-    spigotModule.menuMain();
-    CompMaterial.fromLegacy("STONE", 1);
-    val mat = CompMaterial.ACACIA_DOOR;
+    PunishImporters.register(spigotModule.bukkitPunishImporter());
 
-//    Common.ADD_TELL_PREFIX = true;
+    // After startup
+    if (SpigotConfig.bungee && Advanced.ENCOURAGE_BUNGEE_USAGE) {
+      Notifications.register(
+          Notification
+              .of("&6Use on Bungee")
+              .text(
+                  "",
+                  "&7It seems like you are running",
+                  "&7an BungeeCord server. PunishControl",
+                  "&7works brilliantly on BungeeCord.",
+                  "&7Make sure to install PunishControl on",
+                  "&7or our BungeeCord network ",
+                  "to make use of all its abilities"
+              )
+              .itemType(CompMaterial.GREEN_STAINED_GLASS)
+      );
+    }
   }
 
   // ----------------------------------------------------------------------------------------------------

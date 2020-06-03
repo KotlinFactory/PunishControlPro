@@ -1,5 +1,6 @@
 package org.mineacademy.punishcontrol.proxy.conversations;
 
+import de.exceptionflug.protocolize.inventory.InventoryModule;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -11,6 +12,7 @@ public final class AddTemplateConversation extends SimpleConversation {
 
   public AddTemplateConversation(final ProxiedPlayer player) {
     super(player);
+    InventoryModule.closeAllInventories(player);
   }
 
   public static AddTemplateConversation create(final ProxiedPlayer player) {

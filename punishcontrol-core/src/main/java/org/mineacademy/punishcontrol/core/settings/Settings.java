@@ -120,6 +120,8 @@ public final class Settings extends SimpleSettings {
     public static String DATE_FORMAT = "MM/dd/yyyy/hh";
     public static Double MIN_SIMILARITY;
 
+    public static Boolean ENCOURAGE_BUNGEE_USAGE;
+
     public static Boolean STARTS_WITH;
 
     private static void init() {
@@ -129,6 +131,7 @@ public final class Settings extends SimpleSettings {
       CACHE_RESULTS = getBoolean("Cache_Results");
       MIN_SIMILARITY = getDouble("Searcher.Min_Similarity_Needed");
       STARTS_WITH = getBoolean("Searcher.Use_Starts_With");
+      ENCOURAGE_BUNGEE_USAGE = getBoolean("Encourage_Bungee_Usage");
     }
 
     public static String formatDate(final long ms) {

@@ -39,7 +39,7 @@ public final class ProxyModule {
 
   @Provides
   @Named("settings")
-  public Collection<SettingTypes> offlinePlayers() {
+  public Collection<SettingTypes> settings() {
     return Arrays.asList(SettingTypes.values());
   }
 }
