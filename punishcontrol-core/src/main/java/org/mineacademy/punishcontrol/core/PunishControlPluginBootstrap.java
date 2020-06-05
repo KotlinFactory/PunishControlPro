@@ -28,7 +28,7 @@ import org.mineacademy.punishcontrol.core.util.PunishControlPermissions;
  */
 public interface PunishControlPluginBootstrap {
 
-  CoreComponent coreModule = DaggerCoreComponent.builder().build();
+  CoreComponent coreComponent = DaggerCoreComponent.builder().build();
   String PREFIX = "§3Punish§bControl§5+ §7┃ ";
   String[] LOGO =
       new String[]{
@@ -78,9 +78,10 @@ public interface PunishControlPluginBootstrap {
     // Settings
 
     YamlStaticConfig.loadAll(Settings.class, Localization.class);
+    coreComponent.itemSettings().load();
 
     try {
-      final String language = chooseLanguage();
+      final String language = Settings.LOCALE_PREFIX.toUpperCase();
 
       PunishControlManager.setLanguage(language);
 
@@ -129,10 +130,10 @@ public interface PunishControlPluginBootstrap {
 
     try {
       //Our core-listeners
-      registerEvents(coreModule.banListener());
-      registerEvents(coreModule.muteListener());
-      registerEvents(coreModule.banIpListener());
-      registerEvents(coreModule.muteIpListener());
+      registerEvents(coreComponent.banListener());
+      registerEvents(coreComponent.muteListener());
+      registerEvents(coreComponent.banIpListener());
+      registerEvents(coreComponent.muteIpListener());
       //Spigot-Listeners
       registerListener();
       log("Listener... §l§aOK");
@@ -266,8 +267,6 @@ public interface PunishControlPluginBootstrap {
   void registerProviders();
 
   List<Permission> permissions();
-
-  String chooseLanguage();
 
   void saveError(@NonNull Throwable t);
 }

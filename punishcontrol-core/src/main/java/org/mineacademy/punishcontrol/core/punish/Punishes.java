@@ -4,6 +4,7 @@ import de.leonhard.storage.internal.exceptions.LightningValidationException;
 import de.leonhard.storage.util.Valid;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
+import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.punishes.Ban;
 import org.mineacademy.punishcontrol.core.punishes.Mute;
 import org.mineacademy.punishcontrol.core.punishes.Warn;
@@ -66,25 +67,24 @@ public class Punishes {
     switch (punish.punishType()) {
 
       case BAN:
-        return "\n"+ Localization.Punish.BAN_MESSAGE.replace(
+        return "\n" + Localization.Punish.BAN_MESSAGE.replace(
             punish.reason(),
-            Settings.Advanced.formatDate(punish.getEndTime()))
-            .replacedMessageJoined()
-            .replace("&", "§");
+            Settings.Advanced.formatDate(punish.getEndTime()),
+            Providers.playerProvider().findName(punish.creator()).orElse("unknown")
+        ).replacedMessageJoined().replace("&", "§");
       case MUTE:
-        return "\n"+ Localization.Punish.MUTE_MESSAGE.replace(
-            punish.reason() == null ? "unknown" : punish.reason(),
-            Settings.Advanced.formatDate(punish.getEndTime()))
-            .replacedMessageJoined()
-            .replace("&", "§");
+        return "\n" + Localization.Punish.MUTE_MESSAGE.replace(
+            punish.reason(),
+            Settings.Advanced.formatDate(punish.getEndTime()),
+            Providers.playerProvider().findName(punish.creator()).orElse("unknown")
+        ).replacedMessageJoined().replace("&", "§");
       case WARN:
-        return "\n"+ Localization.Punish.WARN_MESSAGE.replace(
+        return "\n" + Localization.Punish.WARN_MESSAGE.replace(
             punish.reason(),
             Settings.Advanced.formatDate(punish.getEndTime()))
             .replacedMessageJoined()
             .replace("&", "§");
     }
-
 
     throw new LightningValidationException(
         "Exception while fetching the ban message",

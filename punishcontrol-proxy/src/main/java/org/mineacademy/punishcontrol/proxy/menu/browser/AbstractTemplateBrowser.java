@@ -9,7 +9,7 @@ import org.mineacademy.burst.menu.AbstractBrowser;
 import org.mineacademy.burst.menu.BurstMenu;
 import org.mineacademy.punishcontrol.core.punish.template.PunishTemplate;
 import org.mineacademy.punishcontrol.core.punish.template.PunishTemplates;
-import org.mineacademy.punishcontrol.core.settings.Replacer;
+import org.mineacademy.punishcontrol.core.setting.Replacer;
 import org.mineacademy.punishcontrol.proxy.ItemUtil;
 import org.mineacademy.punishcontrol.proxy.menu.AbstractConfirmMenu;
 import org.mineacademy.punishcontrol.proxy.menus.template.PunishTemplateCreatorMenu;

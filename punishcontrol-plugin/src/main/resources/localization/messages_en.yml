@@ -14,12 +14,13 @@ Punish:
     - "&7IP: {ip}"
     - "&7{chat_line}"
 
+
   Ban_Message:
     - ""
     - "&eYou have been banned"
     - "&eReason: {reason}"
     - "&eExpiration: {expiration}"
-    - ""
+    - "&eCreator: {creator}"
 
   Mute_Message:
     - "&eYou have been muted"

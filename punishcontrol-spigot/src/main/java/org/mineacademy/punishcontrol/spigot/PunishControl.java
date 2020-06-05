@@ -37,14 +37,17 @@ public final class PunishControl
     extends SimplePlugin
     implements PunishControlPluginBootstrap {
 
-  private final SpigotComponent spigotModule = DaggerSpigotComponent.create();
+  private final SpigotComponent spigotComponent = DaggerSpigotComponent.create();
 
   /**
    * Setting providers needed before the start
    */
   @Override
   protected void onPluginPreStart() {
+
+    // Need to be set before the main startup
     Providers.pluginDataProvider(SpigotPluginDataProvider.create());
+    Providers.exceptionHandler(SpigotExceptionHandler.create());
 
     if (getDataFolder().exists()) {
       return;
@@ -63,8 +66,8 @@ public final class PunishControl
             )
             .itemType(CompMaterial.ENCHANTED_GOLDEN_APPLE)
     );
-  }
 
+  }
 
   @Override
   protected void onPluginStart() {
@@ -84,10 +87,11 @@ public final class PunishControl
       cfg.set("Advanced.Online_Mode", false);
       log("[PCP-Prestart] your server is in offline-mode - Changed config");
     }
+    Providers.pluginDataProvider(SpigotPluginDataProvider.create());
     onPunishControlPluginStart();
     SimpleSettingsInjector.inject();
 
-    PunishImporters.register(spigotModule.bukkitPunishImporter());
+    PunishImporters.register(spigotComponent.bukkitPunishImporter());
 
     // After startup
     if (SpigotConfig.bungee && Advanced.ENCOURAGE_BUNGEE_USAGE) {
@@ -117,22 +121,22 @@ public final class PunishControl
     registerCommand(MainCommand.create(Settings.MAIN_COMMAND_ALIASES));
     registerCommand(BackupCommand.create());
 
-    registerCommand(spigotModule.commandKick());
-    registerCommand(spigotModule.commandBan());
-    registerCommand(spigotModule.commandMute());
-    registerCommand(spigotModule.commandWarn());
+    registerCommand(spigotComponent.commandKick());
+    registerCommand(spigotComponent.commandBan());
+    registerCommand(spigotComponent.commandMute());
+    registerCommand(spigotComponent.commandWarn());
 
-    registerCommand(spigotModule.commandUnBan());
-    registerCommand(spigotModule.commandUnMute());
-    registerCommand(spigotModule.commandUnWarn());
-    registerCommand(spigotModule.commandPlayerInfo());
-    registerCommand(spigotModule.searchCommand());
-    registerCommand(spigotModule.chooseActionCommand());
+    registerCommand(spigotComponent.commandUnBan());
+    registerCommand(spigotComponent.commandUnMute());
+    registerCommand(spigotComponent.commandUnWarn());
+    registerCommand(spigotComponent.commandPlayerInfo());
+    registerCommand(spigotComponent.searchCommand());
+    registerCommand(spigotComponent.chooseActionCommand());
   }
 
   @Override
   public void registerListener() {
-    registerEvents(spigotModule.spigotDataSetter());
+    registerEvents(spigotComponent.spigotDataSetter());
     registerEvents(SpigotListenerImpl.create());
   }
 
@@ -142,13 +146,7 @@ public final class PunishControl
     Providers.textureProvider(SpigotTextureProvider.newInstance());
     Providers.punishProvider(SpigotPunishProvider.create());
 
-    Providers.exceptionHandler(SpigotExceptionHandler.create());
     Providers.pluginManager(SpigotPluginManager.create());
-  }
-
-  @Override
-  public String chooseLanguage() {
-    return Settings.LOCALE_PREFIX;
   }
 
   // ----------------------------------------------------------------------------------------------------

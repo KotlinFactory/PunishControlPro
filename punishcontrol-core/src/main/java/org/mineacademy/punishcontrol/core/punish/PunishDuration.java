@@ -86,9 +86,14 @@ public final class PunishDuration {
   // ----------------------------------------------------------------------------------------------------
 
   public boolean moreThan(final PunishDuration punishDuration) {
-    if (punishDuration.isPermanent()) {
+    if (isPermanent()) {
       return true;
     }
+
+    if (punishDuration.isPermanent()) {
+      return false;
+    }
+
     return toMs() > punishDuration.toMs();
   }
 

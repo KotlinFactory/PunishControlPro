@@ -150,6 +150,11 @@ Advanced:
   Encourage_Bungee_Usage: true
 
   #
+  # Should our backup command be enabled?
+  #
+  Enable_Backups: true
+
+  #
   # Define how names and other stuff should be searched for
   #
   Searcher:

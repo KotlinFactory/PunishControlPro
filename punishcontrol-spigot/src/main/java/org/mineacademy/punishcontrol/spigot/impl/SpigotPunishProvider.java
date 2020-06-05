@@ -76,8 +76,8 @@ public final class SpigotPunishProvider implements PunishProvider {
 
     Common.runLater(() -> {
       if (punish.punishType().shouldKick()) {
-        Players.find(punish.target()).ifPresent((player -> player.kickPlayer(
-            Punishes.formOnPunishMessage(punish))));
+        Common.runLater(() -> Players.find(punish.target()).ifPresent((player -> player.kickPlayer(
+            Punishes.formOnPunishMessage(punish)))));
       }
 
       if (punish.punishType().shouldWarn()) {

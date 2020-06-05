@@ -6,6 +6,10 @@ import org.mineacademy.fo.Common;
 import org.mineacademy.fo.collection.StrictList;
 import org.mineacademy.fo.command.SimpleCommand;
 import org.mineacademy.fo.plugin.SimplePlugin;
+import org.mineacademy.punishcontrol.core.DaggerCoreComponent;
+import org.mineacademy.punishcontrol.core.setting.YamlStaticConfig;
+import org.mineacademy.punishcontrol.core.settings.Localization;
+import org.mineacademy.punishcontrol.core.settings.Settings;
 import org.mineacademy.punishcontrol.spigot.menus.MainMenu;
 
 public final class MainCommand extends SimpleCommand {
@@ -28,7 +32,17 @@ public final class MainCommand extends SimpleCommand {
   protected void onCommand() {
     checkConsole();
 
-    if(args.length == 1){
+    if (args.length == 1) {
+      if ("reload".equalsIgnoreCase(args[0])) {
+        Settings.resetSettingsCall();
+        Localization.resetLocalizationCall();
+
+        YamlStaticConfig.loadAll(Settings.class, Localization.class);
+        DaggerCoreComponent.create().itemSettings().load();
+
+        tell("&aSuccessfully reloaded &6" + SimplePlugin.getNamed());
+        return;
+      }
       doHelp();
       return;
     }
@@ -42,7 +56,7 @@ public final class MainCommand extends SimpleCommand {
 
   private void doHelp() {
     tell("&8" + Common.chatLineSmooth());
-    tell("&7"+ SimplePlugin.getNamed() + " v." + SimplePlugin.getVersion());
+    tell("&7" + SimplePlugin.getNamed() + " v." + SimplePlugin.getVersion());
     tell("&7© MineAcademy 2020");
     tell(" ");
     for (final SimpleCommand command : SimpleCommand.getRegisteredCommands()) {

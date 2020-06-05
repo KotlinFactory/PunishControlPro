@@ -17,7 +17,6 @@ import org.jetbrains.annotations.Nullable;
 import org.mineacademy.punishcontrol.core.fo.constants.FoConstants.Header;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.PluginDataProvider;
-import org.mineacademy.punishcontrol.core.settings.Replacer;
 
 /**
  * Platform independent version of the YamlStaticConfig
@@ -160,8 +159,7 @@ public abstract class YamlStaticConfig {
   }
 
   @SafeVarargs
-  public static void loadAll(
-      final Class<? extends YamlStaticConfig>... classes) {
+  public static void loadAll(final Class<? extends YamlStaticConfig>... classes) {
     loadAll(Arrays.asList(classes));
   }
 

@@ -10,7 +10,7 @@ import lombok.experimental.UtilityClass;
 import lombok.val;
 import org.mineacademy.burst.item.Item;
 import org.mineacademy.punishcontrol.core.punish.PunishType;
-import org.mineacademy.punishcontrol.core.settings.Replacer;
+import org.mineacademy.punishcontrol.core.setting.Replacer;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 
 @UtilityClass

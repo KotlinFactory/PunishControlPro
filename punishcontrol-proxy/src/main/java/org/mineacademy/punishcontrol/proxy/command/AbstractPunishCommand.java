@@ -20,7 +20,7 @@ import org.mineacademy.punishcontrol.core.punish.PunishDuration;
 import org.mineacademy.punishcontrol.core.punish.PunishType;
 import org.mineacademy.punishcontrol.core.punish.Punishes;
 import org.mineacademy.punishcontrol.core.punish.template.PunishTemplates;
-import org.mineacademy.punishcontrol.core.settings.Replacer;
+import org.mineacademy.punishcontrol.core.setting.Replacer;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 import org.mineacademy.punishcontrol.proxy.menus.punish.PunishCreatorMenu;
 

@@ -17,5 +17,4 @@ public final class LanguageSettingsMenu extends AbstractSettingsMenu {
   public LanguageSettingsMenu(final SettingsBrowser settingsBrowser) {
     super(settingsBrowser);
   }
-
 }

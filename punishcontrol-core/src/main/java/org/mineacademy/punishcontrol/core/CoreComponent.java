@@ -6,6 +6,7 @@ import org.mineacademy.punishcontrol.core.listeners.BanListener;
 import org.mineacademy.punishcontrol.core.listeners.MuteIpListener;
 import org.mineacademy.punishcontrol.core.listeners.MuteListener;
 import org.mineacademy.punishcontrol.core.provider.Providers;
+import org.mineacademy.punishcontrol.core.settings.ItemSettings;
 import org.mineacademy.punishcontrol.core.storage.JsonStorageProvider;
 import org.mineacademy.punishcontrol.core.storage.MySQLStorageProvider;
 
@@ -18,6 +19,8 @@ public interface CoreComponent {
   MySQLStorageProvider mySQLStorageProvider();
 
   JsonStorageProvider jsonStorageProvider();
+
+  ItemSettings itemSettings();
 
   // ----------------------------------------------------------------------------------------------------
   // Listeners

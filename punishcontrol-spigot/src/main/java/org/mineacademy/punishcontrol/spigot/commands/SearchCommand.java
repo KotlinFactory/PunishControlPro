@@ -38,7 +38,7 @@ public final class SearchCommand
 
     if ("ip".equalsIgnoreCase(args[0])) {
       final UUID target = findTarget(data);
-      tell("Ip of &7" + data + " &7 " + playerProvider.ip(target).orElse("unknown"));
+      tell("&7Ip of " + data + " &7 " + playerProvider.ip(target).orElse("unknown"));
     }
 
     if ("name".equalsIgnoreCase(args[0])) {
@@ -129,7 +129,7 @@ public final class SearchCommand
         "&eSearch-Command",
         "&7/" + getLabel() + " player <partial-name> &8* &7search for an "
             + "player by its partial name",
-        "&7" + getLabel() + " player <ip> &8*&7 search for players by ip",
+        "&7" + getLabel() + " player <player|ip> &8*&7 search for players by ip",
         "&7/" + getLabel() + " ip <player>  &8*&7 get a player's IP",
         "&7/" + getLabel() + " uuid <player>  &8*&7 get a player's UUID",
         "&7/" + getLabel() + " name <uuid>  &8*&7 get a player's name from UUID",
@@ -137,7 +137,7 @@ public final class SearchCommand
     };
   }
 
-  private static boolean isValidInet4Address(final String ip) {
+  private static boolean isValidInet4Address(@NonNull final String ip) {
     return ip.contains(".");
   }
 }

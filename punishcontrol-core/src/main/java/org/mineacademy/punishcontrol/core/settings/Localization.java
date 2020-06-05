@@ -3,6 +3,7 @@ package org.mineacademy.punishcontrol.core.settings;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
+import org.mineacademy.punishcontrol.core.setting.Replacer;
 import org.mineacademy.punishcontrol.core.setting.SimpleLocalization;
 
 public final class Localization extends SimpleLocalization {
@@ -56,9 +57,9 @@ public final class Localization extends SimpleLocalization {
           .find("chat_line", "player", "type", "reason", "ip");
 
       BAN_MESSAGE = getReplacer("Ban_Message")
-          .find("reason", "expiration");
+          .find("reason", "expiration", "creator");
       MUTE_MESSAGE = getReplacer("Mute_Message")
-          .find("reason", "expiration");
+          .find("reason", "expiration", "creator");
 
       WARN_MESSAGE = getReplacer("Warn_Message")
           .find("reason", "expiration");

@@ -21,7 +21,7 @@ import org.mineacademy.punishcontrol.core.permission.Permission;
 import org.mineacademy.punishcontrol.core.permission.Permissions;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
-import org.mineacademy.punishcontrol.core.settings.Replacer;
+import org.mineacademy.punishcontrol.core.setting.Replacer;
 import org.mineacademy.punishcontrol.proxy.DaggerProxyComponent;
 import org.mineacademy.punishcontrol.proxy.menus.setting.AbstractSettingsMenu;
 

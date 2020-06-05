@@ -20,6 +20,7 @@ import org.mineacademy.punishcontrol.core.permission.Permission;
 import org.mineacademy.punishcontrol.core.permission.Permissions;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
+import org.mineacademy.punishcontrol.core.util.PunishControlPermissions;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
 import org.mineacademy.punishcontrol.spigot.Players;
 import org.mineacademy.punishcontrol.spigot.Scheduler;
@@ -31,16 +32,19 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
 
   public static final int PERMISSION_BROWSER_SLOT = 0;
   public static final int GROUP_BROWSER_SLOT = 1;
+  public static final int TOGGLE_PUNISHABLE_SLOT = 2;
   private final Button groupBrowser;
   private final Button permissionBrowser;
-  private final boolean targetOnline;
+
+  private final Button togglePunishable;
+
+  private final boolean targetOnline, targetPunishable;
   private final UUID target;
 
   /*
   TODO:
    Make unpunishable
    */
-
 
   public static void showTo(
       @NonNull final Player player,
@@ -52,9 +56,11 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
     super(DaggerSpigotComponent.create().settingsBrowser());
     this.target = target;
     targetOnline = Players.find(target).isPresent();
+    targetPunishable = Providers.playerProvider().punishable(target);
     setTitle("&8Settings for player");
 
     setSize(9 * 2);
+
     groupBrowser = new Button() {
       @Override
       public void onClickedInMenu(
@@ -113,6 +119,53 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
             .makeMenuTool();
       }
     };
+
+    togglePunishable = new Button() {
+      @Override
+      public void onClickedInMenu(Player player, Menu menu, ClickType click) {
+        if (!player.hasPermission(
+            PunishControlPermissions.TOGGLE_PUNISHABLE.permission()
+        )) {
+          animateTitle("&cNo access");
+          return;
+        }
+        Providers.playerProvider().punishable(target, !targetPunishable);
+        showTo(getViewer(), target);
+      }
+
+      @Override
+      public ItemStack getItem() {
+        if (targetPunishable) {
+          return ItemCreator
+              .of(CompMaterial.RED_STAINED_GLASS)
+              .name("&6Toggle punishable")
+              .lores(
+                  Arrays.asList(
+                      "",
+                      "&7Click to make target punishable",
+                      "&7Target is currently unpunishable"
+                  )
+              )
+              .build()
+              .makeMenuTool();
+
+        }
+
+        return ItemCreator
+            .of(CompMaterial.GREEN_STAINED_GLASS)
+            .name("&6Toggle punishable")
+            .lores(
+                Arrays.asList(
+                    "",
+                    "&7Click to make target unpunishable",
+                    "&7Target is currently punishable"
+                )
+            )
+            .build()
+            .makeMenuTool();
+
+      }
+    };
   }
 
   @Override
@@ -123,6 +176,10 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
     if (slot == GROUP_BROWSER_SLOT) {
       return groupBrowser.getItem();
     }
+//
+//    if (slot == TOGGLE_PUNISHABLE_SLOT) {
+//      return togglePunishable.getItem();
+//    }
 
     return null;
   }

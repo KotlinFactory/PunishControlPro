@@ -18,6 +18,7 @@ public final class BackupCommand extends SimpleCommand {
     super("backup");
     setPermission("punishcontrol.command.backup");
     setDescription("Backup server files");
+    setUsage("?");
   }
 
   @Override

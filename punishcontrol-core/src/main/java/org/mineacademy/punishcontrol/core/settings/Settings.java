@@ -115,6 +115,7 @@ public final class Settings extends SimpleSettings {
 
   public static final class Advanced {
 
+    public static Boolean ENABLE_BACKUPS;
     public static Boolean ONLINE_MODE;
     public static Boolean CACHE_RESULTS;
     public static String DATE_FORMAT = "MM/dd/yyyy/hh";
@@ -131,6 +132,7 @@ public final class Settings extends SimpleSettings {
       CACHE_RESULTS = getBoolean("Cache_Results");
       MIN_SIMILARITY = getDouble("Searcher.Min_Similarity_Needed");
       STARTS_WITH = getBoolean("Searcher.Use_Starts_With");
+      ENABLE_BACKUPS = getBoolean("Enable_Backups");
       ENCOURAGE_BUNGEE_USAGE = getBoolean("Encourage_Bungee_Usage");
     }
 

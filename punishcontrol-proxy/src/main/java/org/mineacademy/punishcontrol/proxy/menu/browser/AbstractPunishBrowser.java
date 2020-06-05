@@ -14,7 +14,7 @@ import org.mineacademy.burst.menu.AbstractMenu;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.punish.Punish;
-import org.mineacademy.punishcontrol.core.settings.Replacer;
+import org.mineacademy.punishcontrol.core.setting.Replacer;
 import org.mineacademy.punishcontrol.core.settings.Settings;
 import org.mineacademy.punishcontrol.proxy.ItemUtil;
 import org.mineacademy.punishcontrol.proxy.menu.AbstractConfirmMenu;

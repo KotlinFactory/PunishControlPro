@@ -52,6 +52,7 @@ public final class ProxyPlayerProvider
       final @NonNull String permission) {
     final ProxiedPlayer player = proxyServer.getPlayer(uuid);
     if (player == null) {
+      Debugger.debug("Can't find player - so doesn't have the permission");
       return false;
     }
 

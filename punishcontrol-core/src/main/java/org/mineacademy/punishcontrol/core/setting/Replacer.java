@@ -1,4 +1,4 @@
-package org.mineacademy.punishcontrol.core.settings;
+package org.mineacademy.punishcontrol.core.setting;
 
 import de.leonhard.storage.util.Valid;
 import java.util.ArrayList;
@@ -21,7 +21,6 @@ public final class Replacer {
   //Messages to replace
   private final List<String> variables = new ArrayList<>();
   private final List<Object> replacements = new ArrayList<>();
-
 
   // ----------------------------------------------------------------------------------------------------
   // Static Factory methods
