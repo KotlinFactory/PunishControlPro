@@ -121,15 +121,17 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
       @Override
       public ItemStack getItem() {
         if (punishBuilder().duration() != null) {
+          final String end = punishBuilder.duration().isPermanent()
+              ? "&cnever"
+              : Settings.Advanced
+                  .formatDate(
+                      System.currentTimeMillis() + punishBuilder().duration().toMs());
           return ItemCreator.of(CompMaterial.CLOCK,
               "&6Duration",
               "&7Currently: ",
               "&7" + punishBuilder().duration().toString(),
               "&7Punish will end on:",
-              "&7" + Settings.Advanced
-                  .formatDate(
-                      System.currentTimeMillis() + punishBuilder().duration()
-                          .toMs()),
+              "&7" + end,
               "",
               "&7Click to change")
               .build()
@@ -255,7 +257,8 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
         animateTitle("&7Created punish");
         async(() -> {
 
-          if (storageProvider.isPunished(punishBuilder.target(), punishBuilder.punishType()) && !Groups
+          if (storageProvider
+              .isPunished(punishBuilder.target(), punishBuilder.punishType()) && !Groups
               .canOverride(getViewer().getUniqueId())) {
             animateTitle("&cCan't override punishes");
             return;

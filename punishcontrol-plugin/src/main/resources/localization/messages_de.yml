@@ -37,5 +37,5 @@ Punish:
   Warn_Message:
     - "&eYou have been warned: {reason}"
     - "&eExpiration: {expiration}"
-    - "
+    - ""
 Version: 1

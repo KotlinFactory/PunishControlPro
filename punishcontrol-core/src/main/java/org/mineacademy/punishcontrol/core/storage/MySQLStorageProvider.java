@@ -70,15 +70,13 @@ public final class MySQLStorageProvider
     return isConnected();
   }
 
+  // jdbc:mysql://localhost:3306/hybrisdb?characterEncoding=latin1
   public void connect() {
     connect(
-        MySQL.HOST,
-        MySQL.PORT,
-        MySQL.DATABASE,
+        "jdbc:mysql://localhost:" + MySQL.PORT + "/" + MySQL.DATABASE
+            + "?characterEncoding=latin1",
         MySQL.USER,
-        MySQL.PASSWORD,
-        "PunishControl",
-        true);
+        MySQL.PASSWORD);
   }
 
   @Override
@@ -102,6 +100,7 @@ public final class MySQLStorageProvider
   }
 
   private Ban banFromResultSet(final ResultSet resultSet) throws SQLException {
+    System.out.println("removed? " + resultSet.getBoolean("Removed"));
     return Ban.of(
         resultSet.getString("Target"),
         resultSet.getString("Creator"),
@@ -138,7 +137,7 @@ public final class MySQLStorageProvider
   public List<Ban> listBans() {
     final List<Ban> result = new ArrayList<>();
     try (final ResultSet resultSet = query(
-        "SELECT * FROM {table} WHERE Type='BAN'")) {
+        "SELECT * FROM Punishes WHERE Type='BAN'")) {
       // No bans found
       if (resultSet == null) {
         return result;
@@ -157,7 +156,7 @@ public final class MySQLStorageProvider
   public List<Mute> listMutes() {
     final List<Mute> result = new ArrayList<>();
     try (final ResultSet resultSet = query(
-        "SELECT * FROM {table} WHERE Type='MUTE'")) {
+        "SELECT * FROM Punishes WHERE Type='MUTE'")) {
       // No bans found
       if (resultSet == null) {
         return result;
@@ -176,7 +175,7 @@ public final class MySQLStorageProvider
   public List<Warn> listWarns() {
     final List<Warn> result = new ArrayList<>();
     try (final ResultSet resultSet = query(
-        "SELECT * FROM {table} WHERE TYPE='WARN'")) {
+        "SELECT * FROM Punishes WHERE TYPE='WARN'")) {
       // No bans found
       if (resultSet == null) {
         return result;
@@ -195,7 +194,7 @@ public final class MySQLStorageProvider
   public List<Ban> listBans(@NonNull final UUID uuid) {
     final List<Ban> result = new ArrayList<>();
     try (final ResultSet resultSet =
-        query("SELECT * FROM {table} WHERE Type='BAN' AND Target='" + uuid
+        query("SELECT * FROM Punishes WHERE Type='BAN' AND Target='" + uuid
             + "'")) {
       // No bans found
       if (resultSet == null) {
@@ -215,7 +214,7 @@ public final class MySQLStorageProvider
   public List<Mute> listMutes(@NonNull final UUID uuid) {
     final List<Mute> result = new ArrayList<>();
     try (final ResultSet resultSet =
-        query("SELECT * FROM {table} WHERE Type='MUTE' AND Target='" + uuid
+        query("SELECT * FROM Punishes WHERE Type='MUTE' AND Target='" + uuid
             + "'")) {
       // No bans found
       if (resultSet == null) {
@@ -235,7 +234,7 @@ public final class MySQLStorageProvider
   public List<Warn> listWarns(@NonNull final UUID uuid) {
     final List<Warn> result = new ArrayList<>();
     try (final ResultSet resultSet =
-        query("SELECT * FROM {table} WHERE Type='WARN' AND Target='" + uuid
+        query("SELECT * FROM Punishes WHERE Type='WARN' AND Target='" + uuid
             + "'")) {
       // No bans found
       if (resultSet == null) {
@@ -280,21 +279,21 @@ public final class MySQLStorageProvider
 
   @Override
   public void removeBan(final @NonNull Ban ban) {
-    update("UPDATE {table} SET removed=true WHERE Creation=" + ban.creation()
+    update("UPDATE Punishes SET removed=true WHERE Creation=" + ban.creation()
         + " AND Type='BAN'");
   }
 
   @Override
   public void removeMute(final @NonNull Mute mute) {
     update(
-        "UPDATE {table} SET removed=true WHERE Creation=" + mute.creation()
+        "UPDATE Punishes SET removed=true WHERE Creation=" + mute.creation()
             + " AND Type='MUTE'");
   }
 
   @Override
   public void removeWarn(final @NonNull Warn warn) {
     update(
-        "UPDATE {table} SET removed=true WHERE Creation=" + warn.creation()
+        "UPDATE Punishes SET removed=true WHERE Creation=" + warn.creation()
             + " AND Type='WARN'");
   }
 

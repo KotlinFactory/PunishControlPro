@@ -38,7 +38,15 @@ public final class SearchCommand
 
     if ("ip".equalsIgnoreCase(args[0])) {
       final UUID target = findTarget(data);
-      tell("&7Ip of " + data + " &7 " + playerProvider.ip(target).orElse("unknown"));
+      final String ip = playerProvider.ip(target).orElse("unknown");
+
+      SimpleComponent
+          .of("&7Ip of " + data + " is")
+          .append(" ")
+          .append("&6"+ ip)
+          .onHover("&7Click to copy")
+          .onClickSuggestCmd(ip)
+          .send(sender);
     }
 
     if ("name".equalsIgnoreCase(args[0])) {
@@ -90,6 +98,7 @@ public final class SearchCommand
                 .onClickSuggestCmd(data)
                 .append(" ")
                 .append("&7[" + banned + "&7]")
+                .append(" ")
                 .append("&7[&6action&7]")
                 .onHover("&7Click to choose an action")
                 .onClickRunCmd("/chooseaction " + name)
@@ -129,7 +138,7 @@ public final class SearchCommand
         "&eSearch-Command",
         "&7/" + getLabel() + " player <partial-name> &8* &7search for an "
             + "player by its partial name",
-        "&7" + getLabel() + " player <player|ip> &8*&7 search for players by ip",
+        "&7" + getLabel() + " player <player> &8*&7 search for players by ip",
         "&7/" + getLabel() + " ip <player>  &8*&7 get a player's IP",
         "&7/" + getLabel() + " uuid <player>  &8*&7 get a player's UUID",
         "&7/" + getLabel() + " name <uuid>  &8*&7 get a player's name from UUID",

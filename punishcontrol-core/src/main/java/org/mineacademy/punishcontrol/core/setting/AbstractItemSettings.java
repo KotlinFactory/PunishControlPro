@@ -9,7 +9,9 @@ import java.lang.reflect.Field;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import lombok.AccessLevel;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.mineacademy.punishcontrol.core.providers.ExceptionHandler;
 import org.mineacademy.punishcontrol.core.providers.PluginDataProvider;
@@ -61,10 +63,31 @@ public abstract class AbstractItemSettings {
           "Name of " + item.getClass().getSimpleName() + " mustn't be null");
 
       // Getting data out of our yaml.
-      item.itemType(getConfigInstance().getString(item.name() + ".type"));
+      item.itemType(getConfigInstance().getOrSetDefault(item.name() + ".Type", "STONE"));
 
       // Adding to our registered items
       items.add(item);
     }
+  }
+
+  public Optional<CustomItem> find(@NonNull final String name) {
+    for (CustomItem item : items()) {
+      if (item.name() == null) {
+        continue;
+      }
+
+      if (item.name().equalsIgnoreCase(name)) {
+        return Optional.of(item);
+      }
+    }
+
+    return Optional.empty();
+  }
+
+  public void setType(
+      final CustomItem customItem,
+      final String newType) {
+    customItem.itemType(newType);
+    getConfigInstance().set(customItem.name() + ".Type", newType);
   }
 }

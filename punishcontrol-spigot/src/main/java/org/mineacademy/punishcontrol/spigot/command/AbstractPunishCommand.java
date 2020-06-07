@@ -7,6 +7,7 @@ import java.util.UUID;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.val;
+import org.mineacademy.fo.Common;
 import org.mineacademy.fo.collection.StrictList;
 import org.mineacademy.fo.debug.LagCatcher;
 import org.mineacademy.punishcontrol.core.fo.constants.FoConstants;
@@ -242,9 +243,8 @@ public abstract class AbstractPunishCommand
             return;
           }
 
-          Players.find(target).ifPresent(targetPlayer -> {
-            targetPlayer.kickPlayer(Punishes.formOnPunishMessage(punish));
-          });
+          Players.find(target).ifPresent(targetPlayer -> Common.runLater(
+              () -> targetPlayer.kickPlayer(Punishes.formOnPunishMessage(punish))));
 
           LagCatcher.end("proxy-cmd-save-async");
         });

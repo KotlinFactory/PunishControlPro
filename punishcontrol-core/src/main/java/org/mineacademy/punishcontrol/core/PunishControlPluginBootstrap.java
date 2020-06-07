@@ -28,6 +28,7 @@ import org.mineacademy.punishcontrol.core.util.PunishControlPermissions;
  */
 public interface PunishControlPluginBootstrap {
 
+
   CoreComponent coreComponent = DaggerCoreComponent.builder().build();
   String PREFIX = "§3Punish§bControl§5+ §7┃ ";
   String[] LOGO =

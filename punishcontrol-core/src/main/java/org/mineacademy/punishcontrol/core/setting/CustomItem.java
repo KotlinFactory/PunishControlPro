@@ -2,6 +2,7 @@ package org.mineacademy.punishcontrol.core.setting;
 
 
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
@@ -40,6 +41,10 @@ public final class CustomItem {
   private String name;
   private String itemType;
   private List<String> description;
+
+  public List<String> description() {
+    return Collections.unmodifiableList(description);
+  }
 
   public CustomItem description(@NonNull final String... description) {
     this.description = Arrays.asList(description);

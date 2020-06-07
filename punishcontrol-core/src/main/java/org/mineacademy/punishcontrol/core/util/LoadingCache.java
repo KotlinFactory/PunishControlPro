@@ -35,7 +35,7 @@ public abstract class LoadingCache<K, V> {
   }
 
   public synchronized V get(final K k) {
-    if (!map.containsKey(k)) {
+    if (k != null && !map.containsKey(k)) {
       put(k, load(k));
     }
 

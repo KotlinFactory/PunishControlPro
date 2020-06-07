@@ -8,7 +8,7 @@
     <version>1.0-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <version>1.0.6</version>
+  <version>1.0.8</version>
   <artifactId>punishcontrol-plugin</artifactId>
 
   <properties>
@@ -121,6 +121,8 @@
           </artifactSet>
           <relocations>
             <relocation>
+              <pattern>de.leonhard.storage</pattern>
+              <shadedPattern>org.mineacademy.lib.storage</shadedPattern>
               <pattern>org.mineacademy.fo</pattern>
               <shadedPattern>org.mineacademy.${plugin.name}.lib</shadedPattern>
               <pattern>org.mineacademy.bfo</pattern>

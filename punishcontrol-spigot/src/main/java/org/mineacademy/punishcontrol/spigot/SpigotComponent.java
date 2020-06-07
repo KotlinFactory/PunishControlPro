@@ -16,6 +16,7 @@ import org.mineacademy.punishcontrol.spigot.importers.BukkitPunishImporter;
 import org.mineacademy.punishcontrol.spigot.listeners.SpigotDataSetter;
 import org.mineacademy.punishcontrol.spigot.menus.MainMenu;
 import org.mineacademy.punishcontrol.spigot.menus.browsers.AllPunishesBrowser;
+import org.mineacademy.punishcontrol.spigot.menus.browsers.CustomItemBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.browsers.PlayerBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.browsers.PunishTemplateBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.browsers.PunishedPlayerBrowser;
@@ -76,7 +77,7 @@ public interface SpigotComponent {
 
   PunishedPlayerBrowser punishedPlayerBrowser();
 
- //Settings - Menus
+  //Settings - Menus
 
   SettingsBrowser settingsBrowser();
 
@@ -85,6 +86,8 @@ public interface SpigotComponent {
   LanguageSettingsMenu languageSettingsMenu();
 
   StorageSettingsMenu storageMenu();
+
+  CustomItemBrowser customItemBrowser();
 
   // ----------------------------------------------------------------------------------------------------
   // PunishImporters

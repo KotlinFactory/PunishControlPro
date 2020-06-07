@@ -1,5 +1,6 @@
 package org.mineacademy.punishcontrol.spigot.menus.settings;
 
+import java.util.Arrays;
 import java.util.UUID;
 import lombok.Getter;
 import lombok.experimental.Accessors;
@@ -12,6 +13,7 @@ import org.mineacademy.punishcontrol.core.util.PunishControlPermissions;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
 import org.mineacademy.punishcontrol.spigot.Scheduler;
 import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractPlayerBrowser;
+import org.mineacademy.punishcontrol.spigot.menus.browsers.CustomItemBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.browsers.NotificationBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.browsers.PunishTemplateBrowser;
 
@@ -100,6 +102,34 @@ public enum SettingTypes {
     public boolean hasAccess(final Player player) {
       return player.hasPermission(
           PunishControlPermissions.MENU_SETTINGS_TEMPLATES.permission());
+    }
+  },
+
+  CUSTOMIZATION {
+    @Override
+    public boolean hasAccess(Player player) {
+      return player.hasPermission(
+          PunishControlPermissions.MENU_SETTINGS_CUSTOMIZATION.permission()
+      );
+    }
+
+    @Override
+    public ItemCreator itemCreator() {
+      return ItemCreator
+          .of(CompMaterial.WOODEN_AXE)
+          .name("&6Customization")
+          .lores(
+              Arrays.asList(
+                  "",
+                  "&7Customize menus"
+              )
+          )
+          .build();
+    }
+
+    @Override
+    public void showMenu(Player player) {
+      CustomItemBrowser.showTo(player);
     }
   },
 

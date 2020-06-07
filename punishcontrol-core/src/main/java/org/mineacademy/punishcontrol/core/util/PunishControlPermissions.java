@@ -29,9 +29,15 @@ public class PunishControlPermissions {
           "Access the notifications")
       .type(PermissionType.MENU);
 
+  public Permission MENU_SETTINGS_CUSTOMIZATION =  Permission
+      .of("punishcontrol.menu.settings.customization",
+          "Customize PunishControl's menus")
+      .type(PermissionType.OTHER);
+
   public Permission TOGGLE_PUNISHABLE =  Permission
       .of("punishcontrol.menu.settings.punishable",
           "Toggle whether you can punish a player or not")
       .type(PermissionType.OTHER);
+
 
 }

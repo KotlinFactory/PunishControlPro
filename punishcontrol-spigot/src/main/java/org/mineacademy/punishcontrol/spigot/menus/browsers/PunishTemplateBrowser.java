@@ -15,7 +15,6 @@ import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
 import org.mineacademy.punishcontrol.spigot.Scheduler;
 import org.mineacademy.punishcontrol.spigot.conversations.AddTemplateConversation;
 import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractTemplateBrowser;
-import org.mineacademy.punishcontrol.spigot.menus.MainMenu;
 
 public class PunishTemplateBrowser extends AbstractTemplateBrowser {
 
@@ -30,8 +29,8 @@ public class PunishTemplateBrowser extends AbstractTemplateBrowser {
   }
 
   @Inject
-  public PunishTemplateBrowser(final MainMenu mainMenu) {
-    super(mainMenu);
+  public PunishTemplateBrowser(final SettingsBrowser parent) {
+    super(parent);
 
     setTitle("&8PunishTemplates");
     addTemplateButton = new Button() {

@@ -137,6 +137,9 @@ public final class Settings extends SimpleSettings {
     }
 
     public static String formatDate(final long ms) {
+      if (ms == -1) {
+        return "never";
+      }
       final SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
           Advanced.DATE_FORMAT);
       return simpleDateFormat.format(new Date(ms));

@@ -1,0 +1,16 @@
+# !-------------------------------------------------------------------------------------------------!
+#                       Welcome to the item configuration of PunishControl
+# !-------------------------------------------------------------------------------------------------!
+#
+#    For support and documentation, please visit:
+#    - https://github.com/kangarko/PunishControl/wiki
+#
+# !-------------------------------------------------------------------------------------------------!
+# This file contains all our customization options for items
+#
+# !-------------------------------------------------------------------------------------------------!
+
+Ban:
+  Type: OAK_DOOR
+Mute:
+ Type: PAPER

@@ -70,10 +70,16 @@ public final class PunishDuration {
   }
 
   public static PunishDuration of(final long ms) {
+    if (ms == -1) {
+      return permanent();
+    }
     return new PunishDuration(ms);
   }
 
   public static PunishDuration of(final long time, final TimeUnit unit) {
+    if (time == -1) {
+      return permanent();
+    }
     return new PunishDuration(unit.toMillis(time));
   }
 

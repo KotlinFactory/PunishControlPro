@@ -1,5 +1,5 @@
 <?xml version="1.0" ?>
-<project name="PunishControl-Spigot" default="Build">
+<project name="PunishControl-Spigot-1.15" default="Build">
 
     <!-- Set where to put the plugin for Mac -->
     <condition property="serverPath" value="D:\Test servers\${mc_version}">

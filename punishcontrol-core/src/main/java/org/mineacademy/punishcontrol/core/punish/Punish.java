@@ -130,10 +130,18 @@ public abstract class Punish {
     if (removed()) {
       return true;
     }
+
+    if (punishDuration.isPermanent()) {
+      return false;
+    }
+
     return getEndTime() < System.currentTimeMillis();
   }
 
   public final long getEndTime() {
+    if (punishDuration.isPermanent()) {
+      return -1;
+    }
     return creation + punishDuration.toMs();
   }
 

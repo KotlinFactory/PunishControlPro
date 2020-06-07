@@ -11,8 +11,18 @@ public final class ItemSettings extends AbstractItemSettings {
 
   public static CustomItem BAN_ITEM = CustomItem
       .of("Ban")
-      .description("", "");
+      .itemType("ACACIA_DOOR")
+      .description("Item representing ban's");
 
+  public static CustomItem MUTE_ITEM = CustomItem
+      .of("Mute")
+      .itemType("PAPER")
+      .description("Item representing mute's");
+
+  public static CustomItem APPLY_ITEM = CustomItem
+      .of("Apply")
+      .itemType("EMERALD_BLOCK")
+      .description("Apply item");
 
   @Inject
   public ItemSettings(

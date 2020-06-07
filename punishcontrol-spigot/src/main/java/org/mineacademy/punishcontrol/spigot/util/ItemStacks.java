@@ -17,6 +17,7 @@ import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.fo.model.Replacer;
 import org.mineacademy.fo.remain.CompMaterial;
 import org.mineacademy.punishcontrol.core.punish.PunishType;
+import org.mineacademy.punishcontrol.core.settings.ItemSettings;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 import org.mineacademy.punishcontrol.spigot.Players;
 
@@ -54,7 +55,7 @@ public class ItemStacks {
     return CompMaterial.YELLOW_DYE.toItem();
   }
 
-  public static ItemStack redPane() {
+  public ItemStack redPane() {
     if (MinecraftVersion.olderThan(V.v1_13)) {
       final ItemStack limeDye = new ItemStack(
           CompMaterial.RED_STAINED_GLASS_PANE.getMaterial(), 1,
@@ -63,7 +64,7 @@ public class ItemStacks {
     return CompMaterial.RED_STAINED_GLASS_PANE.toItem();
   }
 
-  public static ItemStack greenPane() {
+  public ItemStack greenPane() {
     if (MinecraftVersion.olderThan(V.v1_13)) {
       final ItemStack limeDye = new ItemStack(
           CompMaterial.GREEN_STAINED_GLASS_PANE.getMaterial(), 1,
@@ -96,12 +97,12 @@ public class ItemStacks {
     switch (punishType) {
       case BAN:
         return ItemCreator
-            .of(new ItemStack(CompMaterial.OAK_DOOR.getMaterial()))
+            .ofString(ItemSettings.BAN_ITEM.itemType())
             .build()
             .makeMenuTool();
       case MUTE:
         return ItemCreator
-            .of(new ItemStack(CompMaterial.PAPER.getMaterial()))
+            .ofString(ItemSettings.MUTE_ITEM.itemType())
             .build()
             .makeMenuTool();
       case WARN:
