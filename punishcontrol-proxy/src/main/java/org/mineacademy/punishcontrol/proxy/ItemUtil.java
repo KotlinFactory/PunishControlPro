@@ -11,6 +11,7 @@ import lombok.val;
 import org.mineacademy.burst.item.Item;
 import org.mineacademy.punishcontrol.core.punish.PunishType;
 import org.mineacademy.punishcontrol.core.setting.Replacer;
+import org.mineacademy.punishcontrol.core.settings.ItemSettings;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 
 @UtilityClass
@@ -20,11 +21,11 @@ public class ItemUtil {
     switch (punishType) {
       case BAN:
         return Item
-            .of(ItemType.OAK_DOOR)
+            .of(ItemSettings.BAN_ITEM.itemType())
             .build();
       case MUTE:
         return Item
-            .of(ItemType.PAPER)
+            .of(ItemSettings.MUTE_ITEM.itemType())
             .build();
       case WARN:
         return Item
@@ -33,7 +34,7 @@ public class ItemUtil {
     }
 
     throw new IllegalStateException(
-        "Invalid punish type: '" + punishType.getClass().getSimpleName() + "'"
+        "forPunishType(): Invalid punish type: '" + punishType.getClass().getSimpleName() + "'"
     );
   }
 

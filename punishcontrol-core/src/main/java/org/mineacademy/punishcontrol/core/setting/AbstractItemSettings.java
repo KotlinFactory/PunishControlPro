@@ -58,12 +58,17 @@ public abstract class AbstractItemSettings {
       }
 
       final CustomItem item = (CustomItem) field.get(null);
+
       Valid.notNull(
           item.name(),
           "Name of " + item.getClass().getSimpleName() + " mustn't be null");
 
+      Valid.notNull(
+          item.itemType(),
+          "Itemtype of " + item.name() + " mustn't be null");
+
       // Getting data out of our yaml.
-      item.itemType(getConfigInstance().getOrSetDefault(item.name() + ".Type", "STONE"));
+      item.itemType(getConfigInstance().getOrSetDefault(item.name() + ".Type", item.itemType()));
 
       // Adding to our registered items
       items.add(item);

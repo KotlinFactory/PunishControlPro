@@ -14,3 +14,5 @@ Ban:
   Type: OAK_DOOR
 Mute:
  Type: PAPER
+Apply:
+  Type: EMERALD_BLOCK

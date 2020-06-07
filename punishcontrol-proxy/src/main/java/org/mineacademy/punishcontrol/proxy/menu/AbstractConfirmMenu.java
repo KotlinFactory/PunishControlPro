@@ -1,12 +1,12 @@
 package org.mineacademy.punishcontrol.proxy.menu;
 
 import de.exceptionflug.mccommons.inventories.api.CallResult;
-import de.exceptionflug.protocolize.items.ItemType;
 import org.mineacademy.bfo.Common;
 import org.mineacademy.bfo.debug.Debugger;
 import org.mineacademy.burst.item.Item;
 import org.mineacademy.burst.menu.AbstractMenu;
 import org.mineacademy.burst.menu.BurstMenu;
+import org.mineacademy.punishcontrol.core.settings.ItemSettings;
 
 public abstract class AbstractConfirmMenu extends AbstractMenu {
 
@@ -24,7 +24,9 @@ public abstract class AbstractConfirmMenu extends AbstractMenu {
     setTitle("&8Confirm");
     set(
         Item
-            .of(ItemType.EMERALD_BLOCK).name("&aConfirm").lore("&7Confirm")
+            .ofString(ItemSettings.APPLY_ITEM.itemType())
+            .name("&aConfirm")
+            .lore("&7Confirm")
             .slot(4)
             .actionHandler("Confirm")
     );

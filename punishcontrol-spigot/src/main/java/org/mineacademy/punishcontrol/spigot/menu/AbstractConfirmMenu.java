@@ -6,7 +6,7 @@ import org.mineacademy.fo.Common;
 import org.mineacademy.fo.debug.Debugger;
 import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.fo.menu.model.ItemCreator;
-import org.mineacademy.fo.remain.CompMaterial;
+import org.mineacademy.punishcontrol.core.settings.ItemSettings;
 import org.mineacademy.punishcontrol.spigot.util.Schedulable;
 
 public abstract class AbstractConfirmMenu extends Menu implements Schedulable {
@@ -52,7 +52,7 @@ public abstract class AbstractConfirmMenu extends Menu implements Schedulable {
     }
 
     return ItemCreator
-        .of(CompMaterial.EMERALD_BLOCK,
+        .of(ItemSettings.APPLY_ITEM.itemType(),
             "&aConfirm",
             "",
             "&7Click to confirm")

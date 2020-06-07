@@ -10,7 +10,7 @@ import org.bukkit.inventory.ItemStack;
 import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.fo.menu.button.Button;
 import org.mineacademy.fo.menu.model.ItemCreator;
-import org.mineacademy.fo.remain.CompMaterial;
+import org.mineacademy.punishcontrol.core.settings.ItemSettings;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
 import org.mineacademy.punishcontrol.spigot.Scheduler;
 import org.mineacademy.punishcontrol.spigot.conversations.AddTemplateConversation;
@@ -44,7 +44,7 @@ public class PunishTemplateBrowser extends AbstractTemplateBrowser {
       @Override
       public ItemStack getItem() {
         return ItemCreator
-            .of(CompMaterial.EMERALD)
+            .ofString(ItemSettings.ADD_ITEM.itemType())
             .name("&aAdd template")
             .lores(Arrays.asList("&7Click here to", "&7Add custom templates"))
             .build()

@@ -20,6 +20,7 @@ import org.mineacademy.punishcontrol.core.punish.PunishDuration;
 import org.mineacademy.punishcontrol.core.punish.PunishType;
 import org.mineacademy.punishcontrol.core.punish.template.PunishTemplate;
 import org.mineacademy.punishcontrol.core.punish.template.PunishTemplates;
+import org.mineacademy.punishcontrol.core.settings.ItemSettings;
 import org.mineacademy.punishcontrol.core.settings.Settings;
 import org.mineacademy.punishcontrol.proxy.DaggerProxyComponent;
 import org.mineacademy.punishcontrol.proxy.ItemUtil;
@@ -162,7 +163,7 @@ public final class PunishTemplateCreatorMenu extends AbstractMenu {
       if (punishTemplate().reason() != null) {
         set(
             Item
-                .of(ItemType.BOOK,
+                .of(ItemSettings.REASON_ITEM.itemType(),
                     "&6Reason",
                     "&7Choose different reason",
                     "&7Current: " + punishTemplate.reason())
@@ -173,7 +174,7 @@ public final class PunishTemplateCreatorMenu extends AbstractMenu {
       } else {
         set(
             Item
-                .of(ItemType.BOOK)
+                .of(ItemSettings.REASON_ITEM.itemType())
                 .name("&6Reason")
                 .lore("&6Reason",
                     "&7Choose the",
@@ -270,7 +271,7 @@ public final class PunishTemplateCreatorMenu extends AbstractMenu {
       set(
           Item
               .of(
-                  ItemType.EMERALD_BLOCK,
+                  ItemSettings.APPLY_ITEM.itemType(),
                   "&aApply",
                   "&7Apply template")
               .slot(APPLY_SLOT)

@@ -35,7 +35,7 @@ public abstract class AbstractMaterialBrowser
 
   private static boolean isItem(final Material material) {
     if (MinecraftVersion.newerThan(V.v1_13)) {
-      return material.isItem();
+      return material.isItem() && !material.isAir();
     }
     return material.getMaxStackSize() == 64;
   }

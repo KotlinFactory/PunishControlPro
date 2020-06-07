@@ -100,7 +100,6 @@ public final class MySQLStorageProvider
   }
 
   private Ban banFromResultSet(final ResultSet resultSet) throws SQLException {
-    System.out.println("removed? " + resultSet.getBoolean("Removed"));
     return Ban.of(
         resultSet.getString("Target"),
         resultSet.getString("Creator"),

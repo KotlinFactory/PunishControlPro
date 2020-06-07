@@ -12,6 +12,7 @@ import org.mineacademy.burst.item.Item;
 import org.mineacademy.punishcontrol.core.PunishControlManager;
 import org.mineacademy.punishcontrol.core.conversation.StorageSettable;
 import org.mineacademy.punishcontrol.core.provider.Providers;
+import org.mineacademy.punishcontrol.core.settings.ItemSettings;
 import org.mineacademy.punishcontrol.core.settings.Settings.MySQL;
 import org.mineacademy.punishcontrol.core.storage.MySQLStorageProvider;
 import org.mineacademy.punishcontrol.core.storage.StorageType;
@@ -64,7 +65,7 @@ public final class StorageSettingsMenu
         if (isConnecting) {
           set(
               Item
-                  .of(ItemType.EMERALD_BLOCK)
+                  .ofString(ItemSettings.APPLY_ITEM.itemType())
                   .name("&7Connecting...")
                   .slot(CONNECT_SLOT)
                   .actionHandler("noAction")

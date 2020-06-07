@@ -19,6 +19,7 @@ import org.mineacademy.punishcontrol.core.providers.TextureProvider;
 import org.mineacademy.punishcontrol.core.punish.PunishBuilder;
 import org.mineacademy.punishcontrol.core.punish.PunishType;
 import org.mineacademy.punishcontrol.core.punish.template.PunishTemplate;
+import org.mineacademy.punishcontrol.core.settings.ItemSettings;
 import org.mineacademy.punishcontrol.core.settings.Settings;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 import org.mineacademy.punishcontrol.proxy.DaggerProxyComponent;
@@ -185,7 +186,7 @@ public final class PunishCreatorMenu extends AbstractMenu {
     //Reason | "Reason"
     {
       if (punishBuilder().reason() != null) {
-        set(Item.of(ItemType.BOOK,
+        set(Item.of(ItemSettings.REASON_ITEM.itemType(),
             "&6Reason",
             "&7Choose different reason",
             "&7Current: " + punishBuilder.reason())
@@ -194,7 +195,7 @@ public final class PunishCreatorMenu extends AbstractMenu {
         );
       } else {
         set(
-            Item.of(ItemType.BOOK,
+            Item.of(ItemSettings.REASON_ITEM.itemType(),
                 "&6Reason",
                 "&7Choose the",
                 "&7reason of the",
@@ -214,7 +215,7 @@ public final class PunishCreatorMenu extends AbstractMenu {
             Item
                 .of(textureProvider.getSkinTexture(target))
                 .name("&6Choose player")
-                .lore("&7Current: " + playerProvider.findNameUnsafe(target))
+                .lore("&7Current: " + playerProvider.findName(target).orElse("unknown"))
                 .slot(CHOOSE_PLAYER_SLOT)
                 .actionHandler("Player")
         );
@@ -304,7 +305,7 @@ public final class PunishCreatorMenu extends AbstractMenu {
     {
       set(
           Item
-              .of(ItemType.EMERALD_BLOCK,
+              .of(ItemSettings.APPLY_ITEM.itemType(),
                   "&aApply",
                   "&7Apply punish")
               .slot(APPLY_SLOT)

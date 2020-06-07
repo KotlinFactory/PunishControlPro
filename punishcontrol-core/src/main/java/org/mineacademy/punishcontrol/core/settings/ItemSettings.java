@@ -22,7 +22,17 @@ public final class ItemSettings extends AbstractItemSettings {
   public static CustomItem APPLY_ITEM = CustomItem
       .of("Apply")
       .itemType("EMERALD_BLOCK")
-      .description("Apply item");
+      .description("Item clicked", "When something is going to be applied");
+
+  public static CustomItem REASON_ITEM = CustomItem
+      .of("Reason")
+      .itemType("BOOK")
+      .description("Item presenting a reason");
+
+  public static CustomItem ADD_ITEM = CustomItem
+      .of("&aAdd new")
+      .itemType("EMERALD")
+      .description("Item clicked when", "Adding new punishment templates");
 
   @Inject
   public ItemSettings(

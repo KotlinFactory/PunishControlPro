@@ -21,6 +21,7 @@ import org.mineacademy.punishcontrol.core.providers.TextureProvider;
 import org.mineacademy.punishcontrol.core.punish.PunishBuilder;
 import org.mineacademy.punishcontrol.core.punish.PunishType;
 import org.mineacademy.punishcontrol.core.punish.template.PunishTemplate;
+import org.mineacademy.punishcontrol.core.settings.ItemSettings;
 import org.mineacademy.punishcontrol.core.settings.Settings;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
@@ -276,7 +277,7 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
       @Override
       public ItemStack getItem() {
         return ItemCreator
-            .of(CompMaterial.EMERALD_BLOCK,
+            .of(ItemSettings.APPLY_ITEM.itemType(),
                 "&aApply",
                 "&7Apply punish")
             .build()
@@ -447,7 +448,7 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
 
     if (slot == CHOOSE_REASON_SLOT) {
       if (punishBuilder().reason() != null) {
-        return ItemCreator.of(CompMaterial.BOOK,
+        return ItemCreator.of(ItemSettings.REASON_ITEM.itemType(),
             "&6Reason",
             "&7Choose different reason",
             "&7Current: " + punishBuilder.reason())
@@ -455,7 +456,7 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
             .make();
       }
 
-      return ItemCreator.of(CompMaterial.BOOK,
+      return ItemCreator.of(ItemSettings.REASON_ITEM.itemType(),
           "&6Reason",
           "&7Choose the",
           "&7reason of the",

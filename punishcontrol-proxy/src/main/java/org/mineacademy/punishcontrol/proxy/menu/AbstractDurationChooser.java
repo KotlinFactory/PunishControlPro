@@ -10,6 +10,7 @@ import lombok.experimental.Accessors;
 import org.mineacademy.burst.item.Item;
 import org.mineacademy.burst.menu.AbstractMenu;
 import org.mineacademy.burst.menu.BurstMenu;
+import org.mineacademy.punishcontrol.core.settings.ItemSettings;
 import org.mineacademy.punishcontrol.core.settings.Localization.Time;
 import org.mineacademy.punishcontrol.core.settings.Settings;
 import org.mineacademy.punishcontrol.core.util.TimeUtil;
@@ -56,7 +57,7 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
     super.updateInventory();
     set(
         Item
-            .of(ItemType.EMERALD_BLOCK)
+            .of(ItemSettings.APPLY_ITEM.itemType())
             .name("&aApply")
             .lore("")
             .slot(APPLY_SLOT)

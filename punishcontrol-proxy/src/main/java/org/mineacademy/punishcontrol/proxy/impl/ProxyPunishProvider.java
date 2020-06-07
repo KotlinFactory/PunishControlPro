@@ -1,6 +1,5 @@
 package org.mineacademy.punishcontrol.proxy.impl;
 
-import de.exceptionflug.protocolize.items.ItemType;
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -18,6 +17,7 @@ import org.mineacademy.punishcontrol.core.punish.Punishes;
 import org.mineacademy.punishcontrol.core.settings.Localization;
 import org.mineacademy.punishcontrol.core.settings.Settings;
 import org.mineacademy.punishcontrol.core.settings.Settings.Punish.Warn;
+import org.mineacademy.punishcontrol.proxy.ItemUtil;
 import org.mineacademy.punishcontrol.proxy.Players;
 import org.mineacademy.punishcontrol.proxy.events.PunishCreateEvent;
 
@@ -63,7 +63,7 @@ public final class ProxyPunishProvider implements PunishProvider {
                     "",
                     "&3" + creatorName + " banned " + targetName
                 )
-                .itemType(ItemType.ACACIA_DOOR)
+                .itemType(ItemUtil.forPunishType(punish.punishType()))
         );
         break;
       case MUTE:
@@ -74,7 +74,7 @@ public final class ProxyPunishProvider implements PunishProvider {
                     "",
                     "&3" + creatorName + " muted " + targetName
                 )
-                .itemType(ItemType.PAPER)
+                .itemType(ItemUtil.forPunishType(punish.punishType()))
         );
         break;
       case WARN:
@@ -85,7 +85,7 @@ public final class ProxyPunishProvider implements PunishProvider {
                     "",
                     "&3" + creatorName + " warned " + targetName
                 )
-                .itemType(ItemType.YELLOW_DYE)
+                .itemType(ItemUtil.forPunishType(punish.punishType()))
         );
         break;
     }
@@ -111,7 +111,7 @@ public final class ProxyPunishProvider implements PunishProvider {
         org.mineacademy.bfo.Common
             .tell(player, Localization.Punish.PUNISH_BROADCAST_MESSAGE.replace(
                 org.mineacademy.bfo.Common.chatLine(),
-                Providers.playerProvider().findNameUnsafe(punish.target()),
+                Providers.playerProvider().findName(punish.target()).orElse("unknown"),
                 punish.punishType().localized(),
                 punish.reason(),
                 punish.ip().orElse("unknown")

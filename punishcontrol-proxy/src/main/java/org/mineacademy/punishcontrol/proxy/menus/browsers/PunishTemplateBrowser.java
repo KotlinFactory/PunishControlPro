@@ -2,13 +2,13 @@ package org.mineacademy.punishcontrol.proxy.menus.browsers;
 
 import de.exceptionflug.mccommons.inventories.api.CallResult;
 import de.exceptionflug.protocolize.inventory.InventoryModule;
-import de.exceptionflug.protocolize.items.ItemType;
 import javax.inject.Inject;
 import lombok.NonNull;
 import lombok.val;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import org.mineacademy.burst.item.Item;
 import org.mineacademy.burst.util.Scheduler;
+import org.mineacademy.punishcontrol.core.settings.ItemSettings;
 import org.mineacademy.punishcontrol.proxy.DaggerProxyComponent;
 import org.mineacademy.punishcontrol.proxy.conversations.AddTemplateConversation;
 import org.mineacademy.punishcontrol.proxy.menu.browser.AbstractTemplateBrowser;
@@ -41,14 +41,13 @@ public class PunishTemplateBrowser extends AbstractTemplateBrowser {
     {
       set(
           Item
-              .of(ItemType.EMERALD)
+              .ofString(ItemSettings.ADD_ITEM.itemType())
               .name("&aAdd template")
               .lore("&7Click here to", "&7Add custom templates")
               .slot(getMaxSize() - 5)
               .actionHandler("Add")
       );
     }
-
   }
 
   @Override
