@@ -239,7 +239,7 @@ public final class PunishCreatorMenu extends AbstractMenu {
       if (punishBuilder.silent()) {
         set(
             Item
-                .of(ItemType.GREEN_STAINED_GLASS_PANE)
+                .ofString(ItemSettings.ENABLED.itemType())
                 .name("&6Silent")
                 .lore(
                     "",
@@ -251,10 +251,9 @@ public final class PunishCreatorMenu extends AbstractMenu {
                 .actionHandler("Silent")
         );
       } else {
-
         set(
             Item
-                .of(ItemType.RED_STAINED_GLASS_PANE)
+                .ofString(ItemSettings.DISABLED.itemType())
                 .name("&6Make Silent")
                 .lore(
                     "",
@@ -273,7 +272,7 @@ public final class PunishCreatorMenu extends AbstractMenu {
       if (punishBuilder.superSilent()) {
         set(
             Item
-                .of(ItemType.GREEN_STAINED_GLASS_PANE)
+                .ofString(ItemSettings.ENABLED.itemType())
                 .name("&6Super Silent")
                 .lore(
                     "",
@@ -287,7 +286,7 @@ public final class PunishCreatorMenu extends AbstractMenu {
       } else {
         set(
             Item
-                .of(ItemType.RED_STAINED_GLASS_PANE)
+                .ofString(ItemSettings.DISABLED.itemType())
                 .name("&6Make Super Silent")
                 .lore(
                     "",
@@ -489,6 +488,11 @@ public final class PunishCreatorMenu extends AbstractMenu {
         if (storageProvider.isPunished(punishBuilder.target(), punishBuilder.punishType()) && !Groups
             .canOverride(getPlayer().getUniqueId())) {
           animateTitle("&cCan't override punishes");
+          return;
+        }
+
+        if (!playerProvider.punishable(punishBuilder.target())) {
+          animateTitle("&cTarget is unpunishable");
           return;
         }
 

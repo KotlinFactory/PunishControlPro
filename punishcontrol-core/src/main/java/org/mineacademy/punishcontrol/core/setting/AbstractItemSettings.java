@@ -52,6 +52,7 @@ public abstract class AbstractItemSettings {
   }
 
   private void load0() throws IllegalAccessException {
+    items.clear();
     for (final Field field : getClass().getFields()) {
       if (field.getType() != CustomItem.class) {
         continue;

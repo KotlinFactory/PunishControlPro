@@ -8,6 +8,7 @@ import lombok.val;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import org.mineacademy.bfo.Common;
+import org.mineacademy.bfo.debug.Debugger;
 import org.mineacademy.punishcontrol.core.notification.Notification;
 import org.mineacademy.punishcontrol.core.notification.Notifications;
 import org.mineacademy.punishcontrol.core.provider.Providers;
@@ -40,13 +41,16 @@ public final class ProxyPunishProvider implements PunishProvider {
     }
 
     if (punish.punishType().shouldWarn()) {
+      Players.find(punish.target()).ifPresent((player -> Providers.playerProvider().sendIfOnline(
+          player.getUniqueId(),
+          Warn.messageType,
+          Punishes.formPunishedMessage(punish).split("\n"))));
+    }
 
-      Players.find(punish.target()).ifPresent((player -> {
-        Providers.playerProvider().sendIfOnline(
-            player.getUniqueId(),
-            Warn.messageType,
-            Punishes.formPunishedMessage(punish).split("\n"));
-      }));
+    if (punish.punishType().shouldMessage()) {
+      Players.find(punish.target()).ifPresent((player -> Providers.playerProvider().sendIfOnline(
+          player.getUniqueId(),
+          Punishes.formPunishedMessage(punish).split("\n"))));
     }
 
     final val targetName = Providers.playerProvider().findName(punish.target())
@@ -110,7 +114,7 @@ public final class ProxyPunishProvider implements PunishProvider {
 
         org.mineacademy.bfo.Common
             .tell(player, Localization.Punish.PUNISH_BROADCAST_MESSAGE.replace(
-                org.mineacademy.bfo.Common.chatLine(),
+                org.mineacademy.bfo.Common.chatLineSmooth(),
                 Providers.playerProvider().findName(punish.target()).orElse("unknown"),
                 punish.punishType().localized(),
                 punish.reason(),
@@ -124,6 +128,7 @@ public final class ProxyPunishProvider implements PunishProvider {
     }
 
     if (!Settings.Notifications.Punish.ENABLED) {
+      Debugger.debug("Punish", "Punish notification disabled - skipping it");
       return;
     }
 
@@ -135,8 +140,8 @@ public final class ProxyPunishProvider implements PunishProvider {
 
       Common
           .tell(player, Localization.Punish.PUNISH_BROADCAST_MESSAGE.replace(
-              Common.chatLine(),
-              Providers.playerProvider().findNameUnsafe(punish.target()),
+              Common.chatLineSmooth(),
+              Providers.playerProvider().findName(punish.target()).orElse("unknown"),
               punish.punishType().localized(),
               punish.reason(),
               punish.ip().orElse("unknown")

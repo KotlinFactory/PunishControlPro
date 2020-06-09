@@ -22,6 +22,8 @@ import org.mineacademy.punishcontrol.core.permission.Permissions;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.setting.Replacer;
+import org.mineacademy.punishcontrol.core.settings.ItemSettings;
+import org.mineacademy.punishcontrol.core.util.PunishControlPermissions;
 import org.mineacademy.punishcontrol.proxy.DaggerProxyComponent;
 import org.mineacademy.punishcontrol.proxy.menus.setting.AbstractSettingsMenu;
 
@@ -29,13 +31,15 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
 
   public static final int PERMISSION_BROWSER_SLOT = 0;
   public static final int GROUP_BROWSER_SLOT = 1;
+  public static final int TOGGLE_PUNISHABLE_SLOT = 2;
 
   private final boolean targetOnline;
   private final UUID target;
+  private final boolean targetPunishable;
 
   /*
-  TODO:
-   Make unpunishable
+    TODO:
+      Make unpunishable
    */
 
   public static void showTo(
@@ -48,6 +52,7 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
     super(DaggerProxyComponent.create().settingsBrowser(), 9 * 2);
     this.target = target;
     targetOnline = Players.find(target).isPresent();
+    targetPunishable = Providers.playerProvider().punishable(target);
     setTitle("&8Settings for player");
   }
 
@@ -95,6 +100,39 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
                 .actionHandler("Permissions")
         );
       }
+
+      // Toggle punishable | "punishable"
+      {
+        if (targetPunishable) {
+          set(
+              Item
+                  .ofString(ItemSettings.DISABLED.itemType())
+                  .name("&6Toggle punishable")
+                  .lore(
+                      Arrays.asList(
+                          "",
+                          "&7Click to make target unpunishable",
+                          "&7Target is currently punishable"
+                      ))
+                  .slot(TOGGLE_PUNISHABLE_SLOT)
+                  .actionHandler("Punishable")
+          );
+        } else {
+          set(
+              Item
+                  .ofString(ItemSettings.ENABLED.itemType())
+                  .name("&6Toggle punishable")
+                  .lore(
+                      Arrays.asList(
+                          "",
+                          "&7Click to make target punishable",
+                          "&7Target is currently unpunishable"
+                      ))
+                  .slot(TOGGLE_PUNISHABLE_SLOT)
+                  .actionHandler("Punishable")
+          );
+        }
+      }
     }
   }
 
@@ -112,6 +150,19 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
 
     registerActionHandler("Permissions", (permissions -> {
       PermissionsBrowser.showTo(getPlayer(), target, this);
+      return CallResult.DENY_GRABBING;
+    }));
+
+    registerActionHandler("Punishable", (punishable -> {
+      if (!player.hasPermission(
+          PunishControlPermissions.TOGGLE_PUNISHABLE.permission()
+      )) {
+        animateTitle("&cNo access");
+        return CallResult.DENY_GRABBING;
+      }
+      Providers.playerProvider().punishable(target, !targetPunishable);
+      showTo(getPlayer(), target);
+
       return CallResult.DENY_GRABBING;
     }));
   }
@@ -258,7 +309,7 @@ class PermissionsBrowser extends AbstractBrowser<Permission> {
       lore.addAll(Arrays.asList(" ", "&aHas access"));
 
       return Item
-          .of(ItemType.GREEN_STAINED_GLASS_PANE)
+          .ofString(ItemSettings.ENABLED.itemType())
           .name("&6Permission: " + permission.permission())
           .lore(lore)
           .build();
@@ -269,7 +320,7 @@ class PermissionsBrowser extends AbstractBrowser<Permission> {
     lore.addAll(Arrays.asList(" ", "&cHas no access"));
 
     return Item
-        .of(ItemType.RED_STAINED_GLASS_PANE)
+        .ofString(ItemSettings.DISABLED.itemType())
         .name("&6Permission: " + permission.permission())
         .lore(lore)
         .build();

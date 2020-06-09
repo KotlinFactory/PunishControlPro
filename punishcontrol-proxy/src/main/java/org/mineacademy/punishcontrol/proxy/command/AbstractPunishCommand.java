@@ -149,6 +149,12 @@ public abstract class AbstractPunishCommand
 
         Scheduler.runAsync(() -> {
           final UUID target = findTarget(finalArgs);
+
+          if (!playerProvider.punishable(target)) {
+            tell("&cThis player is unpunishable");
+            return;
+          }
+
           final Punish punish = template.toPunishBuilder().creator(senderUUID())
               .target(target)
               .ip(playerProvider.ip(target).orElse("unknown"))
@@ -162,7 +168,6 @@ public abstract class AbstractPunishCommand
           }
 
           Players.find(target).ifPresent((player -> {
-//          TODO: Format Reason!
             player.disconnect(reason.toString());
           }));
         });
@@ -188,6 +193,11 @@ public abstract class AbstractPunishCommand
           LagCatcher.start("proxy-cmd-save-async");
 
           final UUID target = findTarget(finalArgs);
+
+          if (!playerProvider.punishable(target)) {
+            tell("&cThis player is unpunishable");
+            return;
+          }
 
           if (storageProvider.isPunished(target, punishType) && !Groups
               .canOverride(senderUUID())) {

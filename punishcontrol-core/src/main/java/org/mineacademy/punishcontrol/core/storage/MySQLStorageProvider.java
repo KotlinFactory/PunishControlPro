@@ -73,7 +73,7 @@ public final class MySQLStorageProvider
   // jdbc:mysql://localhost:3306/hybrisdb?characterEncoding=latin1
   public void connect() {
     connect(
-        "jdbc:mysql://localhost:" + MySQL.PORT + "/" + MySQL.DATABASE
+        "jdbc:mysql://" + MySQL.HOST + ":" + MySQL.PORT + "/" + MySQL.DATABASE
             + "?characterEncoding=latin1",
         MySQL.USER,
         MySQL.PASSWORD);

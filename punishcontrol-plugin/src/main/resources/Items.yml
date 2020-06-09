@@ -13,6 +13,14 @@
 Ban:
   Type: OAK_DOOR
 Mute:
- Type: PAPER
+  Type: PAPER
 Apply:
   Type: EMERALD_BLOCK
+Reason:
+  Type: BOOK
+'&aAdd new':
+  Type: EMERALD
+'&aEnabled':
+  Type: GREEN_STAINED_GLASS_PANE
+'&cDisabled':
+  Type: RED_STAINED_GLASS_PANE

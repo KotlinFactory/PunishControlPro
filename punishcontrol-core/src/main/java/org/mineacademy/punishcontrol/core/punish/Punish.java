@@ -186,6 +186,10 @@ public abstract class Punish {
       reason = "unknown";
     }
 
+    Valid.checkBoolean(
+        PLAYER_PROVIDER.punishable(target),
+        "target is not punishable");
+
     try {
       STORAGE_PROVIDER.savePunish(this);
 

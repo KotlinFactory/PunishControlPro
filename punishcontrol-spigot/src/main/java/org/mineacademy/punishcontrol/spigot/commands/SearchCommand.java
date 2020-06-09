@@ -38,15 +38,9 @@ public final class SearchCommand
 
     if ("ip".equalsIgnoreCase(args[0])) {
       final UUID target = findTarget(data);
-      final String ip = playerProvider.ip(target).orElse("unknown");
+      tell("&7Ip of " + data + " &6is " + playerProvider.ip(target).orElse("unknown"));
 
-      SimpleComponent
-          .of("&7Ip of " + data + " is")
-          .append(" ")
-          .append("&6"+ ip)
-          .onHover("&7Click to copy")
-          .onClickSuggestCmd(ip)
-          .send(sender);
+      return;
     }
 
     if ("name".equalsIgnoreCase(args[0])) {
@@ -62,7 +56,6 @@ public final class SearchCommand
       } catch (final Throwable throwable) {
         tell("&cInvalid UUID: " + data);
       }
-
       return;
     }
 
@@ -77,7 +70,7 @@ public final class SearchCommand
       return;
     }
 
-    //Heavy-weight-stuff
+    // More heavy-weight operations
     async(() -> {
       if ("player".equalsIgnoreCase(args[0])) {
         //Ip
@@ -98,7 +91,6 @@ public final class SearchCommand
                 .onClickSuggestCmd(data)
                 .append(" ")
                 .append("&7[" + banned + "&7]")
-                .append(" ")
                 .append("&7[&6action&7]")
                 .onHover("&7Click to choose an action")
                 .onClickRunCmd("/chooseaction " + name)
@@ -106,10 +98,10 @@ public final class SearchCommand
           }
 
           tell("&7" + Common.chatLineSmooth());
-          //partial name
+          // partial name
         } else {
           tell("&7" + Common.chatLineSmooth());
-          tell("&7Similar-Names");
+          tell("&7Similar names");
           for (final SearchResult result : playerProvider.search(data)) {
             SimpleComponent
                 .of("&7[&8" + Math.round(result.similarity() * 100.0) / 100.0 + "&7]")
@@ -124,8 +116,35 @@ public final class SearchCommand
                 .onClickRunCmd("/chooseaction " + result.result())
                 .send(getSender());
           }
-
           tell("&7" + Common.chatLineSmooth());
+        }
+      } else if ("alts".equalsIgnoreCase(args[0])) {
+        tell("&7" + Common.chatLineSmooth());
+
+        final UUID target = findTarget(data);
+
+        final String ip = playerProvider.ip(target).orElse("unknown");
+
+        tell("&7Players with ip: &6" + ip);
+
+        for (final UUID uuid : playerProvider.searchForUUIDsOfIp(ip)) {
+
+          final String banned = storageProvider.isBanned(uuid)
+              ? "&cbanned"
+              : "&7not banned";
+
+          final String name = playerProvider.findName(uuid).orElse("unknown");
+          SimpleComponent
+              .of("&8" + name + "&7")
+              .onHover("&7Click to copy")
+              .onClickSuggestCmd(data)
+              .append(" ")
+              .append("&7[" + banned + "&7]")
+              .append(" ")
+              .append("&7[&6action&7]")
+              .onHover("&7Click to choose an action")
+              .onClickRunCmd("/chooseaction " + name)
+              .send(getSender());
         }
       }
     });
@@ -136,12 +155,13 @@ public final class SearchCommand
     return new String[]{
         "&8" + Common.chatLineSmooth(),
         "&eSearch-Command",
-        "&7/" + getLabel() + " player <partial-name> &8* &7search for an "
-            + "player by its partial name",
-        "&7" + getLabel() + " player <player> &8*&7 search for players by ip",
-        "&7/" + getLabel() + " ip <player>  &8*&7 get a player's IP",
         "&7/" + getLabel() + " uuid <player>  &8*&7 get a player's UUID",
         "&7/" + getLabel() + " name <uuid>  &8*&7 get a player's name from UUID",
+        "&7/" + getLabel() + " ip <player>  &8*&7 get a player's IP",
+        "&7/" + getLabel() + " player <partial-name> &8* &7search for an "
+            + "player by its partial name",
+        "&7" + getLabel() + " player <ip> &8*&7 search for players by ip",
+        "&7/" + getLabel() + " alts <player> &8*&7 search for alts of a player",
         "&8" + Common.chatLineSmooth()
     };
   }

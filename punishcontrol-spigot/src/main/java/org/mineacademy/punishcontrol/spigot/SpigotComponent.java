@@ -8,6 +8,8 @@ import org.mineacademy.punishcontrol.spigot.commands.KickCommand;
 import org.mineacademy.punishcontrol.spigot.commands.MuteCommand;
 import org.mineacademy.punishcontrol.spigot.commands.PlayerInfoCommand;
 import org.mineacademy.punishcontrol.spigot.commands.SearchCommand;
+import org.mineacademy.punishcontrol.spigot.commands.StaffHistoryCommand;
+import org.mineacademy.punishcontrol.spigot.commands.StaffRollbackCommand;
 import org.mineacademy.punishcontrol.spigot.commands.UnBanCommand;
 import org.mineacademy.punishcontrol.spigot.commands.UnMuteCommand;
 import org.mineacademy.punishcontrol.spigot.commands.UnWarnCommand;
@@ -21,6 +23,7 @@ import org.mineacademy.punishcontrol.spigot.menus.browsers.PlayerBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.browsers.PunishTemplateBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.browsers.PunishedPlayerBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.browsers.SettingsBrowser;
+import org.mineacademy.punishcontrol.spigot.menus.browsers.StaffPunishesBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.punish.PunishCreatorMenu;
 import org.mineacademy.punishcontrol.spigot.menus.settings.LanguageSettingsMenu;
 import org.mineacademy.punishcontrol.spigot.menus.settings.StorageSettingsMenu;
@@ -61,6 +64,10 @@ public interface SpigotComponent {
 
   ChooseActionCommand chooseActionCommand();
 
+  StaffHistoryCommand staffHistoryCommand();
+
+  StaffRollbackCommand staffRollbackCommand();
+
   // ----------------------------------------------------------------------------------------------------
   // Menus
   // ----------------------------------------------------------------------------------------------------
@@ -94,4 +101,6 @@ public interface SpigotComponent {
   // ----------------------------------------------------------------------------------------------------
 
   BukkitPunishImporter bukkitPunishImporter();
+
+   StaffPunishesBrowser.Builder staffPunishesBrowserBuilder();
 }

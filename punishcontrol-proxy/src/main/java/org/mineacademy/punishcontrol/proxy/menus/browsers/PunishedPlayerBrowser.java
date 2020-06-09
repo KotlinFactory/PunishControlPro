@@ -43,7 +43,7 @@ public class PunishedPlayerBrowser extends AbstractPlayerBrowser {
 
   @Override
   protected @Nullable List<String> lore(final UUID target) {
-    return ItemUtil.loreForPlayer(target, storageProvider);
+    return ItemUtil.loreForPlayer(target, storageProvider, playerProvider);
   }
 
   @Override

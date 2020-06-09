@@ -95,7 +95,7 @@ public final class ChooseActionMenu extends AbstractMenu implements Listener {
         Item
             .of(textureProvider.getSkinTexture(target))
             .name("&7Data for: &6" + (targetOnline() ? "&a" : "&7") + targetName)
-            .lore(ItemUtil.loreForPlayer(target, storageProvider))
+            .lore(ItemUtil.loreForPlayer(target, storageProvider, playerProvider))
             .slot(PLAYER_HEAD_SLOT)
             .actionHandler("NoAction")
     );

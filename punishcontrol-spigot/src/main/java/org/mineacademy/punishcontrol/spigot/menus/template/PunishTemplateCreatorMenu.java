@@ -183,7 +183,7 @@ public final class PunishTemplateCreatorMenu extends Menu {
       public ItemStack getItem() {
         if (PunishTemplateCreatorMenu.this.punishTemplate.silent()) {
           return ItemCreator
-              .of(ItemStacks.greenPane())
+              .ofString(ItemSettings.ENABLED.itemType())
               .name("&6Silent")
               .lores(Arrays.asList(
                   "",
@@ -195,7 +195,7 @@ public final class PunishTemplateCreatorMenu extends Menu {
               .makeMenuTool();
         }
         return ItemCreator
-            .of(ItemStacks.redPane())
+            .ofString(ItemSettings.DISABLED.itemType())
             .name("&6Make Silent")
             .lores(Arrays.asList(
                 "",
@@ -226,7 +226,7 @@ public final class PunishTemplateCreatorMenu extends Menu {
       public ItemStack getItem() {
         if (punishTemplate.superSilent()) {
           return ItemCreator
-              .of(ItemStacks.greenPane())
+              .ofString(ItemSettings.ENABLED.itemType())
               .name("&6Super-Silent")
               .lores(Arrays.asList(
                   "",
@@ -238,7 +238,7 @@ public final class PunishTemplateCreatorMenu extends Menu {
               .makeMenuTool();
         }
         return ItemCreator
-            .of(ItemStacks.redPane())
+            .ofString(ItemSettings.DISABLED.itemType())
             .name("&6Make Silent")
             .lores(Arrays.asList(
                 "",

@@ -204,7 +204,7 @@ public final class PunishTemplateCreatorMenu extends AbstractMenu {
       if (punishTemplate().silent()) {
         set(
             Item
-                .of(ItemType.GREEN_STAINED_GLASS_PANE)
+                .ofString(ItemSettings.ENABLED.itemType())
                 .name("&6Silent")
                 .lore(
                     "",
@@ -219,7 +219,7 @@ public final class PunishTemplateCreatorMenu extends AbstractMenu {
 
         set(
             Item
-                .of(ItemType.RED_STAINED_GLASS_PANE)
+                .ofString(ItemSettings.DISABLED.itemType())
                 .name("&6Make Silent")
                 .lore(
                     "",
@@ -238,7 +238,7 @@ public final class PunishTemplateCreatorMenu extends AbstractMenu {
       if (punishTemplate().superSilent()) {
         set(
             Item
-                .of(ItemType.GREEN_STAINED_GLASS_PANE)
+                .ofString(ItemSettings.ENABLED.itemType())
                 .name("&6Super-Silent")
                 .lore(
                     "",
@@ -252,7 +252,7 @@ public final class PunishTemplateCreatorMenu extends AbstractMenu {
       } else {
         set(
             Item
-                .of(ItemType.RED_STAINED_GLASS_PANE)
+                .ofString(ItemSettings.DISABLED.itemType())
                 .name("&6Make Super-Silent")
                 .lore(
                     "",

@@ -258,6 +258,11 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
         animateTitle("&7Created punish");
         async(() -> {
 
+          if (!playerProvider.punishable(punishBuilder.target())) {
+            animateTitle("&cTarget is unpunishable");
+            return;
+          }
+
           if (storageProvider
               .isPunished(punishBuilder.target(), punishBuilder.punishType()) && !Groups
               .canOverride(getViewer().getUniqueId())) {
@@ -344,7 +349,7 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
       public ItemStack getItem() {
         if (punishBuilder.silent()) {
           return ItemCreator
-              .of(ItemStacks.greenPane())
+              .ofString(ItemSettings.ENABLED.itemType())
               .name("&6Silent")
               .lores(Arrays.asList(
                   "",
@@ -356,7 +361,7 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
               .makeMenuTool();
         }
         return ItemCreator
-            .of(ItemStacks.redPane())
+            .ofString(ItemSettings.DISABLED.itemType())
             .name("&6Make Silent")
             .lores(Arrays.asList(
                 "",
@@ -386,7 +391,7 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
       public ItemStack getItem() {
         if (punishBuilder.superSilent()) {
           return ItemCreator
-              .of(ItemStacks.greenPane())
+              .ofString(ItemSettings.ENABLED.itemType())
               .name("&6Super-Silent")
               .lores(Arrays.asList(
                   "",
@@ -398,7 +403,7 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
               .makeMenuTool();
         }
         return ItemCreator
-            .of(ItemStacks.redPane())
+            .ofString(ItemSettings.DISABLED.itemType())
             .name("&6Make Super-Silent")
             .lores(Arrays.asList(
                 "",

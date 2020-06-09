@@ -1,5 +1,6 @@
 package org.mineacademy.punishcontrol.proxy.command;
 
+import de.exceptionflug.mccommons.inventories.proxy.utils.Schedulable;
 import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
@@ -10,7 +11,9 @@ import org.mineacademy.bfo.command.SimpleCommand;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 
-public abstract class AbstractSimplePunishControlCommand extends SimpleCommand {
+public abstract class AbstractSimplePunishControlCommand
+    extends SimpleCommand
+    implements Schedulable {
 
   public static final String INVALID_SILENCE_USAGE =
       "§cCan't be silent and super-silent simultaneously";
@@ -67,7 +70,6 @@ public abstract class AbstractSimplePunishControlCommand extends SimpleCommand {
     }
     return false;
   }
-
 
 
   protected UUID findTarget() {

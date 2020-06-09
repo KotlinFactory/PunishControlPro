@@ -35,7 +35,7 @@ public class PunishedPlayerBrowser extends AbstractPlayerBrowser {
 
   @Override
   protected @Nullable List<String> lore(final UUID target) {
-    return ItemStacks.loreForPlayer(target, storageProvider);
+    return ItemStacks.loreForPlayer(target, storageProvider, playerProvider);
   }
 
   @Override

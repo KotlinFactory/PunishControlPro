@@ -111,6 +111,8 @@ public final class PunishControl
     Commands.registerCommand(proxyComponent.commandPlayerInfo());
     Commands.registerCommand(proxyComponent.searchCommand());
     Commands.registerCommand(proxyComponent.chooseActionCommand());
+    Commands.registerCommand(proxyComponent.staffHistoryCommand());
+    Commands.registerCommand(proxyComponent.staffRollbackCommand());
   }
 
   @Override

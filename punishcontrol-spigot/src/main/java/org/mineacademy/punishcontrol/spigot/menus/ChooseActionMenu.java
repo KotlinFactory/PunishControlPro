@@ -211,7 +211,7 @@ public final class ChooseActionMenu extends Menu {
       return ItemCreator
           .ofSkullHash(textureProvider.getSkinTexture(target))
           .name("&7Data for: &6" + (targetOnline() ? "&a" : "&7") + targetName)
-          .lores(ItemStacks.loreForPlayer(target, storageProvider))
+          .lores(ItemStacks.loreForPlayer(target, storageProvider, playerProvider))
           .build()
           .makeMenuTool();
     }

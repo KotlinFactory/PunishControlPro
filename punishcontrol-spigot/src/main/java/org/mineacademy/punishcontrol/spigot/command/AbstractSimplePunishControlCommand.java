@@ -9,8 +9,11 @@ import org.mineacademy.fo.collection.StrictList;
 import org.mineacademy.fo.command.SimpleCommand;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
+import org.mineacademy.punishcontrol.spigot.util.Schedulable;
 
-public abstract class AbstractSimplePunishControlCommand extends SimpleCommand {
+public abstract class AbstractSimplePunishControlCommand
+    extends SimpleCommand
+    implements Schedulable {
 
   public static final String INVALID_SILENCE_USAGE =
       "§cCan't be silent and super-silent simultaneously";

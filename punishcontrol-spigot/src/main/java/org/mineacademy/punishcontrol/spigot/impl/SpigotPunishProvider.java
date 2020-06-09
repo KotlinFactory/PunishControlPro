@@ -89,6 +89,12 @@ public final class SpigotPunishProvider implements PunishProvider {
               Punishes.formPunishedMessage(punish).split("\n"));
         }));
       }
+
+      if (punish.punishType().shouldMessage()) {
+        Players.find(punish.target()).ifPresent((player -> Providers.playerProvider().sendIfOnline(
+            player.getUniqueId(),
+            Punishes.formPunishedMessage(punish).split("\n"))));
+      }
     });
 
     // No one will be notified
@@ -112,7 +118,7 @@ public final class SpigotPunishProvider implements PunishProvider {
 
         Common
             .tell(player, Localization.Punish.PUNISH_BROADCAST_MESSAGE.replace(
-                Common.chatLine(),
+                Common.chatLineSmooth(),
                 Providers.playerProvider().findNameUnsafe(punish.target()),
                 punish.punishType().localized(),
                 punish.reason(),
@@ -137,7 +143,7 @@ public final class SpigotPunishProvider implements PunishProvider {
 
       Common
           .tell(player, Localization.Punish.PUNISH_BROADCAST_MESSAGE.replace(
-              Common.chatLine(),
+              Common.chatLineSmooth(),
               Providers.playerProvider().findNameUnsafe(punish.target()),
               punish.punishType().localized(),
               punish.reason(),

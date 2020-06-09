@@ -1,4 +1,4 @@
-package org.mineacademy.punishcontrol.spigot.menu;
+package org.mineacademy.punishcontrol.spigot.menu.browser;
 
 import java.util.Arrays;
 import java.util.Collection;
@@ -17,7 +17,7 @@ import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.fo.remain.CompMaterial;
 import org.mineacademy.punishcontrol.core.Searcher;
-import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractSearchableBrowser;
+import org.mineacademy.punishcontrol.spigot.util.ItemStacks;
 import org.mineacademy.punishcontrol.spigot.util.Schedulable;
 
 public abstract class AbstractMaterialBrowser
@@ -26,18 +26,18 @@ public abstract class AbstractMaterialBrowser
 
   private static List<CompMaterial> items = Arrays
       .stream(Material.values())
-      .filter(AbstractMaterialBrowser::isItem)
       .map(CompMaterial::fromMaterial)
       .collect(Collectors.toList())
       .stream()
       .filter(Objects::nonNull)
+      .filter(AbstractMaterialBrowser::isItem)
       .collect(Collectors.toList());
 
-  private static boolean isItem(final Material material) {
+  private static boolean isItem(final CompMaterial material) {
     if (MinecraftVersion.newerThan(V.v1_13)) {
-      return material.isItem() && !material.isAir();
+      return material.getMaterial().isItem() && !material.getMaterial().isItem();
     }
-    return material.getMaxStackSize() == 64;
+    return ItemStacks.isItem(material) && material.getMaterial() != Material.AIR;
   }
 
   protected AbstractMaterialBrowser(@NonNull final Menu parent) {

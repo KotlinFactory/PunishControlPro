@@ -5,6 +5,7 @@ import lombok.NonNull;
 import org.mineacademy.fo.Common;
 import org.mineacademy.fo.collection.StrictList;
 import org.mineacademy.fo.command.SimpleCommand;
+import org.mineacademy.fo.model.SimpleComponent;
 import org.mineacademy.fo.plugin.SimplePlugin;
 import org.mineacademy.punishcontrol.core.DaggerCoreComponent;
 import org.mineacademy.punishcontrol.core.setting.YamlStaticConfig;
@@ -18,6 +19,7 @@ public final class MainCommand extends SimpleCommand {
     super(labels);
     setDescription("Main-Command of PunishControlPro");
     setPermission("punishcontrol.command.main");
+    setAutoHandleHelp(false);
   }
 
   public static MainCommand create(@NonNull final StrictList<String> labels) {
@@ -58,10 +60,19 @@ public final class MainCommand extends SimpleCommand {
     tell("&8" + Common.chatLineSmooth());
     tell("&7" + SimplePlugin.getNamed() + " v." + SimplePlugin.getVersion());
     tell("&7© MineAcademy 2020");
+    tell("&7Founder: Leonhard Solbach");
     tell(" ");
     for (final SimpleCommand command : SimpleCommand.getRegisteredCommands()) {
-      tell("&e/" + command.getLabel() + " &8* &7" + command.getDescription());
+      SimpleComponent
+          .of("&e/")
+          .append("&e" + command.getLabel())
+          .onHover("&7Click to copy.")
+          .onClickSuggestCmd("/" + command.getLabel())
+          .append(" ")
+          .append("&8* &7" + command.getDescription())
+          .send(sender);
     }
     tell("&8" + Common.chatLineSmooth());
   }
 }
+

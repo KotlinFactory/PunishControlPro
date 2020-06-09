@@ -29,6 +29,13 @@ public abstract class AbstractPlayerBrowser extends AbstractSearchableBrowser<UU
 
   public AbstractPlayerBrowser(
       final PlayerProvider playerProvider,
+      final TextureProvider textureProvider) {
+    this(playerProvider, textureProvider, null, false);
+  }
+
+
+  public AbstractPlayerBrowser(
+      final PlayerProvider playerProvider,
       final TextureProvider textureProvider,
       final BurstMenu parent) {
     this(playerProvider, textureProvider, parent, false);

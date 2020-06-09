@@ -5,6 +5,7 @@ import lombok.NonNull;
 import org.mineacademy.bfo.Common;
 import org.mineacademy.bfo.collection.StrictList;
 import org.mineacademy.bfo.command.SimpleCommand;
+import org.mineacademy.bfo.model.SimpleComponent;
 import org.mineacademy.bfo.plugin.SimplePlugin;
 import org.mineacademy.punishcontrol.core.DaggerCoreComponent;
 import org.mineacademy.punishcontrol.core.setting.YamlStaticConfig;
@@ -60,10 +61,19 @@ public final class MainCommand extends SimpleCommand {
     tell("&8" + Common.chatLineSmooth());
     tell("&7" + SimplePlugin.getNamed() + " v." + SimplePlugin.getVersion());
     tell("&7© MineAcademy 2020");
+    tell("&7Founder: Leonhard Solbach");
     tell(" ");
     for (final SimpleCommand command : SimpleCommand.getRegisteredCommands()) {
-      tell("&e/" + command.getLabel() + " &8* &7" + command.getDescription());
+      SimpleComponent
+          .of("&e/")
+          .append("&e"+ command.getLabel())
+          .onHover("&7Click to copy.")
+          .onClickSuggestCmd("/" + command.getLabel())
+          .append(" ")
+          .append("&8* &7" + command.getDescription())
+          .send(sender);
     }
     tell("&8" + Common.chatLineSmooth());
   }
 }
+

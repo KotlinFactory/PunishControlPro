@@ -99,7 +99,7 @@ public final class SearchCommand
           }
 
           tell("&7" + Common.chatLineSmooth());
-          //paritial name
+          // partial name
         } else {
           tell("&7" + Common.chatLineSmooth());
           tell("&7Similar names");
@@ -119,6 +119,34 @@ public final class SearchCommand
           }
           tell("&7" + Common.chatLineSmooth());
         }
+      } else if ("alts".equalsIgnoreCase(args[0])) {
+        tell("&7" + Common.chatLineSmooth());
+
+        final UUID target = findTarget(data);
+
+        final String ip = playerProvider.ip(target).orElse("unknown");
+
+        tell("&7Players with ip: &6" + ip);
+
+        for (final UUID uuid : playerProvider.searchForUUIDsOfIp(ip)) {
+
+          final String banned = storageProvider.isBanned(uuid)
+              ? "&cbanned"
+              : "&7not banned";
+
+          final String name = playerProvider.findName(uuid).orElse("unknown");
+          SimpleComponent
+              .of("&8" + name + "&7")
+              .onHover("&7Click to copy")
+              .onClickSuggestCmd(data)
+              .append(" ")
+              .append("&7[" + banned + "&7]")
+              .append(" ")
+              .append("&7[&6action&7]")
+              .onHover("&7Click to choose an action")
+              .onClickRunCmd("/chooseaction " + name)
+              .send(getSender());
+        }
       }
     });
   }
@@ -128,12 +156,13 @@ public final class SearchCommand
     return new String[]{
         "&8" + Common.chatLineSmooth(),
         "&eSearch-Command",
+        "&7/" + getLabel() + " uuid <player>  &8*&7 get a player's UUID",
+        "&7/" + getLabel() + " name <uuid>  &8*&7 get a player's name from UUID",
+        "&7/" + getLabel() + " ip <player>  &8*&7 get a player's IP",
         "&7/" + getLabel() + " player <partial-name> &8* &7search for an "
             + "player by its partial name",
         "&7" + getLabel() + " player <ip> &8*&7 search for players by ip",
-        "&7/" + getLabel() + " ip <player>  &8*&7 get a player's IP",
-        "&7/" + getLabel() + " uuid <player>  &8*&7 get a player's UUID",
-        "&7/" + getLabel() + " name <uuid>  &8*&7 get a player's name from UUID",
+        "&7/" +getLabel() + " alts <player> &8*&7 search for alts of a player",
         "&8" + Common.chatLineSmooth()
     };
   }

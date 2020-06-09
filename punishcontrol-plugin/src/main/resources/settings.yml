@@ -21,7 +21,6 @@
 #
 # !-------------------------------------------------------------------------------------------------!
 
-
 # -------------------------------------------------------------------------------------------
 # You can change the prefix in front of chat or console messages here:
 # -------------------------------------------------------------------------------------------
@@ -154,6 +153,14 @@ Advanced:
   #
   Enable_Backups: true
 
+
+  #
+  # (Bungee-Only) Defines the latest protocol-version that our items should be compatible with
+  # For a list of Protocol-Versions, please see: https://wiki.vg/Protocol_version_numbers
+  # This changes how many items will be available to select in the material browsers, whic
+  # for example shows up, when you want to customize ur items
+  #
+  Min_Protocol_Version_Supported: 47
   #
   # Define how names and other stuff should be searched for
   #

@@ -34,6 +34,17 @@ public final class ItemSettings extends AbstractItemSettings {
       .itemType("EMERALD")
       .description("Item clicked when", "Adding new punishment templates");
 
+  public static CustomItem ENABLED = CustomItem
+      .of("&aEnabled")
+      .itemType("GREEN_STAINED_GLASS_PANE")
+      .description("Item presententing something enabled");
+
+  public static CustomItem DISABLED = CustomItem
+      .of("&cDisabled")
+      .itemType("RED_STAINED_GLASS_PANE")
+      .description("Item presententing something disabled");
+
+
   @Inject
   public ItemSettings(
       @NonNull final PluginDataProvider pluginDataProvider,

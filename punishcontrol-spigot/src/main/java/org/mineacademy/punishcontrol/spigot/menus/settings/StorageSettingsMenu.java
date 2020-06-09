@@ -13,6 +13,7 @@ import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.fo.remain.CompMaterial;
 import org.mineacademy.punishcontrol.core.PunishControlManager;
 import org.mineacademy.punishcontrol.core.provider.Providers;
+import org.mineacademy.punishcontrol.core.settings.ItemSettings;
 import org.mineacademy.punishcontrol.core.settings.Settings.MySQL;
 import org.mineacademy.punishcontrol.core.storage.MySQLStorageProvider;
 import org.mineacademy.punishcontrol.core.storage.StorageType;
@@ -145,7 +146,7 @@ public final class StorageSettingsMenu
       public ItemStack getItem() {
         if (mySQLStorageProvider.isConnected()) {
           return ItemCreator
-              .of(CompMaterial.GREEN_STAINED_GLASS_PANE)
+              .ofString(ItemSettings.ENABLED.itemType())
               .name("&7Connect")
               .lores(Arrays.asList(
                   " ",
@@ -157,7 +158,7 @@ public final class StorageSettingsMenu
               .makeMenuTool();
         }
         return ItemCreator
-            .of(CompMaterial.GREEN_STAINED_GLASS_PANE)
+            .ofString(ItemSettings.DISABLED.itemType())
             .name("&7Connect")
             .lores(Arrays.asList(
                 " ",

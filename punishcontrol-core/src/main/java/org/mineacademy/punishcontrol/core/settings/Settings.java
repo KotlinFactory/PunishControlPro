@@ -5,6 +5,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.mineacademy.punishcontrol.core.MessageType;
+import org.mineacademy.punishcontrol.core.permission.Permission;
+import org.mineacademy.punishcontrol.core.permission.PermissionType;
+import org.mineacademy.punishcontrol.core.permission.Permissions;
 import org.mineacademy.punishcontrol.core.setting.SimpleSettings;
 import org.mineacademy.punishcontrol.core.storage.StorageType;
 
@@ -97,6 +100,14 @@ public final class Settings extends SimpleSettings {
         pathPrefix("Notifications.Punish");
         ENABLED = getBoolean("Enabled");
         PERMISSION = getString("Permission");
+        Permissions.register(
+            Permission
+                .of(
+                    PERMISSION,
+                    "See notifications on punishments",
+                    "Even if the punishment is silent")
+                .type(PermissionType.OTHER)
+        );
       }
     }
 
@@ -109,6 +120,14 @@ public final class Settings extends SimpleSettings {
         pathPrefix("Notifications.Silent-Punish");
         ENABLED = getBoolean("Enabled");
         PERMISSION = getString("Permission");
+        Permissions.register(
+            Permission
+                .of(
+                    PERMISSION,
+                    "See notifications on punishments",
+                    "Even if the punishment is silent")
+                .type(PermissionType.OTHER)
+        );
       }
     }
   }
@@ -120,6 +139,7 @@ public final class Settings extends SimpleSettings {
     public static Boolean CACHE_RESULTS;
     public static String DATE_FORMAT = "MM/dd/yyyy/hh";
     public static Double MIN_SIMILARITY;
+    public static Integer MIN_PROTOCOL_VERSION_SUPPORTED;
 
     public static Boolean ENCOURAGE_BUNGEE_USAGE;
 
@@ -134,6 +154,7 @@ public final class Settings extends SimpleSettings {
       STARTS_WITH = getBoolean("Searcher.Use_Starts_With");
       ENABLE_BACKUPS = getBoolean("Enable_Backups");
       ENCOURAGE_BUNGEE_USAGE = getBoolean("Encourage_Bungee_Usage");
+      MIN_PROTOCOL_VERSION_SUPPORTED = getInteger("Min_Protocol_Version_Supported");
     }
 
     public static String formatDate(final long ms) {

@@ -132,6 +132,8 @@ public final class PunishControl
     registerCommand(spigotComponent.commandPlayerInfo());
     registerCommand(spigotComponent.searchCommand());
     registerCommand(spigotComponent.chooseActionCommand());
+    registerCommand(spigotComponent.staffHistoryCommand());
+    registerCommand(spigotComponent.staffRollbackCommand());
   }
 
   @Override

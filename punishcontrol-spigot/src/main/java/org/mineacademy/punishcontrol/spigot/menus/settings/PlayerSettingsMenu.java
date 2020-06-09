@@ -20,13 +20,13 @@ import org.mineacademy.punishcontrol.core.permission.Permission;
 import org.mineacademy.punishcontrol.core.permission.Permissions;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
+import org.mineacademy.punishcontrol.core.settings.ItemSettings;
 import org.mineacademy.punishcontrol.core.util.PunishControlPermissions;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
 import org.mineacademy.punishcontrol.spigot.Players;
 import org.mineacademy.punishcontrol.spigot.Scheduler;
 import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.setting.AbstractSettingsMenu;
-import org.mineacademy.punishcontrol.spigot.util.ItemStacks;
 
 public final class PlayerSettingsMenu extends AbstractSettingsMenu {
 
@@ -137,13 +137,13 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
       public ItemStack getItem() {
         if (targetPunishable) {
           return ItemCreator
-              .of(CompMaterial.RED_STAINED_GLASS)
+              .ofString(ItemSettings.DISABLED.itemType())
               .name("&6Toggle punishable")
               .lores(
                   Arrays.asList(
                       "",
-                      "&7Click to make target punishable",
-                      "&7Target is currently unpunishable"
+                      "&7Click to make target unpunishable",
+                      "&7Target is currently punishable"
                   )
               )
               .build()
@@ -152,13 +152,13 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
         }
 
         return ItemCreator
-            .of(CompMaterial.GREEN_STAINED_GLASS)
+            .ofString(ItemSettings.ENABLED.itemType())
             .name("&6Toggle punishable")
             .lores(
                 Arrays.asList(
                     "",
-                    "&7Click to make target unpunishable",
-                    "&7Target is currently punishable"
+                    "&7Click to make target punishable",
+                    "&7Target is currently unpunishable"
                 )
             )
             .build()
@@ -176,10 +176,10 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
     if (slot == GROUP_BROWSER_SLOT) {
       return groupBrowser.getItem();
     }
-//
-//    if (slot == TOGGLE_PUNISHABLE_SLOT) {
-//      return togglePunishable.getItem();
-//    }
+
+    if (slot == TOGGLE_PUNISHABLE_SLOT) {
+      return togglePunishable.getItem();
+    }
 
     return null;
   }
@@ -308,7 +308,7 @@ class PermissionsBrowser extends AbstractBrowser<Permission> {
       lore.addAll(Arrays.asList(" ", "&aHas access"));
 
       return ItemCreator
-          .of(ItemStacks.greenPane())
+          .ofString(ItemSettings.ENABLED.itemType())
           .name("&6Permission: " + permission.permission())
           .lores(lore)
           .build()
@@ -320,7 +320,7 @@ class PermissionsBrowser extends AbstractBrowser<Permission> {
     lore.addAll(Arrays.asList(" ", "&cHas no access"));
 
     return ItemCreator
-        .of(ItemStacks.redPane())
+        .ofString(ItemSettings.DISABLED.itemType())
         .name("&6Permission: " + permission.permission())
         .lores(lore)
         .build()

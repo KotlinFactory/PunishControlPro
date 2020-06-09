@@ -9,6 +9,7 @@ import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 import lombok.val;
 import org.mineacademy.burst.item.Item;
+import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.punish.PunishType;
 import org.mineacademy.punishcontrol.core.setting.Replacer;
 import org.mineacademy.punishcontrol.core.settings.ItemSettings;
@@ -21,11 +22,11 @@ public class ItemUtil {
     switch (punishType) {
       case BAN:
         return Item
-            .of(ItemSettings.BAN_ITEM.itemType())
+            .ofString(ItemSettings.BAN_ITEM.itemType())
             .build();
       case MUTE:
         return Item
-            .of(ItemSettings.MUTE_ITEM.itemType())
+            .ofString(ItemSettings.MUTE_ITEM.itemType())
             .build();
       case WARN:
         return Item
@@ -40,7 +41,8 @@ public class ItemUtil {
 
   public List<String> loreForPlayer(
       final UUID target,
-      final StorageProvider storageProvider) {
+      final StorageProvider storageProvider,
+      final PlayerProvider playerProvider) {
     final boolean targetOnline = Players.find(target).isPresent();
 
     final Replacer lores = Replacer.of(
@@ -49,14 +51,15 @@ public class ItemUtil {
         "&6Banned: &7{banned}",
         "&6Muted: &7{muted}",
         "&6Warned: &7{warned}",
-        ""
+        "&6Punishable: &7{punishable}"
     );
 
     final val ban = storageProvider.currentBan(target);
     final val mute = storageProvider.currentMute(target);
     final val warn = storageProvider.currentWarn(target);
+    val punishable = playerProvider.punishable(target) ? "&ayes" : "&cno";
 
-    lores.find("online", "banned", "muted", "warned");
+    lores.find("online", "banned", "muted", "warned", "punishable");
     lores.replace(
         targetOnline ? "&ayes" : "&cno",
         ban.map(value -> "&ayes &7- " + value.punishDuration().toString())
@@ -64,7 +67,8 @@ public class ItemUtil {
         mute.map(value -> "&ayes &7- " + value.punishDuration().toString())
             .orElse("&cno"),
         warn.map(value -> "&ayes &7- " + value.punishDuration().toString())
-            .orElse("&cno"));
+            .orElse("&cno"),
+        punishable);
 
     return Arrays.asList(lores.replacedMessage());
   }

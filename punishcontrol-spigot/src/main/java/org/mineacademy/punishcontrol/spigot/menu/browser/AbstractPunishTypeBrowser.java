@@ -15,6 +15,7 @@ public abstract class AbstractPunishTypeBrowser
 
   protected AbstractPunishTypeBrowser(final Menu parent) {
     super(parent, Arrays.asList(PunishType.values()));
+    setTitle("&8Choose type");
   }
 
   @Override

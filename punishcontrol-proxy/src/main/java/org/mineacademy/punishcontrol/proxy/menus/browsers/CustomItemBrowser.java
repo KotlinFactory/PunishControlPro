@@ -1,29 +1,29 @@
-package org.mineacademy.punishcontrol.spigot.menus.browsers;
+package org.mineacademy.punishcontrol.proxy.menus.browsers;
 
+import de.exceptionflug.mccommons.inventories.api.ClickType;
+import de.exceptionflug.protocolize.items.ItemStack;
+import de.exceptionflug.protocolize.items.ItemType;
 import java.util.Collection;
 import java.util.Objects;
 import java.util.stream.Collectors;
 import javax.inject.Inject;
 import lombok.NonNull;
-import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.ClickType;
-import org.bukkit.inventory.ItemStack;
-import org.mineacademy.fo.debug.Debugger;
-import org.mineacademy.fo.menu.model.ItemCreator;
-import org.mineacademy.fo.remain.CompMaterial;
+import net.md_5.bungee.api.connection.ProxiedPlayer;
+import org.mineacademy.bfo.debug.Debugger;
+import org.mineacademy.burst.item.Item;
+import org.mineacademy.burst.menu.AbstractSearchableBrowser;
 import org.mineacademy.punishcontrol.core.Searcher;
 import org.mineacademy.punishcontrol.core.setting.CustomItem;
 import org.mineacademy.punishcontrol.core.settings.ItemSettings;
-import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
-import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractMaterialBrowser;
-import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractSearchableBrowser;
+import org.mineacademy.punishcontrol.proxy.DaggerProxyComponent;
+import org.mineacademy.punishcontrol.proxy.menu.browser.AbstractMaterialBrowser;
 
 public final class CustomItemBrowser extends AbstractSearchableBrowser<CustomItem> {
 
   private final ItemSettings itemSettings;
 
-  public static void showTo(@NonNull final Player player) {
-    DaggerSpigotComponent.create().customItemBrowser().displayTo(player);
+  public static void showTo(@NonNull final ProxiedPlayer player) {
+    DaggerProxyComponent.create().customItemBrowser().displayTo(player);
   }
 
   @Inject
@@ -35,7 +35,7 @@ public final class CustomItemBrowser extends AbstractSearchableBrowser<CustomIte
       SettingsBrowser parent,
       ItemSettings itemSettings,
       Collection<CustomItem> content) {
-    super(parent, content);
+    super("ItemBrowser", parent, content);
     this.itemSettings = itemSettings;
     setTitle("&8Custom items");
   }
@@ -48,7 +48,7 @@ public final class CustomItemBrowser extends AbstractSearchableBrowser<CustomIte
   @Override
   public void redisplay(Collection<CustomItem> content) {
     new CustomItemBrowser((SettingsBrowser) getParent(), itemSettings, content)
-        .displayTo(getViewer());
+        .displayTo(getPlayer());
   }
 
   @Override
@@ -68,39 +68,38 @@ public final class CustomItemBrowser extends AbstractSearchableBrowser<CustomIte
   @Override
   protected ItemStack convertToItemStack(CustomItem item) {
 
-    CompMaterial compMaterial;
+    ItemType itemType;
 
-    if (item.itemType().isEmpty()) {
-      compMaterial = CompMaterial.STONE;
+    if (item.itemType() == null || item.itemType().isEmpty()) {
+      itemType = ItemType.STONE;
     } else {
       try {
-        compMaterial = CompMaterial.fromString(item.itemType());
+        itemType = ItemType.valueOf(item.itemType());
       } catch (IllegalArgumentException e) {
         Debugger.debug(
             "Items",
             "Can't parse itemtype of item: " + item.name(),
             "defaulting to stone");
-        compMaterial = CompMaterial.STONE;
+        itemType = ItemType.STONE;
       }
     }
 
-    return ItemCreator
+    return Item
         .of(
-            compMaterial,
+            itemType,
             "&8" + item.name(),
             item.description())
         .lore("")
         .lore("&6Click to edit")
-        .build()
-        .make();
+        .build();
   }
 
   @Override
-  protected void onPageClick(Player player, CustomItem customItem, ClickType click) {
+  protected void onClick(ClickType clickType, CustomItem customItem) {
     new AbstractMaterialBrowser(this) {
       @Override
-      protected void onPageClick(Player player, CompMaterial item, ClickType click) {
-        itemSettings.setType(customItem, item.toString());
+      protected void onClick(ClickType clickType, ItemType itemType) {
+        itemSettings.setType(customItem, itemType.toString());
         CustomItemBrowser.this.redisplay();
       }
     }.displayTo(player);
@@ -111,5 +110,10 @@ public final class CustomItemBrowser extends AbstractSearchableBrowser<CustomIte
     return new String[]{
         ""
     };
+  }
+
+  @Override
+  public void reDisplay() {
+    showTo(getPlayer());
   }
 }
