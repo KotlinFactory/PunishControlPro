@@ -8,6 +8,8 @@ import org.mineacademy.punishcontrol.core.punish.Punish;
 public interface PunishImporter {
 
 
+  boolean pluginInstalled();
+
   /**
    * Plugin needed to import these punishments from.
    */
@@ -24,7 +26,7 @@ public interface PunishImporter {
    * Tells us whether our PunishImporter is applicable (the plugin needed is installed) or
    * not
    */
-  boolean isApplicable();
+  boolean applicable();
 
   /**
    * If we want to import punishments from our mysql-database this needs to be set to
@@ -35,8 +37,8 @@ public interface PunishImporter {
   }
 
   /**
-   * Description that will be shown in menus / chat if players browse
-   * the available punishment importers
+   * Description that will be shown in menus / chat if players browse the available
+   * punishment importers
    */
   String[] description();
 

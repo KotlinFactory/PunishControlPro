@@ -26,7 +26,7 @@ public class PunishImporters {
   public List<PunishImporter> applicableImporters() {
     return importers()
         .stream()
-        .filter(PunishImporter::isApplicable)
+        .filter(PunishImporter::applicable)
         .collect(Collectors.toList());
   }
 

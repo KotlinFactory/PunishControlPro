@@ -49,6 +49,12 @@
 
     <dependency>
       <groupId>org.mineacademy</groupId>
+      <artifactId>punishcontrol-importers</artifactId>
+      <version>1.0.0</version>
+    </dependency>
+
+    <dependency>
+      <groupId>org.mineacademy</groupId>
       <artifactId>punishcontrol-proxy</artifactId>
       <version>1.0.0</version>
     </dependency>

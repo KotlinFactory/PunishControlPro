@@ -22,6 +22,7 @@ import org.mineacademy.punishcontrol.core.permission.Permission;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.settings.Settings;
 import org.mineacademy.punishcontrol.core.settings.Settings.Advanced;
+import org.mineacademy.punishcontrol.external.importers.ExternalImporterRegistrator;
 import org.mineacademy.punishcontrol.proxy.commands.BackupCommand;
 import org.mineacademy.punishcontrol.proxy.commands.MainCommand;
 import org.mineacademy.punishcontrol.proxy.impl.ProxyExceptionHandler;
@@ -87,6 +88,7 @@ public final class PunishControl
     onPunishControlPluginStart();
     // TODO: As long as CoreFoundation wasn't implemented we need to do this
     SimpleSettingsInjector.inject();
+    ExternalImporterRegistrator.register(Providers.pluginManager());
   }
 
   // ----------------------------------------------------------------------------------------------------

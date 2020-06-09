@@ -29,11 +29,11 @@ public abstract class AbstractPunishImporter implements PunishImporter {
   }
 
   // ----------------------------------------------------------------------------------------------------
-  // Overridden methods from PunishImporter
+  // Overridden methods from PunishImporter (final)
   // ----------------------------------------------------------------------------------------------------
 
   @Override
-  public final boolean isApplicable() {
+  public final boolean pluginInstalled() {
     if (pluginName == null) {
       return true;
     }
@@ -41,7 +41,17 @@ public abstract class AbstractPunishImporter implements PunishImporter {
   }
 
   @Override
-  public Optional<String> pluginName() {
+  public final Optional<String> pluginName() {
     return Optional.ofNullable(pluginName);
+  }
+
+  // ----------------------------------------------------------------------------------------------------
+  // Methods that might be overridden
+  // ----------------------------------------------------------------------------------------------------
+
+  // Change me if needed
+  @Override
+  public boolean applicable() {
+    return pluginInstalled();
   }
 }

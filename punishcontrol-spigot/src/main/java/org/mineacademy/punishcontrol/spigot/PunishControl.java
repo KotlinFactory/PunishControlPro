@@ -21,6 +21,7 @@ import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.punish.importer.PunishImporters;
 import org.mineacademy.punishcontrol.core.settings.Settings;
 import org.mineacademy.punishcontrol.core.settings.Settings.Advanced;
+import org.mineacademy.punishcontrol.external.importers.ExternalImporterRegistrator;
 import org.mineacademy.punishcontrol.spigot.commands.BackupCommand;
 import org.mineacademy.punishcontrol.spigot.commands.MainCommand;
 import org.mineacademy.punishcontrol.spigot.impl.SpigotExceptionHandler;
@@ -92,6 +93,8 @@ public final class PunishControl
     SimpleSettingsInjector.inject();
 
     PunishImporters.register(spigotComponent.bukkitPunishImporter());
+
+    ExternalImporterRegistrator.register(Providers.pluginManager());
 
     // After startup
     if (SpigotConfig.bungee && Advanced.ENCOURAGE_BUNGEE_USAGE) {
