@@ -33,6 +33,7 @@
     <module>punishcontrol-spigot</module>
     <module>punishcontrol-proxy</module>
     <module>punishcontrol-plugin</module>
+    <module>punishcontrol-importers</module>
   </modules>
 
 </project>
