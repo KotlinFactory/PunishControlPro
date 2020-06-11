@@ -14,7 +14,9 @@ import org.mineacademy.punishcontrol.core.providers.ExceptionHandler;
 import org.mineacademy.punishcontrol.core.providers.TextureProvider;
 
 public final class ProxyTextureProvider extends SecureJson
-    implements TextureProvider, org.mineacademy.burst.provider.TextureProvider {
+    implements TextureProvider,
+    org.mineacademy.burst.provider.TextureProvider {
+
 
   private ProxyTextureProvider() {
     super(

@@ -12,6 +12,7 @@ import org.mineacademy.bfo.debug.Debugger;
 import org.mineacademy.punishcontrol.core.notification.Notification;
 import org.mineacademy.punishcontrol.core.notification.Notifications;
 import org.mineacademy.punishcontrol.core.provider.Providers;
+import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.providers.PunishProvider;
 import org.mineacademy.punishcontrol.core.punish.Punish;
 import org.mineacademy.punishcontrol.core.punish.Punishes;
@@ -25,6 +26,8 @@ import org.mineacademy.punishcontrol.proxy.events.PunishCreateEvent;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public final class ProxyPunishProvider implements PunishProvider {
 
+  private static PlayerProvider playerProvider;
+
   public static ProxyPunishProvider create() {
     return new ProxyPunishProvider();
   }
@@ -36,21 +39,24 @@ public final class ProxyPunishProvider implements PunishProvider {
       final boolean superSilent) {
 
     if (punish.punishType().shouldKick()) {
+
       Players.find(punish.target()).ifPresent((player -> player.disconnect(
           Punishes.formOnPunishMessage(punish))));
     }
 
     if (punish.punishType().shouldWarn()) {
-      Players.find(punish.target()).ifPresent((player -> Providers.playerProvider().sendIfOnline(
-          player.getUniqueId(),
-          Warn.messageType,
-          Punishes.formPunishedMessage(punish).split("\n"))));
+      Players.find(punish.target())
+          .ifPresent((player -> Providers.playerProvider().sendIfOnline(
+              player.getUniqueId(),
+              Warn.messageType,
+              Punishes.formPunishedMessage(punish).split("\n"))));
     }
 
     if (punish.punishType().shouldMessage()) {
-      Players.find(punish.target()).ifPresent((player -> Providers.playerProvider().sendIfOnline(
-          player.getUniqueId(),
-          Punishes.formPunishedMessage(punish).split("\n"))));
+      Players.find(punish.target())
+          .ifPresent((player -> Providers.playerProvider().sendIfOnline(
+              player.getUniqueId(),
+              Punishes.formPunishedMessage(punish).split("\n"))));
     }
 
     final val targetName = Providers.playerProvider().findName(punish.target())

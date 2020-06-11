@@ -19,6 +19,7 @@ import org.mineacademy.punishcontrol.proxy.menus.MainMenu;
 import org.mineacademy.punishcontrol.proxy.menus.browsers.AllPunishesBrowser;
 import org.mineacademy.punishcontrol.proxy.menus.browsers.CustomItemBrowser;
 import org.mineacademy.punishcontrol.proxy.menus.browsers.PlayerBrowser;
+import org.mineacademy.punishcontrol.proxy.menus.browsers.PunishImporterBrowser;
 import org.mineacademy.punishcontrol.proxy.menus.browsers.PunishTemplateBrowser;
 import org.mineacademy.punishcontrol.proxy.menus.browsers.PunishedPlayerBrowser;
 import org.mineacademy.punishcontrol.proxy.menus.browsers.SettingsBrowser;
@@ -95,4 +96,6 @@ public interface ProxyComponent {
   StorageSettingsMenu storageSettingsMenu();
 
   CustomItemBrowser customItemBrowser();
+
+  PunishImporterBrowser punishImporterBrowser();
 }

@@ -12,6 +12,7 @@ import org.mineacademy.punishcontrol.core.notification.Notification;
 import org.mineacademy.punishcontrol.core.providers.PluginManager;
 import org.mineacademy.punishcontrol.core.punish.Punish;
 import org.mineacademy.punishcontrol.core.punish.importer.AbstractPunishImporter;
+import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 
 public final class BukkitPunishImporter extends AbstractPunishImporter {
 
@@ -20,8 +21,9 @@ public final class BukkitPunishImporter extends AbstractPunishImporter {
 
   @Inject
   public BukkitPunishImporter(
-      @NonNull PluginManager pluginManager) {
-    super(pluginManager, null);
+      @NonNull final StorageProvider storageProvider,
+      @NonNull final PluginManager pluginManager) {
+    super(storageProvider, pluginManager, null);
   }
 
   @Override

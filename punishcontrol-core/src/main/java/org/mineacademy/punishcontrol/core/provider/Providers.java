@@ -16,6 +16,8 @@ import org.mineacademy.punishcontrol.core.providers.PluginDataProvider;
 import org.mineacademy.punishcontrol.core.providers.PluginManager;
 import org.mineacademy.punishcontrol.core.providers.PunishProvider;
 import org.mineacademy.punishcontrol.core.providers.TextureProvider;
+import org.mineacademy.punishcontrol.core.punish.importer.PunishImporter;
+import org.mineacademy.punishcontrol.core.punish.importer.PunishImporters;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 
 /**
@@ -106,6 +108,12 @@ public final class Providers {
   @Named("offline-players")
   public Collection<UUID> offlinePlayers() {
     return playerProvider().offlinePlayers();
+  }
+
+  @Provides
+  @Named("importers")
+  public Collection<PunishImporter> importers() {
+    return PunishImporters.importers();
   }
 
   //Lazy loading our storage provider & allowing to reset it

@@ -2,4 +2,5 @@ main: org.mineacademy.punishcontrol.proxy.PunishControl
 version: ${project.version}
 name: PunishControl
 author: ${author}
-softdepend: ['Lands']
+softdepend:
+  - LiteBans # To probably import punishments

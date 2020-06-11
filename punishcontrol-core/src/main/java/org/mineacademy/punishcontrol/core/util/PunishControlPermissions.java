@@ -37,7 +37,11 @@ public class PunishControlPermissions {
   public Permission TOGGLE_PUNISHABLE =  Permission
       .of("punishcontrol.menu.settings.punishable",
           "Toggle whether you can punish a player or not")
-      .type(PermissionType.OTHER);
+      .type(PermissionType.MENU);
 
+  public Permission IMPORT_PUNISHMENTS =  Permission
+      .of("punishcontrol.import.punishments",
+          "Toggle whether punishments can be importer or not")
+      .type(PermissionType.OTHER);
 
 }

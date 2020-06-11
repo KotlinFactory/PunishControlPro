@@ -59,8 +59,7 @@ public class TimeUtil {
   }
 
   /**
-   * Return the given date in millis formatted as DAY.MONTH.YEAR
-   * HOUR:MINUTES:SECONDS
+   * Return the given date in millis formatted as DAY.MONTH.YEAR HOUR:MINUTES:SECONDS
    *
    * @param time
    * @return
@@ -93,12 +92,10 @@ public class TimeUtil {
   // ------------------------------------------------------------------------------------------------------------
 
   /**
-   * Converts the time from a human readable format like "10 minutes" to
-   * seconds.
+   * Converts the time from a human readable format like "10 minutes" to seconds.
    *
-   * @param humanReadableTime the human readable time format: {time} {period}
-   *                          example: 5 seconds, 10 ticks, 7 minutes, 12 hours
-   *                          etc..
+   * @param humanReadableTime the human readable time format: {time} {period} example: 5
+   *                          seconds, 10 ticks, 7 minutes, 12 hours etc..
    * @return the converted human time to seconds
    */
   public long toTicks(final String humanReadableTime) {
@@ -109,7 +106,7 @@ public class TimeUtil {
     final String[] split = humanReadableTime.split(" ");
 
     for (int i = 1; i < split.length; i++) {
-      final String sub = split[i].toLowerCase();
+      final String sub = split[i];
       int multiplier = 0; // e.g 2 hours = 2
       long unit = 0; // e.g hours = 3600
       boolean isTicks = false;
@@ -123,19 +120,19 @@ public class TimeUtil {
       // attempt to match the unit time
       if (sub.startsWith("tick")) {
         isTicks = true;
-      } else if (sub.startsWith("second")) {
+      } else if (sub.toLowerCase().startsWith("second") || sub.startsWith("s")) {
         unit = 1;
-      } else if (sub.startsWith("minute")) {
+      } else if (sub.toLowerCase().startsWith("minute") || sub.startsWith("m")) {
         unit = 60;
-      } else if (sub.startsWith("hour")) {
+      } else if (sub.toLowerCase().startsWith("hour") || sub.startsWith("H")) {
         unit = 3600;
-      } else if (sub.startsWith("day")) {
+      } else if (sub.toLowerCase().startsWith("day") || sub.startsWith("d")) {
         unit = 86400;
-      } else if (sub.startsWith("week")) {
+      } else if (sub.toLowerCase().startsWith("week")) {
         unit = 604800;
-      } else if (sub.startsWith("month")) {
+      } else if (sub.toLowerCase().startsWith("month") || sub.startsWith("M")) {
         unit = 2629743;
-      } else if (sub.startsWith("year")) {
+      } else if (sub.toLowerCase().startsWith("year") || sub.startsWith("y")) {
         unit = 31556926;
       } else {
         //Invalid-format
@@ -197,8 +194,8 @@ public class TimeUtil {
   }
 
   /**
-   * Format the time in seconds, for example: 10d 5h 10m 20s or just 5m 10s If
-   * the seconds are zero, an output 0s is given
+   * Format the time in seconds, for example: 10d 5h 10m 20s or just 5m 10s If the seconds
+   * are zero, an output 0s is given
    *
    * @param seconds
    * @return
@@ -268,7 +265,7 @@ public class TimeUtil {
       preResult = preResult.replace(hours + " hours", "");
     }
 
-    return preResult.startsWith(" ") ? preResult.substring(1) : preResult ;
+    return preResult.startsWith(" ") ? preResult.substring(1) : preResult;
   }
 
 }

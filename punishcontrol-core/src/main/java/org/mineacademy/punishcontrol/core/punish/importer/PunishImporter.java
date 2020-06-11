@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import org.mineacademy.punishcontrol.core.notification.Notification;
 import org.mineacademy.punishcontrol.core.punish.Punish;
+import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 
 public interface PunishImporter {
 
@@ -22,6 +23,10 @@ public interface PunishImporter {
    */
   Notification notificationOnSuccess();
 
+  /**
+   * StorageProvider used to save our punishments
+   */
+  StorageProvider storageProvider();
   /**
    * Tells us whether our PunishImporter is applicable (the plugin needed is installed) or
    * not
@@ -47,4 +52,13 @@ public interface PunishImporter {
    * punishment importer should have
    */
   String itemString();
+
+  /**
+   * Will import all punishments
+   */
+  default void importAll() {
+    for (Punish punish : listPunishesToImport()) {
+      storageProvider().savePunish(punish);
+    }
+  }
 }

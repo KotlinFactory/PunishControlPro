@@ -88,7 +88,9 @@ public final class PunishControl
     onPunishControlPluginStart();
     // TODO: As long as CoreFoundation wasn't implemented we need to do this
     SimpleSettingsInjector.inject();
-    ExternalImporterRegistrator.register(Providers.pluginManager());
+    ExternalImporterRegistrator.register(
+        Providers.storageProvider(),
+        Providers.pluginManager());
   }
 
   // ----------------------------------------------------------------------------------------------------

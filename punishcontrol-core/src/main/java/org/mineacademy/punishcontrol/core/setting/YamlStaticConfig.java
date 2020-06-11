@@ -14,7 +14,6 @@ import lombok.NonNull;
 import lombok.SneakyThrows;
 import lombok.val;
 import org.jetbrains.annotations.Nullable;
-import org.mineacademy.punishcontrol.core.fo.constants.FoConstants.Header;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.PluginDataProvider;
 
@@ -104,11 +103,11 @@ public abstract class YamlStaticConfig {
     return temporaryInstance().getOrDefault(key, def);
   }
 
-  protected static <T> T getOrSetDefault(@NonNull final String key,
-      final T def) {
-    final T result = temporaryInstance().getOrSetDefault(key, def);
-    temporaryInstance().setHeader(Header.UPDATED_FILE);
-    return result;
+  protected static <T> T getOrSetDefault(
+      @NonNull final String key,
+      @NonNull final T def) {
+    //    temporaryInstance().setHeader(Header.UPDATED_FILE);
+    return temporaryInstance().getOrSetDefault(key, def);
   }
 
   // ----------------------------------------------------------------------------------------------------
@@ -212,8 +211,8 @@ public abstract class YamlStaticConfig {
   }
 
   /**
-   * Loads the class via reflection, scanning for "private static void init()"
-   * methods to run
+   * Loads the class via reflection, scanning for "private static void init()" methods to
+   * run
    */
   public final void loadViaReflection() {
     try {
@@ -236,8 +235,7 @@ public abstract class YamlStaticConfig {
   }
 
   /**
-   * Invoke all "private static void init()" methods in the class and its
-   * subclasses
+   * Invoke all "private static void init()" methods in the class and its subclasses
    *
    * @param clazz
    * @throws Exception

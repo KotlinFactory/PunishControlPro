@@ -1,8 +1,9 @@
 package org.mineacademy.punishcontrol.core.punish.importer;
 
-import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
@@ -10,13 +11,13 @@ import lombok.experimental.UtilityClass;
 @UtilityClass
 public class PunishImporters {
 
-  private final List<PunishImporter> importer = new ArrayList<>();
+  private final Set<PunishImporter> importer = new HashSet<>();
 
   /**
    * Lists all of your registered {@link PunishImporter}'s
    */
-  public List<PunishImporter> importers() {
-    return Collections.unmodifiableList(importer);
+  public Set<PunishImporter> importers() {
+    return Collections.unmodifiableSet(importer);
   }
 
   /**

@@ -8,7 +8,7 @@
     <version>1.0-SNAPSHOT</version>
   </parent>
   <modelVersion>4.0.0</modelVersion>
-  <version>1.1.0-preview</version>
+  <version>1.1.2</version>
   <artifactId>punishcontrol-plugin</artifactId>
 
   <properties>
@@ -108,6 +108,7 @@
               <include>org.mineacademy:punishcontrol-spigot*</include>
               <include>org.mineacademy:punishcontrol-proxy*</include>
               <include>org.mineacademy:punishcontrol-core*</include>
+              <include>org.mineacademy:punishcontrol-importers*</include>
 
               <!-- We want our libraries in our final jar -->
               <include>org.mineacademy:Foundation*</include>

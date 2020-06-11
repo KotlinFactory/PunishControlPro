@@ -14,6 +14,11 @@ public final class ItemSettings extends AbstractItemSettings {
       .itemType("ACACIA_DOOR")
       .description("Item representing ban's");
 
+  public static CustomItem BREAK_UP_ITEM = CustomItem
+      .of("Break-up")
+      .itemType("BARRIER")
+      .description("Item representing a button to break up an action");
+
   public static CustomItem MUTE_ITEM = CustomItem
       .of("Mute")
       .itemType("PAPER")

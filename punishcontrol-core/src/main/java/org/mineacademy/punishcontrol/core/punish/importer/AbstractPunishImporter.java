@@ -6,11 +6,13 @@ import lombok.NonNull;
 import lombok.experimental.Accessors;
 import org.jetbrains.annotations.Nullable;
 import org.mineacademy.punishcontrol.core.providers.PluginManager;
+import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 
 @Getter
 @Accessors(fluent = true)
 public abstract class AbstractPunishImporter implements PunishImporter {
 
+  private final StorageProvider storageProvider;
   private final PluginManager pluginManager;
   private final String pluginName;
 
@@ -21,11 +23,12 @@ public abstract class AbstractPunishImporter implements PunishImporter {
    *                      is installed
    */
   protected AbstractPunishImporter(
+      @NonNull final StorageProvider storageProvider,
       @NonNull final PluginManager pluginManager,
       @Nullable final String pluginName) {
+    this.storageProvider = storageProvider;
     this.pluginManager = pluginManager;
     this.pluginName = pluginName;
-    PunishImporters.register(this);
   }
 
   // ----------------------------------------------------------------------------------------------------

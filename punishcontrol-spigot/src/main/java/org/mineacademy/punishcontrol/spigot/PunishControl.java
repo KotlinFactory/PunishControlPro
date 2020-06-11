@@ -94,7 +94,9 @@ public final class PunishControl
 
     PunishImporters.register(spigotComponent.bukkitPunishImporter());
 
-    ExternalImporterRegistrator.register(Providers.pluginManager());
+    ExternalImporterRegistrator.register(
+        Providers.storageProvider(),
+        Providers.pluginManager());
 
     // After startup
     if (SpigotConfig.bungee && Advanced.ENCOURAGE_BUNGEE_USAGE) {

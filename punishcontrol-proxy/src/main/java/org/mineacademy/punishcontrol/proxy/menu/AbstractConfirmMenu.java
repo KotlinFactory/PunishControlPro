@@ -10,13 +10,14 @@ import org.mineacademy.punishcontrol.core.settings.ItemSettings;
 
 public abstract class AbstractConfirmMenu extends AbstractMenu {
 
-  public AbstractConfirmMenu() {
-    super("Confirm", 9);
-    setTitle("&aConfirm");
-  }
+//  public AbstractConfirmMenu() {
+//    super("Confirm", 9);
+//    setTitle("&aConfirm");
+//  }
 
   public AbstractConfirmMenu(final BurstMenu parent) {
     super("Confirm", parent, 9);
+    updateInventory();
   }
 
   @Override
@@ -30,10 +31,25 @@ public abstract class AbstractConfirmMenu extends AbstractMenu {
             .slot(4)
             .actionHandler("Confirm")
     );
+
+    set(
+        Item
+            .ofString(ItemSettings.BREAK_UP_ITEM.itemType())
+            .name("&3Breakup")
+            .slot(8)
+            .actionHandler("Break-Up")
+    );
   }
 
   @Override
   public void registerActionHandlers() {
+    registerActionHandler("Break-Up", (breakUp -> {
+
+      showParent();
+
+      return CallResult.DENY_GRABBING;
+    }));
+
     registerActionHandler("Confirm", (click) -> {
       try {
         onConfirm();
@@ -72,4 +88,5 @@ public abstract class AbstractConfirmMenu extends AbstractMenu {
   public void reDisplay() {
 
   }
+
 }

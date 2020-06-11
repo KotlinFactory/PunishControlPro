@@ -45,11 +45,11 @@ public final class StaffRollbackCommand extends AbstractSimplePunishControlComma
   @Override
   protected void onCommand() {
 
-    async(() -> {
-      if (args.length < 1) {
-        returnTell("&c" + getUsage());
-      }
+    if (args.length < 1) {
+      returnTell("&c" + getUsage());
+    }
 
+    async(() -> {
       // Is confirmation code
 
       final String data = args[0];
