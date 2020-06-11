@@ -30,14 +30,14 @@ public final class Mute extends Punish {
       @NonNull final String creator,
       @NonNull final String target,
       final long ms) {
-    return Mute.of(UUID.fromString(creator), UUID.fromString(target), ms);
+    return Mute.of(parseUUIDSave(creator), parseUUIDSave(target), ms);
   }
 
   public static Mute of(
       @NonNull final String target,
       @NonNull final String creator,
       @NonNull final PunishDuration punishDuration) {
-    return Mute.of(UUID.fromString(target), UUID.fromString(creator), punishDuration);
+    return Mute.of(parseUUIDSave(target), parseUUIDSave(creator), punishDuration);
   }
 
   public static Mute of(@NonNull final UUID target, @NonNull final UUID creator, final long ms) {

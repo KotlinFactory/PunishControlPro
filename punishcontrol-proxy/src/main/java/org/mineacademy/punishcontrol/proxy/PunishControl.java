@@ -25,12 +25,7 @@ import org.mineacademy.punishcontrol.core.settings.Settings.Advanced;
 import org.mineacademy.punishcontrol.external.importers.ExternalImporterRegistrator;
 import org.mineacademy.punishcontrol.proxy.commands.BackupCommand;
 import org.mineacademy.punishcontrol.proxy.commands.MainCommand;
-import org.mineacademy.punishcontrol.proxy.impl.ProxyExceptionHandler;
-import org.mineacademy.punishcontrol.proxy.impl.ProxyPlayerProvider;
-import org.mineacademy.punishcontrol.proxy.impl.ProxyPluginDataProvider;
-import org.mineacademy.punishcontrol.proxy.impl.ProxyPluginManager;
-import org.mineacademy.punishcontrol.proxy.impl.ProxyPunishProvider;
-import org.mineacademy.punishcontrol.proxy.impl.ProxyTextureProvider;
+import org.mineacademy.punishcontrol.proxy.impl.*;
 import org.mineacademy.punishcontrol.proxy.listeners.ProxyListenerImpl;
 import org.mineacademy.punishcontrol.proxy.menus.settings.SimpleSettingsInjector;
 

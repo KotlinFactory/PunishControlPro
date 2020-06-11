@@ -28,7 +28,7 @@ public abstract class AbstractConfirmMenu extends AbstractMenu {
             .ofString(ItemSettings.APPLY_ITEM.itemType())
             .name("&aConfirm")
             .lore("&7Confirm")
-            .slot(4)
+            .slot(0)
             .actionHandler("Confirm")
     );
 

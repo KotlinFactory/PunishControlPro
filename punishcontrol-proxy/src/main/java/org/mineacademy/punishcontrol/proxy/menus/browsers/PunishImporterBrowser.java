@@ -7,6 +7,7 @@ import de.exceptionflug.protocolize.world.Sound;
 import de.exceptionflug.protocolize.world.SoundCategory;
 import de.exceptionflug.protocolize.world.WorldModule;
 import java.util.Collection;
+import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import javax.inject.Named;
 import lombok.NonNull;
@@ -54,20 +55,32 @@ public final class PunishImporterBrowser extends AbstractBrowser<PunishImporter>
       }
     }.displayTo(getPlayer());
 
-    setTitle("&6Imported punishments");
-    animateTitle("&6Imported punishments");
-    WorldModule.playSound(
-        getPlayer(),
-        Sound.ENTITY_ARROW_HIT_PLAYER, 
-        SoundCategory.NEUTRAL,
-        20f,
-        10f);
+    later(() -> {
+      setTitle("&6Imported punishments");
+      build();
+
+      WorldModule.playSound(
+          getPlayer(),
+          Sound.ENTITY_ARROW_HIT_PLAYER,
+          SoundCategory.NEUTRAL,
+          20f,
+          10f);
+    }, 3, TimeUnit.SECONDS);
   }
 
   @Override
   protected ItemStack convertToItemStack(PunishImporter punishImporter) {
+
+    ItemType type;
+
+    try {
+      type = ItemType.valueOf(punishImporter.itemString());
+    } catch (final Throwable throwable) {
+      type = ItemType.STONE;
+    }
+
     return Item
-        .of(ItemType.STONE)
+        .of(type)
         .name("&6" + punishImporter.pluginName().orElse("vanilla"))
         .lore(punishImporter.description())
         .addLore(" ")

@@ -28,6 +28,7 @@ public final class BukkitPunishImporter extends AbstractPunishImporter {
 
   @Override
   public List<Punish> listPunishesToImport() {
+
     return new ArrayList<>();
   }
 
@@ -50,5 +51,10 @@ public final class BukkitPunishImporter extends AbstractPunishImporter {
   @Override
   public String itemString() {
     return CompMaterial.LAVA_BUCKET.name();
+  }
+
+  @Override
+  public boolean applicable() {
+    return false;
   }
 }

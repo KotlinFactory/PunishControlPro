@@ -1,5 +1,7 @@
 package org.mineacademy.punishcontrol.spigot.menus.settings;
 
+import static org.mineacademy.punishcontrol.core.util.PunishControlPermissions.IMPORT_PUNISHMENTS;
+
 import java.util.Arrays;
 import java.util.UUID;
 import lombok.Getter;
@@ -15,6 +17,7 @@ import org.mineacademy.punishcontrol.spigot.Scheduler;
 import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractPlayerBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.browsers.CustomItemBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.browsers.NotificationBrowser;
+import org.mineacademy.punishcontrol.spigot.menus.browsers.PunishImporterBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.browsers.PunishTemplateBrowser;
 
 @Getter
@@ -130,6 +133,32 @@ public enum SettingTypes {
     @Override
     public void showMenu(Player player) {
       CustomItemBrowser.showTo(player);
+    }
+  },
+
+  PUNISH_IMPORTER {
+    @Override
+    public boolean hasAccess(Player player) {
+      return player.hasPermission(IMPORT_PUNISHMENTS.permission());
+    }
+
+    @Override
+    public ItemCreator itemCreator() {
+      return ItemCreator
+          .of(CompMaterial.CHEST_MINECART)
+          .name("&6Import punishments")
+          .lores(
+              Arrays.asList(
+                  "Import punishments from",
+                  "other plugins or from vanialla"
+              )
+          )
+          .build();
+    }
+
+    @Override
+    public void showMenu(Player player) {
+      PunishImporterBrowser.showTo(player);
     }
   },
 

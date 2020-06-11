@@ -59,7 +59,6 @@ public final class MySQLStorageProvider
         name);
   }
 
-
   @Override
   public void setup() {
     connect();

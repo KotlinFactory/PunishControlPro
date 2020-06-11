@@ -39,7 +39,7 @@ public final class Ban extends Punish {
       @NonNull final String target,
       @NonNull final String creator,
       @NonNull final PunishDuration punishDuration) {
-    return Ban.of(UUID.fromString(target), UUID.fromString(creator), punishDuration);
+    return Ban.of(parseUUIDSave(target), parseUUIDSave(creator), punishDuration);
   }
 
   public static Ban of(

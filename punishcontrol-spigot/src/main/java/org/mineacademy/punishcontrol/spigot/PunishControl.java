@@ -18,18 +18,12 @@ import org.mineacademy.punishcontrol.core.notification.Notification;
 import org.mineacademy.punishcontrol.core.notification.Notifications;
 import org.mineacademy.punishcontrol.core.permission.Permission;
 import org.mineacademy.punishcontrol.core.provider.Providers;
-import org.mineacademy.punishcontrol.core.punish.importer.PunishImporters;
 import org.mineacademy.punishcontrol.core.settings.Settings;
 import org.mineacademy.punishcontrol.core.settings.Settings.Advanced;
 import org.mineacademy.punishcontrol.external.importers.ExternalImporterRegistrator;
 import org.mineacademy.punishcontrol.spigot.commands.BackupCommand;
 import org.mineacademy.punishcontrol.spigot.commands.MainCommand;
-import org.mineacademy.punishcontrol.spigot.impl.SpigotExceptionHandler;
-import org.mineacademy.punishcontrol.spigot.impl.SpigotPlayerProvider;
-import org.mineacademy.punishcontrol.spigot.impl.SpigotPluginDataProvider;
-import org.mineacademy.punishcontrol.spigot.impl.SpigotPluginManager;
-import org.mineacademy.punishcontrol.spigot.impl.SpigotPunishProvider;
-import org.mineacademy.punishcontrol.spigot.impl.SpigotTextureProvider;
+import org.mineacademy.punishcontrol.spigot.impl.*;
 import org.mineacademy.punishcontrol.spigot.listeners.SpigotListenerImpl;
 import org.mineacademy.punishcontrol.spigot.settings.SimpleSettingsInjector;
 import org.spigotmc.SpigotConfig;
@@ -92,7 +86,7 @@ public final class PunishControl
     onPunishControlPluginStart();
     SimpleSettingsInjector.inject();
 
-    PunishImporters.register(spigotComponent.bukkitPunishImporter());
+//    PunishImporters.register(spigotComponent.bukkitPunishImporter());
 
     ExternalImporterRegistrator.register(
         Providers.storageProvider(),

@@ -11,6 +11,7 @@ import lombok.NonNull;
 import lombok.ToString;
 import lombok.experimental.Accessors;
 import org.jetbrains.annotations.Nullable;
+import org.mineacademy.punishcontrol.core.fo.constants.FoConstants;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.ExceptionHandler;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
@@ -64,8 +65,8 @@ public abstract class Punish {
       @NonNull final Map<String, Object> banRawData,
       @NonNull final PunishType punishType) {
     this(
-        UUID.fromString((String) banRawData.get("target")),
-        UUID.fromString((String) banRawData.get("creator")),
+        parseUUIDSave((String) banRawData.get("target")),
+        parseUUIDSave((String) banRawData.get("creator")),
         PunishDuration.of(ClassWrapper.LONG.getLong(banRawData.get("duration"))),
         punishType,
         creation);
@@ -217,5 +218,12 @@ public abstract class Punish {
 
       throwable.printStackTrace();
     }
+  }
+
+  protected static UUID parseUUIDSave(@NonNull final String uuidString) {
+    if (uuidString.equalsIgnoreCase("CONSOLE")) {
+      return FoConstants.CONSOLE;
+    }
+    return UUID.fromString(uuidString);
   }
 }

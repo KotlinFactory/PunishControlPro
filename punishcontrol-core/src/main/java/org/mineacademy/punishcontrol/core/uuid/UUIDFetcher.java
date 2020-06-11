@@ -123,8 +123,9 @@ class UUIDFetcher {
           UUIDFetcher[].class);
       final UUIDFetcher currentNameData = nameHistory[nameHistory.length - 1];
       return currentNameData.name;
-    } catch (final Exception e) {
-      e.printStackTrace();
+    } catch (final Throwable throwable) {
+      System.err.println("Exception while getting name for: " + uuid);
+      throwable.printStackTrace();
     }
     return null;
   }

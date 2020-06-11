@@ -45,12 +45,12 @@ public final class Warn extends Punish {
       @NonNull final String target,
       @NonNull final String creator,
       @NonNull final PunishDuration punishDuration) {
-    return Warn.of(UUID.fromString(target), UUID.fromString(creator), punishDuration);
+    return Warn.of(parseUUIDSave(target), parseUUIDSave(creator), punishDuration);
   }
 
   public static Warn of(
       @NonNull final String target, @NonNull final String creator, final long duration) {
-    return Warn.of(UUID.fromString(target), UUID.fromString(creator), duration);
+    return Warn.of(parseUUIDSave(target), parseUUIDSave(creator), duration);
   }
 
   // ----------------------------------------------------------------------------------------------------
