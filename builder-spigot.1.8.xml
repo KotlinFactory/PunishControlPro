@@ -15,10 +15,8 @@
   <target name="Build">
     <jar jarfile="${serverPath}\plugins\${ant.project.name}.jar" basedir="punishcontrol-core/target/classes/"
       includes="**/*">
-      <zipgroupfileset dir="${user.home}/.m2/repository/com/github/JavaFactoryDev/LightningStorage/3.1.2"
-        includes="**/*lightningstorage-3.1.2.jar"/>
-      <zipgroupfileset dir="${user.home}/.m2/repository/org/reflections/reflections/0.9.12/"
-        includes="**/*reflections-0.9.12.jar"/>
+      <zipgroupfileset dir="${user.home}/.m2/repository/com/github/JavaFactoryDev/LightningStorage/3.1.4"
+        includes="**/*lightningstorage-3.1.4.jar"/>
       <zipgroupfileset dir="${user.home}/.m2/repository/com/google/dagger/dagger/2.26"
         includes="**/*dagger-2.26.jar"/>
       <zipgroupfileset dir="${user.home}/.m2/repository/javax/inject/javax.inject/1"

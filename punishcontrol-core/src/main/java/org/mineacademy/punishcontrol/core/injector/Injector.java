@@ -1,9 +1,8 @@
 package org.mineacademy.punishcontrol.core.injector;
 
-import de.leonhard.storage.internal.DataStorage;
 import java.lang.annotation.Annotation;
+import java.util.List;
 import lombok.NonNull;
-import org.reflections.Reflections;
 
 public interface Injector<C extends Annotation, F extends Annotation>  {
 
@@ -13,12 +12,7 @@ public interface Injector<C extends Annotation, F extends Annotation>  {
 
   Class<F> fieldAnnotationClass();
 
-  DataStorage dataStorage();
-
-  void startInjecting();
-
-  void injectPackage(@NonNull Reflections reflections)
-      throws Exception;
+  void startInjecting(List<Class<?>> classes);
 
   <T> T getValueByPath(@NonNull String path, @NonNull T def);
 }

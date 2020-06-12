@@ -17,9 +17,15 @@ import org.mineacademy.punishcontrol.core.storage.StorageType;
 @UtilityClass
 @Accessors(chain = true)
 public class PunishControlManager {
-  @Setter @NonNull private StorageType storageType;
-  @Setter @NonNull private String language;
-  @Setter @Getter
+
+  @Setter
+  @NonNull
+  private StorageType storageType;
+  @Setter
+  @NonNull
+  private String language;
+  @Setter
+  @Getter
   private boolean onlineMode = true;
 
   /*
@@ -45,7 +51,8 @@ public class PunishControlManager {
 
   @UtilityClass
   @FieldDefaults(makeFinal = true)
-  public static class FILES {
+  public class FILES {
+
     public String JSON_DATA_FILE_NAME = "punishes";
     public String SKIN_STORAGE = "textures";
     public String UUID_STORAGE = "uuids";

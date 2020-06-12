@@ -4,7 +4,6 @@ import de.leonhard.storage.internal.DataStorage;
 import de.leonhard.storage.internal.serialize.LightningSerializable;
 import de.leonhard.storage.internal.serialize.LightningSerializer;
 import java.lang.annotation.Annotation;
-import java.util.Set;
 import lombok.NonNull;
 
 public abstract class AbstractSettingsInjector<C extends Annotation,
@@ -14,14 +13,12 @@ public abstract class AbstractSettingsInjector<C extends Annotation,
   protected AbstractSettingsInjector(
       Class<C> classAnnotationClass,
       Class<F> fieldAnnotationClass,
-      DataStorage dataStorage,
-      Set<String> packages) {
-    super(classAnnotationClass, fieldAnnotationClass, packages);
+      DataStorage dataStorage) {
+    super(classAnnotationClass, fieldAnnotationClass);
     this.dataStorage = dataStorage;
   }
 
-  @Override
-  public DataStorage dataStorage() {
+  public final DataStorage dataStorage() {
     return dataStorage;
   }
 
@@ -40,5 +37,4 @@ public abstract class AbstractSettingsInjector<C extends Annotation,
     dataStorage.setSerializable(path, serializable);
     return (T) serializable.serialize(def);
   }
-
 }

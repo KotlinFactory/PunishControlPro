@@ -11,11 +11,13 @@ import lombok.NonNull;
 import lombok.val;
 import net.md_5.bungee.api.ProxyServer;
 import org.mineacademy.bfo.Common;
+import org.mineacademy.bfo.ReflectionUtil;
 import org.mineacademy.bfo.bungee.SimpleBungee;
 import org.mineacademy.bfo.command.SimpleCommand;
 import org.mineacademy.bfo.plugin.SimplePlugin;
 import org.mineacademy.burst.Burst;
 import org.mineacademy.punishcontrol.core.PunishControlPluginBootstrap;
+import org.mineacademy.punishcontrol.core.injector.Example;
 import org.mineacademy.punishcontrol.core.notification.Notification;
 import org.mineacademy.punishcontrol.core.notification.Notifications;
 import org.mineacademy.punishcontrol.core.permission.Permission;
@@ -86,6 +88,9 @@ public final class PunishControl
     ExternalImporterRegistrator.register(
         Providers.storageProvider(),
         Providers.pluginManager());
+
+    Example.start(new ArrayList<>(ReflectionUtil.getClasses(this)));
+    System.out.println(Example.Test.test().replacedMessageJoined());
   }
 
   // ----------------------------------------------------------------------------------------------------
