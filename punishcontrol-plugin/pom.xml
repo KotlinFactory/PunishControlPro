@@ -109,6 +109,7 @@
               <include>org.mineacademy:punishcontrol-proxy*</include>
               <include>org.mineacademy:punishcontrol-core*</include>
               <include>org.mineacademy:punishcontrol-importers*</include>
+              <include>org.reflections:reflections*</include>
 
               <!-- We want our libraries in our final jar -->
               <include>org.mineacademy:Foundation*</include>

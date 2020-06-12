@@ -11,7 +11,7 @@
 
   <artifactId>punishcontrol-core</artifactId>
   <version>1.0.0</version>
-<!--  <packaging>pom</packaging>-->
+  <!--  <packaging>pom</packaging>-->
 
 
   <properties>
@@ -31,6 +31,12 @@
   </repositories>
 
   <dependencies>
+
+    <dependency>
+      <groupId>org.reflections</groupId>
+      <artifactId>reflections</artifactId>
+      <version>0.9.12</version>
+    </dependency>
 
     <dependency>
       <groupId>org.projectlombok</groupId>
