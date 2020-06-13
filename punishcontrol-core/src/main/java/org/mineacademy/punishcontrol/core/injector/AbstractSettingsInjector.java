@@ -34,7 +34,10 @@ public abstract class AbstractSettingsInjector<C extends Annotation,
     if (dataStorage.contains(path)) {
       return (T) dataStorage.getSerializable(path, def.getClass());
     }
-    dataStorage.setSerializable(path, serializable);
-    return (T) serializable.serialize(def);
+
+    final Object serialized = serializable.serialize(def);
+
+    dataStorage.set(path, serialized);
+    return (T) serializable.deserialize(serialized);
   }
 }

@@ -5,6 +5,7 @@ import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.spigot.commands.*;
 import org.mineacademy.punishcontrol.spigot.importers.BukkitPunishImporter;
 import org.mineacademy.punishcontrol.spigot.listeners.SpigotDataSetter;
+import org.mineacademy.punishcontrol.spigot.listeners.SpigotListenerImpl;
 import org.mineacademy.punishcontrol.spigot.menus.MainMenu;
 import org.mineacademy.punishcontrol.spigot.menus.browsers.*;
 import org.mineacademy.punishcontrol.spigot.menus.punish.PunishCreatorMenu;
@@ -22,6 +23,8 @@ public interface SpigotComponent {
   // ----------------------------------------------------------------------------------------------------
 
   SpigotDataSetter spigotDataSetter();
+
+  SpigotListenerImpl spigotListenerImpl();
 
   // ----------------------------------------------------------------------------------------------------
   // Commands

@@ -10,6 +10,7 @@ import lombok.val;
 import org.bukkit.Bukkit;
 import org.mineacademy.fo.Common;
 import org.mineacademy.fo.MinecraftVersion.V;
+import org.mineacademy.fo.ReflectionUtil;
 import org.mineacademy.fo.command.SimpleCommand;
 import org.mineacademy.fo.plugin.SimplePlugin;
 import org.mineacademy.fo.remain.CompMaterial;
@@ -24,7 +25,6 @@ import org.mineacademy.punishcontrol.external.importers.ExternalImporterRegistra
 import org.mineacademy.punishcontrol.spigot.commands.BackupCommand;
 import org.mineacademy.punishcontrol.spigot.commands.MainCommand;
 import org.mineacademy.punishcontrol.spigot.impl.*;
-import org.mineacademy.punishcontrol.spigot.listeners.SpigotListenerImpl;
 import org.mineacademy.punishcontrol.spigot.settings.SimpleSettingsInjector;
 import org.spigotmc.SpigotConfig;
 
@@ -61,7 +61,6 @@ public final class PunishControl
             )
             .itemType(CompMaterial.ENCHANTED_GOLDEN_APPLE)
     );
-
   }
 
   @Override
@@ -138,7 +137,7 @@ public final class PunishControl
   @Override
   public void registerListener() {
     registerEvents(spigotComponent.spigotDataSetter());
-    registerEvents(SpigotListenerImpl.create());
+    registerEvents(spigotComponent.spigotListenerImpl());
   }
 
   @Override
@@ -162,6 +161,11 @@ public final class PunishControl
   // ----------------------------------------------------------------------------------------------------
   // Methods overridden from SimplePunishControlPlugin
   // ----------------------------------------------------------------------------------------------------
+
+  @Override
+  public List<Class<?>> classes() {
+    return new ArrayList<>(ReflectionUtil.getClasses(this));
+  }
 
   @Override
   public List<Permission> permissions() {

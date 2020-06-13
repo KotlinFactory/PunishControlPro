@@ -50,11 +50,17 @@ public abstract class AbstractInjector<C extends Annotation, F extends Annotatio
 
         final F fieldAnnotation = field.getAnnotation(fieldAnnotationClass);
         final String path = pathFromAnnotation(fieldAnnotation);
+        Valid.checkBoolean(
+            !path.isEmpty(),
+            "Path mustn't be empty",
+            "Class: " + clazz.getName(),
+            "Field: " + field.getName());
         try {
+//          System.out.println("Trying to inject: " + field.getName() + " in " + clazz.getName());
           field.setAccessible(true);
           final Object raw = field.get(null);
           field.set(null, getValueByPath(path, raw));
-//          System.out.println("Injected: " + field.getName() + " in " + clazz.getName());
+          System.out.println("Injected: " + field.getName() + " in " + clazz.getName());
         } catch (final Throwable throwable) {
           throwable.printStackTrace();
         }

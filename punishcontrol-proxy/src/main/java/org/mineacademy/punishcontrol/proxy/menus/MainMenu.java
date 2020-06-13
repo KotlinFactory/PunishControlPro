@@ -1,9 +1,10 @@
 package org.mineacademy.punishcontrol.proxy.menus;
 
 import de.exceptionflug.mccommons.inventories.api.CallResult;
-import de.exceptionflug.mccommons.inventories.api.ClickType;
 import de.exceptionflug.protocolize.items.ItemType;
+import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import javax.inject.Inject;
 import lombok.NonNull;
 import lombok.val;
@@ -13,6 +14,7 @@ import org.mineacademy.burst.item.ChangingButton;
 import org.mineacademy.burst.item.Item;
 import org.mineacademy.burst.menu.ChangingMenu;
 import org.mineacademy.burst.util.Scheduler;
+import org.mineacademy.punishcontrol.core.injector.annotations.Setting;
 import org.mineacademy.punishcontrol.core.providers.TextureProvider;
 import org.mineacademy.punishcontrol.proxy.DaggerProxyComponent;
 import org.mineacademy.punishcontrol.proxy.menus.browsers.AllPunishesBrowser;
@@ -21,12 +23,41 @@ import org.mineacademy.punishcontrol.proxy.menus.browsers.PunishedPlayerBrowser;
 import org.mineacademy.punishcontrol.proxy.menus.browsers.SettingsBrowser;
 import org.mineacademy.punishcontrol.proxy.menus.punish.PunishCreatorMenu;
 
+@Setting
 public final class MainMenu extends ChangingMenu {
 
   public static final int PLAYER_BROWSER_SLOT = 9 * 2 + 6;
   public static final int PUNISHES_BUTTON_SLOT = 9 * 2 + 2;
   public static final int NEW_PUNISH_BUTTON_SLOT = 9 + 4;
   public static final int SETTINGS_BUTTON_SLOT = 9 * 3 + 4;
+  private static final String CREATE_NEW_NAME = "&6Create New";
+  private static final String[] CREATE_NEW_LORE = {" ",
+      "&7Create new punishment"};
+  private static final String SETTINGS = "Settings";
+  private static final String VIEW_SETTINGS = "&7View Settings for";
+
+  // ----------------------------------------------------------------------------------------------------
+  // Custom-Settings
+  // ----------------------------------------------------------------------------------------------------
+
+  @Setting(path = "Menu.Main.Player_Lore")
+  private static List<String> PLAYER_LORE = Arrays.asList(
+      "&7View players",
+      "&7to select",
+      "&7one for more",
+      "&7actions");
+
+  @Setting(path = "Parts.Players")
+  private static String PLAYER = "Players";
+
+  @Setting(path = "Menu.Main.Punish_Lore")
+  private static List<String> punishLore = Arrays.asList("Browse created punishments.",
+      "Right click to view",
+      "punished players");
+
+  // ----------------------------------------------------------------------------------------------------
+  // Displaying
+  // ----------------------------------------------------------------------------------------------------
 
   public static void showTo(@NonNull final ProxiedPlayer player) {
     Scheduler.runAsync(() -> {
@@ -43,10 +74,9 @@ public final class MainMenu extends ChangingMenu {
             ChangingButton
                 .fromCustomHashes(
                     textureProvider.listTextures())
-                .name("&6Players")
+                .name("&6" + PLAYER)
                 .slot(24)
-                .lore("&7View players", "&7to select", "&7one for more",
-                    "&7actions")),
+                .lore(PLAYER_LORE)),
         9 * 5
     );
     setTitle("§3Punish§bControl");
@@ -67,10 +97,7 @@ public final class MainMenu extends ChangingMenu {
           Item
               .of(ItemType.CHEST,
                   "&6Punishments",
-                  "",
-                  "Browse created punishments.",
-                  "Right click to view",
-                  "punished players")
+                  punishLore)
               .slot(PUNISHES_BUTTON_SLOT)
               .actionHandler("ListPunishes")
       );
@@ -81,9 +108,8 @@ public final class MainMenu extends ChangingMenu {
       set(
           Item
               .of(ItemType.CYAN_DYE,
-                  "&6Create New",
-                  " ",
-                  "&7Create new punishment"
+                  CREATE_NEW_NAME,
+                  CREATE_NEW_LORE
               )
               .actionHandler("NewPunish")
               .slot(NEW_PUNISH_BUTTON_SLOT)
@@ -95,8 +121,8 @@ public final class MainMenu extends ChangingMenu {
       set(
           Item
               .of(ItemType.COMPARATOR,
-                  "&6Settings",
-                  "&7View Settings for",
+                  "&6" + SETTINGS,
+                  VIEW_SETTINGS,
                   SimplePlugin.getNamed(),
                   ""
               )

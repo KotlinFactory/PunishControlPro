@@ -44,6 +44,13 @@
       <version>0.3.2</version>
       <scope>provided</scope>
     </dependency>
+
+    <dependency>
+      <groupId>com.github.DevLeoko</groupId>
+      <artifactId>AdvancedBan</artifactId>
+      <version>v2.1.8</version>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
 
   <build>

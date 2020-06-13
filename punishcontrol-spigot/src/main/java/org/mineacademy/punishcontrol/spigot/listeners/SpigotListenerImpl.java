@@ -1,8 +1,12 @@
 package org.mineacademy.punishcontrol.spigot.listeners;
 
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.events.ListenerPriority;
+import com.comphenix.protocol.events.PacketAdapter;
+import com.comphenix.protocol.events.PacketContainer;
+import com.comphenix.protocol.events.PacketEvent;
+import javax.inject.Inject;
+import lombok.NonNull;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
@@ -13,6 +17,8 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.mineacademy.fo.Common;
 import org.mineacademy.fo.debug.Debugger;
 import org.mineacademy.fo.debug.LagCatcher;
+import org.mineacademy.fo.model.HookManager;
+import org.mineacademy.fo.plugin.SimplePlugin;
 import org.mineacademy.punishcontrol.core.event.Events;
 import org.mineacademy.punishcontrol.core.events.ChatEvent;
 import org.mineacademy.punishcontrol.core.events.JoinEvent;
@@ -20,11 +26,37 @@ import org.mineacademy.punishcontrol.core.events.QuitEvent;
 
 public final class SpigotListenerImpl implements Listener {
 
-  //Used for best performance. We don't want to be synchronous
-  private final Set<UUID> toKick = new HashSet<>();
+  @Inject
+  public SpigotListenerImpl(SimplePlugin simplePlugin) {
+    addProtocollibListenerIfLoaded(simplePlugin);
+  }
 
-  public static SpigotListenerImpl create() {
-    return new SpigotListenerImpl();
+  public void addProtocollibListenerIfLoaded(@NonNull final SimplePlugin simplePlugin) {
+    if (HookManager.isProtocolLibLoaded()) {
+      HookManager
+          .addPacketListener(new PacketAdapter(simplePlugin, ListenerPriority.NORMAL,
+              PacketType.Play.Client.CHAT) {
+            @Override
+            public void onPacketReceiving(PacketEvent event) {
+              PacketContainer packet = event.getPacket();
+              if (event.isCancelled()) {
+                return;
+              }
+
+              try {
+                final ChatEvent chatEvent = Events.call(ChatEvent
+                    .create(
+                        event.getPlayer().getUniqueId(),
+                        event.getPlayer().getAddress().getAddress(),
+                        packet.getStrings().read(0)));
+                event.setCancelled(chatEvent.canceled());
+              } catch (final Throwable throwable) {
+                Debugger.saveError(throwable, "Exception while calling chat-event "
+                    + "using protocollib!");
+              }
+            }
+          });
+    }
   }
 
   @EventHandler
@@ -33,13 +65,13 @@ public final class SpigotListenerImpl implements Listener {
     LagCatcher.start("async-join");
     final JoinEvent joinEvent = Events.call(
         JoinEvent
-            .create(playerPreLoginEvent.getUniqueId(),playerPreLoginEvent.getName(), playerPreLoginEvent.getAddress()));
+            .create(playerPreLoginEvent.getUniqueId(), playerPreLoginEvent.getName(),
+                playerPreLoginEvent.getAddress()));
 
     if (!joinEvent.canceled()) {
       LagCatcher.end("async-join");
       return;
     }
-
 
     playerPreLoginEvent.setLoginResult(Result.KICK_BANNED);
     playerPreLoginEvent.setKickMessage(Common.colorize(joinEvent.cancelReason()));
@@ -48,6 +80,9 @@ public final class SpigotListenerImpl implements Listener {
 
   @EventHandler
   public void chat(final AsyncPlayerChatEvent asyncPlayerChatEvent) {
+    if (asyncPlayerChatEvent.isCancelled()) {
+      return;
+    }
     LagCatcher.start("async-chat");
     try {
       final ChatEvent chatEvent = Events.call(ChatEvent
@@ -65,7 +100,10 @@ public final class SpigotListenerImpl implements Listener {
   }
 
   @EventHandler
-  public void chat2(final PlayerCommandPreprocessEvent playerCommandPreprocessEvent){
+  public void chat2(final PlayerCommandPreprocessEvent playerCommandPreprocessEvent) {
+    if (playerCommandPreprocessEvent.isCancelled()) {
+      return;
+    }
     try {
       LagCatcher.start("command-chat");
       final ChatEvent chatEvent = Events.call(ChatEvent
@@ -74,7 +112,7 @@ public final class SpigotListenerImpl implements Listener {
               playerCommandPreprocessEvent.getPlayer().getAddress().getAddress(),
               playerCommandPreprocessEvent.getMessage()));
       playerCommandPreprocessEvent.setCancelled(chatEvent.canceled());
-      playerCommandPreprocessEvent.setMessage(Common.colorize(chatEvent.message()));
+      playerCommandPreprocessEvent.setMessage(chatEvent.message());
       LagCatcher.start("command-chat");
     } catch (final Throwable throwable) {
       Debugger.saveError(

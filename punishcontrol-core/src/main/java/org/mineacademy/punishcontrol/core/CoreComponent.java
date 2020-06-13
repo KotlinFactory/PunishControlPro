@@ -1,6 +1,8 @@
 package org.mineacademy.punishcontrol.core;
 
 import dagger.Component;
+import org.mineacademy.punishcontrol.core.injectors.LocalizationInjector;
+import org.mineacademy.punishcontrol.core.injectors.SettingsInjector;
 import org.mineacademy.punishcontrol.core.listeners.BanIpListener;
 import org.mineacademy.punishcontrol.core.listeners.BanListener;
 import org.mineacademy.punishcontrol.core.listeners.MuteIpListener;
@@ -21,6 +23,10 @@ public interface CoreComponent {
   JsonStorageProvider jsonStorageProvider();
 
   ItemSettings itemSettings();
+
+  SettingsInjector settingsInjector();
+
+  LocalizationInjector localizationInjector();
 
   // ----------------------------------------------------------------------------------------------------
   // Listeners

@@ -2,6 +2,10 @@ package org.mineacademy.punishcontrol.core.provider;
 
 import dagger.Module;
 import dagger.Provides;
+import de.leonhard.storage.LightningBuilder;
+import de.leonhard.storage.Yaml;
+import de.leonhard.storage.internal.settings.ConfigSettings;
+import de.leonhard.storage.internal.settings.DataType;
 import de.leonhard.storage.util.Valid;
 import java.util.Collection;
 import java.util.UUID;
@@ -10,14 +14,10 @@ import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.mineacademy.punishcontrol.core.PunishControlManager;
-import org.mineacademy.punishcontrol.core.providers.ExceptionHandler;
-import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
-import org.mineacademy.punishcontrol.core.providers.PluginDataProvider;
-import org.mineacademy.punishcontrol.core.providers.PluginManager;
-import org.mineacademy.punishcontrol.core.providers.PunishProvider;
-import org.mineacademy.punishcontrol.core.providers.TextureProvider;
+import org.mineacademy.punishcontrol.core.providers.*;
 import org.mineacademy.punishcontrol.core.punish.importer.PunishImporter;
 import org.mineacademy.punishcontrol.core.punish.importer.PunishImporters;
+import org.mineacademy.punishcontrol.core.setting.SimpleSettings;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 
 /**
@@ -57,6 +57,14 @@ public final class Providers {
   @Setter
   @NonNull
   private static PluginManager pluginManager;
+
+  @Setter
+  @NonNull
+  private static Yaml settings;
+
+  @Setter
+  @NonNull
+  private static Yaml localization;
 
   @Provides
   public static PlayerProvider playerProvider() {
@@ -98,6 +106,39 @@ public final class Providers {
     Valid.notNull(pluginManager, "PluginManager not yet set");
 
     return pluginManager;
+  }
+
+  @Named("settings")
+  @Provides
+  public static Yaml settings() {
+    if (settings != null) {
+      return settings;
+    }
+    return settings = LightningBuilder
+        .fromPath("settings.yml", pluginDataProvider.getDataFolder().getAbsolutePath())
+        .addInputStreamFromResource("settings.yml")
+        .setConfigSettings(ConfigSettings.PRESERVE_COMMENTS)
+        .setDataType(DataType.SORTED)
+        .createConfig()
+        .addDefaultsFromInputStream();
+  }
+
+  @Named("localization")
+  @Provides
+  public static Yaml localization() {
+    if (localization != null) {
+      return localization;
+    }
+
+    final String name = "messages_" + SimpleSettings.LOCALE_PREFIX;
+    return  localization = LightningBuilder
+        .fromPath(name, pluginDataProvider().getDataFolder().getAbsolutePath() +
+            "/localization/")
+        .addInputStreamFromResource("localization/" + name + ".yml")
+        .setConfigSettings(ConfigSettings.PRESERVE_COMMENTS)
+        .setDataType(DataType.SORTED)
+        .createConfig()
+        .addDefaultsFromInputStream();
   }
 
   // ----------------------------------------------------------------------------------------------------

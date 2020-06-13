@@ -17,7 +17,6 @@ import org.mineacademy.bfo.command.SimpleCommand;
 import org.mineacademy.bfo.plugin.SimplePlugin;
 import org.mineacademy.burst.Burst;
 import org.mineacademy.punishcontrol.core.PunishControlPluginBootstrap;
-import org.mineacademy.punishcontrol.core.injector.Example;
 import org.mineacademy.punishcontrol.core.notification.Notification;
 import org.mineacademy.punishcontrol.core.notification.Notifications;
 import org.mineacademy.punishcontrol.core.permission.Permission;
@@ -89,8 +88,11 @@ public final class PunishControl
         Providers.storageProvider(),
         Providers.pluginManager());
 
-    Example.start(new ArrayList<>(ReflectionUtil.getClasses(this)));
-    System.out.println(Example.Test.test().replacedMessageJoined());
+//    Example.start(new ArrayList<>(ReflectionUtil.getClasses(this)));
+//    System.out.println(Example.Test.test().replacedMessageJoined());
+//    PunishControlSerializers.register();
+//    coreComponent.settingsInjector().startInjecting(new ArrayList<>(ReflectionUtil.getClasses(this)));
+//    coreComponent.localizationInjector().startInjecting(new ArrayList<>(ReflectionUtil.getClasses(this)));
   }
 
   // ----------------------------------------------------------------------------------------------------
@@ -154,6 +156,12 @@ public final class PunishControl
   // ----------------------------------------------------------------------------------------------------
   // Overridden methods from SimplePunishControl
   // ----------------------------------------------------------------------------------------------------
+
+
+  @Override
+  public List<Class<?>> classes() {
+    return new ArrayList<>(ReflectionUtil.getClasses(this));
+  }
 
   @Override
   public List<Permission> permissions() {

@@ -78,6 +78,13 @@ public interface PunishControlPluginBootstrap {
 
     // Settings
 
+    try {
+      PunishControlSerializers.register();
+    } catch (final Throwable throwable) {
+      log("Couldn't register serializable's");
+      saveError(throwable);
+    }
+
     YamlStaticConfig.loadAll(Settings.class, Localization.class);
     coreComponent.itemSettings().load();
 
@@ -197,6 +204,13 @@ public interface PunishControlPluginBootstrap {
       saveError(throwable);
     }
 
+    try {
+      coreComponent.settingsInjector().startInjecting(classes());
+      coreComponent.localizationInjector().startInjecting(classes());
+    } catch (final Throwable throwable) {
+      saveError(throwable);
+    }
+
     log("§7*-----------------------------------------------------------------*");
   }
 
@@ -260,6 +274,8 @@ public interface PunishControlPluginBootstrap {
   // ----------------------------------------------------------------------------------------------------
   // Abstract methods for startup
   // ----------------------------------------------------------------------------------------------------
+
+  List<Class<?>> classes();
 
   void registerCommands();
 
