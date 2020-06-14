@@ -15,12 +15,16 @@ import org.mineacademy.burst.item.Item;
 import org.mineacademy.burst.menu.AbstractSearchableBrowser;
 import org.mineacademy.burst.menu.BurstMenu;
 import org.mineacademy.punishcontrol.core.Searcher;
+import org.mineacademy.punishcontrol.core.injector.annotations.Localizable;
 import org.mineacademy.punishcontrol.core.settings.Settings.Advanced;
 
+@Localizable
 public abstract class AbstractMaterialBrowser
     extends AbstractSearchableBrowser<ItemType>
     implements Schedulable {
 
+  @Localizable("Parts.Materials")
+  private static String MATERIALS = "Materials";
   private static List<ItemType> items = Arrays
       .stream(ItemType.values())
       .filter(AbstractMaterialBrowser::canApply)
@@ -47,7 +51,7 @@ public abstract class AbstractMaterialBrowser
       @NonNull final BurstMenu parent,
       @NonNull final Collection<ItemType> items) {
     super("MaterialBrowser", parent, items);
-    setTitle("&8Materials");
+    setTitle("&8" + MATERIALS);
   }
 
   @Override

@@ -7,10 +7,12 @@ import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import lombok.val;
+import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.Nullable;
 import org.mineacademy.burst.item.Item;
 import org.mineacademy.burst.menu.AbstractBrowser;
 import org.mineacademy.burst.menu.BurstMenu;
+import org.mineacademy.punishcontrol.core.injector.annotations.Localizable;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.punish.Punish;
@@ -19,7 +21,38 @@ import org.mineacademy.punishcontrol.core.settings.Settings;
 import org.mineacademy.punishcontrol.proxy.ItemUtil;
 import org.mineacademy.punishcontrol.proxy.menu.AbstractConfirmMenu;
 
+@Localizable
 public abstract class AbstractPunishBrowser extends AbstractBrowser<Punish> {
+
+  // ----------------------------------------------------------------------------------------------------
+  // Localization
+  // ----------------------------------------------------------------------------------------------------
+
+  @NonNls
+  @Localizable("Menu.Punish.Title")
+  private static String BROWSE_PUNISHES = "Browse Punishes";
+
+  @NonNls
+  @Localizable("Menu.Punish.Remove")
+  private static String RIGHT_CLICK_TO_REMOVE = "Right-Click to remove";
+  @Localizable("Menu.Punish.Already_Removed")
+  private static String PUNISH_IS_ALREADY_REMOVED = "Punish is already removed";
+
+  @Localizable("Menu.Punish.Lore")
+  private static Replacer lore = Replacer.of(
+      "",
+      "&6Target: &7{target}",
+      "&6Reason: &7{reason}",
+      "&6Creation: &7{creation}",
+      "&6Duration: &7{duration}",
+      "&6End: &7{end}",
+      "&6Creator: &7{creator}",
+      "&7Right click to remove"
+  );
+
+  // ----------------------------------------------------------------------------------------------------
+  // Class
+  // ----------------------------------------------------------------------------------------------------
 
   protected final PlayerProvider playerProvider;
 
@@ -30,7 +63,7 @@ public abstract class AbstractPunishBrowser extends AbstractBrowser<Punish> {
       final Collection<Punish> content) {
     super(name, parent, content);
     this.playerProvider = playerProvider;
-    setTitle("&7Browse Punishes");
+    setTitle("&7" + BROWSE_PUNISHES);
   }
 
   // ----------------------------------------------------------------------------------------------------
@@ -46,17 +79,6 @@ public abstract class AbstractPunishBrowser extends AbstractBrowser<Punish> {
         punish.isOld()
             ? "&cRemoved"
             : Settings.Advanced.formatDate(punish.getEndTime());
-
-    final Replacer lore = Replacer.of(
-        "",
-        "&6Target: &7{target}",
-        "&6Reason: &7{reason}",
-        "&6Creation: &7{creation}",
-        "&6Duration: &7{duration}",
-        "&6End: &7{end}",
-        "&6Creator: &7{creator}",
-        "&7Right click to remove"
-    );
 
     lore.find("target", "reason", "creation", "duration", "end", "creator");
     lore.replace(
@@ -76,7 +98,7 @@ public abstract class AbstractPunishBrowser extends AbstractBrowser<Punish> {
     builder.lore(lores);
 
     if (!punish.isOld()) {
-      lores.add("&6Right-Click to remove");
+      lores.add("&6" + RIGHT_CLICK_TO_REMOVE);
     }
 
     return builder.build();
@@ -93,7 +115,7 @@ public abstract class AbstractPunishBrowser extends AbstractBrowser<Punish> {
     }
 
     if (punish.isOld()) {
-      animateTitle("&cPunish is already removed");
+      animateTitle("&c" + PUNISH_IS_ALREADY_REMOVED);
       return;
     }
 

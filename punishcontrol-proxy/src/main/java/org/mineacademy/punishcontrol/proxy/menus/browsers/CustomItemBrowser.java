@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 import javax.inject.Inject;
 import lombok.NonNull;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
+import org.jetbrains.annotations.NonNls;
 import org.mineacademy.bfo.debug.Debugger;
 import org.mineacademy.burst.item.Item;
 import org.mineacademy.burst.menu.AbstractSearchableBrowser;
@@ -20,6 +21,8 @@ import org.mineacademy.punishcontrol.proxy.menu.browser.AbstractMaterialBrowser;
 
 public final class CustomItemBrowser extends AbstractSearchableBrowser<CustomItem> {
 
+  @NonNls
+  private static final String CUSTOM_ITEMS = "Custom items";
   private final ItemSettings itemSettings;
 
   public static void showTo(@NonNull final ProxiedPlayer player) {
@@ -37,7 +40,7 @@ public final class CustomItemBrowser extends AbstractSearchableBrowser<CustomIte
       Collection<CustomItem> content) {
     super("ItemBrowser", parent, content);
     this.itemSettings = itemSettings;
-    setTitle("&8Custom items");
+    setTitle("&8" + CUSTOM_ITEMS);
   }
 
 

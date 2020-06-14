@@ -9,11 +9,13 @@ import lombok.val;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import net.md_5.bungee.api.plugin.Listener;
+import org.jetbrains.annotations.NonNls;
 import org.mineacademy.bfo.Players;
 import org.mineacademy.bfo.plugin.SimplePlugin;
 import org.mineacademy.burst.item.Item;
 import org.mineacademy.burst.menu.AbstractMenu;
 import org.mineacademy.burst.util.Scheduler;
+import org.mineacademy.punishcontrol.core.injector.annotations.Localizable;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.providers.TextureProvider;
@@ -28,6 +30,7 @@ import org.mineacademy.punishcontrol.proxy.menus.browsers.PlayerPunishBrowser;
 import org.mineacademy.punishcontrol.proxy.menus.punish.PunishCreatorMenu;
 import org.mineacademy.punishcontrol.proxy.menus.settings.PlayerSettingsMenu;
 
+@Localizable
 public final class ChooseActionMenu extends AbstractMenu implements Listener {
 
   private static final int PUNISH_SLOT = 1;
@@ -35,6 +38,10 @@ public final class ChooseActionMenu extends AbstractMenu implements Listener {
   private static final int PLAYER_HEAD_SLOT = 13;
   private static final int SETTINGS_SLOT = 15;
   private static final int KICK_SLOT = 7;
+  @NonNls
+  @Localizable("Parts"
+      + ".Action_For")
+  private static String ACTION_FOR = "Action for";
 
   private final PlayerProvider playerProvider;
   private final TextureProvider textureProvider;
@@ -77,8 +84,7 @@ public final class ChooseActionMenu extends AbstractMenu implements Listener {
         .registerListener(SimplePlugin.getInstance(),
             this);
 
-
-    setTitle("§8Action for " + targetName);
+    setTitle("§8" + ACTION_FOR + " " + targetName);
   }
 
   // ----------------------------------------------------------------------------------------------------
@@ -89,7 +95,7 @@ public final class ChooseActionMenu extends AbstractMenu implements Listener {
   public void updateInventory() {
     super.updateInventory();
 
-    setTitle("§8Action for " + targetName);
+    setTitle("§8" + ACTION_FOR + " " + targetName);
 
     set(
         Item
@@ -216,7 +222,7 @@ public final class ChooseActionMenu extends AbstractMenu implements Listener {
 
   @Override
   protected String[] getInfo() {
-    return new String[]{"&7Menu to select ", "&7Action for players"};
+    return new String[]{"&7Menu to select ", "&7" + ACTION_FOR + " players"};
   }
 
 }

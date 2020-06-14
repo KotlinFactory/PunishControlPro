@@ -8,8 +8,8 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.TYPE, ElementType.FIELD})
 @Retention(RetentionPolicy.RUNTIME)
-public @interface Localization {
+public @interface Localizable {
 
-  String path() default "";
+  String value() default "";
 }
 

@@ -12,6 +12,7 @@ import lombok.NonNull;
 import lombok.experimental.Accessors;
 import lombok.val;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
+import org.jetbrains.annotations.NonNls;
 import org.mineacademy.bfo.plugin.SimplePlugin;
 import org.mineacademy.burst.item.Item;
 import org.mineacademy.burst.menu.AbstractMenu;
@@ -41,6 +42,48 @@ public final class PunishTemplateCreatorMenu extends AbstractMenu {
   public static final int CHOOSE_TYPE_SLOT = 4;
   public static final int CHOOSE_DURATION_SLOT = 40;
   public static final int APPLY_SLOT = 22;
+  @NonNls
+  private static final String TEMPLATE_CREATOR = "Template Creator";
+  private static final String[] CHOOSE_DURATION_LORE = {"&7Choose the",
+      "&7duration of the",
+      "&7punish"};
+  private static final String DURATION = "&6Duration";
+  @NonNls
+  private static final String CHANGE_TYPE = "Change type";
+  private static final String REASON = "&6Reason";
+  @NonNls
+  private static final String CURRENTLY = "Currently";
+  @NonNls
+  private static final String CHOOSE_PERMISSION = "Choose permission";
+  private static final String[] MENU_INFORMATION = {"&7Menu to", "&7edit templates"};
+  private static final String ALREADY_SUPER_SILENT = "&cPunishment is already super-silent";
+  private static final String APPLY = "&aApply";
+  @NonNls
+  private static final String SILENT = "Silent";
+  @NonNls
+  private static final String SUPER_SILENT = "Super-" + SILENT;
+  @NonNls
+  private static final String MAKE_SUPER_SILENT = "Make " + SUPER_SILENT;
+  @NonNls
+  private static final String MAKE_SILENT = "Make " + SILENT;
+  @NonNls
+  private static final String NOT = "not";
+  private static final String[] MAKE_NOT_SILENT_LORE = {"",
+      "&7Click to make",
+      "&7the punish",
+      "&7" + NOT + " silent"};
+  private static final String[] MAKE_SILENT_LORE = {"",
+      "&7Click to make",
+      "&7the punish",
+      "&7silent"};
+  private static final String[] MAKE_NOT_SUPER_SILENT_LORE = {"",
+      "&7Click to make",
+      "&7the punish",
+      "&7" + NOT + " super silent"};
+  private static final String[] MAKE_SUPER_SILENT_LORE = {"",
+      "&7Click to make",
+      "&7the punish",
+      "&7super silent"};
 
   @Getter
   private final PunishTemplate punishTemplate;
@@ -95,7 +138,7 @@ public final class PunishTemplateCreatorMenu extends AbstractMenu {
     );
     this.punishTemplate = punishTemplate;
 
-    setTitle("&8Template Creator");
+    setTitle("&8" + TEMPLATE_CREATOR);
   }
 
   // ----------------------------------------------------------------------------------------------------
@@ -107,7 +150,7 @@ public final class PunishTemplateCreatorMenu extends AbstractMenu {
   public void updateInventory() {
     super.updateInventory();
 
-    if (cancelled){
+    if (cancelled) {
       return;
     }
     // Duration | "Duration"
@@ -115,8 +158,8 @@ public final class PunishTemplateCreatorMenu extends AbstractMenu {
       if (punishTemplate().duration() != null) {
         set(
             Item.of(ItemType.CLOCK,
-                "&6Duration",
-                "&7Currently: ",
+                "&6" + DURATION,
+                "&7" + CURRENTLY + ": ",
                 "&7" + punishTemplate.duration()
                     .toString(),
                 "&7Punishment will end on:",
@@ -134,10 +177,8 @@ public final class PunishTemplateCreatorMenu extends AbstractMenu {
       } else {
         set(
             Item.of(ItemType.CLOCK,
-                "&6Duration",
-                "&7Choose the",
-                "&7duration of the",
-                "&7punish")
+                "&6" + DURATION,
+                CHOOSE_DURATION_LORE)
                 .slot(CHOOSE_DURATION_SLOT)
                 .actionHandler("Duration")
         );
@@ -148,11 +189,11 @@ public final class PunishTemplateCreatorMenu extends AbstractMenu {
     {
       set(
           Item.of(ItemUtil.forPunishType(punishTemplate.punishType()))
-              .name("&6Change type")
+              .name("&6" + CHANGE_TYPE)
               .lore(Arrays.asList(
                   "&7Change the type",
                   "&7of the punish",
-                  "&7Currently: " + punishTemplate.punishType().localized()))
+                  "&7" + CURRENTLY + ": " + punishTemplate.punishType().localized()))
               .slot(CHOOSE_TYPE_SLOT)
               .actionHandler("Type")
       );
@@ -164,7 +205,7 @@ public final class PunishTemplateCreatorMenu extends AbstractMenu {
         set(
             Item
                 .of(ItemSettings.REASON_ITEM.itemType(),
-                    "&6Reason",
+                    "&6" + REASON,
                     "&7Choose different reason",
                     "&7Current: " + punishTemplate.reason())
                 .slot(CHOOSE_REASON_SLOT)
@@ -175,8 +216,8 @@ public final class PunishTemplateCreatorMenu extends AbstractMenu {
         set(
             Item
                 .of(ItemSettings.REASON_ITEM.itemType())
-                .name("&6Reason")
-                .lore("&6Reason",
+                .name("&6" + REASON)
+                .lore(
                     "&7Choose the",
                     "&7reason of the",
                     "&7punish")
@@ -191,9 +232,9 @@ public final class PunishTemplateCreatorMenu extends AbstractMenu {
       set(
           Item
               .of(ItemType.PAPER,
-                  "&6Choose permission",
+                  "&6" + CHOOSE_PERMISSION,
                   " ",
-                  "Currently: " + punishTemplate().permission())
+                  CURRENTLY + ": " + punishTemplate().permission())
               .slot(CHOOSE_PERMISSION_SLOT)
               .actionHandler("Permission")
       );
@@ -205,12 +246,9 @@ public final class PunishTemplateCreatorMenu extends AbstractMenu {
         set(
             Item
                 .ofString(ItemSettings.ENABLED.itemType())
-                .name("&6Silent")
+                .name("&6" + SILENT)
                 .lore(
-                    "",
-                    "&7Click to make",
-                    "&7the punish",
-                    "&7not silent"
+                    MAKE_NOT_SILENT_LORE
                 )
                 .slot(MAKE_SILENT_SLOT)
                 .actionHandler("Silent")
@@ -220,12 +258,9 @@ public final class PunishTemplateCreatorMenu extends AbstractMenu {
         set(
             Item
                 .ofString(ItemSettings.DISABLED.itemType())
-                .name("&6Make Silent")
+                .name("&6" + MAKE_SILENT)
                 .lore(
-                    "",
-                    "&7Click to make",
-                    "&7the punish",
-                    "&7silent"
+                    MAKE_SILENT_LORE
                 )
                 .slot(MAKE_SILENT_SLOT)
                 .actionHandler("Silent")
@@ -239,12 +274,9 @@ public final class PunishTemplateCreatorMenu extends AbstractMenu {
         set(
             Item
                 .ofString(ItemSettings.ENABLED.itemType())
-                .name("&6Super-Silent")
+                .name("&6" + SUPER_SILENT)
                 .lore(
-                    "",
-                    "&7Click to make",
-                    "&7the punish",
-                    "&7not silent"
+                    MAKE_NOT_SUPER_SILENT_LORE
                 )
                 .slot(MAKE_SUPER_SILENT_SLOT)
                 .actionHandler("SuperSilent")
@@ -253,12 +285,9 @@ public final class PunishTemplateCreatorMenu extends AbstractMenu {
         set(
             Item
                 .ofString(ItemSettings.DISABLED.itemType())
-                .name("&6Make Super-Silent")
+                .name("&6" + MAKE_SUPER_SILENT)
                 .lore(
-                    "",
-                    "&7Click to make",
-                    "&7the punish",
-                    "&7silent"
+                    MAKE_SUPER_SILENT_LORE
                 )
                 .slot(MAKE_SUPER_SILENT_SLOT)
                 .actionHandler("SuperSilent")
@@ -272,8 +301,8 @@ public final class PunishTemplateCreatorMenu extends AbstractMenu {
           Item
               .of(
                   ItemSettings.APPLY_ITEM.itemType(),
-                  "&aApply",
-                  "&7Apply template")
+                  APPLY,
+                  "&7" + APPLY + "template")
               .slot(APPLY_SLOT)
               .actionHandler("Apply")
       );
@@ -340,14 +369,14 @@ public final class PunishTemplateCreatorMenu extends AbstractMenu {
     // Silent
     registerActionHandler("Silent", (silent -> {
       if (punishTemplate.superSilent()) {
-        animateTitle("&cPunishment is already super-silent");
+        animateTitle(ALREADY_SUPER_SILENT);
         return CallResult.DENY_GRABBING;
       }
 
       punishTemplate.silent(!punishTemplate.silent());
       animateTitle(punishTemplate.silent()
           ? "&8silent"
-          : "&8not silent");
+          : "&8" + NOT + " silent");
       build();
 
       return CallResult.DENY_GRABBING;
@@ -362,8 +391,8 @@ public final class PunishTemplateCreatorMenu extends AbstractMenu {
       }
       punishTemplate.superSilent(!punishTemplate.superSilent());
       animateTitle(punishTemplate.superSilent()
-          ? "&8super-silent"
-          : "&cnot super-silent");
+          ? "&8" + SUPER_SILENT
+          : "&c" + NOT + " " + SUPER_SILENT.toLowerCase());
       build();
       return CallResult.DENY_GRABBING;
     }));
@@ -371,7 +400,7 @@ public final class PunishTemplateCreatorMenu extends AbstractMenu {
 
   @Override
   protected String[] getInfo() {
-    return new String[]{"&7Menu to", "&7edit templates"};
+    return MENU_INFORMATION;
   }
 
   // ----------------------------------------------------------------------------------------------------

@@ -10,6 +10,7 @@ import javax.inject.Inject;
 import lombok.NonNull;
 import lombok.val;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
+import org.jetbrains.annotations.NonNls;
 import org.mineacademy.burst.util.Scheduler;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.providers.TextureProvider;
@@ -24,6 +25,8 @@ import org.mineacademy.punishcontrol.proxy.menus.MainMenu;
  */
 public final class StaffPunishesBrowser extends AbstractPunishBrowser {
 
+  @NonNls
+  private static final String SHOW_PUNISHMENTS_CREATED_BY = "Show punishments created by";
   private final UUID staffMember;
 
   public static void showTo(
@@ -72,7 +75,7 @@ public final class StaffPunishesBrowser extends AbstractPunishBrowser {
         @Override
         protected List<String> lore(UUID uuid) {
           return Collections.singletonList(
-              "Show punishments created by " + playerProvider.findName(uuid).orElse(
+              SHOW_PUNISHMENTS_CREATED_BY + " " + playerProvider.findName(uuid).orElse(
                   "unknown")
           );
         }

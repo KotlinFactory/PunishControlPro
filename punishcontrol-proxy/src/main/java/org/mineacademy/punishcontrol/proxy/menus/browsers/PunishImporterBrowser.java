@@ -12,6 +12,7 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import lombok.NonNull;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
+import org.jetbrains.annotations.NonNls;
 import org.mineacademy.burst.item.Item;
 import org.mineacademy.burst.menu.AbstractBrowser;
 import org.mineacademy.burst.util.Scheduler;
@@ -21,25 +22,52 @@ import org.mineacademy.punishcontrol.proxy.menu.AbstractConfirmMenu;
 
 public final class PunishImporterBrowser extends AbstractBrowser<PunishImporter> {
 
+  // Localization
+  @NonNls
+  private static final String STARTED_IMPORTING = "Started importing";
+  @NonNls
+  private static final String FINISHED_IMPORTING = "Finished importing;)";
+  @NonNls
+  private static final String CAN_T_IMPORT_FROM_THIS_IMPORTER = "cCan't import from this importer!";
+  @NonNls
+  private static final String YES = "yes";
+  @NonNls
+  private static final String NO = "no";
+  @NonNls
+  private static final String IMPORT_PUNISHMENTS = "Import punishments";
+  private static final String[] MENU_INFORMATION = {
+      "Menu to import punishment"
+  };
+  @NonNls
+  private static final String IS_APPLICABLE = "Is applicable:";
+
   public static void showTo(@NonNull final ProxiedPlayer player) {
     Scheduler.runAsync(() -> {
       DaggerProxyComponent.create().punishImporterBrowser().displayTo(player);
     });
   }
 
+  // ----------------------------------------------------------------------------------------------------
+  // Constructor
+  // ----------------------------------------------------------------------------------------------------
+
   @Inject
   public PunishImporterBrowser(
       @NonNull final SettingsBrowser parent,
       @NonNull @Named("importers") final Collection<PunishImporter> content) {
     super("PunishImporter", parent, content);
-    setTitle("&8Import punishments");
+    setTitle("&8" + IMPORT_PUNISHMENTS);
   }
+
+  // ----------------------------------------------------------------------------------------------------
+  // Methods overridden AbstractBrowser
+  // ----------------------------------------------------------------------------------------------------
 
   @Override
   protected void onClick(ClickType clickType, PunishImporter punishImporter) {
 
     if (!punishImporter.applicable()) {
-      animateTitle("&cCan't import from this importer!");
+      animateTitle("&" + CAN_T_IMPORT_FROM_THIS_IMPORTER);
       return;
     }
 
@@ -47,10 +75,10 @@ public final class PunishImporterBrowser extends AbstractBrowser<PunishImporter>
 
       @Override
       public void onConfirm() {
-        animateTitle("68Started importing");
+        animateTitle("68" + STARTED_IMPORTING);
         async(() -> {
           punishImporter.importAll();
-          animateTitle("&aFinished importing;)");
+          animateTitle("&a" + FINISHED_IMPORTING);
         });
       }
     }.displayTo(getPlayer());
@@ -84,7 +112,8 @@ public final class PunishImporterBrowser extends AbstractBrowser<PunishImporter>
         .name("&6" + punishImporter.pluginName().orElse("vanilla"))
         .lore(punishImporter.description())
         .addLore(" ")
-        .addLore("&6Is applicable: " + (punishImporter.applicable() ? "&ayes" : "&cno"))
+        .addLore(
+            "&6" + IS_APPLICABLE + " " + (punishImporter.applicable() ? "&a" + YES : "&c" + NO))
         .build();
   }
 
@@ -95,8 +124,6 @@ public final class PunishImporterBrowser extends AbstractBrowser<PunishImporter>
 
   @Override
   protected String[] getInfo() {
-    return new String[]{
-        "Menu to import punishment"
-    };
+    return MENU_INFORMATION;
   }
 }

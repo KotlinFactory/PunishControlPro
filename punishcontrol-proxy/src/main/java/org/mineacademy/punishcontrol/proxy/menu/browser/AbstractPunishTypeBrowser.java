@@ -6,10 +6,15 @@ import java.util.Collections;
 import org.mineacademy.burst.item.Item;
 import org.mineacademy.burst.menu.AbstractBrowser;
 import org.mineacademy.burst.menu.AbstractMenu;
+import org.mineacademy.punishcontrol.core.injector.annotations.Localizable;
 import org.mineacademy.punishcontrol.core.punish.PunishType;
 import org.mineacademy.punishcontrol.proxy.ItemUtil;
 
+@Localizable
 public abstract class AbstractPunishTypeBrowser extends AbstractBrowser<PunishType> {
+
+  @Localizable("Parts.Select")
+  private static String SELECT = "Select";
 
   protected AbstractPunishTypeBrowser(final AbstractMenu parent) {
     super("PunishTypes", parent, Arrays.asList(PunishType.values()));
@@ -20,7 +25,7 @@ public abstract class AbstractPunishTypeBrowser extends AbstractBrowser<PunishTy
     return Item
         .of(ItemUtil.forPunishType(item))
         .name(item.localized())
-        .lore(Collections.singletonList("&7Select " + item.localized()))
+        .lore(Collections.singletonList("&7" + SELECT + " " + item.localized()))
         .build();
   }
 

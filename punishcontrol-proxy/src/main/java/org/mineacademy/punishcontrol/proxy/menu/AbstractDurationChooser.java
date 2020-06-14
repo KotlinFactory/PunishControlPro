@@ -10,6 +10,7 @@ import lombok.experimental.Accessors;
 import org.mineacademy.burst.item.Item;
 import org.mineacademy.burst.menu.AbstractMenu;
 import org.mineacademy.burst.menu.BurstMenu;
+import org.mineacademy.punishcontrol.core.injector.annotations.Localizable;
 import org.mineacademy.punishcontrol.core.settings.ItemSettings;
 import org.mineacademy.punishcontrol.core.settings.Localization.Time;
 import org.mineacademy.punishcontrol.core.settings.Settings;
@@ -17,6 +18,7 @@ import org.mineacademy.punishcontrol.core.util.TimeUtil;
 import org.mineacademy.punishcontrol.proxy.conversations.DurationChooseConversation;
 
 @Accessors(fluent = true)
+@Localizable
 public abstract class AbstractDurationChooser extends AbstractMenu {
 
 
@@ -28,6 +30,15 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
   public static final int HOUR_SLOT = 9 * 4;
   public static final int CLOCK_SLOT = 26;
   public static final int APPLY_SLOT = 22;
+
+
+  // ----------------------------------------------------------------------------------------------------
+  // Translations
+  // ----------------------------------------------------------------------------------------------------
+  @Localizable(value = "Menu.Choose_Duration")
+  private static  String CHOOSE_DURATION = "Choose duration";
+
+
   @Setter
   protected long ms;
 
@@ -40,7 +51,7 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
       final long ms) {
     super("DurationChooser", parent, SIZE);
     this.ms = ms;
-    setTitle("&8Choose duration");
+    setTitle("&8" + CHOOSE_DURATION);
 
     //Initial update
     updateClock();

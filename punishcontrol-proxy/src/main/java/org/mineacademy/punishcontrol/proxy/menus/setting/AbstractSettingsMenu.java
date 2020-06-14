@@ -6,6 +6,8 @@ import org.mineacademy.punishcontrol.proxy.menus.browsers.SettingsBrowser;
 
 public abstract class AbstractSettingsMenu extends AbstractMenu {
 
+  private static final String[] MENU_INFORMATION = {"Menu to change settings."};
+
   protected AbstractSettingsMenu(final SettingsBrowser settingsBrowser) {
     this(settingsBrowser, 9 * 4);
   }
@@ -16,6 +18,6 @@ public abstract class AbstractSettingsMenu extends AbstractMenu {
 
   @Override
   protected final String[] getInfo() {
-    return new String[]{"Menu to change settings."};
+    return MENU_INFORMATION;
   }
 }

@@ -6,9 +6,16 @@ import org.mineacademy.bfo.debug.Debugger;
 import org.mineacademy.burst.item.Item;
 import org.mineacademy.burst.menu.AbstractMenu;
 import org.mineacademy.burst.menu.BurstMenu;
+import org.mineacademy.punishcontrol.core.injector.annotations.Localizable;
 import org.mineacademy.punishcontrol.core.settings.ItemSettings;
 
+@Localizable
 public abstract class AbstractConfirmMenu extends AbstractMenu {
+
+  @Localizable(value = "Parts.Confirm")
+  private static String CONFIRM = "Confirm";
+  @Localizable(value = "Parts.Break")
+  private static String BREAKUP = "Breakup";
 
 //  public AbstractConfirmMenu() {
 //    super("Confirm", 9);
@@ -16,18 +23,18 @@ public abstract class AbstractConfirmMenu extends AbstractMenu {
 //  }
 
   public AbstractConfirmMenu(final BurstMenu parent) {
-    super("Confirm", parent, 9);
+    super(CONFIRM, parent, 9);
     updateInventory();
   }
 
   @Override
   public void updateInventory() {
-    setTitle("&8Confirm");
+    setTitle("&8" + CONFIRM);
     set(
         Item
             .ofString(ItemSettings.APPLY_ITEM.itemType())
-            .name("&aConfirm")
-            .lore("&7Confirm")
+            .name("&a" + CONFIRM)
+            .lore("&7" + CONFIRM)
             .slot(0)
             .actionHandler("Confirm")
     );
@@ -35,7 +42,7 @@ public abstract class AbstractConfirmMenu extends AbstractMenu {
     set(
         Item
             .ofString(ItemSettings.BREAK_UP_ITEM.itemType())
-            .name("&3Breakup")
+            .name("&3" + BREAKUP)
             .slot(8)
             .actionHandler("Break-Up")
     );
@@ -50,7 +57,7 @@ public abstract class AbstractConfirmMenu extends AbstractMenu {
       return CallResult.DENY_GRABBING;
     }));
 
-    registerActionHandler("Confirm", (click) -> {
+    registerActionHandler(CONFIRM, (click) -> {
       try {
         onConfirm();
       } catch (final Throwable throwable) {

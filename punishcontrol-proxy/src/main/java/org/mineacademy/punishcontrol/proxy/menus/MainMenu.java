@@ -1,6 +1,7 @@
 package org.mineacademy.punishcontrol.proxy.menus;
 
 import de.exceptionflug.mccommons.inventories.api.CallResult;
+import de.exceptionflug.mccommons.inventories.api.ClickType;
 import de.exceptionflug.protocolize.items.ItemType;
 import java.util.Arrays;
 import java.util.Collections;
@@ -14,7 +15,7 @@ import org.mineacademy.burst.item.ChangingButton;
 import org.mineacademy.burst.item.Item;
 import org.mineacademy.burst.menu.ChangingMenu;
 import org.mineacademy.burst.util.Scheduler;
-import org.mineacademy.punishcontrol.core.injector.annotations.Setting;
+import org.mineacademy.punishcontrol.core.injector.annotations.Localizable;
 import org.mineacademy.punishcontrol.core.providers.TextureProvider;
 import org.mineacademy.punishcontrol.proxy.DaggerProxyComponent;
 import org.mineacademy.punishcontrol.proxy.menus.browsers.AllPunishesBrowser;
@@ -23,7 +24,7 @@ import org.mineacademy.punishcontrol.proxy.menus.browsers.PunishedPlayerBrowser;
 import org.mineacademy.punishcontrol.proxy.menus.browsers.SettingsBrowser;
 import org.mineacademy.punishcontrol.proxy.menus.punish.PunishCreatorMenu;
 
-@Setting
+@Localizable
 public final class MainMenu extends ChangingMenu {
 
   public static final int PLAYER_BROWSER_SLOT = 9 * 2 + 6;
@@ -34,23 +35,23 @@ public final class MainMenu extends ChangingMenu {
   private static final String[] CREATE_NEW_LORE = {" ",
       "&7Create new punishment"};
   private static final String SETTINGS = "Settings";
-  private static final String VIEW_SETTINGS = "&7View Settings for";
+  private static final String VIEW_SETTINGS = "View Settings for";
 
   // ----------------------------------------------------------------------------------------------------
   // Custom-Settings
   // ----------------------------------------------------------------------------------------------------
 
-  @Setting(path = "Menu.Main.Player_Lore")
+  @Localizable(value = "Menu.Main.Player_Lore")
   private static List<String> PLAYER_LORE = Arrays.asList(
       "&7View players",
       "&7to select",
       "&7one for more",
       "&7actions");
 
-  @Setting(path = "Parts.Players")
+  @Localizable(value = "Parts.Players")
   private static String PLAYER = "Players";
 
-  @Setting(path = "Menu.Main.Punish_Lore")
+  @Localizable(value = "Menu.Main.Punish_Lore")
   private static List<String> punishLore = Arrays.asList("Browse created punishments.",
       "Right click to view",
       "punished players");
@@ -122,9 +123,9 @@ public final class MainMenu extends ChangingMenu {
           Item
               .of(ItemType.COMPARATOR,
                   "&6" + SETTINGS,
+                  " ",
                   VIEW_SETTINGS,
-                  SimplePlugin.getNamed(),
-                  ""
+                  SimplePlugin.getNamed()
               )
               .slot(SETTINGS_BUTTON_SLOT)
               .actionHandler("Settings")
@@ -148,11 +149,10 @@ public final class MainMenu extends ChangingMenu {
       set(
           Item
               .of(ItemType.COMPARATOR,
-                  "&6Settings",
-                  "&7View Settings for",
-                  SimplePlugin.getNamed(),
-
-                  ""
+                  "&6" + SETTINGS,
+                  "",
+                  "&7" + VIEW_SETTINGS,
+                  SimplePlugin.getNamed()
               )
               .slot(45)
               .actionHandler("Settings")

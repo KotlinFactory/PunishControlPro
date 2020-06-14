@@ -172,7 +172,24 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
 // Sub-Classes that are only needed for this menu
 // ----------------------------------------------------------------------------------------------------
 
-final class GroupBrowser extends AbstractBrowser<Group> {
+ final class GroupBrowser extends AbstractBrowser<Group> {
+
+   private static final String[] MENU_INFORMATION = {
+       "&7Menu to view",
+       "&7the groups",
+       "&7a player has",
+       "&7changes can't",
+       "&7be yet made"
+   };
+   private static Replacer GROUP_REPLACER = Replacer.of(
+
+       "&6Priority: &7{priority}",
+       "&6Ban-Limit: &7{ban-limit}",
+       "&6Mute-Limit: &7{mute-limit}",
+       "&6Warn-Limit: &7{warn-limit}",
+       "&6Override-Punishes: &7{override}",
+       "&6Template only: &7{template_only}"
+   );
 
   private final PlayerSettingsMenu parent;
   private final UUID target;
@@ -200,23 +217,15 @@ final class GroupBrowser extends AbstractBrowser<Group> {
 
   @Override
   protected ItemStack convertToItemStack(final Group group) {
-    final Replacer replacer = Replacer.of(
-        "&6Priority: &7{priority}",
-        "&6Ban-Limit: &7{ban-limit}",
-        "&6Mute-Limit: &7{mute-limit}",
-        "&6Warn-Limit: &7{warn-limit}",
-        "&6Override-Punishes: &7{override}",
-        "&6Template only: &7{template_only}"
-    );
 
-    replacer.find("priority",
+    GROUP_REPLACER.find("priority",
         "ban-limit",
         "mute-limit",
         "warn-limit",
         "override",
         "template_only");
 
-    replacer.replace(
+    GROUP_REPLACER.replace(
         group.priority(),
         group.banLimit().toString(),
         group.muteLimit().toString(),
@@ -232,19 +241,13 @@ final class GroupBrowser extends AbstractBrowser<Group> {
     return Item
         .of(material,
             "&7" + group.name(),
-            replacer.replacedMessage())
+            GROUP_REPLACER.replacedMessage())
         .build();
   }
 
   @Override
   protected String[] getInfo() {
-    return new String[]{
-        "&7Menu to view",
-        "&7the groups",
-        "&7a player has",
-        "&7changes can't",
-        "&7be yet made"
-    };
+    return MENU_INFORMATION;
   }
 
   @Override
@@ -255,6 +258,13 @@ final class GroupBrowser extends AbstractBrowser<Group> {
 
 class PermissionsBrowser extends AbstractBrowser<Permission> {
 
+  private static final String[] MENU_INFORMATION = {
+      "&7Menu to view",
+      "&7the permissions",
+      "&7a player has",
+      "&7changes will ",
+      "&7be temporary"
+  };
   private final PlayerProvider playerProvider;
   private final UUID target;
   private final PlayerSettingsMenu parent;
@@ -283,13 +293,7 @@ class PermissionsBrowser extends AbstractBrowser<Permission> {
 
   @Override
   protected String[] getInfo() {
-    return new String[]{
-        "&7Menu to view",
-        "&7the permissions",
-        "&7a player has",
-        "&7changes will ",
-        "&7be temporary"
-    };
+    return MENU_INFORMATION;
   }
 
   @Override
