@@ -101,6 +101,11 @@ public final class PunishCreatorMenu extends AbstractMenu {
       "&7punish should be",
       "&7applied to"};
 
+  private static String[] CHOOSE_REASON_LORE = new String[]{
+      "&7Choose the",
+      "&7reason of the",
+      "&7punish"};
+
   @NonNls
   private static final String CURRENT = "Current";
   @NonNls
@@ -157,9 +162,6 @@ public final class PunishCreatorMenu extends AbstractMenu {
   private PunishBuilder punishBuilder;
   private PunishTemplate punishTemplate;
   private static final PunishType DEFAULT_PUNISH_TYPE = PunishType.BAN;
-  private String[] CHOOSE_REASON_LORE = new String[]{"&7Choose the",
-      "&7reason of the",
-      "&7punish"};
 
   public static void showTo(@NonNull final ProxiedPlayer player) {
     DaggerProxyComponent.create().punishCreatorMenu().displayTo(player);

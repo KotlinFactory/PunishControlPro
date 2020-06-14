@@ -17,28 +17,28 @@ import org.mineacademy.punishcontrol.core.settings.Settings;
 import org.mineacademy.punishcontrol.core.util.TimeUtil;
 import org.mineacademy.punishcontrol.proxy.conversations.DurationChooseConversation;
 
-@Accessors(fluent = true)
 @Localizable
+@Accessors(fluent = true)
 public abstract class AbstractDurationChooser extends AbstractMenu {
 
 
-  public static final int SIZE = 9 * 5;
-  public static final int PERMANENT_SLOT = 8;
-  public static final int YEAR_SLOT = 0;
-  public static final int MONTH_SLOT = 9;
-  public static final int DAY_SLOT = 9 * 3;
-  public static final int HOUR_SLOT = 9 * 4;
-  public static final int CLOCK_SLOT = 26;
-  public static final int APPLY_SLOT = 22;
-
+  private static final int SIZE = 9 * 5;
 
   // ----------------------------------------------------------------------------------------------------
-  // Translations
+  // Button
+  // ----------------------------------------------------------------------------------------------------
+  private static final int PERMANENT_SLOT = 8;
+  private static final int YEAR_SLOT = 0;
+  private static final int MONTH_SLOT = 9;
+  private static final int DAY_SLOT = 9 * 3;
+  private static final int HOUR_SLOT = 9 * 4;
+  private static final int CLOCK_SLOT = 26;
+  private static final int APPLY_SLOT = 22;
+  // ----------------------------------------------------------------------------------------------------
+  // Localization
   // ----------------------------------------------------------------------------------------------------
   @Localizable(value = "Menu.Choose_Duration")
-  private static  String CHOOSE_DURATION = "Choose duration";
-
-
+  private static String CHOOSE_DURATION = "Choose duration";
   @Setter
   protected long ms;
 
@@ -154,7 +154,6 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
       getParent().reDisplay();
       return CallResult.DENY_GRABBING;
     }));
-
 
     registerActionHandler("Perma", (perma) -> {
       makePermanent();

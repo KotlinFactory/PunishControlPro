@@ -38,6 +38,10 @@ public abstract class AbstractTemplateBrowser
       "Right-Click to remove"
   );
 
+  // ----------------------------------------------------------------------------------------------------
+  // Constructors & Fields
+  // ----------------------------------------------------------------------------------------------------
+
   protected AbstractTemplateBrowser(final BurstMenu parent) {
     super("TemplateBrowser", parent, PunishTemplates.list());
     setTitle("&8Punish templates");
@@ -57,19 +61,6 @@ public abstract class AbstractTemplateBrowser
         "silent",
         "super-silent",
         "access");
-
-//    if (item.name().equalsIgnoreCase("default-ban")) {
-//      Common.log(
-//          Common.chatLineSmooth(),
-//          "Name: " + item.name(),
-//          "Duration: " + item.duration().toMs(),
-//          "Generic: " + TimeUtil.formatTimeDays(item.duration().toMs() / 1000),
-//          "toString(): " + item.duration().toString(),
-//          "file: " + item.getFilePath(),
-//          Common.chatLineSmooth(),
-//          " "
-//      );
-//    }
 
     replacer.replace(
         item.punishType(),

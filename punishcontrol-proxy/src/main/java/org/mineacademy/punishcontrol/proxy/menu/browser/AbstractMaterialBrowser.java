@@ -23,25 +23,26 @@ public abstract class AbstractMaterialBrowser
     extends AbstractSearchableBrowser<ItemType>
     implements Schedulable {
 
+  // ----------------------------------------------------------------------------------------------------
+  // Localization
+  // ----------------------------------------------------------------------------------------------------
+
+  @Localizable("Menu.Proxy.Material-Browser.Information")
+  private static String[] MENU_INFORMATION = {
+      "",
+      "&7Menu to select materials",
+      "&7that fit your wishes best",
+      "&7more items will be added soon"
+  };
   @Localizable("Parts.Materials")
   private static String MATERIALS = "Materials";
+
+
   private static List<ItemType> items = Arrays
       .stream(ItemType.values())
       .filter(AbstractMaterialBrowser::canApply)
       .filter(mat -> mat != ItemType.AIR)
       .collect(Collectors.toList());
-
-  private static boolean canApply(ItemType type) {
-
-    try {
-      de.exceptionflug.mccommons.inventories.api.item.ItemType.valueOf(type.name());
-      // Must be available in the latest & in the minimal supported minecraft version
-      return type.getApplicableMapping(ProtocolVersions.MINECRAFT_LATEST) != null
-          && type.getApplicableMapping(Advanced.MIN_PROTOCOL_VERSION_SUPPORTED) != null;
-    } catch (final Throwable throwable) {
-      return false;
-    }
-  }
 
   protected AbstractMaterialBrowser(@NonNull final BurstMenu parent) {
     this(parent, items);
@@ -52,6 +53,23 @@ public abstract class AbstractMaterialBrowser
       @NonNull final Collection<ItemType> items) {
     super("MaterialBrowser", parent, items);
     setTitle("&8" + MATERIALS);
+  }
+
+  /**
+   * Checks whether an ItemType can actually be displayed on the server Depends on which
+   * ProtocolVersion is Supported.
+   *
+   * @param type Type of the item
+   */
+  private static boolean canApply(@NonNull final ItemType type) {
+    try {
+      de.exceptionflug.mccommons.inventories.api.item.ItemType.valueOf(type.name());
+      // Must be available in the latest & in the minimal supported minecraft version
+      return type.getApplicableMapping(ProtocolVersions.MINECRAFT_LATEST) != null
+          && type.getApplicableMapping(Advanced.MIN_PROTOCOL_VERSION_SUPPORTED) != null;
+    } catch (final Throwable throwable) {
+      return false;
+    }
   }
 
   @Override
@@ -71,16 +89,11 @@ public abstract class AbstractMaterialBrowser
 
   @Override
   protected String[] getInfo() {
-    return new String[]{
-        "",
-        "&7Menu to select materials",
-        "&7that fit your wishes best",
-        "&7more items will be added soon"
-    };
+    return MENU_INFORMATION;
   }
 
   @Override
-  public final void redisplay(Collection<ItemType> content) {
+  public final void redisplay(@NonNull final Collection<ItemType> content) {
     async(() -> new AbstractMaterialBrowser(this, content) {
       @Override
       public void reDisplay() {

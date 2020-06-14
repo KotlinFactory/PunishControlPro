@@ -33,40 +33,31 @@ import org.mineacademy.punishcontrol.proxy.menus.settings.PlayerSettingsMenu;
 @Localizable
 public final class ChooseActionMenu extends AbstractMenu implements Listener {
 
+  // ----------------------------------------------------------------------------------------------------
+  // Localization
+  // ----------------------------------------------------------------------------------------------------
+
+  private static final String[] MENU_INFORMATION = {"&7Menu to select ",
+      "&7Action for players"};
   private static final int PUNISH_SLOT = 1;
+
+  // ----------------------------------------------------------------------------------------------------
+  // Button positions
+  // ----------------------------------------------------------------------------------------------------
   private static final int LIST_PUNISHES_SLOT = 11;
   private static final int PLAYER_HEAD_SLOT = 13;
   private static final int SETTINGS_SLOT = 15;
   private static final int KICK_SLOT = 7;
   @NonNls
-  @Localizable("Parts"
-      + ".Action_For")
+  @Localizable("Parts.Action_For")
   private static String ACTION_FOR = "Action for";
 
+  // Fields
   private final PlayerProvider playerProvider;
   private final TextureProvider textureProvider;
   private final StorageProvider storageProvider;
   private final UUID target;
   private final String targetName;
-
-  public static void showTo(
-      @NonNull final ProxiedPlayer player,
-      @NonNull final UUID target) {
-    Scheduler.runAsync(() -> {
-      final val menu = create(target);
-      menu.displayTo(player);
-    });
-  }
-
-  public static ChooseActionMenu create(@NonNull final UUID target) {
-    return new ChooseActionMenu(
-        DaggerProxyComponent.create().menuMain(),
-        Providers.playerProvider(),
-        Providers.textureProvider(),
-        Providers.storageProvider(),
-        target);
-  }
-
 
   public ChooseActionMenu(
       final MainMenu mainMenu,
@@ -85,6 +76,24 @@ public final class ChooseActionMenu extends AbstractMenu implements Listener {
             this);
 
     setTitle("§8" + ACTION_FOR + " " + targetName);
+  }
+
+  public static void showTo(
+      @NonNull final ProxiedPlayer player,
+      @NonNull final UUID target) {
+    Scheduler.runAsync(() -> {
+      final val menu = create(target);
+      menu.displayTo(player);
+    });
+  }
+
+  public static ChooseActionMenu create(@NonNull final UUID target) {
+    return new ChooseActionMenu(
+        DaggerProxyComponent.create().menuMain(),
+        Providers.playerProvider(),
+        Providers.textureProvider(),
+        Providers.storageProvider(),
+        target);
   }
 
   // ----------------------------------------------------------------------------------------------------
@@ -222,7 +231,6 @@ public final class ChooseActionMenu extends AbstractMenu implements Listener {
 
   @Override
   protected String[] getInfo() {
-    return new String[]{"&7Menu to select ", "&7" + ACTION_FOR + " players"};
+    return MENU_INFORMATION;
   }
-
 }

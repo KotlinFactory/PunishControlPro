@@ -7,11 +7,13 @@ import de.exceptionflug.protocolize.items.ItemType;
 import javax.inject.Inject;
 import lombok.NonNull;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
+import org.jetbrains.annotations.NonNls;
 import org.mineacademy.bfo.debug.Debugger;
 import org.mineacademy.burst.item.Item;
 import org.mineacademy.punishcontrol.core.PunishControlManager;
 import org.mineacademy.punishcontrol.core.conversation.StorageSettable;
 import org.mineacademy.punishcontrol.core.provider.Providers;
+import org.mineacademy.punishcontrol.core.setting.Replacer;
 import org.mineacademy.punishcontrol.core.settings.ItemSettings;
 import org.mineacademy.punishcontrol.core.settings.Settings.MySQL;
 import org.mineacademy.punishcontrol.core.storage.MySQLStorageProvider;
@@ -25,17 +27,50 @@ public final class StorageSettingsMenu
     extends AbstractSettingsMenu
     implements StorageSettable {
 
+  @NonNls
+  private static final String CAN_T_CONNECT = "Can't connect - See console";
+  @NonNls
+  private static final String ALREADY_CONNECTED = "Already connected";
+  @NonNls
+  private static final String ALREADY_CONNECTING = "Already connecting";
+
   private static final MySQLStorageProvider mySQLStorageProvider =
       Providers.storageProvider() instanceof MySQLStorageProvider
           ? (MySQLStorageProvider) Providers.storageProvider()
           : new MySQLStorageProvider(Providers.exceptionHandler());
-  public static final int CONNECT_SLOT = 12;
-  public static final int USE_SLOT = 14;
-  public static final int HOST_SLOT = 2;
-  public static final int PORT_SLOT = 3;
-  public static final int DATABASE_SLOT = 4;
-  public static final int USER_SLOT = 5;
-  public static final int PASSWORD_SLOT = 6;
+  private static final String[] CONNECT_FAILED_LORE = {" ",
+      "&7Try to connect ",
+      "&7to MySQL using",
+      "&7these settings",
+      "&7Current state: &cNot connected"};
+  private static final String[] CONNECT_SUCCESS_LORE = {" ",
+      "&7Try to connect ",
+      "&7to MySQL using",
+      "&7these settings",
+      "&7Current state: &aSucceeded"};
+  private static final String CONNECT = "&7Connect";
+  private static final String STORAGE_TYPE = "&6Storage Type";
+
+  private static final String[] USE_MYSQL_LORE = {
+      "",
+      "&7Click to use",
+      "&7MySQL as storage"};
+  private static final String[] USE_JSON_LORE = {
+      "",
+      "&7Click to use",
+      "&7JSON as storage"};
+
+  // ----------------------------------------------------------------------------------------------------
+  // Buttons
+  // ----------------------------------------------------------------------------------------------------
+
+  private static final int CONNECT_SLOT = 12;
+  private static final int USE_SLOT = 14;
+  private static final int HOST_SLOT = 2;
+  private static final int PORT_SLOT = 3;
+  private static final int DATABASE_SLOT = 4;
+  private static final int USER_SLOT = 5;
+  private static final int PASSWORD_SLOT = 6;
 
   private boolean isConnecting;
 
@@ -74,12 +109,8 @@ public final class StorageSettingsMenu
           set(
               Item
                   .of(ItemType.GREEN_STAINED_GLASS_PANE)
-                  .name("&7Connect")
-                  .lore(" ",
-                      "&7Try to connect ",
-                      "&7to MySQL using",
-                      "&7these settings",
-                      "&7Current state: &aSucceeded")
+                  .name(CONNECT)
+                  .lore(CONNECT_SUCCESS_LORE)
                   .slot(CONNECT_SLOT)
                   .actionHandler("Connect")
           );
@@ -89,11 +120,7 @@ public final class StorageSettingsMenu
               Item
                   .of(ItemType.GREEN_STAINED_GLASS_PANE)
                   .name("&7Connect")
-                  .lore(" ",
-                      "&7Try to connect ",
-                      "&7to MySQL using",
-                      "&7these settings",
-                      "&7Current state: &cNot connected")
+                  .lore(CONNECT_FAILED_LORE)
                   .slot(CONNECT_SLOT)
                   .actionHandler("Connect")
           );
@@ -108,11 +135,9 @@ public final class StorageSettingsMenu
         set(
             Item
                 .of(ItemType.COMMAND_BLOCK)
-                .name("&6Storage Type")
+                .name(STORAGE_TYPE)
                 .lore(
-                    "",
-                    "&7Click to use",
-                    "&7MySQL as storage"
+                    USE_MYSQL_LORE
                 )
                 .slot(USE_SLOT)
                 .actionHandler("Use")
@@ -121,11 +146,9 @@ public final class StorageSettingsMenu
         set(
             Item
                 .of(ItemType.COMMAND_BLOCK)
-                .name("&6Storage Type")
+                .name(STORAGE_TYPE)
                 .lore(
-                    "",
-                    "&7Click to use",
-                    "&7JSON as storage"
+                    USE_JSON_LORE
                 )
                 .slot(USE_SLOT)
                 .actionHandler("Use")
@@ -135,15 +158,22 @@ public final class StorageSettingsMenu
 
     // Host | "Host"
     {
+      final Replacer HOST_REPLACER = Replacer
+          .of(" ",
+              "&7Click to",
+              "&7set the host",
+              "&7Currently: {currently}");
+
+      HOST_REPLACER
+          .find("currently")
+          .replace((MySQL.HOST.isEmpty() ? "&cNot set" : MySQL.HOST));
       set(
           Item
               .of(ItemType.YELLOW_STAINED_GLASS_PANE)
               .name("&7Host")
               .lore(
-                  " ",
-                  "&7Click to",
-                  "&7set the host",
-                  "&7Currently: " + (MySQL.HOST.isEmpty() ? "&cNot set" : MySQL.HOST))
+                  HOST_REPLACER.replacedMessage()
+              )
               .actionHandler("Host")
               .slot(HOST_SLOT)
       );
@@ -175,7 +205,8 @@ public final class StorageSettingsMenu
                   " ",
                   "&7Click to",
                   "&7set the database",
-                  "&7Currently: " + (MySQL.DATABASE.isEmpty() ? "&cNot set"
+                  "&7Currently: " + (MySQL.DATABASE.isEmpty()
+                      ? "&cNot set"
                       : MySQL.DATABASE))
               .actionHandler("Database")
               .slot(DATABASE_SLOT)
@@ -192,7 +223,9 @@ public final class StorageSettingsMenu
                   " ",
                   "&7Click to",
                   "&7set the user",
-                  "&7Currently: " + (MySQL.USER.isEmpty() ? "&cNot set" : MySQL.USER))
+                  "&7Currently: " + (MySQL.USER.isEmpty()
+                      ? "&cNot set"
+                      : MySQL.USER))
               .actionHandler("User")
               .slot(USER_SLOT)
       );
@@ -209,8 +242,8 @@ public final class StorageSettingsMenu
                   "&7Click to",
                   "&7set the password",
                   "&7Currently: " + (MySQL.PASSWORD.isEmpty()
-                      ? "&cnot set" :
-                      "****"))
+                      ? "&cnot set"
+                      : "****"))
               .actionHandler("Password")
               .slot(PASSWORD_SLOT)
       );
@@ -243,12 +276,12 @@ public final class StorageSettingsMenu
 
     registerActionHandler("Connect", (connect -> {
       if (isConnecting) {
-        animateTitle("&cAlready connecting");
+        animateTitle("&c" + ALREADY_CONNECTING);
         return CallResult.DENY_GRABBING;
       }
 
       if (mySQLStorageProvider.isConnected()) {
-        animateTitle("&cAlready connected");
+        animateTitle("&c" + ALREADY_CONNECTED);
         return CallResult.DENY_GRABBING;
       }
 
@@ -261,7 +294,7 @@ public final class StorageSettingsMenu
           Debugger.debug("MySQL", "Connected");
           build();
         } catch (final Throwable throwable) {
-          animateTitle("&cCan't connect - See console");
+          animateTitle("&c" + CAN_T_CONNECT);
           Debugger.saveError(throwable);
         } finally {
           isConnecting = false;

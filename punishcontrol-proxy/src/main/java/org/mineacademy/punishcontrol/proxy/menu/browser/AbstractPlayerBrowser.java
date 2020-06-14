@@ -14,15 +14,34 @@ import org.mineacademy.burst.item.Item;
 import org.mineacademy.burst.menu.AbstractSearchableBrowser;
 import org.mineacademy.burst.menu.BurstMenu;
 import org.mineacademy.punishcontrol.core.fo.constants.FoConstants;
+import org.mineacademy.punishcontrol.core.injector.annotations.Localizable;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.providers.TextureProvider;
+import org.mineacademy.punishcontrol.core.setting.Replacer;
 
 /**
- * Abstract class for our PlayerBrowser
- * Implementations mustn't have any particular constructor-logic or they must override
- * {@link #reDisplay()} and {@link #redisplay(Collection)}
+ * Abstract class for our PlayerBrowser Implementations mustn't have any particular
+ * constructor-logic or they must override {@link #reDisplay()} and {@link
+ * #redisplay(Collection)}
  */
+@Localizable
 public abstract class AbstractPlayerBrowser extends AbstractSearchableBrowser<UUID> {
+
+  // Localization
+
+  @Localizable("Menu.Proxy.PlayerBrowser.Information")
+  private static String[] PLAYER_BROWSER_INFORMATION = {
+      "&7Menu to select",
+      "&7an player"
+  };
+  @Localizable("Menu.Proxy.PlayerBrowser.Compass_Lore")
+  private static String[] COMPASS_LORE = {"&7Search for a player"};
+
+  @Localizable("Menu.Proxy.Results_Found")
+  private static Replacer results = Replacer
+      .of("Found {results} result(s)");
+
+  // Fields & Constructor's
 
   protected final PlayerProvider playerProvider;
   protected final TextureProvider textureProvider;
@@ -73,13 +92,21 @@ public abstract class AbstractPlayerBrowser extends AbstractSearchableBrowser<UU
   }
 
   // ----------------------------------------------------------------------------------------------------
-  // Overridden methods
+  // Methods to override
   // ----------------------------------------------------------------------------------------------------
 
   @Nullable
   protected List<String> lore(final UUID uuid) {
     return null;
   }
+
+  @Override
+  public void reDisplay() {
+  }
+
+  // ----------------------------------------------------------------------------------------------------
+  // Overridden methods
+  // ----------------------------------------------------------------------------------------------------
 
   @Override
   protected final ItemStack convertToItemStack(final UUID uuid) {
@@ -99,15 +126,7 @@ public abstract class AbstractPlayerBrowser extends AbstractSearchableBrowser<UU
 
   @Override
   protected final String[] getInfo() {
-    return new String[]{
-        "&7Menu to select",
-        "&7an player"
-    };
-  }
-
-
-  @Override
-  public void reDisplay() {
+    return PLAYER_BROWSER_INFORMATION;
   }
 
   public void redisplay(@NonNull Collection<UUID> newContent) {
@@ -131,11 +150,9 @@ public abstract class AbstractPlayerBrowser extends AbstractSearchableBrowser<UU
 
       menu.displayTo(AbstractPlayerBrowser.this.getPlayer());
 
-      if (newContent.size() == 1) {
-        menu.animateTitle("&8Found " + newContent.size() + " result");
-      } else {
-        menu.animateTitle("&8Found " + newContent.size() + " results");
-      }
+      results.replaceAll("results", newContent.size());
+
+      menu.animateTitle("&8" + results.replacedMessageJoined());
     });
   }
 
@@ -150,6 +167,6 @@ public abstract class AbstractPlayerBrowser extends AbstractSearchableBrowser<UU
 
   @Override
   protected String[] compassLore() {
-    return new String[]{"&7Search for a player"};
+    return COMPASS_LORE;
   }
 }
