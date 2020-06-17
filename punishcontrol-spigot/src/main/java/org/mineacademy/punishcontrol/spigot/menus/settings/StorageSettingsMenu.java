@@ -39,6 +39,34 @@ public final class StorageSettingsMenu
 
   @NonNls
   private static final String USER = "User";
+  @NonNls
+  private static final String CONNECT = "Connect";
+  private static final String[] CONNECTION_FAILED_LORE = {" ",
+      "&7Try to connect ",
+      "&7to MySQL using",
+      "&7these settings",
+      "&7Current state: &cfailed"};
+  private static final String[] CONNECTION_SUCCEEDED_LORE = {" ",
+      "&7Try to connect ",
+      "&7to MySQL using",
+      "&7these settings",
+      "&7Current state: &aSucceeded"};
+  private static final String[] USE_JSON_LORE = {"",
+      "&7Click to use",
+      "&7JSON as storage"};
+  private static final String[] USE_MYSQL_LORE = {"",
+      "&7Click to use",
+      "&7MySQL as storage"};
+  @NonNls
+  private static final String STORAGE_TYPE = "Storage Type";
+  @NonNls
+  private static final String ALREADY_CONNECTING = "Already connecting";
+  @NonNls
+  private static final String ALREADY_CONNECTED = "Already connected";
+  @NonNls
+  private static final String STORAGE_SETTINGS = "Storage settings";
+  @NonNls
+  private static final String PASSWORD = "Password";
 
   private static Replacer replacer = Replacer.of(
       " ",
@@ -62,7 +90,7 @@ public final class StorageSettingsMenu
   public StorageSettingsMenu(@NonNull final SettingsBrowser settingsBrowser) {
     super(settingsBrowser);
 
-    setTitle("&8Storage settings");
+    setTitle("&8" + STORAGE_SETTINGS);
     setSize(9 * 2);
     useButton = new Button() {
       @Override
@@ -79,12 +107,10 @@ public final class StorageSettingsMenu
           return
               ItemCreator
                   .of(CompMaterial.COMMAND_BLOCK)
-                  .name("&6Storage Type")
+                  .name("&6" + STORAGE_TYPE)
                   .lores(
                       Arrays.asList(
-                          "",
-                          "&7Click to use",
-                          "&7MySQL as storage"
+                          USE_MYSQL_LORE
                       )
                   )
                   .build()
@@ -92,12 +118,10 @@ public final class StorageSettingsMenu
         } else {
           return ItemCreator
               .of(CompMaterial.COMMAND_BLOCK)
-              .name("&6Storage Type")
+              .name("&6" + STORAGE_TYPE)
               .lores(
                   Arrays.asList(
-                      "",
-                      "&7Click to use",
-                      "&7JSON as storage"
+                      USE_JSON_LORE
                   )
               )
               .build()
@@ -115,12 +139,12 @@ public final class StorageSettingsMenu
 
         try {
           if (isConnecting) {
-            animateTitle("&cAlready connecting");
+            animateTitle("&c" + ALREADY_CONNECTING);
             return;
           }
 
           if (StorageTypes.mySQLStorageProvider.isConnected()) {
-            animateTitle("&cAlready connected");
+            animateTitle("&c" + ALREADY_CONNECTED);
             return;
           }
 
@@ -152,25 +176,17 @@ public final class StorageSettingsMenu
         if (StorageTypes.mySQLStorageProvider.isConnected()) {
           return ItemCreator
               .ofString(ItemSettings.ENABLED.itemType())
-              .name("&7Connect")
+              .name("&7" + CONNECT)
               .lores(Arrays.asList(
-                  " ",
-                  "&7Try to connect ",
-                  "&7to MySQL using",
-                  "&7these settings",
-                  "&7Current state: &aSucceeded"))
+                  CONNECTION_SUCCEEDED_LORE))
               .build()
               .makeMenuTool();
         }
         return ItemCreator
             .ofString(ItemSettings.DISABLED.itemType())
-            .name("&7Connect")
+            .name("&7" + CONNECT)
             .lores(Arrays.asList(
-                " ",
-                "&7Try to connect ",
-                "&7to MySQL using",
-                "&7these settings",
-                "&7Current state: &cfailed"))
+                CONNECTION_FAILED_LORE))
             .build()
             .makeMenuTool();
       }
@@ -282,21 +298,21 @@ public final class StorageSettingsMenu
           final Menu menu,
           final ClickType click) {
 
-        MySQLStorageConversation.create("Password").start(player);
+        MySQLStorageConversation.create(PASSWORD).start(player);
       }
 
       @Override
       public ItemStack getItem() {
         return ItemCreator
             .of(CompMaterial.YELLOW_STAINED_GLASS_PANE)
-            .name("&7Password")
+            .name("&7" + PASSWORD)
             .lores(Arrays.asList(
                 " ",
                 "&7Click to",
                 "&7set the password",
                 "&7Currently: " + (MySQL.PASSWORD.isEmpty()
-                    ? "&cnot set" :
-                    "****")
+                    ? "&cnot set"
+                    : "****")
             ))
             .build()
             .makeMenuTool();
