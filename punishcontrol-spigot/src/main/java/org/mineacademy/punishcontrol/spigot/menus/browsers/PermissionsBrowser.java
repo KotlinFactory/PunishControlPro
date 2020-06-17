@@ -8,6 +8,7 @@ import lombok.val;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NonNls;
 import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.punishcontrol.core.permission.Permission;
 import org.mineacademy.punishcontrol.core.permission.Permissions;
@@ -20,6 +21,17 @@ import org.mineacademy.punishcontrol.spigot.menus.settings.PlayerSettingsMenu;
 
 public final class PermissionsBrowser extends AbstractBrowser<Permission> {
 
+  private static final String[] MENU_INFORMATION = {
+      "&7Menu to view",
+      "&7the permissions",
+      "&7a player has",
+      "&7changes can't be",
+      "&7made on spigot site" // Don't mess around with spigot
+  };
+  @NonNls
+  private static final String PERMISSION = "Permission";
+  private static final String[] HAS_ACCESS_LORE = {" ", "&aHas access"};
+  private static final String[] HAS_NO_ACCESS_LORE = {" ", "&cHas no access"};
   private final PlayerProvider playerProvider;
   private final UUID target;
 
@@ -42,18 +54,12 @@ public final class PermissionsBrowser extends AbstractBrowser<Permission> {
     super(parent, Permissions.registeredPermissions());
     this.target = target;
     playerProvider = Providers.playerProvider();
-    setTitle("&8Permissions");
+    setTitle("&8" + PERMISSION + "s");
   }
 
   @Override
   protected String[] getInfo() {
-    return new String[]{
-        "&7Menu to view",
-        "&7the permissions",
-        "&7a player has",
-        "&7changes can't be",
-        "&7made on spigot site" // Don't mess around with spigot
-    };
+    return MENU_INFORMATION;
   }
 
   @Override
@@ -61,11 +67,11 @@ public final class PermissionsBrowser extends AbstractBrowser<Permission> {
     if (playerProvider.hasPermission(target, permission.permission())) {
       final List<String> lore = new ArrayList<>(
           descriptionForPermission(permission));
-      lore.addAll(Arrays.asList(" ", "&aHas access"));
+      lore.addAll(Arrays.asList(HAS_ACCESS_LORE));
 
       return ItemCreator
           .ofString(ItemSettings.ENABLED.itemType())
-          .name("&6Permission: " + permission.permission())
+          .name("&6" + PERMISSION + ": " + permission.permission())
           .lores(lore)
           .build()
           .makeMenuTool();
@@ -73,11 +79,11 @@ public final class PermissionsBrowser extends AbstractBrowser<Permission> {
 
     final List<String> lore = new ArrayList<>(
         descriptionForPermission(permission));
-    lore.addAll(Arrays.asList(" ", "&cHas no access"));
+    lore.addAll(Arrays.asList(HAS_NO_ACCESS_LORE));
 
     return ItemCreator
         .ofString(ItemSettings.DISABLED.itemType())
-        .name("&6Permission: " + permission.permission())
+        .name("&6" + PERMISSION + ": " + permission.permission())
         .lores(lore)
         .build()
         .makeMenuTool();
@@ -87,7 +93,7 @@ public final class PermissionsBrowser extends AbstractBrowser<Permission> {
   private List<String> descriptionForPermission(final Permission item) {
     return Arrays.asList(
         "",
-        "&7Permission to: ",
+        "&7" + PERMISSION + " to: ",
         "&7" + String.join(" ", item.description()));
   }
 

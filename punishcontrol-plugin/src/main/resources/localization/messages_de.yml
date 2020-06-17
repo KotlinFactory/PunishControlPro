@@ -5,37 +5,196 @@
 
 Commands:
   Player:
-    Never_Played: "&cEin Spieler namens {player} war noch nie auf diesem server."
-    Not_Online: "&cDer Spieler {player} &ist nicht online."
-    Not_Exists: "&cDer Spieler {player} &cexistiert nicht"
+    Never_Played: '&cEin Spieler namens {player} war noch nie auf diesem server.'
+    Not_Online: '&cDer Spieler {player} &ist nicht online.'
+    Not_Exists: '&cDer Spieler {player} &cexistiert nicht'
 
 Punish:
-  # Placeholders: {console_line}, {player}, {type}, {reason}, {duration}, {expiration}, {ip}
-  #
-  Message_To_Broadcast:
-    - "&7{chat_line}"
-    - "&7Der Spieler {player} wurde gepunished."
-    - "&7Typ: &6{type}"
-    - "&7Grund: {reason}"
-    - "&7Ip: {ip}"
-    - "&7{chat_line}"
-
   Ban_Message:
     - ""
-    - "&eDu wurdest gebannt"
-    - "&eGrund: {reason}"
-    - "&eEnde: {expiration}"
+    - '&eDu wurdest gebannt'
+    - '&eGrund: {reason}'
+    - '&eEnde: {expiration}'
+    - ""
+  Warn_Message:
+    - '&eDu wurdest gewarnt: {reason}'
+    - '&eEnde: {expiration}'
     - ""
 
   Mute_Message:
-    - "&eDu wurdest gemuted"
-    - "&eGrund: {reason}"
-    - "&eEnde: {expiration}"
+    - '&eDu wurdest gemuted'
+    - '&eGrund: {reason}'
+    - '&eEnde: {expiration}'
     - ""
 
-  #
-  Warn_Message:
-    - "&eYou have been warned: {reason}"
-    - "&eExpiration: {expiration}"
-    - ""
-Version: 1
+  Message_To_Broadcast:
+    - '&7{chat_line}'
+    - '&7Der Spieler {player} wurde bestraft.'
+    - '&7Typ: &6{type}'
+    - '&7Grund: {reason}'
+    - '&7Ip: {ip}'
+    - '&7{chat_line}'
+
+Parts:
+  Currently: Aktuell
+  Has_No_Access: Kein Zugang
+  Yes: Ja
+  Apply: Anwenden
+  Materials: Materialien
+  Break: Breakup
+  Confirm: Bestätigen
+  Reason: Grund
+  Has_Access: Zugang
+  Groups: Groups
+  Change_Type: Typ ändern
+  Permission: Permission
+  Permissions: Permissions
+  Settings: Einstellungen
+  Punishments: Bestrafungen
+  Players: Spieler
+  No: Nein
+  StorageType: Speicher-Art
+  Connect: Verbinden
+  Silent: silent
+  Duration: '&6Dauer'
+  Permission_To: Berechtigung für
+  SuperSilent: super silent
+  Not: nicht
+  Action_For: Aktion für
+  Select: Auswählen
+  CreateNew: Erstellen
+Menu:
+  Proxy:
+    ChooseAction:
+      Lore:
+        - '&7Menu um eine'
+        - '&7Aktion für einen Spieler'
+        - '&7zu wählen'
+  TemplateCreator:
+    Choose_Duration:
+      Lore:
+        - '&7Stelle die'
+        - '&7Dauer der Bestrafung ein'
+  Already:
+    SuperSilent: '&cBestrafung ist bereits super silent'
+    Name: Templates erstellen
+    ChoosePermission:
+      Name: Wähle die Permission
+    Results_Found: 'Resultate: {results}'
+    PlayerPermissionBrowser:
+      Lore:
+        - '&7Menu to view'
+        - '&7the permissions'
+        - '&7a player has'
+        - '&7changes will '
+        - '&7be temporary'
+    PlayerBrowser:
+      Information:
+        - '&7Menu zum Auswählen'
+        - '&7eines Spielers'
+      Compass_Lore:
+        - '&7Suche nach einem Spieler'
+    Create_New_Lore:
+      - ' '
+      - '&7Neue Bestrafung erstellen'
+    StorageSettingsMenu:
+      AlreadyConnecting: Verbindungsaufbau läuft bereits
+      AlreadyConnected: Verbindung ist bereits aufgebaut
+      ConnectionFailed:
+        - ' '
+        - '&7Versuchen zu MySQL Datenbank'
+        - '&7mit gegebenen Einstellungen zu verbinden'
+        - '&7Current state: &cNicht Verbunden'
+      Can_t_Connect: Verbindungsaufbau fehlgeschlagen.
+    Punish:
+      Title: Durchsuche Bestrafungen
+      Lore:
+        - ""
+        - '&6Ziel: &7{target}'
+        - '&6Grund: &7{reason}'
+        - '&6Erstellung: &7{creation}'
+        - '&6Dauer: &7{duration}'
+        - '&6Ende: &7{end}'
+        - '&6Ersteller: &7{creator}'
+        - '&7Rechts klicken zum entfernen'
+      Remove: Rechts klicken zum entfernen
+      Already_Removed: Diese Bestrafung wurde bereits entfernt
+    Main:
+      Player_Lore:
+        - '&7Wähle einen Spielern'
+        - '&7für weitere Aktionsmöglichkeiten'
+      View_Settings_Lore: Einstellungen für den Spieler ansehen
+    Material-Browser:
+      Information:
+        - ""
+        - '&7Menü um ein Material auszuwählen,'
+        - '&7welches dir am Besten gefällt'
+    Template:
+      Make:
+        SuperSilent:
+          Lore:
+            - ""
+            - '&Die Bestrafung ''super silent'' machen'
+          Name: Super silent machen
+        Silent:
+          Lore:
+            - ""
+            - '&Die Bestrafung ''silent'' machen'
+        Not:
+          SuperSilent:
+            Lore:
+              - ""
+              - '&7Die Bestrafung nicht'
+              - '&7super silent machen'
+          Silent:
+            Lore:
+              - ' '
+              - '&7Die Bestrafung nicht'
+              - '&silent machen'
+        Silen:
+          Namet: Silent machen
+    GroupBrowser:
+      Information:
+        - '&7Menü um Gruppen'
+        - '&7zu durchsuchen, denen ein'
+        - '&7Spieler angehört'
+      Lore:
+        - '&6Priorität: &7{priority}'
+        - '&6Bann-Limit: &7{ban-limit}'
+        - '&6Mute-Limit: &7{mute-limit}'
+        - '&6Warn-Limit: &7{warn-limit}'
+        - '&6Bestrafungen überrschreiben: &7{override}'
+        - '&6Template only: &7{template_only}'
+  Templates:
+    Information:
+      - '&7Menü zum Betrachten von'
+      - '&7Bestrafungs-Templates'
+  Choose_Duration: Zeit wählen
+  Main:
+    Punish_Lore:
+      - Durchsuche bereits erstellte Bestrafungen
+      - Rechts klick, um
+      - bestrafte Spieler zu durchsuchen
+  Settings:
+    Information:
+      - '&7Menü um eine Einstellung'
+      - '&7zu wählen'
+    Choose:
+      Name: Einstellung wählen
+  Template:
+    Add:
+      Lore:
+        - '&7Füge ein weiteres Template hinzu'
+      Name: Template hinzufügen
+    Lore:
+      - '&6Art: &7{type}'
+      - '&6Dauer: &7{duration}'
+      - '&6Grund: &7{reason}'
+      - '&6Permission: &7{permission}'
+      - '&6Silent: {silent}'
+      - '&6Super-Silent: {super-silent}'
+      - '&6Zugangs-Rechte: &7{access}'
+      - Zum entfernen rechts klicken
+
+  Version: '1'
+
