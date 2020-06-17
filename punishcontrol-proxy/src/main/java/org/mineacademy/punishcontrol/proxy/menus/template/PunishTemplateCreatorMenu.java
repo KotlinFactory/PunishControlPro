@@ -17,6 +17,7 @@ import org.mineacademy.bfo.plugin.SimplePlugin;
 import org.mineacademy.burst.item.Item;
 import org.mineacademy.burst.menu.AbstractMenu;
 import org.mineacademy.burst.util.Scheduler;
+import org.mineacademy.punishcontrol.core.injector.annotations.Localizable;
 import org.mineacademy.punishcontrol.core.punish.PunishDuration;
 import org.mineacademy.punishcontrol.core.punish.PunishType;
 import org.mineacademy.punishcontrol.core.punish.template.PunishTemplate;
@@ -31,8 +32,86 @@ import org.mineacademy.punishcontrol.proxy.menu.AbstractDurationChooser;
 import org.mineacademy.punishcontrol.proxy.menu.browser.AbstractPunishTypeBrowser;
 import org.mineacademy.punishcontrol.proxy.menus.browsers.PunishTemplateBrowser;
 
+@Localizable
 @Accessors(fluent = true)
 public final class PunishTemplateCreatorMenu extends AbstractMenu {
+
+
+  // ----------------------------------------------------------------------------------------------------
+  // Localization
+  // ----------------------------------------------------------------------------------------------------
+  @NonNls
+  @Localizable("Menu.Proxy.TemplateCreator.Name")
+  private static String TEMPLATE_CREATOR = "Template Creator";
+  @Localizable("Menu.Proxy.TemplateCreator.Choose_Duration.Lore")
+  private static String[] CHOOSE_DURATION_LORE = {
+      "&7Choose the",
+      "&7duration of the",
+      "&7punish"};
+
+  @Localizable("Parts.Duration")
+  private static String DURATION = "&6Duration";
+  @NonNls
+  @Localizable("Parts.Change_Type")
+  private static String CHANGE_TYPE = "Change type";
+  @Localizable("Parts.Reason")
+  private static String REASON = "Reason";
+  @NonNls
+  @Localizable("Parts.Currently")
+  private static String CURRENTLY = "Currently";
+  @NonNls
+  @Localizable("Menu.Proxy.TemplateCreator.ChoosePermission.Name")
+  private static String CHOOSE_PERMISSION = "Choose permission";
+  private static String[] MENU_INFORMATION = {
+      "&7Menu to",
+      "&7edit templates"};
+  @Localizable("Menu.Proxy.TemplateCreator.Already.SuperSilent")
+  private static String ALREADY_SUPER_SILENT = "&cPunishment is already super-silent";
+  @Localizable("Parts.Apply")
+  private static String APPLY = "Apply";
+  @NonNls
+  @Localizable("Parts.Silent")
+  private static String SILENT = "Silent";
+  @NonNls
+  @Localizable("Parts.SuperSilent")
+  private static String SUPER_SILENT = "Super-Silent";
+  @NonNls
+  @Localizable("Menu.Proxy.Template.Make.SuperSilent.Name")
+  private static String MAKE_SUPER_SILENT = "Make super silent";
+  @NonNls
+  @Localizable("Menu.Proxy.Template.Make.Silen.Namet")
+  private static String MAKE_SILENT = "Make silent";
+  @NonNls
+  @Localizable("Parts.Not")
+  private static String NOT = "not";
+  @Localizable("Menu.Proxy.Template.Make.Not.Silent.Lore")
+  private static String[] MAKE_NOT_SILENT_LORE = {
+      " ",
+      "&7Click to make",
+      "&7the punish",
+      "&7not silent"};
+  @Localizable("Menu.Proxy.Template.Make.Silent.Lore")
+  private static String[] MAKE_SILENT_LORE = {
+      "",
+      "&7Click to make",
+      "&7the punish",
+      "&7silent"};
+  @Localizable("Menu.Proxy.Template.Make.Not.SuperSilent.Lore")
+  private static String[] MAKE_NOT_SUPER_SILENT_LORE = {
+      "",
+      "&7Click to make",
+      "&7the punish",
+      "&7Not super silent"};
+  @Localizable("Menu.Proxy.Template.Make.SuperSilent.Lore")
+  private static String[] MAKE_SUPER_SILENT_LORE = {
+      "",
+      "&7Click to make",
+      "&7the punish",
+      "&7super silent"};
+
+  // ----------------------------------------------------------------------------------------------------
+  // Button positions
+  // ----------------------------------------------------------------------------------------------------
 
   private static final int SIZE = 9 * 6;
   private static final int CHOOSE_REASON_SLOT = 19;
@@ -42,51 +121,10 @@ public final class PunishTemplateCreatorMenu extends AbstractMenu {
   public static final int CHOOSE_TYPE_SLOT = 4;
   public static final int CHOOSE_DURATION_SLOT = 40;
   public static final int APPLY_SLOT = 22;
-  @NonNls
-  private static final String TEMPLATE_CREATOR = "Template Creator";
-  private static final String[] CHOOSE_DURATION_LORE = {"&7Choose the",
-      "&7duration of the",
-      "&7punish"};
-  private static final String DURATION = "&6Duration";
-  @NonNls
-  private static final String CHANGE_TYPE = "Change type";
-  private static final String REASON = "&6Reason";
-  @NonNls
-  private static final String CURRENTLY = "Currently";
-  @NonNls
-  private static final String CHOOSE_PERMISSION = "Choose permission";
-  private static final String[] MENU_INFORMATION = {"&7Menu to", "&7edit templates"};
-  private static final String ALREADY_SUPER_SILENT = "&cPunishment is already super-silent";
-  private static final String APPLY = "&aApply";
-  @NonNls
-  private static final String SILENT = "Silent";
-  @NonNls
-  private static final String SUPER_SILENT = "Super-" + SILENT;
-  @NonNls
-  private static final String MAKE_SUPER_SILENT = "Make " + SUPER_SILENT;
-  @NonNls
-  private static final String MAKE_SILENT = "Make " + SILENT;
-  @NonNls
-  private static final String NOT = "not";
-  private static final String[] MAKE_NOT_SILENT_LORE = {"",
-      "&7Click to make",
-      "&7the punish",
-      "&7" + NOT + " silent"};
-  private static final String[] MAKE_SILENT_LORE = {"",
-      "&7Click to make",
-      "&7the punish",
-      "&7silent"};
-  private static final String[] MAKE_NOT_SUPER_SILENT_LORE = {"",
-      "&7Click to make",
-      "&7the punish",
-      "&7" + NOT + " super silent"};
-  private static final String[] MAKE_SUPER_SILENT_LORE = {"",
-      "&7Click to make",
-      "&7the punish",
-      "&7super silent"};
 
-  @Getter
-  private final PunishTemplate punishTemplate;
+  // ----------------------------------------------------------------------------------------------------
+  // Showing up
+  // ----------------------------------------------------------------------------------------------------
 
   public static void showTo(
       final ProxiedPlayer player,
@@ -128,6 +166,13 @@ public final class PunishTemplateCreatorMenu extends AbstractMenu {
     PunishTemplates.register(template);
     return fromExisting(template);
   }
+
+  // ----------------------------------------------------------------------------------------------------
+  // Fields an constructors
+  // ----------------------------------------------------------------------------------------------------
+
+  @Getter
+  private final PunishTemplate punishTemplate;
 
   private PunishTemplateCreatorMenu(
       @NonNull final PunishTemplate punishTemplate) {
@@ -301,7 +346,7 @@ public final class PunishTemplateCreatorMenu extends AbstractMenu {
           Item
               .of(
                   ItemSettings.APPLY_ITEM.itemType(),
-                  APPLY,
+                  "&a" + APPLY,
                   "&7" + APPLY + "template")
               .slot(APPLY_SLOT)
               .actionHandler("Apply")

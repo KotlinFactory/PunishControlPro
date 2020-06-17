@@ -39,7 +39,6 @@ public class ChangingMenu extends Menu implements Schedulable {
     this.buttons = buttons;
   }
 
-
   private void start() {
     new BukkitRunnable() {
       @Override
@@ -57,6 +56,7 @@ public class ChangingMenu extends Menu implements Schedulable {
         for (final ChangingButton button : buttons) {
           getViewer().getOpenInventory().setItem(button.slot(), button.nextItem());
         }
+
         getViewer().updateInventory();
       }
     }.runTaskTimerAsynchronously(SimplePlugin.getInstance(), updateDelay(),

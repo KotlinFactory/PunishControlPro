@@ -152,7 +152,7 @@ public abstract class SimpleLocalization extends YamlStaticConfig {
   /**
    * Locale keys related to your plugin commands
    */
-  public static class Commands {
+  public static final class Commands {
 
     /**
      * The message at "No_Console" key shown when console is denied executing a

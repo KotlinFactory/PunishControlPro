@@ -37,9 +37,15 @@ public final class ChooseActionMenu extends AbstractMenu implements Listener {
   // Localization
   // ----------------------------------------------------------------------------------------------------
 
-  private static final String[] MENU_INFORMATION = {"&7Menu to select ",
+  @Localizable("Menu.Proxy.ChooseAction.Lore")
+  private static String[] MENU_INFORMATION = {
+      "&7Menu to select ",
       "&7Action for players"};
-  private static final int PUNISH_SLOT = 1;
+
+
+  @NonNls
+  @Localizable("Parts.Action_For")
+  private static String ACTION_FOR = "Action for";
 
   // ----------------------------------------------------------------------------------------------------
   // Button positions
@@ -48,11 +54,10 @@ public final class ChooseActionMenu extends AbstractMenu implements Listener {
   private static final int PLAYER_HEAD_SLOT = 13;
   private static final int SETTINGS_SLOT = 15;
   private static final int KICK_SLOT = 7;
-  @NonNls
-  @Localizable("Parts.Action_For")
-  private static String ACTION_FOR = "Action for";
+  private static final int PUNISH_SLOT = 1;
 
   // Fields
+
   private final PlayerProvider playerProvider;
   private final TextureProvider textureProvider;
   private final StorageProvider storageProvider;

@@ -12,56 +12,67 @@ import org.mineacademy.bfo.debug.Debugger;
 import org.mineacademy.burst.item.Item;
 import org.mineacademy.punishcontrol.core.PunishControlManager;
 import org.mineacademy.punishcontrol.core.conversation.StorageSettable;
+import org.mineacademy.punishcontrol.core.injector.annotations.Localizable;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.setting.Replacer;
 import org.mineacademy.punishcontrol.core.settings.ItemSettings;
 import org.mineacademy.punishcontrol.core.settings.Settings.MySQL;
-import org.mineacademy.punishcontrol.core.storage.MySQLStorageProvider;
 import org.mineacademy.punishcontrol.core.storage.StorageType;
+import org.mineacademy.punishcontrol.core.storage.StorageTypes;
 import org.mineacademy.punishcontrol.proxy.DaggerProxyComponent;
 import org.mineacademy.punishcontrol.proxy.conversations.MySQLStorageConversation;
 import org.mineacademy.punishcontrol.proxy.menus.browsers.SettingsBrowser;
 import org.mineacademy.punishcontrol.proxy.menus.setting.AbstractSettingsMenu;
 
+@Localizable
 public final class StorageSettingsMenu
     extends AbstractSettingsMenu
     implements StorageSettable {
 
-  @NonNls
-  private static final String CAN_T_CONNECT = "Can't connect - See console";
-  @NonNls
-  private static final String ALREADY_CONNECTED = "Already connected";
-  @NonNls
-  private static final String ALREADY_CONNECTING = "Already connecting";
+  // ----------------------------------------------------------------------------------------------------
+  // Localization
+  // ----------------------------------------------------------------------------------------------------
 
-  private static final MySQLStorageProvider mySQLStorageProvider =
-      Providers.storageProvider() instanceof MySQLStorageProvider
-          ? (MySQLStorageProvider) Providers.storageProvider()
-          : new MySQLStorageProvider(Providers.exceptionHandler());
-  private static final String[] CONNECT_FAILED_LORE = {" ",
+  @NonNls
+  @Localizable("Menu.Proxy.StorageSettingsMenu.Can_t_Connect")
+  private static String CAN_T_CONNECT = "Can't connect - See console";
+  @Localizable("Menu.Proxy.StorageSettingsMenu.AlreadyConnected")
+  @NonNls
+  private static String ALREADY_CONNECTED = "Already connected";
+  @NonNls
+  @Localizable("Menu.Proxy.StorageSettingsMenu.AlreadyConnecting")
+  private static String ALREADY_CONNECTING = "Already connecting";
+  @Localizable("Menu.Proxy.StorageSettingsMenu.ConnectionFailed")
+  private static String[] CONNECT_FAILED_LORE = {
+      " ",
       "&7Try to connect ",
       "&7to MySQL using",
       "&7these settings",
       "&7Current state: &cNot connected"};
-  private static final String[] CONNECT_SUCCESS_LORE = {" ",
+  @Localizable("Menu.Proxy.StorageSettingsMenu.ConnectionFailed")
+  private static String[] CONNECT_SUCCESS_LORE = {
+      " ",
       "&7Try to connect ",
       "&7to MySQL using",
       "&7these settings",
       "&7Current state: &aSucceeded"};
-  private static final String CONNECT = "&7Connect";
-  private static final String STORAGE_TYPE = "&6Storage Type";
+  @Localizable("Parts.Connect")
+  private static String CONNECT = "Connect";
+  @Localizable("Parts.StorageType")
+  private static String STORAGE_TYPE = "Storage Type";
 
-  private static final String[] USE_MYSQL_LORE = {
+  private static String[] USE_MYSQL_LORE = {
       "",
       "&7Click to use",
       "&7MySQL as storage"};
-  private static final String[] USE_JSON_LORE = {
+
+  private static String[] USE_JSON_LORE = {
       "",
       "&7Click to use",
       "&7JSON as storage"};
 
   // ----------------------------------------------------------------------------------------------------
-  // Buttons
+  // Button positions
   // ----------------------------------------------------------------------------------------------------
 
   private static final int CONNECT_SLOT = 12;
@@ -72,6 +83,18 @@ public final class StorageSettingsMenu
   private static final int USER_SLOT = 5;
   private static final int PASSWORD_SLOT = 6;
 
+  // ----------------------------------------------------------------------------------------------------
+  // Showing up
+  // ----------------------------------------------------------------------------------------------------
+
+  public static void showTo(@NonNull final ProxiedPlayer player) {
+    DaggerProxyComponent.create().storageSettingsMenu().displayTo(player);
+  }
+
+  // ----------------------------------------------------------------------------------------------------
+  // Fields & Constructors
+  // ----------------------------------------------------------------------------------------------------
+
   private boolean isConnecting;
 
   @Inject
@@ -80,9 +103,6 @@ public final class StorageSettingsMenu
     setTitle("&8MySQL");
   }
 
-  public static void showTo(@NonNull final ProxiedPlayer player) {
-    DaggerProxyComponent.create().storageSettingsMenu().displayTo(player);
-  }
 
   @Override
   public void reDisplay() {
@@ -97,6 +117,7 @@ public final class StorageSettingsMenu
     {
       try {
 
+
         if (isConnecting) {
           set(
               Item
@@ -105,11 +126,11 @@ public final class StorageSettingsMenu
                   .slot(CONNECT_SLOT)
                   .actionHandler("noAction")
           );
-        } else if (mySQLStorageProvider.isConnected()) {
+        } else if (StorageTypes.mySQLStorageProvider.isConnected()) {
           set(
               Item
                   .of(ItemType.GREEN_STAINED_GLASS_PANE)
-                  .name(CONNECT)
+                  .name("&6" + CONNECT)
                   .lore(CONNECT_SUCCESS_LORE)
                   .slot(CONNECT_SLOT)
                   .actionHandler("Connect")
@@ -250,20 +271,24 @@ public final class StorageSettingsMenu
     }
   }
 
+  // ----------------------------------------------------------------------------------------------------
+  // Overridden methods
+  // ----------------------------------------------------------------------------------------------------
+
   @Override
   public void registerActionHandlers() {
     super.registerActionHandlers();
 
     registerActionHandler("Use", (use -> {
       if (PunishControlManager.storageType() == StorageType.JSON) {
-        if (!mySQLStorageProvider.isConnected()) {
+        if (!StorageTypes.mySQLStorageProvider.isConnected()) {
           animateTitle("&cNot connected!");
           return CallResult.DENY_GRABBING;
         }
         //Switching to json
         setToConfig("Storage", "MYSQL");
         PunishControlManager.setStorageType(StorageType.MYSQL);
-        Providers.storageProvider(mySQLStorageProvider);
+        Providers.storageProvider(StorageTypes.mySQLStorageProvider);
       } else {
         //Switching to json
         setToConfig("Storage", "JSON");
@@ -280,7 +305,7 @@ public final class StorageSettingsMenu
         return CallResult.DENY_GRABBING;
       }
 
-      if (mySQLStorageProvider.isConnected()) {
+      if (StorageTypes.mySQLStorageProvider.isConnected()) {
         animateTitle("&c" + ALREADY_CONNECTED);
         return CallResult.DENY_GRABBING;
       }
@@ -289,7 +314,7 @@ public final class StorageSettingsMenu
       build();
       async(() -> {
         try {
-          mySQLStorageProvider.connect();
+          StorageTypes.mySQLStorageProvider.connect();
           isConnecting = false;
           Debugger.debug("MySQL", "Connected");
           build();

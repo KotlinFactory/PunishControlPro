@@ -1,6 +1,7 @@
 package org.mineacademy.punishcontrol.core.injector;
 
 import de.leonhard.storage.internal.DataStorage;
+import de.leonhard.storage.internal.FlatFile;
 import de.leonhard.storage.internal.serialize.LightningSerializable;
 import de.leonhard.storage.internal.serialize.LightningSerializer;
 import java.lang.annotation.Annotation;
@@ -8,6 +9,7 @@ import lombok.NonNull;
 
 public abstract class AbstractSettingsInjector<C extends Annotation,
     F extends Annotation> extends AbstractInjector<C, F> {
+
   private final DataStorage dataStorage;
 
   protected AbstractSettingsInjector(
@@ -24,6 +26,11 @@ public abstract class AbstractSettingsInjector<C extends Annotation,
 
   @Override
   public final <T> T getValueByPath(@NonNull final String path, @NonNull final T def) {
+
+    if (dataStorage instanceof FlatFile) {
+      ((FlatFile) dataStorage).setPathPrefix(null);
+    }
+
     final LightningSerializable serializable =
         LightningSerializer.findSerializable(def.getClass());
 

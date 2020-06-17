@@ -89,9 +89,9 @@ public abstract class AbstractTemplateBrowser
       new AbstractConfirmMenu(this) {
         @Override
         public void onConfirm() {
-          //Unregistering
+          // Unregistering
           PunishTemplates.unregister(punishTemplate);
-          //Deleting file so it won't be re-registered after a server-restart
+          // Deleting file so it won't be re-registered after a server-restart
           punishTemplate.getFile().delete();
         }
       }.displayTo(getPlayer());

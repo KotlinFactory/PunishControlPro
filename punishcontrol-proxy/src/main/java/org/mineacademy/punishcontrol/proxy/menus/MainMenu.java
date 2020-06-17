@@ -37,9 +37,12 @@ public final class MainMenu extends ChangingMenu {
   private static String PUNISHMENTS = "Punishments";
   @Localizable("Parts.CreateNew")
   private static String CREATE_NEW_NAME = "Create New";
+  @Localizable("Menu.Proxy.Create_New_Lore")
   private static String[] CREATE_NEW_LORE = {
       " ",
       "&7Create new punishment"};
+
+  @Localizable("Parts.Settings")
   private static String SETTINGS = "Settings";
 
   @Localizable(value = "Menu.Proxy.Main.View_Settings_Lore")

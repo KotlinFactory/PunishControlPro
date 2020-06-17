@@ -10,6 +10,7 @@ import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
+import org.mineacademy.punishcontrol.core.setting.Replacer;
 
 @Getter
 @Accessors(fluent = true)
@@ -27,44 +28,66 @@ public abstract class AbstractInjector<C extends Annotation, F extends Annotatio
       if (!clazz.isAnnotationPresent(classAnnotationClass)) {
         continue;
       }
+//      if (!clazz.getSimpleName().equalsIgnoreCase("AbstractPunishBrowser"))
+//        continue;
 
 //      System.out.println("Trying to inject: " + clazz.getName());
 
-      for (Field field : clazz.getDeclaredFields()) {
+      {
 
-        // We only inject static fields
-        if (!Modifier.isStatic(field.getModifiers())) {
+        for (Field field : clazz.getDeclaredFields()) {
+
+          // We only inject static fields
+          if (!Modifier.isStatic(field.getModifiers())) {
 //          System.out.println("Field is not static: " + field.getName());
-          continue;
-        }
+            continue;
+          }
 
-        if (!field.isAnnotationPresent(fieldAnnotationClass)) {
+          if (!field.isAnnotationPresent(fieldAnnotationClass)) {
 //          System.out.println("field annotation is not present at");
-          continue;
-        }
+            continue;
+          }
 
-        Valid.checkBoolean(
-            !Modifier.isFinal(field.getModifiers()),
-            "Can't inject final field '" + field.getName() + "'",
-            "Class: " + clazz.getName());
+          Valid.checkBoolean(
+              !Modifier.isFinal(field.getModifiers()),
+              "Can't inject final field '" + field.getName() + "'",
+              "Field is final!",
+              "Class: " + clazz.getName());
 
-        final F fieldAnnotation = field.getAnnotation(fieldAnnotationClass);
-        final String path = pathFromAnnotation(fieldAnnotation);
-        Valid.checkBoolean(
-            !path.isEmpty(),
-            "Path mustn't be empty",
-            "Class: " + clazz.getName(),
-            "Field: " + field.getName());
-        try {
+          final F fieldAnnotation = field.getAnnotation(fieldAnnotationClass);
+          final String path = pathFromAnnotation(fieldAnnotation);
+          Valid.checkBoolean(
+              !path.isEmpty(),
+              "Path mustn't be empty",
+              "Class: " + clazz.getName(),
+              "Field: " + field.getName());
+          try {
 //          System.out.println("Trying to inject: " + field.getName() + " in " + clazz.getName());
-          field.setAccessible(true);
-          final Object raw = field.get(null);
-          field.set(null, getValueByPath(path, raw));
-          System.out.println("Injected: " + field.getName() + " in " + clazz.getName());
-        } catch (final Throwable throwable) {
-          throwable.printStackTrace();
+            field.setAccessible(true);
+            final Object raw = field.get(null);
+//            System.out.println("Pre: ");
+//            debugRep(raw);
+            field.set(null, getValueByPath(path, raw));
+//            System.out.println("After: ");
+//            debugRep(getValueByPath(path, raw));
+//            System.out.println("Injected: " + field.getName() + " in " + clazz.getName());
+          } catch (final Throwable throwable) {
+            System.err.println("Exception while injecting!");
+            System.err.println("Path:  '" + path + "'");
+            throwable.printStackTrace();
+          }
         }
       }
+    }
+  }
+
+  private static void debugRep(final Object replacer) {
+    if (!(replacer instanceof Replacer)) {
+      return;
+    }
+    final Replacer rep = (Replacer) replacer;
+    for (String s : rep.replacedMessage()) {
+      System.out.println(s);
     }
   }
 }

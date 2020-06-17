@@ -29,17 +29,17 @@ public abstract class AbstractPunishBrowser extends AbstractBrowser<Punish> {
   // ----------------------------------------------------------------------------------------------------
 
   @NonNls
-  @Localizable("Menu.Punish.Title")
+  @Localizable("Menu.Proxy.Punish.Title")
   private static String BROWSE_PUNISHES = "Browse Punishes";
 
   @NonNls
-  @Localizable("Menu.Punish.Remove")
+  @Localizable("Menu.Proxy.Punish.Remove")
   private static String RIGHT_CLICK_TO_REMOVE = "Right-Click to remove";
-  @Localizable("Menu.Punish.Already_Removed")
+  @Localizable("Menu.Proxy.Punish.Already_Removed")
   private static String PUNISH_IS_ALREADY_REMOVED = "Punish is already removed";
 
-  @Localizable("Menu.Punish.Lore")
-  private static Replacer lore = Replacer.of(
+  @Localizable("Menu.Proxy.Punish.Lore")
+  private static Replacer LORE_REPLACER = Replacer.of(
       "",
       "&6Target: &7{target}",
       "&6Reason: &7{reason}",
@@ -80,8 +80,8 @@ public abstract class AbstractPunishBrowser extends AbstractBrowser<Punish> {
             ? "&cRemoved"
             : Settings.Advanced.formatDate(punish.getEndTime());
 
-    lore.find("target", "reason", "creation", "duration", "end", "creator");
-    lore.replace(
+    LORE_REPLACER.find("target", "reason", "creation", "duration", "end", "creator");
+    LORE_REPLACER.replace(
         playerProvider.findName(punish.target()).orElse("unknown"),
         punish.reason(),
         Settings.Advanced.formatDate(punish.creation()),
@@ -90,7 +90,8 @@ public abstract class AbstractPunishBrowser extends AbstractBrowser<Punish> {
         playerProvider.findName(punish.creator()).orElse("unknown"));
 
     final List<String> lores = new ArrayList<>(
-        Arrays.asList(lore.replacedMessage()));
+        Arrays.asList(LORE_REPLACER.replacedMessage()));
+
 
     if (loresToAdd(punish) != null) {
       lores.addAll(loresToAdd(punish));
