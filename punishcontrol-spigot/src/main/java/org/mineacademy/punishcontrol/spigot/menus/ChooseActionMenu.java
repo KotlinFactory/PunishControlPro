@@ -6,6 +6,7 @@ import lombok.val;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NonNls;
 import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.fo.menu.button.Button;
 import org.mineacademy.fo.menu.model.ItemCreator;
@@ -33,6 +34,23 @@ public final class ChooseActionMenu extends Menu {
   private static final int PLAYER_HEAD_SLOT = 13;
   private static final int SETTINGS_SLOT = 15;
   private static final int KICK_SLOT = 7;
+  @NonNls
+  private static final String ACTION_FOR = "Action for";
+  @NonNls
+  private static final String PUNISHMENTS = "Punishments";
+  @NonNls
+  private static final String VIEW_PUNISHMENTS = "View punishments";
+  private static final String[] PLAYER_OFFLINE_LORE = {" ",
+      "&cDisabled:",
+      "&7Player is offline"};
+  private static final String[] SETTINGS_FOR_PLAYER_LORE = {" ",
+      "&7Settings for player"};
+  private static final String[] DISABLED_OFFLINE_LORE = {"",
+      "&cDisabled:",
+      "&7Player is offline"};
+  private static final String[] MENU_INFORMATION = {"&7Menu to select an", "&7Action for players"};
+  @NonNls
+  private static final String DATA_FOR = "Data for";
 
   private final Button punish;
   private final Button listPunishes;
@@ -76,7 +94,7 @@ public final class ChooseActionMenu extends Menu {
     this.target = target;
     targetName = playerProvider.findNameUnsafe(target);
     setSize(9 * 3);
-    setTitle("§8Action for " + targetName);
+    setTitle("§8" + ACTION_FOR + " " + targetName);
 
     punish = new Button() {
       @Override
@@ -107,7 +125,7 @@ public final class ChooseActionMenu extends Menu {
       @Override
       public ItemStack getItem() {
         return ItemCreator
-            .of(CompMaterial.CHEST, "&6Punishments", "", "&7View punishments")
+            .of(CompMaterial.CHEST, "&6" + PUNISHMENTS, "", "&7" + VIEW_PUNISHMENTS)
             .build()
             .makeMenuTool();
       }
@@ -130,17 +148,14 @@ public final class ChooseActionMenu extends Menu {
           return ItemCreator
               .of(CompMaterial.COMPARATOR,
                   "&6Settings",
-                  " ",
-                  "&cDisabled:",
-                  "&7Player is offline")
+                  PLAYER_OFFLINE_LORE)
               .build()
               .makeMenuTool();
         }
         return ItemCreator
             .of(CompMaterial.COMPARATOR,
                 "&6Settings",
-                " ",
-                "&7Settings for player")
+                SETTINGS_FOR_PLAYER_LORE)
             .build()
             .makeMenuTool();
       }
@@ -164,9 +179,7 @@ public final class ChooseActionMenu extends Menu {
               .of(
                   CompMaterial.BLAZE_POWDER,
                   "&6Kick",
-                  "",
-                  "&cDisabled:",
-                  "&7Player is offline")
+                  DISABLED_OFFLINE_LORE)
               .build().makeMenuTool();
         }
 
@@ -210,7 +223,7 @@ public final class ChooseActionMenu extends Menu {
     if (slot == ChooseActionMenu.PLAYER_HEAD_SLOT) {
       return ItemCreator
           .ofSkullHash(textureProvider.getSkinTexture(target))
-          .name("&7Data for: &6" + (targetOnline() ? "&a" : "&7") + targetName)
+          .name("&7" + DATA_FOR + ": &6" + (targetOnline() ? "&a" : "&7") + targetName)
           .lores(ItemStacks.loreForPlayer(target, storageProvider, playerProvider))
           .build()
           .makeMenuTool();
@@ -233,6 +246,6 @@ public final class ChooseActionMenu extends Menu {
 
   @Override
   protected String[] getInfo() {
-    return new String[]{"&7Menu to select an", "&7Action for players"};
+    return MENU_INFORMATION;
   }
 }

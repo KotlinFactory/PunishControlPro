@@ -2,6 +2,7 @@ package org.mineacademy.punishcontrol.spigot.menus.punish;
 
 import de.leonhard.storage.util.Valid;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.UUID;
 import javax.inject.Inject;
 import lombok.NonNull;
@@ -9,6 +10,7 @@ import lombok.val;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NonNls;
 import org.mineacademy.fo.Common;
 import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.fo.menu.button.Button;
@@ -43,6 +45,69 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
   public static final int MAKE_SUPER_SILENT_SLOT = 32;
   public static final int CHOOSE_TYPE_SLOT = 4;
   public static final int CHOOSE_TEMPLATE_SLOT = 25;
+  @NonNls
+  private static final String CREATE_PUNISH = "Create punish";
+  @NonNls
+  private static final String PUNISH = "Punish";
+  @NonNls
+  private static final String CHOOSE_TEMPLATE = "Choose template";
+  @NonNls
+  private static final String NO_ACCESS = "You don't have access to the template";
+  private static final String[] FROM_TEMPLATE_LORE = {"&7Create an punish",
+      "&7from an existing",
+      "&7template"};
+  @NonNls
+  private static final String FROM_TEMPLATE_NAME = "From template";
+  @NonNls
+  private static final String MISSING_TARGET = "Missing target!";
+  @NonNls
+  private static final String MISSING_PUNISH_TYPE = "Missing punish-type!";
+  @NonNls
+  private static final String MISSING_CREATOR = "Missing creator!";
+  @NonNls
+  private static final String MISSING_REASON = "Missing reason!";
+  @NonNls
+  private static final String MISSING_DURATION = "Missing duration!";
+  @NonNls
+  private static final String YOU_WOULD_EXCEED_YOUR_LIMITS = "You would exceed your limits";
+  @NonNls
+  private static final String CREATED_PUNISH = "Created punish";
+  @NonNls
+  private static final String TARGET_IS_UNPUNISHABLE = "Target is unpunishable";
+  @NonNls
+  private static final String CAN_T_OVERRIDE_PUNISHES = "Can't override punishes";
+  @NonNls
+  private static final String APPLY = "Apply";
+  @NonNls
+  private static final String APPLY_PUNISH = "Apply punish";
+  @NonNls
+  private static final String CHOOSE_PLAYER = "Choose player";
+  @NonNls
+  private static final String CURRENT = "Current";
+  @NonNls
+  private static final String PUNISHMENT_IS_ALREADY_SUPER_SILENT = "Punishment is already super-silent!";
+  private static final String[] MAKE_NOT_SUPER_SILENT_LORE = {"",
+      "&7Click to make",
+      "&7the punish",
+      "&7not silent"};
+  private static final String[] MAKE_SUPER_SILENT_LORE = {"",
+      "&7Click to make",
+      "&7the punish",
+      "&7super-silent"};
+  private static final String[] MENU_INFORMATION = {"&7Menu to", "&7create punishes"};
+  @NonNls
+  private static final String REASON = "Reason";
+  private static final String[] CHOOSE_REASON_LORE = {"&7Choose the",
+      "&7reason of the",
+      "&7punish"};
+  private static final String[] CHOOSE_PLAYER_LORE = {"&7Choose the",
+      "&7player the",
+      "&7punish should be",
+      "&7applied to"};
+  @NonNls
+  private static final String CLICK_TO_CHOOSE = "Click to choose";
+  @NonNls
+  private static final String ANOTHER_PLAYER = "another player";
   private final Button fromTemplate;
   private final Button chooseDuration;
   private final Button makeSilent;
@@ -100,10 +165,10 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
     setSize(SIZE);
 
     if (punishBuilder().target() != null) {
-      setTitle("&8Punish " + playerProvider
-          .findNameUnsafe(punishBuilder().target()));
+      setTitle("&8" + PUNISH + " " + playerProvider
+          .findName(punishBuilder().target()).orElse("unknown"));
     } else {
-      setTitle("&8Create punish");
+      setTitle("&8" + CREATE_PUNISH);
     }
 
     chooseDuration = new Button() {
@@ -129,9 +194,9 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
                       System.currentTimeMillis() + punishBuilder().duration().toMs());
           return ItemCreator.of(CompMaterial.CLOCK,
               "&6Duration",
-              "&7Currently: ",
+              "&7" + CURRENT + "ly: ",
               "&7" + punishBuilder().duration().toString(),
-              "&7Punish will end on:",
+              "&7" + PUNISH + " will end on:",
               "&7" + end,
               "",
               "&7Click to change")
@@ -162,7 +227,7 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
               final ClickType click) {
             //Applying new setting & showing up
             if (!Groups.hasAccess(player.getUniqueId(), punishTemplate)) {
-              animateTitle("&cYou don't have access to the template");
+              animateTitle("&c" + NO_ACCESS);
               return;
             }
 
@@ -181,23 +246,22 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
         if (punishTemplate != null) {
           return ItemCreator
               .of(ItemStacks.forPunishType(punishBuilder().punishType()))
-              .name("&6Choose template")
+              .name("&6" + CHOOSE_TEMPLATE)
+              //TODO
               .lores(Arrays.asList(
                   "&7Create an punish",
                   "&7from an existing",
                   "&7template",
-                  "&7Current: &6" + punishTemplate.name()))
+                  "&7" + CURRENT + ": &6" + punishTemplate.name()))
               .build()
               .makeMenuTool();
         }
 
         return ItemCreator
             .of(CompMaterial.PAPER)
-            .name("&6From template")
+            .name("&6" + FROM_TEMPLATE_NAME)
             .lores(Arrays.asList(
-                "&7Create an punish",
-                "&7from an existing",
-                "&7template"))
+                FROM_TEMPLATE_LORE))
             .build()
             .makeMenuTool();
       }
@@ -213,25 +277,25 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
             .creation(System.currentTimeMillis());
 
         if (punishBuilder().punishType() == null) {
-          animateTitle("&cMissing punish-type!");
+          animateTitle("&c" + MISSING_PUNISH_TYPE);
           return;
         }
         if (punishBuilder().target() == null) {
-          animateTitle("&cMissing target!");
+          animateTitle("&c" + MISSING_TARGET);
           return;
         }
         if (punishBuilder().creator() == null) {
-          animateTitle("&cMissing creator!");
+          animateTitle("&c" + MISSING_CREATOR);
           return;
         }
 
         if (punishBuilder().reason() == null) {
-          animateTitle("&cMissing reason!");
+          animateTitle("&c" + MISSING_REASON);
           return;
         }
 
         if (punishBuilder().duration() == null) {
-          animateTitle("&cMissing duration!");
+          animateTitle("&c" + MISSING_DURATION);
           return;
         }
 
@@ -243,30 +307,30 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
               getViewer().getUniqueId(),
               punishBuilder().punishType(),
               punishBuilder().duration())) {
-            animateTitle("&cYou would exceed your limits");
+            animateTitle("&c" + YOU_WOULD_EXCEED_YOUR_LIMITS);
             return;
           }
         } else {
           if (!Groups.hasAccess(
               getViewer().getUniqueId(),
               punishTemplate)) {
-            animateTitle("&cYou would exceed your limits");
+            animateTitle("&c" + YOU_WOULD_EXCEED_YOUR_LIMITS);
             return;
           }
         }
 
-        animateTitle("&7Created punish");
+        animateTitle("&7" + CREATED_PUNISH);
         async(() -> {
 
           if (!playerProvider.punishable(punishBuilder.target())) {
-            animateTitle("&cTarget is unpunishable");
+            animateTitle("&c" + TARGET_IS_UNPUNISHABLE);
             return;
           }
 
           if (storageProvider
               .isPunished(punishBuilder.target(), punishBuilder.punishType()) && !Groups
               .canOverride(getViewer().getUniqueId())) {
-            animateTitle("&cCan't override punishes");
+            animateTitle("&c" + CAN_T_OVERRIDE_PUNISHES);
             return;
           }
 
@@ -283,8 +347,8 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
       public ItemStack getItem() {
         return ItemCreator
             .of(ItemSettings.APPLY_ITEM.itemType(),
-                "&aApply",
-                "&7Apply punish")
+                "&a" + APPLY,
+                "&7" + APPLY_PUNISH)
             .build()
             .makeMenuTool();
       }
@@ -316,16 +380,19 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
         if (target != null) {
           return ItemCreator
               .ofSkullHash(textureProvider.getSkinTexture(target))
-              .name("&6Choose player")
+              .name("&6" + CHOOSE_PLAYER)
               .lores(Arrays.asList("&7Choose different player",
-                  "&7Current: " + playerProvider.findNameUnsafe(target)))
+                  "&7" + CURRENT + ": " + playerProvider.findName(target)
+                      .orElse("unknown")))
               .build()
               .makeMenuTool();
         }
         return ItemCreator
-            .of(CompMaterial.PLAYER_HEAD, "&6Choose player",
+            .of(CompMaterial.PLAYER_HEAD, "&6" + CHOOSE_PLAYER,
                 "&7Choose the",
-                "&7player the", "&7punish should be", "&7applied to")
+                "&7player the",
+                "&7punish should be",
+                "&7applied to")
             .build()
             .makeMenuTool();
       }
@@ -336,7 +403,7 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
       public void onClickedInMenu(
           final Player player, final Menu menu, final ClickType click) {
         if (punishBuilder.superSilent()) {
-          animateTitle("&cPunish is already super-silent!");
+          animateTitle("&c" + PUNISHMENT_IS_ALREADY_SUPER_SILENT);
           return;
         }
         punishBuilder.silent(!punishBuilder.silent());
@@ -394,10 +461,7 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
               .ofString(ItemSettings.ENABLED.itemType())
               .name("&6Super-Silent")
               .lores(Arrays.asList(
-                  "",
-                  "&7Click to make",
-                  "&7the punish",
-                  "&7not silent"
+                  MAKE_NOT_SUPER_SILENT_LORE
               ))
               .build()
               .makeMenuTool();
@@ -406,10 +470,7 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
             .ofString(ItemSettings.DISABLED.itemType())
             .name("&6Make Super-Silent")
             .lores(Arrays.asList(
-                "",
-                "&7Click to make",
-                "&7the punish",
-                "&7super-silent"
+                MAKE_SUPER_SILENT_LORE
             ))
             .build()
             .makeMenuTool();
@@ -419,12 +480,12 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
 
   @Override
   protected String[] getInfo() {
-    return new String[]{"&7Menu to", "&7create punishes"};
+    return MENU_INFORMATION;
   }
 
   //Lazy getter for the builder
   private PunishBuilder punishBuilder() {
-    Valid.notNull(punishType, "PunishType was set to null!");
+    Valid.notNull(punishType, PUNISH + "Type was set to null!");
     if (punishBuilder != null) {
       return punishBuilder;
     }
@@ -454,18 +515,16 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
     if (slot == CHOOSE_REASON_SLOT) {
       if (punishBuilder().reason() != null) {
         return ItemCreator.of(ItemSettings.REASON_ITEM.itemType(),
-            "&6Reason",
+            "&6" + REASON,
             "&7Choose different reason",
-            "&7Current: " + punishBuilder.reason())
+            "&7" + CURRENT + ": " + punishBuilder.reason())
             .build()
             .make();
       }
 
       return ItemCreator.of(ItemSettings.REASON_ITEM.itemType(),
-          "&6Reason",
-          "&7Choose the",
-          "&7reason of the",
-          "&7punish")
+          "&6" + REASON,
+          CHOOSE_REASON_LORE)
           .build()
           .make();
     }
@@ -488,18 +547,19 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
       if (target != null) {
         return ItemCreator
             .ofSkullHash(textureProvider.getSkinTexture(target))
-            .name("&6Choose player")
-            .lores(Arrays.asList(
-                "&7Current: " + playerProvider.findNameUnsafe(punishBuilder().target()),
-                "&7Click to choose", "&7another player"))
+            .name("&6" + CHOOSE_PLAYER)
+            .lores(Collections.singletonList(
+                "&7" + CURRENT + ": " + playerProvider
+                    .findName(punishBuilder().target()).orElse("unknown")))
+            .lore("&7" + CLICK_TO_CHOOSE)
+            .lore("&7" + ANOTHER_PLAYER)
             .build()
             .makeMenuTool();
       }
 
       return ItemCreator
-          .of(CompMaterial.PLAYER_HEAD, "&6Choose player",
-              "&7Choose the",
-              "&7player the", "&7punish should be", "&7applied to")
+          .of(CompMaterial.PLAYER_HEAD, "&6" + CHOOSE_PLAYER,
+              CHOOSE_PLAYER_LORE)
           .build()
           .makeMenuTool();
     }

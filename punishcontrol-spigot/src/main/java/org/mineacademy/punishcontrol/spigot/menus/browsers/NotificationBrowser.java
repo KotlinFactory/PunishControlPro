@@ -5,6 +5,7 @@ import lombok.val;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NonNls;
 import org.mineacademy.fo.Common;
 import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.fo.remain.CompMaterial;
@@ -17,6 +18,11 @@ import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractBrowser;
 
 public final class NotificationBrowser extends AbstractBrowser<Notification> {
 
+  @NonNls
+  private static final String NOTIFICATIONS = "Notifications";
+  @NonNls
+  private static final String RIGHT_CLICK_TO_DISMISS = "Right click to dismiss";
+
   public static void showTo(@NonNull final Player player) {
     Scheduler.runAsync(() -> new NotificationBrowser().displayTo(player));
   }
@@ -25,7 +31,7 @@ public final class NotificationBrowser extends AbstractBrowser<Notification> {
     super(
         DaggerSpigotComponent.create().settingsBrowser(),
         Notifications.registeredNotifications());
-    setTitle("&8Notifications");
+    setTitle("&8" + NOTIFICATIONS);
   }
 
   @Override
@@ -33,7 +39,7 @@ public final class NotificationBrowser extends AbstractBrowser<Notification> {
     final CompMaterial type = item.itemType();
     final val text = Common.colorize(item.text());
     text.add(" ");
-    text.add("&6Right click to dismiss");
+    text.add("&6" + RIGHT_CLICK_TO_DISMISS);
     return ItemCreator
         .of(type)
         .name(Common.colorize(item.name()))

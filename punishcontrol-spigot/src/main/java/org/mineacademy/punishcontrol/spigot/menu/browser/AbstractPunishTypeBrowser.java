@@ -5,6 +5,7 @@ import java.util.Collections;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NonNls;
 import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.punishcontrol.core.punish.PunishType;
@@ -13,16 +14,21 @@ import org.mineacademy.punishcontrol.spigot.util.ItemStacks;
 public abstract class AbstractPunishTypeBrowser
     extends AbstractBrowser<PunishType> {
 
+  @NonNls
+  private static final String SELECT = "Select";
+  @NonNls
+  private static final String CHOOSE_TYPE = "Choose type";
+
   protected AbstractPunishTypeBrowser(final Menu parent) {
     super(parent, Arrays.asList(PunishType.values()));
-    setTitle("&8Choose type");
+    setTitle("&8" + CHOOSE_TYPE);
   }
 
   @Override
   protected ItemStack convertToItemStack(final PunishType item) {
     return ItemCreator
         .of(ItemStacks.forPunishType(item)).name(item.localized())
-        .lores(Collections.singletonList("&7Select " + item.localized()))
+        .lores(Collections.singletonList("&7" + SELECT + " " + item.localized()))
         .build()
         .makeMenuTool();
   }

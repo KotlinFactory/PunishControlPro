@@ -11,6 +11,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NonNls;
 import org.mineacademy.fo.MinecraftVersion;
 import org.mineacademy.fo.MinecraftVersion.V;
 import org.mineacademy.fo.menu.Menu;
@@ -24,6 +25,14 @@ public abstract class AbstractMaterialBrowser
     extends AbstractSearchableBrowser<CompMaterial>
     implements Schedulable {
 
+  private static final String[] MENU_INFORMATION = {
+      "",
+      "&7Menu to select materials",
+      "&7that fit your wishes best",
+      "&7more items will be added soon"
+  };
+  @NonNls
+  private static final String MATERIALS = "Materials";
   private static List<CompMaterial> items = Arrays
       .stream(Material.values())
       .map(CompMaterial::fromMaterial)
@@ -48,7 +57,7 @@ public abstract class AbstractMaterialBrowser
       @NonNull final Menu parent,
       @NonNull final Collection<CompMaterial> items) {
     super(parent, items);
-    setTitle("&8Materials");
+    setTitle("&8" + MATERIALS);
   }
 
   @Override
@@ -68,12 +77,7 @@ public abstract class AbstractMaterialBrowser
 
   @Override
   protected String[] getInfo() {
-    return new String[]{
-        "",
-        "&7Menu to select materials",
-        "&7that fit your wishes best",
-        "&7more items will be added soon"
-    };
+    return MENU_INFORMATION;
   }
 
   @Override

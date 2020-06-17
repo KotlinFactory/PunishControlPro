@@ -6,6 +6,7 @@ import lombok.val;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NonNls;
 import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.fo.menu.button.Button;
 import org.mineacademy.fo.menu.model.ItemCreator;
@@ -14,6 +15,11 @@ import org.mineacademy.punishcontrol.spigot.conversations.SearchConversation;
 
 public abstract class AbstractSearchableBrowser<T> extends AbstractBrowser<T> {
 
+  @NonNls
+  private static final String SEARCH = "Search";
+  private static final String[] SEARCH_FOR_A_VALUE = {
+      "&7Search for a value",
+  };
   private final Button searchButton;
 
   protected AbstractSearchableBrowser(
@@ -31,7 +37,7 @@ public abstract class AbstractSearchableBrowser<T> extends AbstractBrowser<T> {
       public ItemStack getItem() {
         return ItemCreator
             .of(CompMaterial.COMPASS)
-            .name("&6Search")
+            .name("&6" + SEARCH)
             .lores(Arrays.asList(compassLore()))
             .build()
             .makeMenuTool();
@@ -47,9 +53,7 @@ public abstract class AbstractSearchableBrowser<T> extends AbstractBrowser<T> {
    * Defines the lore our compass should have
    */
   protected String[] compassLore() {
-    return new String[]{
-        "&7Search for a value",
-    };
+    return SEARCH_FOR_A_VALUE;
   }
 
   @Override

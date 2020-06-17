@@ -4,6 +4,7 @@ import javax.inject.Inject;
 import lombok.NonNull;
 import lombok.val;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NonNls;
 import org.mineacademy.fo.debug.LagCatcher;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
@@ -13,6 +14,9 @@ import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractPunishBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.MainMenu;
 
 public final class AllPunishesBrowser extends AbstractPunishBrowser {
+
+  @NonNls
+  private static final String BROWSE_PUNISHES = "Browse Punishes";
 
   //Showing up while saving performance:)
   public static void showTo(@NonNull final Player player) {
@@ -30,7 +34,7 @@ public final class AllPunishesBrowser extends AbstractPunishBrowser {
       final PlayerProvider playerProvider,
       final StorageProvider storageProvider) {
     super(parent, playerProvider, storageProvider.listPunishes());
-    setTitle("&7Browse Punishes");
+    setTitle("&7" + BROWSE_PUNISHES);
   }
 
   @Override

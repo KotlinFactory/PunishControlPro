@@ -2,6 +2,7 @@ package org.mineacademy.punishcontrol.spigot.menu;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NonNls;
 import org.mineacademy.fo.Common;
 import org.mineacademy.fo.debug.Debugger;
 import org.mineacademy.fo.menu.Menu;
@@ -11,15 +12,19 @@ import org.mineacademy.punishcontrol.spigot.util.Schedulable;
 
 public abstract class AbstractConfirmMenu extends Menu implements Schedulable {
 
+  @NonNls
+  private static final String CONFIRM = "Confirm";
+  private static final String[] MENU_INFORMATION = {"&7Apply action"};
+
   public AbstractConfirmMenu() {
     setSize(9);
-    setTitle("&aConfirm");
+    setTitle("&a" + CONFIRM);
   }
 
   public AbstractConfirmMenu(final Menu parent) {
     super(parent);
     setSize(9);
-    setTitle("&8Confirm");
+    setTitle("&8" + CONFIRM);
   }
 
   public AbstractConfirmMenu(
@@ -27,7 +32,7 @@ public abstract class AbstractConfirmMenu extends Menu implements Schedulable {
       final boolean returnMakesNewInstance) {
     super(parent, returnMakesNewInstance);
     setSize(9);
-    setTitle("&8Confirm");
+    setTitle("&8" + CONFIRM);
   }
 
   public abstract void onConfirm();
@@ -53,7 +58,7 @@ public abstract class AbstractConfirmMenu extends Menu implements Schedulable {
 
     return ItemCreator
         .of(ItemSettings.APPLY_ITEM.itemType(),
-            "&aConfirm",
+            "&a" + CONFIRM,
             "",
             "&7Click to confirm")
         .build()
@@ -83,6 +88,6 @@ public abstract class AbstractConfirmMenu extends Menu implements Schedulable {
 
   @Override
   protected String[] getInfo() {
-    return new String[]{"&7Apply action"};
+    return MENU_INFORMATION;
   }
 }

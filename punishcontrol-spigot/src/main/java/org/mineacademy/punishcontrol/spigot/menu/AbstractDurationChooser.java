@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NonNls;
 import org.mineacademy.fo.PlayerUtil;
 import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.fo.menu.button.Button;
@@ -36,6 +37,18 @@ public abstract class AbstractDurationChooser
   public static final int HOUR_SLOT = 9 * 4;
   public static final int CONFIRM_SLOT = 22;
   public static final int MAKE_PERMA_SLOT = 8;
+  @NonNls
+  private static final String CHOOSE_DURATION = "Choose duration";
+  private static final String[] DURATION_LORE = {"&7Left-Click to add",
+      "&7Right-Click to remove"};
+  @NonNls
+  private static final String MAKE_PERMANENT = "Make permanent";
+  @NonNls
+  private static final String CONFIRM = "Confirm";
+  @NonNls
+  private static final String CONFIRM_THE_DURATION = CONFIRM + " the duration";
+  @NonNls
+  private static final String SELECT_DURATION = "Select duration";
 
   private final Button year, month, day, hour;
 
@@ -58,7 +71,7 @@ public abstract class AbstractDurationChooser
     super(parent);
     setSize(SIZE);
     this.ms = ms;
-    changeTitle("&8Choose duration");
+    changeTitle("&8" + CHOOSE_DURATION);
 
     expirationClock = ItemCreator
         .of(CompMaterial.CLOCK,
@@ -82,7 +95,8 @@ public abstract class AbstractDurationChooser
             .ofSkullHash(Time.YEAR.hash())
             .name("&6" + Time.YEAR.localized())
             .lores(
-                Arrays.asList("&7Left-Click to add", "&7Right-Click to remove"))
+                Arrays.asList(DURATION_LORE)
+            )
             .build()
             .makeMenuTool();
       }
@@ -102,7 +116,7 @@ public abstract class AbstractDurationChooser
             .ofSkullHash(Time.MONTH.hash())
             .name("&6" + Time.MONTH.localized())
             .lores(
-                Arrays.asList("&7Left-Click to add", "&7Right-Click to remove"))
+                Arrays.asList(DURATION_LORE))
             .build()
             .makeMenuTool();
       }
@@ -121,7 +135,7 @@ public abstract class AbstractDurationChooser
             .ofSkullHash(Time.DAY.hash())
             .name("&6" + Time.DAY.localized())
             .lores(
-                Arrays.asList("&7Left-Click to add", "&7Right-Click to remove"))
+                Arrays.asList(DURATION_LORE))
             .build()
             .makeMenuTool();
       }
@@ -140,7 +154,7 @@ public abstract class AbstractDurationChooser
             .ofSkullHash(Time.HOUR.hash())
             .name("&6" + Time.HOUR.localized())
             .lores(
-                Arrays.asList("&7Left-Click to add", "&7Right-Click to remove"))
+                Arrays.asList(DURATION_LORE))
             .build()
             .makeMenuTool();
       }
@@ -156,7 +170,7 @@ public abstract class AbstractDurationChooser
       @Override
       public ItemStack getItem() {
         return ItemCreator
-            .of(CompMaterial.REDSTONE_BLOCK, "&4Make permanent", "")
+            .of(CompMaterial.REDSTONE_BLOCK, "&4" + MAKE_PERMANENT, "")
             .build()
             .makeMenuTool();
       }
@@ -173,8 +187,8 @@ public abstract class AbstractDurationChooser
       public ItemStack getItem() {
         return ItemCreator
             .of(CompMaterial.EMERALD,
-                "&aConfirm",
-                "&7Confirm the duration")
+                "&a" + CONFIRM,
+                "&7" + CONFIRM_THE_DURATION)
             .build()
             .makeMenuTool();
       }
@@ -192,7 +206,7 @@ public abstract class AbstractDurationChooser
   @Override
   protected void onDisplay(final InventoryDrawer drawer) {
     updateClock();
-    changeTitle("&8Select duration");
+    changeTitle("&8" + SELECT_DURATION);
   }
 
   @Override

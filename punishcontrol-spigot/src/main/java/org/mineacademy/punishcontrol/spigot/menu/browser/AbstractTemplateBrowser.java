@@ -5,6 +5,7 @@ import lombok.val;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NonNls;
 import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.fo.model.Replacer;
@@ -17,6 +18,22 @@ import org.mineacademy.punishcontrol.spigot.util.ItemStacks;
 public abstract class AbstractTemplateBrowser
     extends AbstractBrowser<PunishTemplate> {
 
+  private static final Replacer replacer = Replacer.of(
+      "&6Type: &7{type}",
+      "&6Duration: &7{duration}",
+      "&6Reason: &7{reason}",
+      "&6Permission: &7{permission}",
+      "&6Silent: {silent}",
+      "&6Super-Silent: {super-silent}",
+      "&6Access: &7{access}",
+      "Right-Click to remove"
+  );
+  @NonNls
+  private static final String YES = "Yes";
+  @NonNls
+  private static final String NO = "No";
+
+
   protected AbstractTemplateBrowser(final Menu parent) {
     super(parent, PunishTemplates.list());
     setTitle("&8Choose template");
@@ -27,17 +44,6 @@ public abstract class AbstractTemplateBrowser
     final val creator = ItemCreator
         .of(ItemStacks.forPunishType(item.punishType()));
     creator.name("&6" + item.name());
-
-    final Replacer replacer = Replacer.of(
-        "&6Type: &7{type}",
-        "&6Duration: &7{duration}",
-        "&6Reason: &7{reason}",
-        "&6Permission: &7{permission}",
-        "&6Silent: {silent}",
-        "&6Super-Silent: {super-silent}",
-        "&6Access: &7{access}",
-        "Right-Click to remove"
-    );
 
     replacer.find(
         "type",
@@ -53,11 +59,11 @@ public abstract class AbstractTemplateBrowser
         item.reason(),
         item.duration(),
         item.permission(),
-        item.silent() ? "&aYes" : "&cNo",
-        item.superSilent() ? "&aYes" : "&cNo",
+        item.silent() ? "&a" + YES : "&c" + NO,
+        item.superSilent() ? "&a" + YES : "&c" + NO,
         PunishTemplates.hasAccess(getViewer().getUniqueId(), item)
-            ? "&aYes"
-            : "&cNo"
+            ? "&a" + YES
+            : "&c" + NO
     );
 
     creator.lores(Arrays.asList(replacer.getReplacedMessage()));

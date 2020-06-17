@@ -22,6 +22,8 @@ import org.mineacademy.punishcontrol.spigot.menus.MainMenu;
  */
 public final class StaffPunishesBrowser extends AbstractPunishBrowser {
 
+  private static final String SHOW_PUNISHMENTS_CREATED_BY = "Show punishments created by {target}";
+  private static final String PUNISHMENTS_BY_TARGET = "Punishments by {target}";
   private final UUID staffMember;
 
   public static void showTo(
@@ -56,8 +58,8 @@ public final class StaffPunishesBrowser extends AbstractPunishBrowser {
           @Override
           protected List<String> lore(UUID uuid) {
             return Collections.singletonList(
-                "Show punishments created by " + playerProvider.findName(uuid).orElse(
-                    "unknown")
+                SHOW_PUNISHMENTS_CREATED_BY
+                    .replace("{target}", playerProvider.findName(uuid).orElse("unknown"))
             );
           }
         },
@@ -69,8 +71,8 @@ public final class StaffPunishesBrowser extends AbstractPunishBrowser {
 
     this.staffMember = staffMember;
 
-    setTitle("&8Punishments by " + playerProvider.findName(staffMember).orElse(
-        "unknown"));
+    setTitle("&8"+ PUNISHMENTS_BY_TARGET
+        .replace("{target}", playerProvider.findName(staffMember).orElse("unknown")));
 
 //   .displayTo(getPlayer());
 //    registerActionHandler("Back", (back -> {
@@ -81,7 +83,7 @@ public final class StaffPunishesBrowser extends AbstractPunishBrowser {
 
   @Override
   protected void redrawForPlayer(Player player) {
-        showTo(getViewer(), staffMember);
+    showTo(getViewer(), staffMember);
 
   }
 

@@ -8,6 +8,7 @@ import lombok.NonNull;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NonNls;
 import org.mineacademy.fo.debug.Debugger;
 import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.fo.remain.CompMaterial;
@@ -20,6 +21,8 @@ import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractSearchableBrows
 
 public final class CustomItemBrowser extends AbstractSearchableBrowser<CustomItem> {
 
+  @NonNls
+  private static final String CUSTOM_ITEMS = "Custom items";
   private final ItemSettings itemSettings;
 
   public static void showTo(@NonNull final Player player) {
@@ -37,7 +40,7 @@ public final class CustomItemBrowser extends AbstractSearchableBrowser<CustomIte
       Collection<CustomItem> content) {
     super(parent, content);
     this.itemSettings = itemSettings;
-    setTitle("&8Custom items");
+    setTitle("&8" + CUSTOM_ITEMS);
   }
 
 

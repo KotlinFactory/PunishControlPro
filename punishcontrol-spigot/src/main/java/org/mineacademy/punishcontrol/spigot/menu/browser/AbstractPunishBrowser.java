@@ -8,6 +8,7 @@ import lombok.val;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.Nullable;
 import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.fo.menu.model.ItemCreator;
@@ -20,6 +21,24 @@ import org.mineacademy.punishcontrol.spigot.menu.AbstractConfirmMenu;
 import org.mineacademy.punishcontrol.spigot.util.ItemStacks;
 
 public abstract class AbstractPunishBrowser extends AbstractBrowser<Punish> {
+
+  @NonNls
+  private static final String PUNISH_IS_ALREADY_REMOVED = "Punish is already removed";
+  private static final String[] MENU_INFORMATION = {"View punishes"};
+  @NonNls
+  private static final String RIGHT_CLICK_TO_REMOVE = "Right-Click to remove";
+
+  private static final Replacer lore = Replacer.of(
+      "",
+      "&6Target: &7{target}",
+      "&6Reason: &7{reason}",
+      "&6Creation: &7{creation}",
+      "&6Duration: &7{duration}",
+      "&6End: &7{end}",
+      "&6Creator: &7{creator}",
+      "&7Right click to remove"
+  );
+
 
   protected final PlayerProvider playerProvider;
 
@@ -48,16 +67,6 @@ public abstract class AbstractPunishBrowser extends AbstractBrowser<Punish> {
             ? "&cRemoved"
             : Settings.Advanced.formatDate(punish.getEndTime());
 
-    final Replacer lore = Replacer.of(
-        "",
-        "&6Target: &7{target}",
-        "&6Reason: &7{reason}",
-        "&6Creation: &7{creation}",
-        "&6Duration: &7{duration}",
-        "&6End: &7{end}",
-        "&6Creator: &7{creator}",
-        "&7Right click to remove"
-    );
 
     lore.find("target", "reason", "creation", "duration", "end", "creator");
     lore.replace(
@@ -77,7 +86,7 @@ public abstract class AbstractPunishBrowser extends AbstractBrowser<Punish> {
     builder.lores(lores);
 
     if (!punish.isOld()) {
-      lores.add("&6Right-Click to remove");
+      lores.add("&6" + RIGHT_CLICK_TO_REMOVE);
     }
 
     return builder.build().make();
@@ -96,7 +105,7 @@ public abstract class AbstractPunishBrowser extends AbstractBrowser<Punish> {
 
   @Override
   protected String[] getInfo() {
-    return new String[]{"View punishes"};
+    return MENU_INFORMATION;
   }
 
   @Override
@@ -110,7 +119,7 @@ public abstract class AbstractPunishBrowser extends AbstractBrowser<Punish> {
     }
 
     if (punish.isOld()) {
-      animateTitle("&cPunish is already removed");
+      animateTitle("&c" + PUNISH_IS_ALREADY_REMOVED);
       return;
     }
 

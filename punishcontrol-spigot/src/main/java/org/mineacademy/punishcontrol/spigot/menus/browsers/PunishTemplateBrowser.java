@@ -7,6 +7,7 @@ import lombok.val;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NonNls;
 import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.fo.menu.button.Button;
 import org.mineacademy.fo.menu.model.ItemCreator;
@@ -18,6 +19,10 @@ import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractTemplateBrowser
 
 public class PunishTemplateBrowser extends AbstractTemplateBrowser {
 
+  @NonNls
+  private static final String ADD_TEMPLATE = "Add template";
+  private static final String[] ADD_TEMPLATE_LORE = {"&7Click here to",
+      "&7Add custom templates"};
   private final Button addTemplateButton;
 
   public static void showTo(@NonNull final Player player) {
@@ -45,8 +50,8 @@ public class PunishTemplateBrowser extends AbstractTemplateBrowser {
       public ItemStack getItem() {
         return ItemCreator
             .ofString(ItemSettings.ADD_ITEM.itemType())
-            .name("&aAdd template")
-            .lores(Arrays.asList("&7Click here to", "&7Add custom templates"))
+            .name("&a" + ADD_TEMPLATE)
+            .lores(Arrays.asList(ADD_TEMPLATE_LORE))
             .build()
             .makeMenuTool();
       }

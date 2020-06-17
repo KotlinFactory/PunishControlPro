@@ -8,6 +8,7 @@ import lombok.val;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NonNls;
 import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.fo.menu.button.Button;
 import org.mineacademy.fo.menu.model.ItemCreator;
@@ -28,6 +29,26 @@ import org.mineacademy.punishcontrol.spigot.util.ItemStacks;
 public final class MainMenu extends ChangingMenu {
 
   public static final int PLAYER_BROWSER_SLOT = 9 * 2 + 6;
+  private static final String[] BROWSE_PLAYERS_LORE = {
+      "&7View players",
+      "&7to select",
+      "&7one for more",
+      "&7actions"};
+  @NonNls
+  private static final String PLAYERS = "Players";
+  @NonNls
+  private static final String PUNISHMENTS = "Punishments";
+  private static final String[] BROWSER_PUNISHMENTS_LORE = {"",
+      "Browse created punishments.",
+      "Right click to view",
+      "punished players"};
+  private static final String[] CREATE_NEW_PUNISHMENT_LORE = {" ", "Make new punishment"};
+  @NonNls
+  private static final String CREATE_NEW = "Create New";
+  @NonNls
+  private static final String SETTINGS = "Settings";
+  @NonNls
+  private static final String VIEW_SETTINGS_FOR = "View Settings for";
   private final Button punishesButton;
   private final Button newButton;
   private final Button settingsButton;
@@ -46,10 +67,10 @@ public final class MainMenu extends ChangingMenu {
             ChangingButton
                 .fromCustomHashes(
                     textureProvider.listTextures())
-                .name("&6Players")
+                .name("&6" + PLAYERS)
                 .slot(24)
-                .lore("&7View players", "&7to select", "&7one for more",
-                    "&7actions")
+                .lore(
+                    BROWSE_PLAYERS_LORE)
         ));
 
     setSize(9 * 5);
@@ -70,11 +91,8 @@ public final class MainMenu extends ChangingMenu {
       public ItemStack getItem() {
         return ItemCreator
             .of(CompMaterial.CHEST,
-                "&6Punishments",
-                "",
-                "Browse created punishments.",
-                "Right click to view",
-                "punished players"
+                "&6" + PUNISHMENTS,
+                BROWSER_PUNISHMENTS_LORE
             )
             .glow(true).build().make();
       }
@@ -95,8 +113,8 @@ public final class MainMenu extends ChangingMenu {
       public ItemStack getItem() {
         return ItemCreator
             .of(ItemStacks.cyanDye())
-            .name("&6Create New")
-            .lores(Arrays.asList(" ", "Make new punishment"))
+            .name("&6" + CREATE_NEW)
+            .lores(Arrays.asList(CREATE_NEW_PUNISHMENT_LORE))
             .build().make();
       }
     };
@@ -113,8 +131,8 @@ public final class MainMenu extends ChangingMenu {
       public ItemStack getItem() {
         return ItemCreator
             .of(CompMaterial.COMPARATOR,
-                "&6Settings",
-                "&7View Settings for",
+                "&6" + SETTINGS,
+                "&7" + VIEW_SETTINGS_FOR,
                 SimplePlugin.getNamed(),
                 ""
             )

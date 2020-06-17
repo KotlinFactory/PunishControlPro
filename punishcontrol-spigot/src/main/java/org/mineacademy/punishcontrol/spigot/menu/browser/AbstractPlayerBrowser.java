@@ -10,18 +10,25 @@ import lombok.val;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.Nullable;
 import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.punishcontrol.core.fo.constants.FoConstants;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.providers.TextureProvider;
+import org.mineacademy.punishcontrol.core.setting.Replacer;
 import org.mineacademy.punishcontrol.spigot.util.ItemStacks;
 
 public abstract class AbstractPlayerBrowser extends AbstractSearchableBrowser<UUID> {
 
+  private static final String CHOOSE_ACTION = "&7Choose action";
+  @NonNls
+  private static final String PLAYERS = "Players";
   protected final PlayerProvider playerProvider;
   protected final TextureProvider textureProvider;
+  private static Replacer results = Replacer
+      .of("Found {results} result(s)");
 
 
   public AbstractPlayerBrowser(
@@ -57,7 +64,7 @@ public abstract class AbstractPlayerBrowser extends AbstractSearchableBrowser<UU
     super(mainMenu, players);
     this.playerProvider = playerProvider;
     this.textureProvider = textureProvider;
-    setTitle("&8Players");
+    setTitle("&8" + PLAYERS);
     players.remove(FoConstants.CONSOLE);
   }
 
@@ -71,14 +78,14 @@ public abstract class AbstractPlayerBrowser extends AbstractSearchableBrowser<UU
 
   @Override
   protected final ItemStack convertToItemStack(final UUID uuid) {
-    final String name = playerProvider.findNameUnsafe(uuid);
+    final String name = playerProvider.findName(uuid).orElse("unknown");
     final String hash = textureProvider.getSkinTexture(uuid);
 
     final ItemCreator.ItemCreatorBuilder builder = ItemCreator.ofSkullHash(hash)
         .name("§3" + name);
 
     if (lore(uuid) == null) {
-      builder.lores(Collections.singletonList("&7Choose action"));
+      builder.lores(Collections.singletonList(CHOOSE_ACTION));
     } else {
       builder.lores(lore(uuid));
     }
@@ -124,11 +131,9 @@ public abstract class AbstractPlayerBrowser extends AbstractSearchableBrowser<UU
 
       menu.displayTo(AbstractPlayerBrowser.this.getViewer());
 
-      if (newContent.size() == 1) {
-        menu.animateTitle("&8Found " + newContent.size() + " result");
-      } else {
-        menu.animateTitle("&8Found " + newContent.size() + " results");
-      }
+      results.replaceAll("results", newContent.size());
+
+      menu.animateTitle("&8" + results.replacedMessageJoined());
     });
   }
 

@@ -9,6 +9,7 @@ import lombok.NonNull;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NonNls;
 import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.punishcontrol.core.Searcher;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
@@ -17,6 +18,12 @@ import org.mineacademy.punishcontrol.spigot.menus.MainMenu;
 import org.mineacademy.punishcontrol.spigot.menus.settings.SettingTypes;
 
 public final class SettingsBrowser extends AbstractSearchableBrowser<SettingTypes> {
+
+  @NonNls
+  private static final String INSUFFICIENT_PERMISSION = "Insufficient permission";
+  @NonNls
+  private static final String CHOOSE_SETTING = "Choose Setting";
+  private static final String[] MENU_INFORMATION = {"&7Menu to choose", "&7a setting"};
 
   public static void showTo(@NonNull final Player player) {
     DaggerSpigotComponent.create().settingsBrowser().displayTo(player, true);
@@ -27,14 +34,14 @@ public final class SettingsBrowser extends AbstractSearchableBrowser<SettingType
       @NonNull final MainMenu mainMenu,
       @NonNull @Named("settings") final Collection<SettingTypes> settings) {
     super(mainMenu, settings);
-    setTitle("&8Choose Settings");
+    setTitle("&8" + CHOOSE_SETTING + "s");
   }
 
   public SettingsBrowser(
       @NonNull final Menu mainMenu,
       @NonNull @Named("settings") final Collection<SettingTypes> settings) {
     super(mainMenu, settings);
-    setTitle("&8Choose Settings");
+    setTitle("&8" + CHOOSE_SETTING + "s");
   }
 
   @Override
@@ -48,7 +55,7 @@ public final class SettingsBrowser extends AbstractSearchableBrowser<SettingType
       final SettingTypes item,
       final ClickType click) {
     if (!item.hasAccess(player)) {
-      animateTitle("&cInsufficient permission");
+      animateTitle("&c" + INSUFFICIENT_PERMISSION);
       return;
     }
     item.showMenu(getViewer());
@@ -56,7 +63,7 @@ public final class SettingsBrowser extends AbstractSearchableBrowser<SettingType
 
   @Override
   protected String[] getInfo() {
-    return new String[]{"&7Menu to choose", "&7a setting"};
+    return MENU_INFORMATION;
   }
 
   @Override

@@ -6,17 +6,18 @@ import lombok.NonNull;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NonNls;
 import org.mineacademy.fo.debug.Debugger;
 import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.fo.menu.button.Button;
 import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.fo.remain.CompMaterial;
 import org.mineacademy.punishcontrol.core.PunishControlManager;
-import org.mineacademy.punishcontrol.core.provider.Providers;
+import org.mineacademy.punishcontrol.core.setting.Replacer;
 import org.mineacademy.punishcontrol.core.settings.ItemSettings;
 import org.mineacademy.punishcontrol.core.settings.Settings.MySQL;
-import org.mineacademy.punishcontrol.core.storage.MySQLStorageProvider;
 import org.mineacademy.punishcontrol.core.storage.StorageType;
+import org.mineacademy.punishcontrol.core.storage.StorageTypes;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
 import org.mineacademy.punishcontrol.spigot.Scheduler;
 import org.mineacademy.punishcontrol.spigot.conversations.MySQLStorageConversation;
@@ -36,10 +37,14 @@ public final class StorageSettingsMenu
   public static final int USER_SLOT = 5;
   public static final int PASSWORD_SLOT = 6;
 
-  private static final MySQLStorageProvider mySQLStorageProvider =
-      Providers.storageProvider() instanceof MySQLStorageProvider
-          ? (MySQLStorageProvider) Providers.storageProvider()
-          : new MySQLStorageProvider(Providers.exceptionHandler());
+  @NonNls
+  private static final String USER = "User";
+
+  private static Replacer replacer = Replacer.of(
+      " ",
+      "&7Click to",
+      "&7set the {type}",
+      "&7Currently: {currently}");
 
   private final Button connect;
   private final Button host;
@@ -57,9 +62,8 @@ public final class StorageSettingsMenu
   public StorageSettingsMenu(@NonNull final SettingsBrowser settingsBrowser) {
     super(settingsBrowser);
 
-
     setTitle("&8Storage settings");
-    setSize(9*2);
+    setSize(9 * 2);
     useButton = new Button() {
       @Override
       public void onClickedInMenu(
@@ -115,7 +119,7 @@ public final class StorageSettingsMenu
             return;
           }
 
-          if (mySQLStorageProvider.isConnected()) {
+          if (StorageTypes.mySQLStorageProvider.isConnected()) {
             animateTitle("&cAlready connected");
             return;
           }
@@ -124,7 +128,7 @@ public final class StorageSettingsMenu
           restartMenu();
           async(() -> {
             try {
-              mySQLStorageProvider.connect();
+              StorageTypes.mySQLStorageProvider.connect();
               isConnecting = false;
               Debugger.debug("MySQL", "Connected");
               restartMenu();
@@ -144,7 +148,8 @@ public final class StorageSettingsMenu
 
       @Override
       public ItemStack getItem() {
-        if (mySQLStorageProvider.isConnected()) {
+        //
+        if (StorageTypes.mySQLStorageProvider.isConnected()) {
           return ItemCreator
               .ofString(ItemSettings.ENABLED.itemType())
               .name("&7Connect")
@@ -186,10 +191,9 @@ public final class StorageSettingsMenu
             .of(CompMaterial.YELLOW_STAINED_GLASS_PANE)
             .name("&7Host")
             .lores(Arrays.asList(
-                " ",
-                "&7Click to",
-                "&7set the host",
-                "&7Currently: " + (MySQL.HOST.isEmpty() ? "&cNot set" : MySQL.HOST)
+                replacer.replaceAll("type", "host", "currently", (MySQL.HOST.isEmpty()
+                    ? "&cNot set"
+                    : MySQL.HOST)).replacedMessage()
             ))
             .build()
             .makeMenuTool();
@@ -212,10 +216,8 @@ public final class StorageSettingsMenu
             .of(CompMaterial.YELLOW_STAINED_GLASS_PANE)
             .name("&7Port")
             .lores(Arrays.asList(
-                " ",
-                "&7Click to",
-                "&7set the port",
-                "&7Currently: " + (MySQL.HOST.isEmpty() ? "&cNot set" : MySQL.HOST)
+                replacer.replaceAll("type", "port", "currently", MySQL.PORT)
+                    .replacedMessage()
             ))
             .build()
             .makeMenuTool();
@@ -235,13 +237,12 @@ public final class StorageSettingsMenu
       public ItemStack getItem() {
         return ItemCreator
             .of(CompMaterial.YELLOW_STAINED_GLASS_PANE)
-            .name("&7Database") 
+            .name("&7Database")
             .lores(Arrays.asList(
-                " ",
-                "&7Click to",
-                "&7set the database",
-                "&7Currently: " + (MySQL.DATABASE.isEmpty() ? "&cNot set"
-                    : MySQL.DATABASE)
+                replacer
+                    .replaceAll("type", "database", "currently", (MySQL.DATABASE.isEmpty()
+                        ? "&cNot set"
+                        : MySQL.DATABASE)).replacedMessage()
             ))
             .build()
             .makeMenuTool();
@@ -254,19 +255,20 @@ public final class StorageSettingsMenu
           final Player player,
           final Menu menu,
           final ClickType click) {
-        MySQLStorageConversation.create("User").start(player);
+        MySQLStorageConversation.create(USER).start(player);
       }
 
       @Override
       public ItemStack getItem() {
+
         return ItemCreator
             .of(CompMaterial.YELLOW_STAINED_GLASS_PANE)
-            .name("&7User")
+            .name("&7" + USER)
             .lores(Arrays.asList(
-                " ",
-                "&7Click to",
-                "&7set the user",
-                "&7Currently: " + (MySQL.USER.isEmpty() ? "&cNot set" : MySQL.USER)
+                replacer
+                    .replaceAll("type", "user", "currently", (MySQL.USER.isEmpty()
+                        ? "&cNot set"
+                        : MySQL.USER)).replacedMessage()
             ))
             .build()
             .makeMenuTool();
