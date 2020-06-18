@@ -84,12 +84,11 @@ public interface SpigotComponent {
 
   PunishImporterBrowser punishImporterBrowser();
 
-
   // ----------------------------------------------------------------------------------------------------
   // PunishImporters
   // ----------------------------------------------------------------------------------------------------
 
   BukkitPunishImporter bukkitPunishImporter();
 
-   StaffPunishesBrowser.Builder staffPunishesBrowserBuilder();
+  StaffPunishesBrowser.Builder staffPunishesBrowserBuilder();
 }

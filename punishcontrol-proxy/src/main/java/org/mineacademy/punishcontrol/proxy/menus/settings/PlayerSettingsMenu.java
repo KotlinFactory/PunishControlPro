@@ -12,9 +12,9 @@ import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.settings.ItemSettings;
 import org.mineacademy.punishcontrol.core.util.PunishControlPermissions;
 import org.mineacademy.punishcontrol.proxy.DaggerProxyComponent;
-import org.mineacademy.punishcontrol.proxy.menus.setting.AbstractSettingsMenu;
 import org.mineacademy.punishcontrol.proxy.menus.browsers.GroupBrowser;
 import org.mineacademy.punishcontrol.proxy.menus.browsers.PlayerPermissionsBrowser;
+import org.mineacademy.punishcontrol.proxy.menus.setting.AbstractSettingsMenu;
 
 public final class PlayerSettingsMenu extends AbstractSettingsMenu {
 

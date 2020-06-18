@@ -45,9 +45,8 @@ public final class ProxyDataSetter implements Listener<JoinEvent>, Schedulable {
       }
 
       try {
-        if(Advanced.ONLINE_MODE) {
+        if (Advanced.ONLINE_MODE)
           textureProvider.saveSkinTexture(uuid);
-        }
       } catch (final Throwable throwable) {
         Debugger.saveError(throwable, "Exception while saving Textures");
       }

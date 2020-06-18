@@ -4,14 +4,14 @@ import de.leonhard.storage.util.Valid;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import lombok.AccessLevel;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.val;
+import lombok.*;
+import lombok.experimental.Accessors;
 
 /**
  * Platform independent version of the Replacer
  */
+@Getter
+@Accessors(fluent = true)
 @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class Replacer {
 
@@ -58,9 +58,8 @@ public final class Replacer {
     variables.clear();
     replacements.clear();
 
-    for (int i = 0; i < associativeArray.length; i++) {
-
-      //Even: Value
+    //Even: Value
+    for (int i = 0; i < associativeArray.length; i++)
       if (i % 2 == 0) {
         //Odd: Key
         final val raw = associativeArray[i];
@@ -69,10 +68,8 @@ public final class Replacer {
             "Expected String at " + raw + ", got " + raw.getClass()
                 .getSimpleName());
         variables.add((String) raw);
-      } else {
+      } else
         replacements.add(associativeArray[i]);
-      }
-    }
     return this;
   }
 
@@ -90,13 +87,11 @@ public final class Replacer {
     for (int i = 0; i < variables.size(); i++) {
       String found = variables.get(i);
       { // Auto insert brackets
-        if (!found.startsWith("{")) {
+        if (!found.startsWith("{"))
           found = "{" + found;
-        }
 
-        if (!found.endsWith("}")) {
+        if (!found.endsWith("}"))
           found = found + "}";
-        }
       }
       final Object rep = i <= replacements.size() ? replacements.get(i) : null;
 

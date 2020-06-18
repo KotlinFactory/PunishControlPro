@@ -14,6 +14,8 @@ import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.Accessors;
 import org.mineacademy.punishcontrol.core.PunishControlManager;
+import org.mineacademy.punishcontrol.core.localization.Localizable;
+import org.mineacademy.punishcontrol.core.localization.Localizables;
 import org.mineacademy.punishcontrol.core.providers.*;
 import org.mineacademy.punishcontrol.core.punish.importer.PunishImporter;
 import org.mineacademy.punishcontrol.core.punish.importer.PunishImporters;
@@ -111,9 +113,8 @@ public final class Providers {
   @Named("settings")
   @Provides
   public static Yaml settings() {
-    if (settings != null) {
+    if (settings != null)
       return settings;
-    }
     return settings = LightningBuilder
         .fromPath("settings.yml", pluginDataProvider.getDataFolder().getAbsolutePath())
         .addInputStreamFromResource("settings.yml")
@@ -126,12 +127,11 @@ public final class Providers {
   @Named("localization")
   @Provides
   public static Yaml localization() {
-    if (localization != null) {
+    if (localization != null)
       return localization;
-    }
 
     final String name = "messages_" + SimpleSettings.LOCALE_PREFIX;
-    return  localization = LightningBuilder
+    return localization = LightningBuilder
         .fromPath(name, pluginDataProvider().getDataFolder().getAbsolutePath() +
             "/localization/")
         .addInputStreamFromResource("localization/" + name + ".yml")
@@ -144,6 +144,12 @@ public final class Providers {
   // ----------------------------------------------------------------------------------------------------
   // Dagger only
   // ----------------------------------------------------------------------------------------------------
+
+  @Provides
+  @Named("localizables")
+  public Collection<Localizable> localizables() {
+    return Localizables.localizables();
+  }
 
   @Provides
   @Named("offline-players")

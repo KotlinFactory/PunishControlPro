@@ -7,7 +7,8 @@ import org.mineacademy.punishcontrol.core.settings.Settings;
 
 @UtilityClass
 public class SimpleSettingsInjector {
-  public void inject(){
+
+  public void inject() {
     SimpleSettings.DEBUG_SECTIONS = new ArrayList<>(Settings.DEBUG_SECTIONS);
     SimpleSettings.LOCALE_PREFIX = Settings.LOCALE_PREFIX;
     SimpleSettings.PLUGIN_PREFIX = Settings.PLUGIN_PREFIX;

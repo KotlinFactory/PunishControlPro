@@ -8,9 +8,9 @@ import de.leonhard.storage.util.Valid;
 
 /**
  * A simple implementation of a basic localization file. We create the
- * localization/messages_LOCALEPREFIX.yml file automatically and fill it with
- * values from your localization/messages_LOCALEPREFIX.yml file placed within in
- * your plugins jar file.
+ * localization/messages_LOCALEPREFIX.yml file automatically and fill it with values from
+ * your localization/messages_LOCALEPREFIX.yml file placed within in your plugins jar
+ * file.
  */
 @SuppressWarnings("unused")
 public abstract class SimpleLocalization extends YamlStaticConfig {
@@ -20,8 +20,8 @@ public abstract class SimpleLocalization extends YamlStaticConfig {
    */
   public static String NO_PERMISSION = "&cInsufficient permission ({permission}).";
   /**
-   * The server prefix. Example: you have to use it manually if you are sending
-   * messages from the console to players
+   * The server prefix. Example: you have to use it manually if you are sending messages
+   * from the console to players
    */
   public static String SERVER_PREFIX = "[Server]";
 
@@ -33,14 +33,13 @@ public abstract class SimpleLocalization extends YamlStaticConfig {
    */
   public static String CONSOLE_NAME = "Console";
   /**
-   * The message when a section is missing from data.db file (typically we use
-   * this file to store serialized values such as arenas from minigame
-   * plugins).
+   * The message when a section is missing from data.db file (typically we use this file
+   * to store serialized values such as arenas from minigame plugins).
    */
   public static String DATA_MISSING = "&c{name} lacks database information! Please only create {type} in-game! Skipping..";
   /**
-   * The message when the console attempts to start a server conversation which
-   * is prevented.
+   * The message when the console attempts to start a server conversation which is
+   * prevented.
    */
   public static String CONVERSATION_REQUIRES_PLAYER = "Only players may enter this conversation.";
 
@@ -58,8 +57,8 @@ public abstract class SimpleLocalization extends YamlStaticConfig {
   private static boolean localizationClassCalled;
 
   /**
-   * Load the values -- this method is called automatically by reflection in the
-   * {@link YamlStaticConfig} class!
+   * Load the values -- this method is called automatically by reflection in the {@link
+   * YamlStaticConfig} class!
    */
   private static void init() {
     pathPrefix(null);
@@ -100,8 +99,7 @@ public abstract class SimpleLocalization extends YamlStaticConfig {
   }
 
   /**
-   * Reset the flag indicating that the class has been loaded, used in
-   * reloading.
+   * Reset the flag indicating that the class has been loaded, used in reloading.
    */
   public static void resetLocalizationCall() {
     localizationClassCalled = false;
@@ -120,9 +118,9 @@ public abstract class SimpleLocalization extends YamlStaticConfig {
   }
 
   /**
-   * Set and update the config version automatically, however the {@link
-   * #VERSION} will contain the older version used in the file on the disk so
-   * you can use it for comparing in the init() methods
+   * Set and update the config version automatically, however the {@link #VERSION} will
+   * contain the older version used in the file on the disk so you can use it for
+   * comparing in the init() methods
    *
    * <p>
    * Please call this as a super method when overloading this!
@@ -142,8 +140,7 @@ public abstract class SimpleLocalization extends YamlStaticConfig {
    * Return the very latest config version
    *
    * <p>
-   * Any changes here must also be made to the "Version" key in your settings
-   * file.
+   * Any changes here must also be made to the "Version" key in your settings file.
    *
    * @return
    */
@@ -155,8 +152,7 @@ public abstract class SimpleLocalization extends YamlStaticConfig {
   public static final class Commands {
 
     /**
-     * The message at "No_Console" key shown when console is denied executing a
-     * command.
+     * The message at "No_Console" key shown when console is denied executing a command.
      */
     public static String NO_CONSOLE = "&cYou may only use this command as a player";
 
@@ -166,15 +162,15 @@ public abstract class SimpleLocalization extends YamlStaticConfig {
     public static String COOLDOWN_WAIT = "&cWait {duration} second(s) before using this command again.";
 
     /**
-     * The message shown when the player tries a command but inputs an invalid
-     * first argument parameter. We suggest he types /{label} ? for help so make
-     * sure you implement some help there as well.
+     * The message shown when the player tries a command but inputs an invalid first
+     * argument parameter. We suggest he types /{label} ? for help so make sure you
+     * implement some help there as well.
      */
     public static String INVALID_ARGUMENT = "&cInvalid argument. Run &6/{label} ? &cfor help.";
 
     /**
-     * The message shown when the player tries a command but inputs an invalid
-     * second argument parameter. We so suggest he types /{label} {0} for help
+     * The message shown when the player tries a command but inputs an invalid second
+     * argument parameter. We so suggest he types /{label} {0} for help
      */
     public static String INVALID_SUB_ARGUMENT = "&cInvalid argument. Run '/{label} {0}' for help.";
 
@@ -193,14 +189,13 @@ public abstract class SimpleLocalization extends YamlStaticConfig {
     public static String LABEL_USAGE = "&cUsage:";
 
     /**
-     * The message at "Reload_Success" key shown when the plugin has been
-     * reloaded successfully.
+     * The message at "Reload_Success" key shown when the plugin has been reloaded
+     * successfully.
      */
     public static String RELOAD_SUCCESS = "&6{plugin_name} {plugin_version} has been reloaded.";
 
     /**
-     * The message at "Reload_Fail" key shown when the plugin has failed to
-     * reload.
+     * The message at "Reload_Fail" key shown when the plugin has failed to reload.
      */
     public static String RELOAD_FAIL = "&4Oups, &creloading failed! See the console for more information. Error: {error}";
 
@@ -210,8 +205,8 @@ public abstract class SimpleLocalization extends YamlStaticConfig {
     public static String ERROR = "&4&lOups! &cThe command failed :( Check the console and report the error.";
 
     /**
-     * Load the values -- this method is called automatically by reflection in
-     * the {@link YamlStaticConfig} class!
+     * Load the values -- this method is called automatically by reflection in the {@link
+     * YamlStaticConfig} class!
      */
     private static void init() {
       pathPrefix("Commands");
@@ -274,8 +269,8 @@ public abstract class SimpleLocalization extends YamlStaticConfig {
     public static String NOT_ONLINE = "&cPlayer {player} &cis not online on this server.";
 
     /**
-     * Load the values -- this method is called automatically by reflection in
-     * the {@link YamlStaticConfig} class!
+     * Load the values -- this method is called automatically by reflection in the {@link
+     * YamlStaticConfig} class!
      */
     private static void init() {
       pathPrefix("Player");
@@ -297,8 +292,8 @@ public abstract class SimpleLocalization extends YamlStaticConfig {
     public static String ITEM_DELETED = "&2The {item} has been deleted.";
 
     /**
-     * Load the values -- this method is called automatically by reflection in
-     * the {@link YamlStaticConfig} class!
+     * Load the values -- this method is called automatically by reflection in the {@link
+     * YamlStaticConfig} class!
      */
     private static void init() {
       pathPrefix("Menu");
@@ -331,8 +326,8 @@ public abstract class SimpleLocalization extends YamlStaticConfig {
             + "&2Please restart the server to load the new version.";
 
     /**
-     * Load the values -- this method is called automatically by reflection in
-     * the {@link YamlStaticConfig} class!
+     * Load the values -- this method is called automatically by reflection in the {@link
+     * YamlStaticConfig} class!
      */
     private static void init() {
       // Upgrade from old path

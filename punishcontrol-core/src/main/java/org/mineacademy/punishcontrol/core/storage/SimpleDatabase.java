@@ -1,11 +1,7 @@
 package org.mineacademy.punishcontrol.core.storage;
 
 import de.leonhard.storage.util.Valid;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -16,18 +12,25 @@ import lombok.RequiredArgsConstructor;
  *
  * <p>Before running queries make sure to call connect() methods.
  *
- * <p>You can also override {@link #onConnected()} to run your code after the connection has been
+ * <p>You can also override {@link #onConnected()} to run your code after the connection
+ * has been
  * established.
  *
  * <p>To use this class you must know the MySQL command syntax!
  */
 public class SimpleDatabase {
 
-  /** Map of variables you can use with the {} syntax in SQL */
+  /**
+   * Map of variables you can use with the {} syntax in SQL
+   */
   private final Map<String, String> sqlVariables = new HashMap<>();
-  /** The established connection, or null if none */
+  /**
+   * The established connection, or null if none
+   */
   Connection connection;
-  /** The last credentials from the connect function, or null if never called */
+  /**
+   * The last credentials from the connect function, or null if never called
+   */
   private LastCredentials lastCredentials;
 
   // --------------------------------------------------------------------
@@ -53,8 +56,8 @@ public class SimpleDatabase {
   }
 
   /**
-   * Attempts to establish a new database connection, you can then use {table} in SQL to replace
-   * with your table name
+   * Attempts to establish a new database connection, you can then use {table} in SQL to
+   * replace with your table name
    *
    * @param host
    * @param port
@@ -74,8 +77,8 @@ public class SimpleDatabase {
   }
 
   /**
-   * Attempts to establish a new database connection you can then use {table} in SQL to replace with
-   * your table name
+   * Attempts to establish a new database connection you can then use {table} in SQL to
+   * replace with your table name
    *
    * @param host
    * @param port
@@ -94,7 +97,8 @@ public class SimpleDatabase {
       final String table,
       final boolean autoReconnect) {
     connect(
-        "jdbc:mysql://" + host + ":" + port + "/" + database + "?autoReconnect=" + autoReconnect,
+        "jdbc:mysql://" + host + ":" + port + "/" + database + "?autoReconnect="
+            + autoReconnect,
         user,
         password,
         table);
@@ -112,7 +116,8 @@ public class SimpleDatabase {
   }
 
   /**
-   * Connects to the database you can then use {table} in SQL to replace with your table name*
+   * Connects to the database you can then use {table} in SQL to replace with your table
+   * name*
    *
    * @param url
    * @param user
@@ -138,8 +143,8 @@ public class SimpleDatabase {
   }
 
   /**
-   * Attempts to connect using last known credentials. Fails gracefully if those are not provided
-   * i.e. connect function was never called
+   * Attempts to connect using last known credentials. Fails gracefully if those are not
+   * provided i.e. connect function was never called
    */
   private void connectUsingLastCredentials() {
     if (lastCredentials != null) {
@@ -151,14 +156,19 @@ public class SimpleDatabase {
     }
   }
 
-  /** Called automatically after the first connection has been established */
-  protected void onConnected() {}
+  /**
+   * Called automatically after the first connection has been established
+   */
+  protected void onConnected() {
+  }
 
   // --------------------------------------------------------------------
   // Disconnecting
   // --------------------------------------------------------------------
 
-  /** Attempts to close the connection, if not null */
+  /**
+   * Attempts to close the connection, if not null
+   */
   protected final void close() {
     if (connection != null) {
       synchronized (connection) {
@@ -250,7 +260,8 @@ public class SimpleDatabase {
    * @return
    * @throws SQLException
    */
-  protected final java.sql.PreparedStatement prepareStatement(String sql) throws SQLException {
+  protected final java.sql.PreparedStatement prepareStatement(String sql)
+      throws SQLException {
     checkEstablished();
 
     synchronized (connection) {
@@ -267,7 +278,8 @@ public class SimpleDatabase {
   }
 
   /**
-   * Is the connection established, open and valid? Performs a blocking ping request to the database
+   * Is the connection established, open and valid? Performs a blocking ping request to
+   * the database
    *
    * @return whether the connection driver was set
    */
@@ -301,7 +313,9 @@ public class SimpleDatabase {
     return getOrEmpty(lastCredentials.table);
   }
 
-  /** Checks if the connect() function was called */
+  /**
+   * Checks if the connect() function was called
+   */
   private void checkEstablished() {
     Valid.checkBoolean(isLoaded(), "Connection was never established");
   }
@@ -320,8 +334,8 @@ public class SimpleDatabase {
   // --------------------------------------------------------------------
 
   /**
-   * Adds a new variable you can then use in your queries. The variable name will be added {}
-   * brackets automatically.
+   * Adds a new variable you can then use in your queries. The variable name will be added
+   * {} brackets automatically.
    *
    * @param name
    * @param value
@@ -349,7 +363,9 @@ public class SimpleDatabase {
     return input == null || "none".equalsIgnoreCase(input) ? "" : input;
   }
 
-  /** Stores last known credentials from the connect() functions */
+  /**
+   * Stores last known credentials from the connect() functions
+   */
   @RequiredArgsConstructor
   private static final class LastCredentials {
 
@@ -360,13 +376,19 @@ public class SimpleDatabase {
      */
     private final String url;
 
-    /** The user name for the database */
+    /**
+     * The user name for the database
+     */
     private final String user;
 
-    /** The password for the database */
+    /**
+     * The password for the database
+     */
     private final String password;
 
-    /** The table. Never used in this class, only stored for your convenience */
+    /**
+     * The table. Never used in this class, only stored for your convenience
+     */
     private final String table;
   }
 }

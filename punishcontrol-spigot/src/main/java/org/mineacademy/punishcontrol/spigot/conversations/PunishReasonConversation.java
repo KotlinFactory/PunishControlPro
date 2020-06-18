@@ -32,6 +32,7 @@ public final class PunishReasonConversation extends SimpleConversation {
 
   @RequiredArgsConstructor(access = AccessLevel.PRIVATE)
   private static final class ReasonPrompt extends SimplePrompt {
+
     private final PunishCreatorMenu menu;
 
     public static ReasonPrompt create(final PunishCreatorMenu menu) {

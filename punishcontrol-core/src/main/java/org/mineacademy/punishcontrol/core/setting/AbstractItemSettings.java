@@ -69,7 +69,8 @@ public abstract class AbstractItemSettings {
           "Itemtype of " + item.name() + " mustn't be null");
 
       // Getting data out of our yaml.
-      item.itemType(getConfigInstance().getOrSetDefault(item.name() + ".Type", item.itemType()));
+      item.itemType(
+          getConfigInstance().getOrSetDefault(item.name() + ".Type", item.itemType()));
 
       // Adding to our registered items
       items.add(item);

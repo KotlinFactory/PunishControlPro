@@ -11,8 +11,8 @@ import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import org.mineacademy.bfo.Common;
 import org.mineacademy.bfo.PlayerUtil;
-import org.mineacademy.burst.provider.UUIDNameProvider;
 import org.mineacademy.bfo.debug.Debugger;
+import org.mineacademy.burst.provider.UUIDNameProvider;
 import org.mineacademy.punishcontrol.core.MessageType;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.AbstractPlayerProvider;
@@ -34,9 +34,8 @@ public final class ProxyPlayerProvider
   public List<UUID> getOnlinePlayers() {
     final List<UUID> result = new ArrayList<>();
 
-    for (final val player : proxyServer.getPlayers()) {
+    for (final val player : proxyServer.getPlayers())
       result.add(player.getUniqueId());
-    }
 
     return result;
   }
@@ -64,9 +63,8 @@ public final class ProxyPlayerProvider
       final @NonNull String... messages) {
     final ProxiedPlayer player = proxyServer.getPlayer(uuid);
 
-    if (player == null) {
+    if (player == null)
       return;
-    }
 
     Common.tell(player, messages);
   }
@@ -78,9 +76,8 @@ public final class ProxyPlayerProvider
       @NonNull final String... messages) {
     final ProxiedPlayer player = Players.find(uuid).orElse(null);
 
-    if (player == null) {
+    if (player == null)
       return;
-    }
 
     switch (messageType) {
       case CHAT:
@@ -100,9 +97,8 @@ public final class ProxyPlayerProvider
   @Override
   public void kickIfOnline(@NonNull final UUID uuid, @NonNull final String... reason) {
     final val player = ProxyServer.getInstance().getPlayer(uuid);
-    if (player == null) {
+    if (player == null)
       return;
-    }
 
     player.disconnect(Common.colorize(String.join("\n", reason)));
   }

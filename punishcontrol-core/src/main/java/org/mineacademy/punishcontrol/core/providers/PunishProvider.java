@@ -4,6 +4,7 @@ import lombok.NonNull;
 import org.mineacademy.punishcontrol.core.punish.Punish;
 
 public interface PunishProvider {
+
   void broadCastPunishMessage(
       @NonNull final Punish punish, final boolean silent, final boolean superSilent);
 

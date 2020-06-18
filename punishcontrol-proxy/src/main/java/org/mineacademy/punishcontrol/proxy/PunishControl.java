@@ -45,7 +45,7 @@ public final class PunishControl
     Providers.pluginDataProvider(ProxyPluginDataProvider.create());
     Providers.exceptionHandler(ProxyExceptionHandler.create());
 
-    if (!getDataFolder().exists()) {
+    if (!getDataFolder().exists())
       Notifications.register(
           Notification
               .of("&6Take a tour")
@@ -59,9 +59,7 @@ public final class PunishControl
               )
               .itemType(ItemType.ENCHANTED_GOLDEN_APPLE)
       );
-    }
   }
-
 
   @Override
   protected void onPluginStart() {
@@ -102,9 +100,8 @@ public final class PunishControl
   @Override
   public void registerCommands() {
     registerCommand(MainCommand.create(Settings.MAIN_COMMAND_ALIASES));
-    if (Advanced.ENABLE_BACKUPS) {
+    if (Advanced.ENABLE_BACKUPS)
       registerCommand(BackupCommand.create());
-    }
 
     Commands.registerCommand(proxyComponent.commandKick());
     Commands.registerCommand(proxyComponent.commandBan());
@@ -167,9 +164,8 @@ public final class PunishControl
   public List<Permission> permissions() {
     final val result = new ArrayList<Permission>();
     for (final SimpleCommand command : SimpleCommand.getRegisteredCommands()) {
-      if (command.getPermission() == null) {
+      if (command.getPermission() == null)
         continue;
-      }
 
       result.add(Permission.of(command.getPermission(), command.getDescription()));
     }

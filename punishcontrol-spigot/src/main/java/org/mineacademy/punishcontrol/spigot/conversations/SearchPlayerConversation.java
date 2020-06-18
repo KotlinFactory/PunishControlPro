@@ -31,7 +31,8 @@ public final class SearchPlayerConversation
     return new SearchPlayerConversation(abstractPlayerBrowser);
   }
 
-  private SearchPlayerConversation(@NonNull final AbstractPlayerBrowser abstractPlayerBrowser) {
+  private SearchPlayerConversation(
+      @NonNull final AbstractPlayerBrowser abstractPlayerBrowser) {
     this.abstractPlayerBrowser = abstractPlayerBrowser;
   }
 
@@ -48,7 +49,8 @@ public final class SearchPlayerConversation
     }
 
     @Override
-    protected @Nullable SimplePrompt acceptValidatedInput(@NotNull ConversationContext conversationContext, @NonNull String input) {
+    protected @Nullable SimplePrompt acceptValidatedInput(
+        @NotNull ConversationContext conversationContext, @NonNull String input) {
 
       async(() -> abstractPlayerBrowser.redisplay(
           playerProvider.search(input)

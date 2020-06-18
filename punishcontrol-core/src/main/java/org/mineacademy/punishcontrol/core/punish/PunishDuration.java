@@ -19,32 +19,28 @@ public final class PunishDuration {
   private final long ms;
 
   /**
-   * Returns an empty punish-duration.
-   * Normally indicates that the String that should be parsed had the
-   * wrong format.
+   * Returns an empty punish-duration. Normally indicates that the String that should be
+   * parsed had the wrong format.
    */
   public static PunishDuration empty() {
     return new PunishDuration(Long.MIN_VALUE);
   }
 
   public static PunishDuration of(@NonNull String humanReadableTime) {
-    if (humanReadableTime.equalsIgnoreCase("-1")) {
+    if (humanReadableTime.equalsIgnoreCase("-1"))
       return permanent();
-    }
 
-    if (!humanReadableTime.contains(" ")) {
-      // Input: 10days Output: 10 days
+    // Input: 10days Output: 10 days
+    if (!humanReadableTime.contains(" "))
       humanReadableTime = splitHumanToHumanReadable(humanReadableTime);
-    }
 
     // Converting to ms (1tick = 50ms)
 
     final long ticks = TimeUtil.toTicks(humanReadableTime);
 
     //Invalid format
-    if (ticks == Long.MIN_VALUE) {
+    if (ticks == Long.MIN_VALUE)
       return empty();
-    }
     return new PunishDuration(TimeUtil.toTicks(humanReadableTime) * 50);
   }
 
@@ -70,16 +66,14 @@ public final class PunishDuration {
   }
 
   public static PunishDuration of(final long ms) {
-    if (ms == -1) {
+    if (ms == -1)
       return permanent();
-    }
     return new PunishDuration(ms);
   }
 
   public static PunishDuration of(final long time, final TimeUnit unit) {
-    if (time == -1) {
+    if (time == -1)
       return permanent();
-    }
     return new PunishDuration(unit.toMillis(time));
   }
 
@@ -92,13 +86,11 @@ public final class PunishDuration {
   // ----------------------------------------------------------------------------------------------------
 
   public boolean moreThan(final PunishDuration punishDuration) {
-    if (isPermanent()) {
+    if (isPermanent())
       return true;
-    }
 
-    if (punishDuration.isPermanent()) {
+    if (punishDuration.isPermanent())
       return false;
-    }
 
     return toMs() > punishDuration.toMs();
   }
@@ -121,9 +113,8 @@ public final class PunishDuration {
 
   @Override
   public String toString() {
-    if (isPermanent()) {
+    if (isPermanent())
       return "&cPermanent";
-    }
     return TimeUtil.formatMenuDate(ms);
   }
 

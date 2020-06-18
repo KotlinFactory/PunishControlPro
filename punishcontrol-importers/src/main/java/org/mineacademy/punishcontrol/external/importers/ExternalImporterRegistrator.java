@@ -8,6 +8,7 @@ import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 
 @UtilityClass
 public class ExternalImporterRegistrator {
+
   private final ImporterComponent importerComponent = DaggerImporterComponent.create();
 
   public void register(

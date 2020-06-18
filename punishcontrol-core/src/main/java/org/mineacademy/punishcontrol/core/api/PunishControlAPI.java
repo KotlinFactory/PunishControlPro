@@ -13,7 +13,8 @@ public abstract class PunishControlAPI {
 
    */
 
-  @Setter private static volatile PunishControlAPI instance;
+  @Setter
+  private static volatile PunishControlAPI instance;
 
   public static PunishControlAPI getInstance() {
     Valid.notNull(
@@ -22,7 +23,6 @@ public abstract class PunishControlAPI {
         "This means that PunishControlPro is either",
         "Not installed on your server or",
         "You were hooking into it before it was loaded.");
-
 
     return instance;
   }

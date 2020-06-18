@@ -1,10 +1,6 @@
 package org.mineacademy.punishcontrol.core.providers;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import lombok.NonNull;
 import lombok.val;
 import org.mineacademy.punishcontrol.core.PunishControlManager;
@@ -29,7 +25,7 @@ public abstract class AbstractPlayerProvider
   public final List<UUID> offlinePlayers() {
     final List<UUID> result = new ArrayList<>();
 
-    for (final String key : fileData.singleLayerKeySet()) {
+    for (final String key : fileData.singleLayerKeySet())
       try {
         result.add(UUID.fromString(key));
       } catch (final Throwable throwable) {
@@ -38,7 +34,6 @@ public abstract class AbstractPlayerProvider
         System.err.println("Skipping it...");
         throwable.printStackTrace();
       }
-    }
 
     return result;
   }
@@ -46,7 +41,7 @@ public abstract class AbstractPlayerProvider
   public final List<String> playerNames() {
     final List<String> result = new ArrayList<>();
 
-    for (final String key : fileData.singleLayerKeySet()) {
+    for (final String key : fileData.singleLayerKeySet())
       try {
         result.add(getString(key + ".name"));
       } catch (final Throwable throwable) {
@@ -55,7 +50,6 @@ public abstract class AbstractPlayerProvider
         System.err.println("Skipping it...");
         throwable.printStackTrace();
       }
-    }
 
     return result;
   }
@@ -72,27 +66,24 @@ public abstract class AbstractPlayerProvider
 
   @Override
   public final Optional<String> ip(@NonNull final UUID uuid) {
-    if (contains(uuid + ".ip")) {
+    if (contains(uuid + ".ip"))
       return Optional.of(getString(uuid + ".ip"));
-    }
 
     return Optional.empty();
   }
 
   @Override
   public Optional<String> findName(@NonNull final UUID uuid) {
-    if (contains(uuid.toString())) {
+    if (contains(uuid.toString()))
       return Optional.ofNullable(getString(uuid + ".name"));
-    } else {
-      if (!PunishControlManager.isOnlineMode()) {
+    else {
+      if (!PunishControlManager.isOnlineMode())
         return Optional.empty();
-      }
 
       //Not yet in file
       final String name = UUIDs.toName(uuid).orElse(null);
-      if (name != null) {
+      if (name != null)
         set(uuid.toString() + ".name", name);
-      }
       return Optional.ofNullable(name);
     }
   }
@@ -100,24 +91,20 @@ public abstract class AbstractPlayerProvider
   @Override
   public final Optional<UUID> findUUID(@NonNull final String name) {
     for (final val entry : getFileData().toMap().entrySet()) {
-      if (!(entry.getValue() instanceof Map)) {
+      if (!(entry.getValue() instanceof Map))
         continue;
-      }
-      @SuppressWarnings("unchecked") final Map<String, Object> data = (Map<String, Object>) entry
+      final Map<String, Object> data = (Map<String, Object>) entry
           .getValue();
-      if (data.get("name").toString().equalsIgnoreCase(name)) {
+      if (data.get("name").toString().equalsIgnoreCase(name))
         return Optional.of(UUID.fromString(entry.getKey()));
-      }
     }
 
     //Not yet in file
-    if (!PunishControlManager.isOnlineMode()) {
+    if (!PunishControlManager.isOnlineMode())
       return Optional.empty();
-    }
     final UUID uuid = UUIDs.find(name).orElse(null);
-    if (uuid != null) {
+    if (uuid != null)
       set(uuid.toString() + ".name", name);
-    }
     return Optional.ofNullable(uuid);
   }
 
@@ -140,9 +127,8 @@ public abstract class AbstractPlayerProvider
     for (final UUID uuid : offlinePlayers()) {
       final String ip = ip(uuid).orElse("unknown");
 
-      if (hostAddress.equalsIgnoreCase(ip)) {
+      if (hostAddress.equalsIgnoreCase(ip))
         result.add(uuid);
-      }
     }
 
     return result;

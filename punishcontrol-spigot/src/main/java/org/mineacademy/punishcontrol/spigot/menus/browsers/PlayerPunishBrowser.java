@@ -14,8 +14,7 @@ import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractPunishBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.ChooseActionMenu;
 
 /**
- * Same as {@link AllPunishesBrowser} but only shows the punishes for one
- * player.
+ * Same as {@link AllPunishesBrowser} but only shows the punishes for one player.
  */
 public final class PlayerPunishBrowser extends AbstractPunishBrowser {
 

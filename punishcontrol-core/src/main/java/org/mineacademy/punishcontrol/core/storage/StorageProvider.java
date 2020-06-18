@@ -1,11 +1,7 @@
 package org.mineacademy.punishcontrol.core.storage;
 
 import java.net.InetAddress;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import lombok.NonNull;
@@ -29,7 +25,7 @@ public interface StorageProvider {
     return new PlayerCache(this, uuid);
   }
 
-  default Set<UUID> listPunishedPlayers(){
+  default Set<UUID> listPunishedPlayers() {
     return listCurrentPunishes()
         .stream()
         .filter((punish -> !punish.isOld()))
@@ -62,7 +58,7 @@ public interface StorageProvider {
   // ----------------------------------------------------------------------------------------------------
 
 
-  default List<Punish> listCurrentPunishes(){
+  default List<Punish> listCurrentPunishes() {
     final List<Punish> result = new ArrayList<>();
 
     result.addAll(listBans());
@@ -140,35 +136,29 @@ public interface StorageProvider {
 
   default Optional<Ban> currentBan(@NonNull final UUID uuid) {
 
-    for (final Ban ban : listBans(uuid)) {
-      if (!ban.isOld()) {
+    for (final Ban ban : listBans(uuid))
+      if (!ban.isOld())
         return Optional.of(ban);
-      }
-    }
     return Optional.empty();
   }
 
   default Optional<Ban> currentBan(@NonNull final InetAddress inetAddress) {
     for (final Ban ban : listCurrentBans()) {
       final String toCompare = ban.ip().orElse("unknown");
-      if ("unknown".equalsIgnoreCase(toCompare)) {
+      if ("unknown".equalsIgnoreCase(toCompare))
         continue;
-      }
       //toCompare is never null
-      if (toCompare.equalsIgnoreCase(inetAddress.getHostAddress())) {
+      if (toCompare.equalsIgnoreCase(inetAddress.getHostAddress()))
         return Optional.ofNullable(ban);
-      }
     }
     return Optional.empty();
   }
 
 
   default Optional<Mute> currentMute(@NonNull final UUID uuid) {
-    for (final Mute mute : listMutes(uuid)) {
-      if (!mute.isOld()) {
+    for (final Mute mute : listMutes(uuid))
+      if (!mute.isOld())
         return Optional.of(mute);
-      }
-    }
 
     return Optional.empty();
   }
@@ -176,23 +166,19 @@ public interface StorageProvider {
   default Optional<Mute> currentMute(@NonNull final InetAddress inetAddress) {
     for (final Mute mute : listCurrentMutes()) {
       final String toCompare = mute.ip().orElse("unknown");
-      if ("unknown".equalsIgnoreCase(toCompare)) {
+      if ("unknown".equalsIgnoreCase(toCompare))
         continue;
-      }
       //toCompare is never null
-      if (toCompare.equalsIgnoreCase(inetAddress.getHostAddress())) {
+      if (toCompare.equalsIgnoreCase(inetAddress.getHostAddress()))
         return Optional.ofNullable(mute);
-      }
     }
     return Optional.empty();
   }
 
   default Optional<Warn> currentWarn(@NonNull final UUID uuid) {
-    for (final Warn warn : listWarns(uuid)) {
-      if (!warn.isOld()) {
+    for (final Warn warn : listWarns(uuid))
+      if (!warn.isOld())
         return Optional.of(warn);
-      }
-    }
 
     return Optional.empty();
   }
@@ -230,13 +216,11 @@ public interface StorageProvider {
   default boolean isBanned(@NonNull final InetAddress inetAddress) {
     for (final Ban ban : listCurrentBans()) {
       final String toCompare = ban.ip().orElse("unknown");
-      if ("unknown".equalsIgnoreCase(toCompare)) {
+      if ("unknown".equalsIgnoreCase(toCompare))
         continue;
-      }
       //toCompare is never null
-      if (toCompare.equalsIgnoreCase(inetAddress.getHostAddress())) {
+      if (toCompare.equalsIgnoreCase(inetAddress.getHostAddress()))
         return true;
-      }
     }
     return false;
   }
@@ -244,13 +228,11 @@ public interface StorageProvider {
   default boolean isMuted(@NonNull final InetAddress inetAddress) {
     for (final Mute ban : listCurrentMutes()) {
       final String toCompare = ban.ip().orElse("unknown");
-      if ("unknown".equalsIgnoreCase(toCompare)) {
+      if ("unknown".equalsIgnoreCase(toCompare))
         continue;
-      }
       //toCompare is never null
-      if (toCompare.equalsIgnoreCase(inetAddress.getHostAddress())) {
+      if (toCompare.equalsIgnoreCase(inetAddress.getHostAddress()))
         return true;
-      }
     }
     return false;
   }
@@ -258,13 +240,11 @@ public interface StorageProvider {
   default boolean isWarned(@NonNull final InetAddress inetAddress) {
     for (final Warn ban : listCurrentWarns()) {
       final String toCompare = ban.ip().orElse("unknown");
-      if ("unknown".equalsIgnoreCase(toCompare)) {
+      if ("unknown".equalsIgnoreCase(toCompare))
         continue;
-      }
       //toCompare is never null
-      if (toCompare.equalsIgnoreCase(inetAddress.getHostAddress())) {
+      if (toCompare.equalsIgnoreCase(inetAddress.getHostAddress()))
         return true;
-      }
     }
     return false;
   }
@@ -319,9 +299,8 @@ public interface StorageProvider {
   default boolean removeBanFor(@NonNull final UUID target) {
     final Optional<Ban> optionalBan = currentBan(target);
 
-    if (!optionalBan.isPresent()) {
+    if (!optionalBan.isPresent())
       return false;
-    }
 
     final Ban ban = optionalBan.get();
 
@@ -333,9 +312,8 @@ public interface StorageProvider {
   default boolean removeMuteFor(@NonNull final UUID target) {
     final Optional<Mute> optionalMute = currentMute(target);
 
-    if (!optionalMute.isPresent()) {
+    if (!optionalMute.isPresent())
       return false;
-    }
 
     final Mute mute = optionalMute.get();
 
@@ -347,9 +325,8 @@ public interface StorageProvider {
   default boolean removeWarnFor(@NonNull final UUID target) {
     final Optional<Warn> optionalWarn = currentWarn(target);
 
-    if (!optionalWarn.isPresent()) {
+    if (!optionalWarn.isPresent())
       return false;
-    }
 
     final Warn warn = optionalWarn.get();
 

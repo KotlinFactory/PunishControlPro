@@ -67,7 +67,6 @@ public abstract class AbstractPunishBrowser extends AbstractBrowser<Punish> {
             ? "&cRemoved"
             : Settings.Advanced.formatDate(punish.getEndTime());
 
-
     lore.find("target", "reason", "creation", "duration", "end", "creator");
     lore.replace(
         playerProvider.findName(punish.target()).orElse("unknown"),
@@ -123,7 +122,7 @@ public abstract class AbstractPunishBrowser extends AbstractBrowser<Punish> {
       return;
     }
 
-    new AbstractConfirmMenu(this){
+    new AbstractConfirmMenu(this) {
       @Override
       public void onConfirm() {
         async(() -> Providers.storageProvider().removePunish(punish));

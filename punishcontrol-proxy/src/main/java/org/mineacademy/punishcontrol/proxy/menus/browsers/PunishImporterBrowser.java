@@ -64,7 +64,7 @@ public final class PunishImporterBrowser extends AbstractBrowser<PunishImporter>
   // ----------------------------------------------------------------------------------------------------
 
   @Override
-  protected void onClick(ClickType clickType, PunishImporter punishImporter) {
+  protected void onClick(final ClickType clickType, final PunishImporter punishImporter) {
 
     if (!punishImporter.applicable()) {
       animateTitle("&" + CAN_T_IMPORT_FROM_THIS_IMPORTER);
@@ -97,7 +97,7 @@ public final class PunishImporterBrowser extends AbstractBrowser<PunishImporter>
   }
 
   @Override
-  protected ItemStack convertToItemStack(PunishImporter punishImporter) {
+  protected ItemStack convertToItemStack(final PunishImporter punishImporter) {
 
     ItemType type;
 
@@ -113,7 +113,8 @@ public final class PunishImporterBrowser extends AbstractBrowser<PunishImporter>
         .lore(punishImporter.description())
         .addLore(" ")
         .addLore(
-            "&6" + IS_APPLICABLE + " " + (punishImporter.applicable() ? "&a" + YES : "&c" + NO))
+            "&6" + IS_APPLICABLE + " " + (punishImporter.applicable() ? "&a" + YES
+                : "&c" + NO))
         .build();
   }
 

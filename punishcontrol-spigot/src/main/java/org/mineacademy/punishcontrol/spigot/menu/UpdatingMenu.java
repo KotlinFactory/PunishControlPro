@@ -53,7 +53,6 @@ public class UpdatingMenu extends Menu implements Schedulable {
           return;
         }
 
-
         for (final UpdatingButton button : buttons) {
           getViewer().getOpenInventory().setItem(button.slot(), button.build());
         }

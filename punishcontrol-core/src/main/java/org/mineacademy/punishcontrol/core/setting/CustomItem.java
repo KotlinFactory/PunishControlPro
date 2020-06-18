@@ -4,12 +4,7 @@ package org.mineacademy.punishcontrol.core.setting;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 @Setter

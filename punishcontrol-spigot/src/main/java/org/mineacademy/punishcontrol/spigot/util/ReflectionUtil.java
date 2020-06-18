@@ -1,11 +1,5 @@
 package org.mineacademy.punishcontrol.spigot.util;
 
-import lombok.experimental.UtilityClass;
-import org.bukkit.Bukkit;
-import org.bukkit.World;
-import org.bukkit.entity.Player;
-import org.bukkit.scoreboard.Scoreboard;
-
 import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -13,6 +7,11 @@ import java.util.AbstractMap;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import lombok.experimental.UtilityClass;
+import org.bukkit.Bukkit;
+import org.bukkit.World;
+import org.bukkit.entity.Player;
+import org.bukkit.scoreboard.Scoreboard;
 
 @UtilityClass
 public final class ReflectionUtil {
@@ -34,7 +33,7 @@ public final class ReflectionUtil {
 
   public Object getNMSPlayer(final Player p)
       throws NoSuchMethodException, SecurityException, IllegalAccessException,
-          IllegalArgumentException, InvocationTargetException {
+      IllegalArgumentException, InvocationTargetException {
     final Method getHandle = p.getClass().getMethod("getHandle");
     return getHandle.invoke(p);
   }
@@ -46,14 +45,14 @@ public final class ReflectionUtil {
 
   public Object getNMSWorld(final World w)
       throws NoSuchMethodException, SecurityException, IllegalAccessException,
-          IllegalArgumentException, InvocationTargetException {
+      IllegalArgumentException, InvocationTargetException {
     final Method getHandle = w.getClass().getMethod("getHandle");
     return getHandle.invoke(w);
   }
 
   public Object getNMSScoreboard(final Scoreboard s)
       throws NoSuchMethodException, SecurityException, IllegalAccessException,
-          IllegalArgumentException, InvocationTargetException {
+      IllegalArgumentException, InvocationTargetException {
     final Method getHandle = s.getClass().getMethod("getHandle");
     return getHandle.invoke(s);
   }
@@ -119,7 +118,8 @@ public final class ReflectionUtil {
   }
 
   public void setValueSubclass(
-      final Class<?> clazz, final Object instance, final String field, final Object value) {
+      final Class<?> clazz, final Object instance, final String field,
+      final Object value) {
     try {
       final Field f = clazz.getDeclaredField(field);
       f.setAccessible(true);
@@ -132,7 +132,8 @@ public final class ReflectionUtil {
   public void sendAllPacket(final Object packet) throws Exception {
     for (final Player p : Bukkit.getOnlinePlayers()) {
       final Object nmsPlayer = getNMSPlayer(p);
-      final Object connection = nmsPlayer.getClass().getField("playerConnection").get(nmsPlayer);
+      final Object connection = nmsPlayer.getClass().getField("playerConnection")
+          .get(nmsPlayer);
       connection
           .getClass()
           .getMethod("sendPacket", ReflectionUtil.getClass("{nms}.Packet"))
@@ -144,7 +145,8 @@ public final class ReflectionUtil {
     try {
       for (final String name : players) {
         final Object nmsPlayer = getNMSPlayer(Bukkit.getPlayer(name));
-        final Object connection = nmsPlayer.getClass().getField("playerConnection").get(nmsPlayer);
+        final Object connection = nmsPlayer.getClass().getField("playerConnection")
+            .get(nmsPlayer);
         connection
             .getClass()
             .getMethod("sendPacket", ReflectionUtil.getClass("{nms}.Packet"))
@@ -157,7 +159,8 @@ public final class ReflectionUtil {
 
   public void sendPlayerPacket(final Player p, final Object packet) throws Exception {
     final Object nmsPlayer = getNMSPlayer(p);
-    final Object connection = nmsPlayer.getClass().getField("playerConnection").get(nmsPlayer);
+    final Object connection = nmsPlayer.getClass().getField("playerConnection")
+        .get(nmsPlayer);
     connection
         .getClass()
         .getMethod("sendPacket", ReflectionUtil.getClass("{nms}.Packet"))

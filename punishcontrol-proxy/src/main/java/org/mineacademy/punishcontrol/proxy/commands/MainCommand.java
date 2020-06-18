@@ -50,9 +50,8 @@ public final class MainCommand extends SimpleCommand {
       return;
     }
 
-    if (args.length != 0) {
+    if (args.length != 0)
       returnInvalidArgs();
-    }
 
     MainMenu.showTo(getPlayer());
   }
@@ -63,16 +62,15 @@ public final class MainCommand extends SimpleCommand {
     tell("&7© MineAcademy 2020");
     tell("&7Founder: Leonhard Solbach");
     tell(" ");
-    for (final SimpleCommand command : SimpleCommand.getRegisteredCommands()) {
+    for (final SimpleCommand command : SimpleCommand.getRegisteredCommands())
       SimpleComponent
           .of("&e/")
-          .append("&e"+ command.getLabel())
+          .append("&e" + command.getLabel())
           .onHover("&7Click to copy.")
           .onClickSuggestCmd("/" + command.getLabel())
           .append(" ")
           .append("&8* &7" + command.getDescription())
           .send(sender);
-    }
     tell("&8" + Common.chatLineSmooth());
   }
 }

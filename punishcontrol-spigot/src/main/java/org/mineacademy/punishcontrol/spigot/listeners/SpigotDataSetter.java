@@ -39,7 +39,7 @@ public final class SpigotDataSetter implements Listener<JoinEvent> {
     Scheduler.runAsync(
         () -> {
           playerProvider.saveData(uuid, name, ip);
-          if(Advanced.ONLINE_MODE) {
+          if (Advanced.ONLINE_MODE) {
             textureProvider.saveSkinTexture(uuid);
           }
         });

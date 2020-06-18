@@ -12,7 +12,8 @@ public class Menus {
   private static final StorageProvider STORAGE_PROVIDER = Providers.storageProvider();
 
   private final String[] INFO_LORE = {
-    "§7Punish / More information", " ", "&7Banned: {false/true}", "&7Muted: {false/true}"
+      "§7Punish / More information", " ", "&7Banned: {false/true}",
+      "&7Muted: {false/true}"
   };
 
   public String[] getInfoForPlayer(@NonNull final UUID target) {

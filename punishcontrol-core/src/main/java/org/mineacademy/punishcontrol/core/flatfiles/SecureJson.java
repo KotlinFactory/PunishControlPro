@@ -11,8 +11,8 @@ import lombok.NonNull;
 import org.mineacademy.punishcontrol.core.providers.ExceptionHandler;
 
 /**
- * A class designed to make it as easy as possible to handle exceptions while
- * handling JSON-Files
+ * A class designed to make it as easy as possible to handle exceptions while handling
+ * JSON-Files
  */
 public abstract class SecureJson extends Json {
 

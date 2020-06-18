@@ -73,8 +73,8 @@ public final class SearchCommand
 
     // More heavy-weight operations
     async(() -> {
-      if ("player".equalsIgnoreCase(args[0])) {
-        //Ip
+      //Ip
+      if ("player".equalsIgnoreCase(args[0]))
         if (isValidInet4Address(data)) {
 
           tell("&7" + Common.chatLineSmooth());
@@ -103,7 +103,7 @@ public final class SearchCommand
         } else {
           tell("&7" + Common.chatLineSmooth());
           tell("&7Similar names");
-          for (final SearchResult result : playerProvider.search(data)) {
+          for (final SearchResult result : playerProvider.search(data))
             SimpleComponent
                 .of("&7[&8" + Math.round(result.similarity() * 100.0) / 100.0 + "&7]")
                 .onHover("&7The higher the number the more similar the name")
@@ -116,10 +116,9 @@ public final class SearchCommand
                 .onHover("&7Click to choose an action")
                 .onClickRunCmd("/chooseaction " + result.result())
                 .send(getSender());
-          }
           tell("&7" + Common.chatLineSmooth());
         }
-      } else if ("alts".equalsIgnoreCase(args[0])) {
+      else if ("alts".equalsIgnoreCase(args[0])) {
         tell("&7" + Common.chatLineSmooth());
 
         final UUID target = findTarget(data);
@@ -162,7 +161,7 @@ public final class SearchCommand
         "&7/" + getLabel() + " player <partial-name> &8* &7search for an "
             + "player by its partial name",
         "&7" + getLabel() + " player <ip> &8*&7 search for players by ip",
-        "&7/" +getLabel() + " alts <player> &8*&7 search for alts of a player",
+        "&7/" + getLabel() + " alts <player> &8*&7 search for alts of a player",
         "&8" + Common.chatLineSmooth()
     };
   }

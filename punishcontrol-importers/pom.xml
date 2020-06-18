@@ -12,7 +12,6 @@
   <version>1.0.0</version>
 
 
-
   <repositories>
     <repository>
       <id>jitpack.io</id>

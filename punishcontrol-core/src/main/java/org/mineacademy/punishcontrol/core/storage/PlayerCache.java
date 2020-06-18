@@ -1,16 +1,15 @@
 package org.mineacademy.punishcontrol.core.storage;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.mineacademy.punishcontrol.core.punish.Punish;
 import org.mineacademy.punishcontrol.core.punishes.Ban;
 import org.mineacademy.punishcontrol.core.punishes.Mute;
 import org.mineacademy.punishcontrol.core.punishes.Warn;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @Getter
 @RequiredArgsConstructor()

@@ -60,7 +60,7 @@ public final class NotificationBrowser extends AbstractBrowser<Notification> {
 
   @Override
   protected void onClick(final ClickType clickType, final Notification notification) {
-    if (clickType != ClickType.RIGHT_CLICK){
+    if (clickType != ClickType.RIGHT_CLICK) {
       return;
     }
     new AbstractConfirmMenu(this) {

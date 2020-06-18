@@ -56,13 +56,15 @@ public final class PunishImporterBrowser extends AbstractBrowser<PunishImporter>
         .name("&6" + punishImporter.pluginName().orElse("vanilla"))
         .lores(Arrays.asList(punishImporter.description()))
         .lore(" ")
-        .lore("&6Is applicable: " + (punishImporter.applicable() ? "&a" + YES : "&c" + NO))
+        .lore(
+            "&6Is applicable: " + (punishImporter.applicable() ? "&a" + YES : "&c" + NO))
         .build()
         .make();
   }
 
   @Override
-  protected void onPageClick(Player player, PunishImporter punishImporter, ClickType click) {
+  protected void onPageClick(Player player, PunishImporter punishImporter,
+      ClickType click) {
     if (!punishImporter.applicable()) {
       animateTitle("&cCan't import from this importer!");
       return;

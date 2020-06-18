@@ -35,34 +35,6 @@ Punish:
     - '&7Ip: {ip}'
     - '&7{chat_line}'
 
-Parts:
-  Currently: Aktuell
-  Has_No_Access: Kein Zugang
-  Yes: Ja
-  Apply: Anwenden
-  Materials: Materialien
-  Break: Breakup
-  Confirm: Bestätigen
-  Reason: Grund
-  Has_Access: Zugang
-  Groups: Groups
-  Change_Type: Typ ändern
-  Permission: Permission
-  Permissions: Permissions
-  Settings: Einstellungen
-  Punishments: Bestrafungen
-  Players: Spieler
-  No: Nein
-  StorageType: Speicher-Art
-  Connect: Verbinden
-  Silent: silent
-  Duration: '&6Dauer'
-  Permission_To: Berechtigung für
-  SuperSilent: super silent
-  Not: nicht
-  Action_For: Aktion für
-  Select: Auswählen
-  CreateNew: Erstellen
 Menu:
   Proxy:
     ChooseAction:
@@ -196,5 +168,34 @@ Menu:
       - '&6Zugangs-Rechte: &7{access}'
       - Zum entfernen rechts klicken
 
-  Version: '1'
+  Parts:
+    Currently: Aktuell
+    Has_No_Access: Kein Zugang
+    Yes: Ja
+    Apply: Anwenden
+    Materials: Materialien
+    Break: Breakup
+    Confirm: Bestätigen
+    Reason: Grund
+    Has_Access: Zugang
+    Groups: Groups
+    Change_Type: Typ ändern
+    Permission: Permission
+    Permissions: Permissions
+    Settings: Einstellungen
+    Punishments: Bestrafungen
+    Players: Spieler
+    No: Nein
+    StorageType: Speicher-Art
+    Connect: Verbinden
+    Silent: silent
+    Duration: '&6Dauer'
+    Permission_To: Berechtigung für
+    SuperSilent: super silent
+    Not: nicht
+    Action_For: Aktion für
+    Select: Auswählen
+    CreateNew: Erstellen
+
+  Version: 1
 

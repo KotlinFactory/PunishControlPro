@@ -23,7 +23,9 @@ public class Scheduler {
 
   public void runAsyncLater(final long delay, final Runnable runnable) {
     Bukkit.getScheduler()
-        .runTaskLaterAsynchronously(SimplePlugin.getInstance(), runnable,
+        .runTaskLaterAsynchronously(
+            SimplePlugin.getInstance(),
+            runnable,
             delay);
   }
 

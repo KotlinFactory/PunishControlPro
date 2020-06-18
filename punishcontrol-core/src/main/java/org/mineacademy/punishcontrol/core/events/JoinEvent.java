@@ -22,6 +22,6 @@ public final class JoinEvent extends AbstractEvent {
       @NonNull final UUID targetUUID,
       @NonNull final String name,
       @NonNull final InetAddress targetInetAddress) {
-    return new JoinEvent(targetUUID,name, targetInetAddress);
+    return new JoinEvent(targetUUID, name, targetInetAddress);
   }
 }

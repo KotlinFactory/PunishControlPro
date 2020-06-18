@@ -22,12 +22,11 @@ public abstract class AbstractInjector<C extends Annotation, F extends Annotatio
   protected final Class<F> fieldAnnotationClass;
 
   @Override
-  public final void startInjecting(List<Class<?>> classes) {
-    for (Class<?> clazz : classes) {
+  public final void startInjecting(final List<Class<?>> classes) {
+    for (final Class<?> clazz : classes) {
 
-      if (!clazz.isAnnotationPresent(classAnnotationClass)) {
+      if (!clazz.isAnnotationPresent(classAnnotationClass))
         continue;
-      }
 //      if (!clazz.getSimpleName().equalsIgnoreCase("AbstractPunishBrowser"))
 //        continue;
 
@@ -35,18 +34,16 @@ public abstract class AbstractInjector<C extends Annotation, F extends Annotatio
 
       {
 
-        for (Field field : clazz.getDeclaredFields()) {
+        for (final Field field : clazz.getDeclaredFields()) {
 
           // We only inject static fields
-          if (!Modifier.isStatic(field.getModifiers())) {
-//          System.out.println("Field is not static: " + field.getName());
+          //          System.out.println("Field is not static: " + field.getName());
+          if (!Modifier.isStatic(field.getModifiers()))
             continue;
-          }
 
-          if (!field.isAnnotationPresent(fieldAnnotationClass)) {
-//          System.out.println("field annotation is not present at");
+          //          System.out.println("field annotation is not present at");
+          if (!field.isAnnotationPresent(fieldAnnotationClass))
             continue;
-          }
 
           Valid.checkBoolean(
               !Modifier.isFinal(field.getModifiers()),
@@ -68,6 +65,7 @@ public abstract class AbstractInjector<C extends Annotation, F extends Annotatio
 //            System.out.println("Pre: ");
 //            debugRep(raw);
             field.set(null, getValueByPath(path, raw));
+            onInjected(clazz, field, path);
 //            System.out.println("After: ");
 //            debugRep(getValueByPath(path, raw));
 //            System.out.println("Injected: " + field.getName() + " in " + clazz.getName());
@@ -81,13 +79,16 @@ public abstract class AbstractInjector<C extends Annotation, F extends Annotatio
     }
   }
 
+  protected void onInjected(final Class<?> clazz, final Field field, final String path) {
+
+  }
+
+
   private static void debugRep(final Object replacer) {
-    if (!(replacer instanceof Replacer)) {
+    if (!(replacer instanceof Replacer))
       return;
-    }
     final Replacer rep = (Replacer) replacer;
-    for (String s : rep.replacedMessage()) {
+    for (final String s : rep.replacedMessage())
       System.out.println(s);
-    }
   }
 }

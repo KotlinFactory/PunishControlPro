@@ -20,7 +20,8 @@ public class PunishedPlayerBrowser extends AbstractPlayerBrowser {
   private final StorageProvider storageProvider;
 
   public static void showTo(final Player player) {
-    Scheduler.runAsync(() -> DaggerSpigotComponent.create().punishedPlayerBrowser().displayTo(player, true));
+    Scheduler.runAsync(() -> DaggerSpigotComponent.create().punishedPlayerBrowser()
+        .displayTo(player, true));
   }
 
   @Inject
@@ -29,7 +30,8 @@ public class PunishedPlayerBrowser extends AbstractPlayerBrowser {
       final TextureProvider textureProvider,
       final StorageProvider storageProvider,
       final MainMenu mainMenu) {
-    super(playerProvider, textureProvider, mainMenu, storageProvider.listPunishedPlayers());
+    super(playerProvider, textureProvider, mainMenu,
+        storageProvider.listPunishedPlayers());
     this.storageProvider = storageProvider;
   }
 

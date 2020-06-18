@@ -48,7 +48,8 @@ public final class ChooseActionMenu extends Menu {
   private static final String[] DISABLED_OFFLINE_LORE = {"",
       "&cDisabled:",
       "&7Player is offline"};
-  private static final String[] MENU_INFORMATION = {"&7Menu to select an", "&7Action for players"};
+  private static final String[] MENU_INFORMATION = {"&7Menu to select an",
+      "&7Action for players"};
   @NonNls
   private static final String DATA_FOR = "Data for";
 

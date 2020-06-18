@@ -123,6 +123,7 @@ public abstract class AbstractPlayerBrowser extends AbstractSearchableBrowser<UU
         public void onClick(UUID uuid) {
           AbstractPlayerBrowser.this.onClick(uuid);
         }
+
         @Override
         public Collection<UUID> searchByPartialString(String partial) {
           return AbstractPlayerBrowser.this.searchByPartialString(partial);

@@ -4,7 +4,7 @@ import java.lang.annotation.Annotation;
 import java.util.List;
 import lombok.NonNull;
 
-public interface Injector<C extends Annotation, F extends Annotation>  {
+public interface Injector<C extends Annotation, F extends Annotation> {
 
   String pathFromAnnotation(F fieldAnnotation);
 

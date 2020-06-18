@@ -65,7 +65,7 @@ public class Permissions {
         "# This file lists all permissions we use.",
         "# You can also view them using our menu system.",
         "# ",
-        "# Do not change them! Please use the settings.yml instead.", 
+        "# Do not change them! Please use the settings.yml instead.",
         ""
     ));
 

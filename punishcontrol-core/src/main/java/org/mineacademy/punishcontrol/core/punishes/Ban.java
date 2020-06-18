@@ -49,7 +49,8 @@ public final class Ban extends Punish {
     return new Ban(target, creator, duration, System.currentTimeMillis());
   }
 
-  public static Ban ofRawData(final long creation, @NonNull final Map<String, Object> rawData) {
+  public static Ban ofRawData(final long creation,
+      @NonNull final Map<String, Object> rawData) {
     return new Ban(creation, rawData);
   }
   // ----------------------------------------------------------------------------------------------------

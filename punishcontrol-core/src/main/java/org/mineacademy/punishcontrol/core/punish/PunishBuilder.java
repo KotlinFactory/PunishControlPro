@@ -3,11 +3,7 @@ package org.mineacademy.punishcontrol.core.punish;
 import de.leonhard.storage.util.Valid;
 import java.util.Optional;
 import java.util.UUID;
-import lombok.AccessLevel;
-import lombok.Getter;
-import lombok.NonNull;
-import lombok.RequiredArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import lombok.experimental.Accessors;
 import org.jetbrains.annotations.Nullable;
 import org.mineacademy.punishcontrol.core.provider.Providers;
@@ -67,7 +63,7 @@ public final class PunishBuilder {
     return this;
   }
 
-  public boolean canBuild(){
+  public boolean canBuild() {
     if (punishType == null) {
       return false;
     }

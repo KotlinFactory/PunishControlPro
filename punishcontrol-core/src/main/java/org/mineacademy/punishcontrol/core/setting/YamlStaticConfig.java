@@ -8,11 +8,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.Arrays;
 import java.util.List;
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.SneakyThrows;
-import lombok.val;
+import lombok.*;
 import org.jetbrains.annotations.Nullable;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.PluginDataProvider;
@@ -33,9 +29,8 @@ public abstract class YamlStaticConfig {
   }
 
   public static String colorize(@Nullable final String input) {
-    if (input == null) {
+    if (input == null)
       return "";
-    }
 
     return input.replace("§", "&");
   }
@@ -79,7 +74,6 @@ public abstract class YamlStaticConfig {
    * @param path
    * @return
    */
-  @SuppressWarnings("unchecked")
   protected static Replacer getReplacer(final String path) {
     final Object raw = get(path);
 
@@ -87,9 +81,8 @@ public abstract class YamlStaticConfig {
         raw != null,
         "Your config lacks a Replacer at '" + path + "'");
 
-    if (raw instanceof List<?>) {
+    if (raw instanceof List<?>)
       return Replacer.of((List<String>) raw);
-    }
     return Replacer.of(raw.toString());
   }
 
@@ -168,18 +161,16 @@ public abstract class YamlStaticConfig {
     // Loading Settings
     for (final Class<? extends YamlStaticConfig> aClass : classes) {
       final YamlStaticConfig config = aClass.newInstance();
-      if (!(config instanceof SimpleSettings)) {
+      if (!(config instanceof SimpleSettings))
         continue;
-      }
       config.load();
     }
 
     // Loading Localizations
     for (final Class<? extends YamlStaticConfig> aClass : classes) {
       final YamlStaticConfig config = aClass.newInstance();
-      if (config instanceof SimpleSettings) {
+      if (config instanceof SimpleSettings)
         continue;
-      }
       config.load();
     }
   }
@@ -248,9 +239,8 @@ public abstract class YamlStaticConfig {
       invokeMethodsIn(subClazz);
 
       // And classes in sub-classes in superclass.
-      for (final Class<?> subSubClazz : subClazz.getDeclaredClasses()) {
+      for (final Class<?> subSubClazz : subClazz.getDeclaredClasses())
         invokeMethodsIn(subSubClazz);
-      }
     }
   }
 
@@ -290,11 +280,10 @@ public abstract class YamlStaticConfig {
     for (final Field field : clazz.getDeclaredFields()) {
       field.setAccessible(true);
 
-      if (Modifier.isPublic(field.getModifiers())) {
+      if (Modifier.isPublic(field.getModifiers()))
         Valid.checkBoolean(!field.getType().isPrimitive(),
             "Field '" + field.getName() + "' in " + clazz
                 + " must not be primitive!");
-      }
 
       Object result = null;
       try {

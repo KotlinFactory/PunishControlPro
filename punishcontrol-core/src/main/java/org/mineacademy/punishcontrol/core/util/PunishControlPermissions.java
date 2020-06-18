@@ -9,6 +9,7 @@ import org.mineacademy.punishcontrol.core.permission.PermissionType;
 @UtilityClass
 @FieldDefaults(makeFinal = true, level = AccessLevel.PUBLIC)
 public class PunishControlPermissions {
+
   public Permission MENU_SETTINGS_STORAGE = Permission
       .of("punishcontrol.menu.settings.player",
           "Access the storage-settings")
@@ -16,7 +17,7 @@ public class PunishControlPermissions {
 
   public Permission MENU_SETTINGS_PLAYER = Permission
       .of("punishcontrol.menu.settings.storage",
-      "Access the player-settings")
+          "Access the player-settings")
       .type(PermissionType.MENU);
 
   public Permission MENU_SETTINGS_TEMPLATES = Permission
@@ -29,17 +30,17 @@ public class PunishControlPermissions {
           "Access the notifications")
       .type(PermissionType.MENU);
 
-  public Permission MENU_SETTINGS_CUSTOMIZATION =  Permission
+  public Permission MENU_SETTINGS_CUSTOMIZATION = Permission
       .of("punishcontrol.menu.settings.customization",
           "Customize PunishControl's menus")
       .type(PermissionType.OTHER);
 
-  public Permission TOGGLE_PUNISHABLE =  Permission
+  public Permission TOGGLE_PUNISHABLE = Permission
       .of("punishcontrol.menu.settings.punishable",
           "Toggle whether you can punish a player or not")
       .type(PermissionType.MENU);
 
-  public Permission IMPORT_PUNISHMENTS =  Permission
+  public Permission IMPORT_PUNISHMENTS = Permission
       .of("punishcontrol.import.punishments",
           "Toggle whether punishments can be importer or not")
       .type(PermissionType.OTHER);

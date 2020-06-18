@@ -38,7 +38,6 @@ public abstract class AbstractUnPunishCommand extends
       returnTell(INVALID_SILENCE_USAGE);
     }
 
-
     switch (args.length) {
       case 0:
         if (!isPlayer()) {

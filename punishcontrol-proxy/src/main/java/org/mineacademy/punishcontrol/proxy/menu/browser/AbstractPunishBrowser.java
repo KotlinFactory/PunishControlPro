@@ -30,16 +30,16 @@ public abstract class AbstractPunishBrowser extends AbstractBrowser<Punish> {
 
   @NonNls
   @Localizable("Menu.Proxy.Punish.Title")
-  private static String BROWSE_PUNISHES = "Browse Punishes";
+  private static final String BROWSE_PUNISHES = "Browse Punishes";
 
   @NonNls
   @Localizable("Menu.Proxy.Punish.Remove")
-  private static String RIGHT_CLICK_TO_REMOVE = "Right-Click to remove";
+  private static final String RIGHT_CLICK_TO_REMOVE = "Right-Click to remove";
   @Localizable("Menu.Proxy.Punish.Already_Removed")
-  private static String PUNISH_IS_ALREADY_REMOVED = "Punish is already removed";
+  private static final String PUNISH_IS_ALREADY_REMOVED = "Punish is already removed";
 
   @Localizable("Menu.Proxy.Punish.Lore")
-  private static Replacer LORE_REPLACER = Replacer.of(
+  private static final Replacer LORE_REPLACER = Replacer.of(
       "",
       "&6Target: &7{target}",
       "&6Reason: &7{reason}",
@@ -92,15 +92,12 @@ public abstract class AbstractPunishBrowser extends AbstractBrowser<Punish> {
     final List<String> lores = new ArrayList<>(
         Arrays.asList(LORE_REPLACER.replacedMessage()));
 
-
-    if (loresToAdd(punish) != null) {
+    if (loresToAdd(punish) != null)
       lores.addAll(loresToAdd(punish));
-    }
     builder.lore(lores);
 
-    if (!punish.isOld()) {
+    if (!punish.isOld())
       lores.add("&6" + RIGHT_CLICK_TO_REMOVE);
-    }
 
     return builder.build();
   }
@@ -111,9 +108,8 @@ public abstract class AbstractPunishBrowser extends AbstractBrowser<Punish> {
 
   @Override
   protected void onClick(final ClickType clickType, final Punish punish) {
-    if (clickType != ClickType.RIGHT_CLICK) {
+    if (clickType != ClickType.RIGHT_CLICK)
       return;
-    }
 
     if (punish.isOld()) {
       animateTitle("&c" + PUNISH_IS_ALREADY_REMOVED);

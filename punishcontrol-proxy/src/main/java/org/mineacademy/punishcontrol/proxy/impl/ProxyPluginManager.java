@@ -25,36 +25,32 @@ public final class ProxyPluginManager implements PluginManager {
   }
 
   @Override
-  public boolean isEnabled(@NonNull String pluginName) {
+  public boolean isEnabled(@NonNull final String pluginName) {
     return ProxyServer.getInstance().getPluginManager().getPlugin(pluginName) != null;
   }
 
   @Override
-  public void enable(@NonNull String pluginName) {
+  public void enable(@NonNull final String pluginName) {
     final Plugin plugin = ProxyServer
         .getInstance()
         .getPluginManager()
         .getPlugin(pluginName);
 
-    if (plugin == null) {
+    if (plugin == null)
       return;
-    }
-
 
     plugin.onEnable();
   }
 
   @Override
-  public void disable(@NonNull String pluginName) {
+  public void disable(@NonNull final String pluginName) {
     final Plugin plugin = ProxyServer
         .getInstance()
         .getPluginManager()
         .getPlugin(pluginName);
 
-    if (plugin == null) {
+    if (plugin == null)
       return;
-    }
-
 
     plugin.onDisable();
   }

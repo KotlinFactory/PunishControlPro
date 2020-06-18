@@ -14,11 +14,7 @@ import org.mineacademy.burst.util.Scheduler;
 import org.mineacademy.punishcontrol.core.fo.constants.FoConstants;
 import org.mineacademy.punishcontrol.core.group.Groups;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
-import org.mineacademy.punishcontrol.core.punish.Punish;
-import org.mineacademy.punishcontrol.core.punish.PunishBuilder;
-import org.mineacademy.punishcontrol.core.punish.PunishDuration;
-import org.mineacademy.punishcontrol.core.punish.PunishType;
-import org.mineacademy.punishcontrol.core.punish.Punishes;
+import org.mineacademy.punishcontrol.core.punish.*;
 import org.mineacademy.punishcontrol.core.punish.template.PunishTemplates;
 import org.mineacademy.punishcontrol.core.setting.Replacer;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
@@ -84,16 +80,14 @@ public abstract class AbstractPunishCommand
   protected final void onCommand() {
 
     // Checking the console if needed.
-    if (!consoleAllowed) {
+    if (!consoleAllowed)
       checkConsole();
-    }
 
     silent = checkSilent();
     superSilent = checkSuperSilent();
 
-    if (silent && superSilent) {
+    if (silent && superSilent)
       returnTell(INVALID_SILENCE_USAGE);
-    }
 
     final List<String> finalArgs = new ArrayList<>(Arrays.asList(args));
     // Args without params
@@ -107,22 +101,19 @@ public abstract class AbstractPunishCommand
 
     switch (size) {
       case 0:
-        if (!isPlayer()) {
+        if (!isPlayer())
           returnTell(MORE_ARGUMENTS_AS_CONSOLE_MESSAGE);
-        }
 
         PunishCreatorMenu.showTo(getPlayer(), PunishBuilder.of(punishType));
         break;
       case 1:
 
         if ("?".equalsIgnoreCase(finalArgs.get(0)) || "help"
-            .equalsIgnoreCase(finalArgs.get(0))) {
+            .equalsIgnoreCase(finalArgs.get(0)))
           returnTell(getMultilineUsageMessage());
-        }
 
-        if (!isPlayer()) {
+        if (!isPlayer())
           returnTell(MORE_ARGUMENTS_AS_CONSOLE_MESSAGE);
-        }
         // Choose action (PUNISH)
         PunishCreatorMenu.showTo(getPlayer(),
             PunishBuilder.of(punishType).target(findTarget(finalArgs)));
@@ -163,9 +154,8 @@ public abstract class AbstractPunishCommand
 
           punish.create();
 
-          if (!punishType.shouldKick()) {
+          if (!punishType.shouldKick())
             return;
-          }
 
           Players.find(target).ifPresent((player -> {
             player.disconnect(reason.toString());
@@ -207,9 +197,8 @@ public abstract class AbstractPunishCommand
 
           for (int i = 0; i < finalArgs.size(); i++) {
             // Ignoring first & second argument//
-            if (i == 0 || i == 1) {
+            if (i == 0 || i == 1)
               continue;
-            }
 
             reason.append(finalArgs.get(i)).append(" ");
           }
@@ -242,9 +231,8 @@ public abstract class AbstractPunishCommand
 
           tell(punishMessage.replacedMessage());
 
-          if (!punishType.shouldKick()) {
+          if (!punishType.shouldKick())
             return;
-          }
 
           Players.find(target).ifPresent(targetPlayer -> {
             targetPlayer.disconnect(Punishes.formOnPunishMessage(punish));

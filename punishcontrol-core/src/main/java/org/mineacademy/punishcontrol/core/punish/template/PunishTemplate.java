@@ -54,7 +54,7 @@ public final class PunishTemplate extends SecureJson {
     return PunishDuration.of(getOrSetDefault("Duration", "2 days"));
   }
 
-  public String name(){
+  public String name() {
     return file.getName().replace(".json", "");
   }
 
@@ -79,7 +79,7 @@ public final class PunishTemplate extends SecureJson {
   // Setters
   // ----------------------------------------------------------------------------------------------------
 
-  public void permission(@NonNull final String permission){
+  public void permission(@NonNull final String permission) {
     set("Permission", permission);
   }
 

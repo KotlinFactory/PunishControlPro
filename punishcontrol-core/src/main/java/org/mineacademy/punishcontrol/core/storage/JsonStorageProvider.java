@@ -14,8 +14,8 @@ import org.mineacademy.punishcontrol.core.punishes.Mute;
 import org.mineacademy.punishcontrol.core.punishes.Warn;
 
 /**
- * Class to save our data in a JSON for an example how the file looks like, just
- * scrool to the end of this file
+ * Class to save our data in a JSON for an example how the file looks like, just scrool to
+ * the end of this file
  */
 
 public final class JsonStorageProvider extends SecureJson implements StorageProvider {

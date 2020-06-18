@@ -1,10 +1,6 @@
 package org.mineacademy.punishcontrol.proxy.impl;
 
-import lombok.AccessLevel;
-import lombok.NoArgsConstructor;
-import lombok.NonNull;
-import lombok.SneakyThrows;
-import lombok.val;
+import lombok.*;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import org.mineacademy.bfo.Common;
@@ -38,26 +34,22 @@ public final class ProxyPunishProvider implements PunishProvider {
       final boolean silent,
       final boolean superSilent) {
 
-    if (punish.punishType().shouldKick()) {
-
+    if (punish.punishType().shouldKick())
       Players.find(punish.target()).ifPresent((player -> player.disconnect(
           Punishes.formOnPunishMessage(punish))));
-    }
 
-    if (punish.punishType().shouldWarn()) {
+    if (punish.punishType().shouldWarn())
       Players.find(punish.target())
           .ifPresent((player -> Providers.playerProvider().sendIfOnline(
               player.getUniqueId(),
               Warn.messageType,
               Punishes.formPunishedMessage(punish).split("\n"))));
-    }
 
-    if (punish.punishType().shouldMessage()) {
+    if (punish.punishType().shouldMessage())
       Players.find(punish.target())
           .ifPresent((player -> Providers.playerProvider().sendIfOnline(
               player.getUniqueId(),
               Punishes.formPunishedMessage(punish).split("\n"))));
-    }
 
     final val targetName = Providers.playerProvider().findName(punish.target())
         .orElse("");
@@ -101,22 +93,19 @@ public final class ProxyPunishProvider implements PunishProvider {
     }
 
     // No one will be notified
-    if (superSilent) {
+    if (superSilent)
       return;
-    }
 
     if (silent) {
 
-      if (!Settings.Notifications.SilentPunish.ENABLED) {
+      if (!Settings.Notifications.SilentPunish.ENABLED)
         return;
-      }
 
       for (final ProxiedPlayer player : ProxyServer.getInstance().getPlayers()) {
 
         // The player {} has been banned by
-        if (!player.hasPermission(Settings.Notifications.SilentPunish.PERMISSION)) {
+        if (!player.hasPermission(Settings.Notifications.SilentPunish.PERMISSION))
           continue;
-        }
 
         org.mineacademy.bfo.Common
             .tell(player, Localization.Punish.PUNISH_BROADCAST_MESSAGE.replace(
@@ -140,9 +129,8 @@ public final class ProxyPunishProvider implements PunishProvider {
 
     for (final ProxiedPlayer player : ProxyServer.getInstance().getPlayers()) {
 
-      if (!player.hasPermission(Settings.Notifications.Punish.PERMISSION)) {
+      if (!player.hasPermission(Settings.Notifications.Punish.PERMISSION))
         continue;
-      }
 
       Common
           .tell(player, Localization.Punish.PUNISH_BROADCAST_MESSAGE.replace(

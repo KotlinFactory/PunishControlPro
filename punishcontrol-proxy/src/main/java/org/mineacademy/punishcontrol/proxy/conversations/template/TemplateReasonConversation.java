@@ -36,7 +36,8 @@ public final class TemplateReasonConversation extends SimpleConversation {
 
     private final PunishTemplateCreatorMenu menu;
 
-    public ReasonPrompt(final SimpleConversation parent, final PunishTemplateCreatorMenu menu) {
+    public ReasonPrompt(final SimpleConversation parent,
+        final PunishTemplateCreatorMenu menu) {
       super(parent);
       this.menu = menu;
     }

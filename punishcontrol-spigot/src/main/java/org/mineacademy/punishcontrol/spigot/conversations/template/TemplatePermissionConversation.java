@@ -16,7 +16,8 @@ public class TemplatePermissionConversation extends SimpleConversation {
 
   private final PunishTemplateCreatorMenu menu;
 
-  public static TemplatePermissionConversation create(final PunishTemplateCreatorMenu menu) {
+  public static TemplatePermissionConversation create(
+      final PunishTemplateCreatorMenu menu) {
     return new TemplatePermissionConversation(menu);
   }
 

@@ -1,0 +1,26 @@
+package org.mineacademy.punishcontrol.core.localization;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import lombok.NonNull;
+import lombok.experimental.UtilityClass;
+
+
+/**
+ * Class to manage our localizable Strings. Can be used to display them in a menu in the
+ * different platform's implementations such as Spigot or Proxy
+ */
+@UtilityClass
+public class Localizables {
+
+  private final List<Localizable> localizables = new ArrayList<>();
+
+  public void register(@NonNull final Localizable localizable) {
+    localizables.add(localizable);
+  }
+
+  public List<Localizable> localizables() {
+    return Collections.unmodifiableList(localizables);
+  }
+}

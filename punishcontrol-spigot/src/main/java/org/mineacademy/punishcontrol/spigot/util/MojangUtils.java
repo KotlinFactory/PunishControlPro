@@ -54,7 +54,6 @@ public class MojangUtils {
   }
 
   private String fetch0(final UUID uuid) throws Exception {
-    System.out.println("uuid: " + uuid);
     final URL url_1 = new URL(
         SERVICE_URL + UUIDTypeAdapter
             .fromUUID(uuid)

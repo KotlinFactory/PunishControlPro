@@ -71,7 +71,7 @@ public final class StaffPunishesBrowser extends AbstractPunishBrowser {
 
     this.staffMember = staffMember;
 
-    setTitle("&8"+ PUNISHMENTS_BY_TARGET
+    setTitle("&8" + PUNISHMENTS_BY_TARGET
         .replace("{target}", playerProvider.findName(staffMember).orElse("unknown")));
 
 //   .displayTo(getPlayer());

@@ -9,12 +9,12 @@ import org.mineacademy.punishcontrol.core.listener.Listeners;
 
 
 /**
- * Central utility class
- * for handling events
+ * Central utility class for handling events
  */
 @UtilityClass
 @SuppressWarnings({"rawtypes", "unchecked"})
 public class Events {
+
   private final List<Event> knownEvents = new ArrayList<>();
 
   public void add(final Event event) {

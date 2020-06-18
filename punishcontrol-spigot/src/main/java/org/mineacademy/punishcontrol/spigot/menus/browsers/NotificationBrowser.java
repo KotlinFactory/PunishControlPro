@@ -22,6 +22,10 @@ public final class NotificationBrowser extends AbstractBrowser<Notification> {
   private static final String NOTIFICATIONS = "Notifications";
   @NonNls
   private static final String RIGHT_CLICK_TO_DISMISS = "Right click to dismiss";
+  private static final String[] MENU_INFORMATION = {
+      "&7All current notifications",
+      "&7are listed here"
+  };
 
   public static void showTo(@NonNull final Player player) {
     Scheduler.runAsync(() -> new NotificationBrowser().displayTo(player));
@@ -49,12 +53,13 @@ public final class NotificationBrowser extends AbstractBrowser<Notification> {
   }
 
   @Override
-  protected void onPageClick(final Player player, final Notification item, final ClickType click) {
+  protected void onPageClick(final Player player, final Notification item,
+      final ClickType click) {
     if (!click.isRightClick()) {
       return;
     }
 
-    new AbstractConfirmMenu(this){
+    new AbstractConfirmMenu(this) {
       @Override
       public void onConfirm() {
         Notifications.unregister(item);
@@ -69,9 +74,6 @@ public final class NotificationBrowser extends AbstractBrowser<Notification> {
 
   @Override
   protected String[] getInfo() {
-    return new String[]{
-        "&7All current notifications",
-        "&7are listed here"
-    };
+    return MENU_INFORMATION;
   }
 }

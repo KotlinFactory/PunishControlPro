@@ -57,8 +57,8 @@ class UUIDFetcher {
 
 
   /**
-   * Fetches the uuid synchronously for a specified name and time and passes the
-   * result to the consumer
+   * Fetches the uuid synchronously for a specified name and time and passes the result to
+   * the consumer
    *
    * @param name      The name
    * @param timestamp Time when the player had this name in milliseconds

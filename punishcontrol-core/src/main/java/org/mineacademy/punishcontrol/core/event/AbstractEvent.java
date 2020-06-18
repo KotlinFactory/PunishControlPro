@@ -8,6 +8,7 @@ import lombok.experimental.Accessors;
 @Getter
 @Accessors(fluent = true, chain = false)
 public abstract class AbstractEvent implements Event {
+
   private boolean canceled;
   private String cancelReason;
 

@@ -27,6 +27,7 @@ public interface PunishImporter {
    * StorageProvider used to save our punishments
    */
   StorageProvider storageProvider();
+
   /**
    * Tells us whether our PunishImporter is applicable (the plugin needed is installed) or
    * not
@@ -57,8 +58,7 @@ public interface PunishImporter {
    * Will import all punishments
    */
   default void importAll() {
-    for (Punish punish : listPunishesToImport()) {
+    for (final Punish punish : listPunishesToImport())
       storageProvider().savePunish(punish);
-    }
   }
 }

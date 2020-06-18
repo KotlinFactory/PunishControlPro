@@ -13,6 +13,7 @@ import org.mineacademy.punishcontrol.spigot.menus.settings.SettingTypes;
 
 @Module
 public class SpigotModule {
+
   @Provides
   public Server server() {
     return Bukkit.getServer();

@@ -1,11 +1,7 @@
 package org.mineacademy.punishcontrol.core.converter;
 
 import de.leonhard.storage.util.Valid;
-import java.util.AbstractMap;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import lombok.experimental.UtilityClass;
 

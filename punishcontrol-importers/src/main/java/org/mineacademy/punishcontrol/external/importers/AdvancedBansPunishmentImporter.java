@@ -14,13 +14,14 @@ public final class AdvancedBansPunishmentImporter extends AbstractPunishImporter
   /**
    * @param storageProvider
    * @param pluginManager   Implementation of our {@link PluginManager}.
-   * @param pluginName      Name of the plugin we want to import punishes from. If null: The
-   *                        PunishImporter will always be treated as if the plugin it needs
+   * @param pluginName      Name of the plugin we want to import punishes from. If null:
+   *                        The PunishImporter will always be treated as if the plugin it
+   *                        needs
    */
   protected AdvancedBansPunishmentImporter(
-      @NonNull StorageProvider storageProvider,
-      @NonNull PluginManager pluginManager,
-      @Nullable String pluginName) {
+      @NonNull final StorageProvider storageProvider,
+      @NonNull final PluginManager pluginManager,
+      @Nullable final String pluginName) {
     super(storageProvider, pluginManager, pluginName);
   }
 
