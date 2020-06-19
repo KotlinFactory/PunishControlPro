@@ -18,13 +18,18 @@ public final class LocalizationInjector
   }
 
   @Override
-  protected void onInjected(final Class<?> clazz, final Field field, final String path) {
+  protected void onInjected(
+      final Class<?> clazz,
+      final Field field,
+      final String path,
+      final Object raw) {
     Localizables.register(
         org.mineacademy.punishcontrol.core.localization.Localizable
             .builder()
             .clazz(clazz)
             .field(field)
             .path(path)
+            .rawValue(raw)
             .build()
     );
   }

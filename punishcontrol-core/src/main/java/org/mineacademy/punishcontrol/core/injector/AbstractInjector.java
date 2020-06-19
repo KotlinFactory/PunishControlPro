@@ -64,8 +64,9 @@ public abstract class AbstractInjector<C extends Annotation, F extends Annotatio
             final Object raw = field.get(null);
 //            System.out.println("Pre: ");
 //            debugRep(raw);
-            field.set(null, getValueByPath(path, raw));
-            onInjected(clazz, field, path);
+            final Object valueByPath = getValueByPath(path, raw);
+            field.set(null, valueByPath);
+            onInjected(clazz, field, path, valueByPath);
 //            System.out.println("After: ");
 //            debugRep(getValueByPath(path, raw));
 //            System.out.println("Injected: " + field.getName() + " in " + clazz.getName());
@@ -79,7 +80,10 @@ public abstract class AbstractInjector<C extends Annotation, F extends Annotatio
     }
   }
 
-  protected void onInjected(final Class<?> clazz, final Field field, final String path) {
+  protected void onInjected(final Class<?> clazz,
+      final Field field,
+      final String path,
+      final Object value) {
 
   }
 

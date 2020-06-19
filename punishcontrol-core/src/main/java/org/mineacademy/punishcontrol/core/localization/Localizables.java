@@ -3,6 +3,7 @@ package org.mineacademy.punishcontrol.core.localization;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 
@@ -18,6 +19,13 @@ public class Localizables {
 
   public void register(@NonNull final Localizable localizable) {
     localizables.add(localizable);
+  }
+
+  public Optional<Localizable> find(@NonNull final String path) {
+    return localizables()
+        .stream()
+        .filter(localizable -> localizable.path().equals(path))
+        .findFirst();
   }
 
   public List<Localizable> localizables() {
