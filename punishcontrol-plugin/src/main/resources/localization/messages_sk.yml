@@ -1,5 +1,5 @@
 # !-------------------------------------------------------------------------------------------------!
-#                       Welcome to the german localization of PunishControl
+#                       Welcome to the slovak localization of PunishControl
 # !-------------------------------------------------------------------------------------------------!
 #
 #
@@ -23,7 +23,6 @@
 #
 # Messages used in commands
 #
-
 Commands:
   Player:
     Never_Played: "&cHráč {player} nikdy nehral na tomto servery."
@@ -33,7 +32,6 @@ Commands:
 #
 # Message's when a player is punished
 #
-
 Punish:
   # Placeholders: {console_line}, {player}, {type}, {reason}, {duration}, {expiration}, {ip}
   Message_To_Broadcast:
@@ -61,6 +59,12 @@ Punish:
   Warn_Message:
     - "&eDostal si warn: {reason}"
     - "&eExpiruje: {expiration}"
+
+#
+# Hash value used in menus
+# Link: https://minecraft-heads.com/custom-heads/miscellaneous/14662-slovakia
+#
+Skull_Hash: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNmM3MmE4YzExNWExZmI2NjlhMjU3MTVjNGQxNWYyMjEzNmFjNGMyNDUyNzg0ZTQ4OTRiM2Q1NmJjNWIwYjkifX19
 
 #
 # Internal do not touch!

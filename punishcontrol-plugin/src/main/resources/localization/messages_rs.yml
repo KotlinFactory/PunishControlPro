@@ -1,5 +1,5 @@
 # !-------------------------------------------------------------------------------------------------!
-#                       Welcome to the german localization of PunishControl
+#                       Welcome to the serbian localization of PunishControl
 # !-------------------------------------------------------------------------------------------------!
 #
 #
@@ -59,6 +59,11 @@ Punish:
   Warn_Message:
     - "&eBili ste upozoreni: {reason}"
     - "&eIstiče dana: {expiration}"
+#
+# Hash value used in menus
+# Link: https://minecraft-heads.com/custom-heads/miscellaneous/18527-serbia
+#
+Skull_Hash: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWIwNDgzYTRmMGRkZjRmYmJjOTc3YjEyN2IzZDI5NGQ3YTg2OWY5OTUzNjZlM2Y1MGY2YjA1YTcwZjUyMjUxMCJ9fX0=
 
 #
 # Internal do not touch!

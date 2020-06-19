@@ -2,7 +2,6 @@
 #                       Welcome to the czech localization of PunishControl
 # !-------------------------------------------------------------------------------------------------!
 #
-# Deutsche Übersetzung der Messages in PunishControl.
 #
 #
 #    For support and documentation, please visit:
@@ -58,4 +57,13 @@ Punish:
     - "&eByl jste varován: {reason}"
     - "&eExpirace: {expiration}"
 
+#
+# Hash value used in menus.
+# Links: https://minecraft-heads.com/custom-heads/miscellaneous/2199-czech-republic
+#
+Skull_Hash: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDgxNTJiNzMzNGQ3ZWNmMzM1ZTQ3YTRmMzVkZWZiZDJlYjY5NTdmYzdiZmU5NDIxMjY0MmQ2MmY0NmU2MWUifX19
+
+#
+# Internal - Do not touch!
+#
 Version: 1

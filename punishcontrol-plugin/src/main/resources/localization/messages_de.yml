@@ -229,6 +229,12 @@ Parts:
   CreateNew: Erstellen
 
 #
+# Hash value used in menus
+# Link: https://minecraft-heads.com/custom-heads/miscellaneous/522-germany
+#
+Skull_Hash: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNWU3ODk5YjQ4MDY4NTg2OTdlMjgzZjA4NGQ5MTczZmU0ODc4ODY0NTM3NzQ2MjZiMjRiZDhjZmVjYzc3YjNmIn19fQ==
+
+#
 # Internal do not touch!
 #
 Version: 1
