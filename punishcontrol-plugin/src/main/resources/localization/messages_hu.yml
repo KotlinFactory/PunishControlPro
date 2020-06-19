@@ -1,16 +1,27 @@
-#-------------------------------------------------------------------------------------------
+# !-------------------------------------------------------------------------------------------------!
+#                       Welcome to the german localization of PunishControl
+# !-------------------------------------------------------------------------------------------------!
 #
-# Your file has been automatically updated at 05.06.2020 15:31:31
-# to PunishControl 1.0.3
 #
-# Due to the improvements LightningStorage (Library we use) brought most comments
-# should have been preserved.
 #
-# If you'd like to view the default file, you can either:
-# a) Open the punishcontrol-plugin-1.0.3.jar with a WinRar or similar
-# b) or, visit: https://github.com/kangarko/PunishControl/wiki
+#    For support and documentation, please visit:
+#    - https://github.com/kangarko/PunishControl/wiki
 #
-#-------------------------------------------------------------------------------------------
+# !-------------------------------------------------------------------------------------------------!
+#
+#    1) COLOR CODES are supported with the '&' character. See
+#       - http://minecraftwiki.net/wiki/Formatting_codes
+#       [!] When you use them, omit the message with " " or ' '.
+#
+#    2) For UNICODE CHARACTERS (smileys, symbols, ..), save the file in UTF-8 encoding. See
+#       - https://github.com/kangarko/ChatControl/wiki/Use-Right-Encoding
+#
+#
+#
+# !-------------------------------------------------------------------------------------------------!
+
+#
+# Messages used in commands
 #
 Commands:
   Player:
@@ -18,6 +29,9 @@ Commands:
     Not_Online: '&c{player} &cnincs fent a szerveren.'
     Not_Exists: '&c{player} &cnevű játékos &cnem létezik.'
 
+#
+# Message's when a player is punished
+#
 Punish:
   Ban_Message:
     - ""
@@ -54,5 +68,7 @@ Punish:
       - '&eIndok: {reason}'
       - '&eLejárat: {expiration}'
       - ""
-
-Version: '1'
+#
+# Internal do not touch!
+#
+Version: 1

@@ -1,11 +1,40 @@
+# !-------------------------------------------------------------------------------------------------!
+#                       Welcome to the spanish localization of PunishControl
+# !-------------------------------------------------------------------------------------------------!
+#
+#
+#
+#    For support and documentation, please visit:
+#    - https://github.com/kangarko/PunishControl/wiki
+#
+# !-------------------------------------------------------------------------------------------------!
+#
+#    1) COLOR CODES are supported with the '&' character. See
+#       - http://minecraftwiki.net/wiki/Formatting_codes
+#       [!] When you use them, omit the message with " " or ' '.
+#
+#    2) For UNICODE CHARACTERS (smileys, symbols, ..), save the file in UTF-8 encoding. See
+#       - https://github.com/kangarko/ChatControl/wiki/Use-Right-Encoding
+#
+#
+#
+# !-------------------------------------------------------------------------------------------------!
+
+
+#
+# Messages used in commands
+#
 Commands:
   Player:
     Never_Played: "&cEl Jugador {player} nunca ha jugado en el servidor."
     Not_Online: "&cEl Jugador {player} &cno está en línea en este servidor."
     Not_Exists: "&cEl Jugador {player} &cno existe."
 
+#
+# Message's when a player is punished
+#
 Punish:
-  #Placeholders: {console_line}, {player}, {type}, {reason}, {duration}, {expiration}, {ip}
+  # Placeholders: {console_line}, {player}, {type}, {reason}, {duration}, {expiration}, {ip}
   Message_To_Broadcast:
     - "&7{chat_line}"
     - "&7El Jugador {player} fue castigado."
@@ -32,4 +61,7 @@ Punish:
     - "&eSe le ha advertido: {reason}"
     - "&eExpiración: {expiration}"
 
+#
+# Internal do not touch!
+#
 Version: 1

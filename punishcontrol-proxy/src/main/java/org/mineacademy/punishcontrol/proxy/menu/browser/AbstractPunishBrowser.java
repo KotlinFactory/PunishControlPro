@@ -30,16 +30,16 @@ public abstract class AbstractPunishBrowser extends AbstractBrowser<Punish> {
 
   @NonNls
   @Localizable("Menu.Proxy.Punish.Title")
-  private static final String BROWSE_PUNISHES = "Browse Punishes";
+  private static String BROWSE_PUNISHES = "Browse Punishes";
 
   @NonNls
   @Localizable("Menu.Proxy.Punish.Remove")
-  private static final String RIGHT_CLICK_TO_REMOVE = "Right-Click to remove";
+  private static String RIGHT_CLICK_TO_REMOVE = "Right-Click to remove";
   @Localizable("Menu.Proxy.Punish.Already_Removed")
-  private static final String PUNISH_IS_ALREADY_REMOVED = "Punish is already removed";
+  private static String PUNISH_IS_ALREADY_REMOVED = "Punish is already removed";
 
   @Localizable("Menu.Proxy.Punish.Lore")
-  private static final Replacer LORE_REPLACER = Replacer.of(
+  private static Replacer LORE_REPLACER = Replacer.of(
       "",
       "&6Target: &7{target}",
       "&6Reason: &7{reason}",

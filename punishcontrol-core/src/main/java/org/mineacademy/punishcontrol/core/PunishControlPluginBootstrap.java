@@ -2,7 +2,9 @@ package org.mineacademy.punishcontrol.core;
 
 import de.leonhard.storage.Yaml;
 import de.leonhard.storage.internal.exceptions.LightningValidationException;
+import de.leonhard.storage.util.FileUtils;
 import java.io.File;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
@@ -31,6 +33,18 @@ public interface PunishControlPluginBootstrap {
 
   CoreComponent coreComponent = DaggerCoreComponent.builder().build();
   String PREFIX = "§3Punish§bControl§5+ §7┃ ";
+  List<String> KNOWN_LANGUAGES = Arrays.asList(
+      "cz",
+      "de",
+      "en",
+      "es",
+      "fr",
+      "hu",
+      "nl",
+      "pt",
+      "ru",
+      "sk");
+
   String[] LOGO =
       new String[]{
           "§3 ____              _     _      ____            _             _ ",
@@ -42,9 +56,8 @@ public interface PunishControlPluginBootstrap {
 
   static int getRandomNumberInRange(final int min, final int max) {
 
-    if (min >= max) {
+    if (min >= max)
       throw new IllegalArgumentException("max must be greater than min");
-    }
 
     final Random r = new Random();
     return r.nextInt((max - min) + 1) + min;
@@ -68,6 +81,7 @@ public interface PunishControlPluginBootstrap {
   }
 
   default void onPunishControlPluginStart() {
+
     log("§7*------------------- §3PunishControl-Pro - 2020  §7------------------*");
 
     log(" ");
@@ -77,7 +91,6 @@ public interface PunishControlPluginBootstrap {
     log(" ");
 
     // Settings
-
     try {
       PunishControlSerializers.register();
     } catch (final Throwable throwable) {
@@ -152,9 +165,8 @@ public interface PunishControlPluginBootstrap {
 
     try {
       // Your custom stuff.
-      if (permissions() != null) {
+      if (permissions() != null)
         Permissions.registerAll(permissions());
-      }
       Permissions.addFromClass(PunishControlPermissions.class);
       log("Permissions... §l§aOK");
     } catch (final Throwable throwable) {
@@ -181,7 +193,7 @@ public interface PunishControlPluginBootstrap {
 
     log();
 
-    if (Providers.storageProvider() instanceof MySQLStorageProvider) {
+    if (Providers.storageProvider() instanceof MySQLStorageProvider)
       try {
         ((MySQLStorageProvider) Providers.storageProvider()).connect();
       } catch (final Throwable throwable) {
@@ -190,7 +202,6 @@ public interface PunishControlPluginBootstrap {
             "Exception while connecting to MySQL!",
             "Likewise this is caused be wrong or missing credentials.");
       }
-    }
 
     // Logging an random message
     final int index = getRandomNumberInRange(0,
@@ -211,7 +222,17 @@ public interface PunishControlPluginBootstrap {
       saveError(throwable);
     }
 
+    for (final String knownLanguage : KNOWN_LANGUAGES)
+      FileUtils.extractResource(
+          getWorkingDirectory(),
+          "localization/messages_" + knownLanguage + ".yml",
+          false);
+
     log("§7*-----------------------------------------------------------------*");
+
+//    System.out.println(
+//        "Injected " + Localizables.localizables().size() + " localizables");
+
   }
 
   default void loadGroups() {
@@ -221,9 +242,8 @@ public interface PunishControlPluginBootstrap {
         .getMap("Groups");
 
     for (final val entry : rawData.entrySet()) { // Group-Names
-      if (!(entry.getValue() instanceof Map)) {
+      if (!(entry.getValue() instanceof Map))
         continue;
-      }
 
       @SuppressWarnings("unchecked") final Map<String, Object> groupRawData = (Map<String, Object>) entry
           .getValue();
@@ -252,11 +272,10 @@ public interface PunishControlPluginBootstrap {
       Groups.registerGroup(builder.build());
     }
 
-    for (final Group group : Groups.registeredGroups()) {
+    for (final Group group : Groups.registeredGroups())
       Permissions.register(
           Permission.of(group.permission(), "The group " + group.name())
       );
-    }
   }
 
   default void registerEvents(final Listener<?> listener) {

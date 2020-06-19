@@ -35,38 +35,38 @@ public final class StorageSettingsMenu
 
   @NonNls
   @Localizable("Menu.Proxy.StorageSettingsMenu.Can_t_Connect")
-  private static final String CAN_T_CONNECT = "Can't connect - See console";
+  private static String CAN_T_CONNECT = "Can't connect - See console";
   @Localizable("Menu.Proxy.StorageSettingsMenu.AlreadyConnected")
   @NonNls
-  private static final String ALREADY_CONNECTED = "Already connected";
+  private static String ALREADY_CONNECTED = "Already connected";
   @NonNls
   @Localizable("Menu.Proxy.StorageSettingsMenu.AlreadyConnecting")
-  private static final String ALREADY_CONNECTING = "Already connecting";
+  private static String ALREADY_CONNECTING = "Already connecting";
   @Localizable("Menu.Proxy.StorageSettingsMenu.ConnectionFailed")
-  private static final String[] CONNECT_FAILED_LORE = {
+  private static String[] CONNECT_FAILED_LORE = {
       " ",
       "&7Try to connect ",
       "&7to MySQL using",
       "&7these settings",
       "&7Current state: &cNot connected"};
   @Localizable("Menu.Proxy.StorageSettingsMenu.ConnectionFailed")
-  private static final String[] CONNECT_SUCCESS_LORE = {
+  private static String[] CONNECT_SUCCESS_LORE = {
       " ",
       "&7Try to connect ",
       "&7to MySQL using",
       "&7these settings",
       "&7Current state: &aSucceeded"};
   @Localizable("Parts.Connect")
-  private static final String CONNECT = "Connect";
+  private static String CONNECT = "Connect";
   @Localizable("Parts.StorageType")
-  private static final String STORAGE_TYPE = "Storage Type";
+  private static String STORAGE_TYPE = "Storage Type";
 
-  private static final String[] USE_MYSQL_LORE = {
+  private static String[] USE_MYSQL_LORE = {
       "",
       "&7Click to use",
       "&7MySQL as storage"};
 
-  private static final String[] USE_JSON_LORE = {
+  private static String[] USE_JSON_LORE = {
       "",
       "&7Click to use",
       "&7JSON as storage"};

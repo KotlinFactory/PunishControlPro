@@ -112,8 +112,8 @@ public abstract class YamlStaticConfig {
     final val raw = get(key);
 
     Valid.checkBoolean(raw != null,
-        "Your config lacks '" + type.getSimpleName() +
-            "' at '" + key + "'");
+        "Your config names '" + getFileName() + "'lacks '" + type.getSimpleName() +
+        "' at '" + key + "'");
 
     return ClassWrapper.getFromDef(get(key), type);
   }
@@ -258,10 +258,10 @@ public abstract class YamlStaticConfig {
       if (method.getName().equals("init")) {
         Valid.checkBoolean(
             Modifier.isPrivate(mod) && Modifier.isStatic(mod)
-                && method.getReturnType() == Void.TYPE
-                && method.getParameterTypes().length == 0,
+            && method.getReturnType() == Void.TYPE
+            && method.getParameterTypes().length == 0,
             "Method '" + method.getName() + "' in " + clazz
-                + " must be 'private static void init()'");
+            + " must be 'private static void init()'");
 
         method.setAccessible(true);
         method.invoke(null);
@@ -283,7 +283,7 @@ public abstract class YamlStaticConfig {
       if (Modifier.isPublic(field.getModifiers()))
         Valid.checkBoolean(!field.getType().isPrimitive(),
             "Field '" + field.getName() + "' in " + clazz
-                + " must not be primitive!");
+            + " must not be primitive!");
 
       Object result = null;
       try {

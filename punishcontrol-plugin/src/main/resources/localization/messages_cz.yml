@@ -1,3 +1,29 @@
+# !-------------------------------------------------------------------------------------------------!
+#                       Welcome to the czech localization of PunishControl
+# !-------------------------------------------------------------------------------------------------!
+#
+# Deutsche Übersetzung der Messages in PunishControl.
+#
+#
+#    For support and documentation, please visit:
+#    - https://github.com/kangarko/PunishControl/wiki
+#
+# !-------------------------------------------------------------------------------------------------!
+#
+#    1) COLOR CODES are supported with the '&' character. See
+#       - http://minecraftwiki.net/wiki/Formatting_codes
+#       [!] When you use them, omit the message with " " or ' '.
+#
+#    2) For UNICODE CHARACTERS (smileys, symbols, ..), save the file in UTF-8 encoding. See
+#       - https://github.com/kangarko/ChatControl/wiki/Use-Right-Encoding
+#
+#
+#
+# !-------------------------------------------------------------------------------------------------!
+
+#
+# Messages used in commands
+#
 Commands:
   Player:
     Never_Played: "&cHráč {player} nikdy nehrál na tomto serveru"

@@ -1,15 +1,40 @@
+# !-------------------------------------------------------------------------------------------------!
+#                       Welcome to the german localization of PunishControl
+# !-------------------------------------------------------------------------------------------------!
 #
-# PunishControl German localization file
-# Wie schön es doch ist Deutscher zu sein^^
+# Deutsche Übersetzung der Messages in PunishControl.
 #
+#
+#    For support and documentation, please visit:
+#    - https://github.com/kangarko/PunishControl/wiki
+#
+# !-------------------------------------------------------------------------------------------------!
+#
+#    1) COLOR CODES are supported with the '&' character. See
+#       - http://minecraftwiki.net/wiki/Formatting_codes
+#       [!] When you use them, omit the message with " " or ' '.
+#
+#    2) For UNICODE CHARACTERS (smileys, symbols, ..), save the file in UTF-8 encoding. See
+#       - https://github.com/kangarko/ChatControl/wiki/Use-Right-Encoding
+#
+#
+#
+# !-------------------------------------------------------------------------------------------------!
 
+#
+# Messages used in commands
+#
 Commands:
   Player:
     Never_Played: '&cEin Spieler namens {player} war noch nie auf diesem server.'
     Not_Online: '&cDer Spieler {player} &ist nicht online.'
     Not_Exists: '&cDer Spieler {player} &cexistiert nicht'
 
+#
+# Message's when a player is punished
+#
 Punish:
+  # Placeholders: {console_line}, {player}, {type}, {reason}, {duration}, {expiration}, {ip}
   Ban_Message:
     - ""
     - '&eDu wurdest gebannt'
@@ -35,6 +60,9 @@ Punish:
     - '&7Ip: {ip}'
     - '&7{chat_line}'
 
+#
+# Messages in Menus
+#
 Menu:
   Proxy:
     ChooseAction:
@@ -168,34 +196,40 @@ Menu:
       - '&6Zugangs-Rechte: &7{access}'
       - Zum entfernen rechts klicken
 
-  Parts:
-    Currently: Aktuell
-    Has_No_Access: Kein Zugang
-    Yes: Ja
-    Apply: Anwenden
-    Materials: Materialien
-    Break: Breakup
-    Confirm: Bestätigen
-    Reason: Grund
-    Has_Access: Zugang
-    Groups: Groups
-    Change_Type: Typ ändern
-    Permission: Permission
-    Permissions: Permissions
-    Settings: Einstellungen
-    Punishments: Bestrafungen
-    Players: Spieler
-    No: Nein
-    StorageType: Speicher-Art
-    Connect: Verbinden
-    Silent: silent
-    Duration: '&6Dauer'
-    Permission_To: Berechtigung für
-    SuperSilent: super silent
-    Not: nicht
-    Action_For: Aktion für
-    Select: Auswählen
-    CreateNew: Erstellen
+#
+# Single words
+#
+Parts:
+  Currently: Aktuell
+  Has_No_Access: Kein Zugang
+  Yes: Ja
+  Apply: Anwenden
+  Materials: Materialien
+  Break: Breakup
+  Confirm: Bestätigen
+  Reason: Grund
+  Has_Access: Zugang
+  Groups: Groups
+  Change_Type: Typ ändern
+  Permission: Permission
+  Permissions: Permissions
+  Settings: Einstellungen
+  Punishments: Bestrafungen
+  Players: Spieler
+  No: Nein
+  StorageType: Speicher-Art
+  Connect: Verbinden
+  Silent: silent
+  Duration: '&6Dauer'
+  Permission_To: Berechtigung für
+  SuperSilent: super silent
+  Not: nicht
+  Action_For: Aktion für
+  Select: Auswählen
+  CreateNew: Erstellen
 
-  Version: 1
+#
+# Internal do not touch!
+#
+Version: 1
 
