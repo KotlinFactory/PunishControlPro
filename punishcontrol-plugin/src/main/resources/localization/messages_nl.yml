@@ -1,11 +1,39 @@
+# !-------------------------------------------------------------------------------------------------!
+#                       Welcome to the german localization of PunishControl
+# !-------------------------------------------------------------------------------------------------!
+#
+#
+#
+#    For support and documentation, please visit:
+#    - https://github.com/kangarko/PunishControl/wiki
+#
+# !-------------------------------------------------------------------------------------------------!
+#
+#    1) COLOR CODES are supported with the '&' character. See
+#       - http://minecraftwiki.net/wiki/Formatting_codes
+#       [!] When you use them, omit the message with " " or ' '.
+#
+#    2) For UNICODE CHARACTERS (smileys, symbols, ..), save the file in UTF-8 encoding. See
+#       - https://github.com/kangarko/ChatControl/wiki/Use-Right-Encoding
+#
+#
+#
+# !-------------------------------------------------------------------------------------------------!
+
+#
+# Messages used in commands
+#
 Commands:
   Player:
     Never_Played: "&cSpeler {player} heeft nog nooit op de server gespeeld."
     Not_Online: "&cSpeler {player} &cis niet online op deze server."
     Not_Exists: "&cSpeler {player} &cbestaat niet."
 
+#
+# Message's when a player is punished
+#
 Punish:
-  #Placeholders: {console_line}, {player}, {type}, {reason}, {duration}, {expiration}, {ip}
+  # Placeholders: {console_line}, {player}, {type}, {reason}, {duration}, {expiration}, {ip}
   Message_To_Broadcast:
     - "&7{chat_line}"
     - "&7De speler {player} is gestraft."
@@ -32,4 +60,7 @@ Punish:
     - "&eU bent gewaarschuwd: {reason}"
     - "&eVervaldatum: {expiration}"
 
+#
+# Internal do not touch!
+#
 Version: 1
