@@ -28,9 +28,9 @@ Name: French
 
 Commands:
   Player:
-    Never_Played: "{player} &cne s'est jamais connecté sur le serveur."
-    Not_Online: "{player} &cn'est pas connecté."
-    Not_Exists: "{player} &cn'existe pas."
+    Never_Played: '{player} ne s''est jamais connecté au serveur.'
+    Not_Online: '{player} &cn''est pas connecté sur ce serveur.'
+    Not_Exists: '&cLe joueur {player} &cn''existe pas.'
 
 #
 # Message's when a player is punished
@@ -47,10 +47,10 @@ Punish:
 
   Ban_Message:
     - ""
-    - "&eVous avez été banni(e) !"
-    - "&eRaison: {reason}"
-    - "&eExpiration: {expiration}"
-    - ""
+    - '&eVous avez été banni'
+    - '&eRaison: {reason}'
+    - '&eExpiration: {expiration}'
+    - '&eAuteur: {creator}'
 
   Mute_Message:
     - ""
@@ -66,6 +66,150 @@ Punish:
     - "&eRaison: {reason}"
     - "&eExpiration: {expiration}"
     - ""
+
+Menu:
+  Proxy:
+    TemplateCreator:
+      Choose_Duration:
+        Lore:
+          - '&7Choisissez la durée'
+          - '&7de la sanction'
+      Already:
+        SuperSilent: '&cLa sanction est déjà en mode Super-Silencieux'
+      Name: Créateur de Modèle
+      ChoosePermission:
+        Name: Choisissez une permission
+    Results_Found: {results} resultat(s) obtenu(s)
+    PlayerBrowser:
+      Information:
+        - '&7Menu pour séléctionner'
+        - '&7un joueur'
+      Compass_Lore:
+        - '&7Chercher un joueur'
+    Create_New_Lore:
+      - ' '
+      - '&7Créer une nouvelle sanction'
+    StorageSettingsMenu:
+      AlreadyConnecting: En cours de connexion
+      AlreadyConnected: Déjà connecté
+      ConnectionFailed:
+        - ' '
+        - '&7Essayez de vous connecter'
+        - '&7à MYSQL en utilisant'
+        - '&7ces paramètres.'
+        - '&7Etat Actuel: &cNon Connecté'
+      Can_t_Connect: Connexion impossible - Vérifiez la console
+    Punish:
+      Title: Parcourir les Sanctions
+      Lore:
+        - ""
+        - '&6Cible: &7{target}'
+        - '&6Raison: &7{reason}'
+        - '&6Création: &7{creation}'
+        - '&6Durée: &7{duration}'
+        - '&6Fin: &7{end}'
+        - '&6Auteur: &7{creator}'
+        - '&7Cliquez-Droit pour supprimer'
+      Remove: Cliquez-Droit pour supprimer
+      Already_Removed: La sanction à déjà été supprimée
+    Main:
+      Player_Lore:
+        - '&7Afficher les joueurs'
+        - '&7afin d''en séléctionner un'
+        - '&7pour plus d''options'
+      View_Settings_Lore: Afficher les paramètres pour
+    Material-Browser:
+      Information:
+        - ""
+        - '&7Menu pour sélectionner les matériaux'
+        - '&7qui vous conviennent le plus.'
+        - '&7Plus d''objets seront ajoutés'
+    Template:
+      Make:
+        SuperSilent:
+          Lore:
+            - ""
+            - '&7Cliquez pour rendre'
+            - '&7la sanction'
+            - '&7super silencieuse'
+          Name: Rendre Super-Silencieuse
+        Silent:
+          Lore:
+            - ""
+            - '&7Cliquez pour rendre'
+            - '&7la sanction'
+            - '&7silencieuse'
+        Not:
+          SuperSilent:
+            Lore:
+              - ""
+              - '&7Cliquez pour retirer'
+              - '&7la sanction du mode'
+              - '&7Super-Silencieux'
+          Silent:
+            Lore:
+              - ' '
+              - '&7Cliquez pour retirer'
+              - '&7la sanction du mode'
+              - '&7Silencieux'
+        Silen:
+          Namet: Rendre Silencieux
+  Templates:
+    Information:
+      - '&7Menu pour voir les modèles'
+      - '&7Vous pouvez également'
+      - '&7modifier les modèles'
+  Choose_Duration: Choisir une Durée
+  Main:
+    Punish_Lore:
+      - Parcourir les sanctions créées.
+      - Cliquez-Droit pour voir
+      - les joueurs sanctionnés
+  Settings:
+    Information:
+      - '&7Menu pour choisir'
+      - '&7un paramètre'
+    Choose:
+      Name: Choisir un Paramètre
+  Template:
+    Add:
+      Lore:
+        - '&7Cliquez ici pour ajouter'
+        - '&7des modèles personnalisés'
+      Name: Ajouter un Modèle
+    Lore:
+      - '&6Type: &7{type}'
+      - '&6Durée: &7{duration}'
+      - '&6Raison: &7{reason}'
+      - '&6Permission: &7{permission}'
+      - '&6Mode Silencieux: {silent}'
+      - '&6Mode Super-Silencieux: {super-silent}'
+      - '&6Accès: &7{access}'
+      - Cliquez-Droit pour retirer
+
+
+Parts:
+  No: Non
+  Currently: Actuellement
+  StorageType: Type se Stockage
+  Yes: Oui
+  Apply: Appliquer
+  Materials: Matériaux
+  Connect: Connecter
+  Break: Rompre
+  Confirm: Confirmer
+  Silent: Silencieux
+  Duration: '&6Durée'
+  Reason: Raison
+  SuperSilent: Super-Silencieux
+  Not: pas
+  Action_For: Action pour
+  Change_Type: Changer le type
+  Select: Selectionner
+  CreateNew: Créer Nouveau
+  Settings: Paramètres
+  Punishments: Sanctions
+  Players: Joueurs
 
 #
 # Hash value used in menus
