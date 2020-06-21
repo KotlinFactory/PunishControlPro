@@ -60,6 +60,10 @@ Punish:
     - "&eВы полчили предупреждение: {reason}"
     - "&eИстекает: {expiration}"
 
+  Kick_Message:
+    - "&3You have been kicked!"
+    - "&6Reason: &7{reason}"
+
 #
 # Hash value used in menus
 # Link: https://minecraft-heads.com/custom-heads/miscellaneous/4406-russia

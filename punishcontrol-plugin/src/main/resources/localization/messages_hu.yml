@@ -51,6 +51,9 @@ Punish:
     - '&eFigyelmeztetést kaptál: {reason}'
     - '&eLejárat: {expiration}'
 
+  Kick_Message:
+    - "&3You have been kicked!"
+    - "&6Reason: &7{reason}"
 
   Message_To_Broadcast:
     - '&7{chat_line}'

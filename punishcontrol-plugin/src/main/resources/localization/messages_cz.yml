@@ -54,6 +54,10 @@ Punish:
     - "&eExpirace: {expiration}"
     - ""
 
+  Kick_Message:
+    - "&3You have been kicked!"
+    - "&6Reason: &7{reason}"
+
   #
   Warn_Message:
     - "&eByl jste varován: {reason}"

@@ -18,7 +18,8 @@ import org.mineacademy.punishcontrol.core.settings.Settings;
 @SuppressWarnings("unchecked")
 public class Punishes {
 
-  public <T extends Punish> T convert(final Punish punish,
+  public <T extends Punish> T convert(
+      final Punish punish,
       @NonNull final Class<T> target) {
     if (target == Ban.class) {
       return (T)
@@ -56,7 +57,10 @@ public class Punishes {
   }
 
   public String formKickedMessage(final String reason) {
-    return reason;
+    return Localization.Punish.KICK_MESSAGE
+        .find("reason")
+        .replace(reason)
+        .replacedMessageJoined();
   }
 
   /**

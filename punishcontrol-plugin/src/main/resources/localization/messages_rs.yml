@@ -61,6 +61,10 @@ Punish:
   Warn_Message:
     - "&eBili ste upozoreni: {reason}"
     - "&eIstiče dana: {expiration}"
+
+  Kick_Message:
+    - "&3You have been kicked!"
+    - "&6Reason: &7{reason}"
 #
 # Hash value used in menus
 # Link: https://minecraft-heads.com/custom-heads/miscellaneous/18527-serbia

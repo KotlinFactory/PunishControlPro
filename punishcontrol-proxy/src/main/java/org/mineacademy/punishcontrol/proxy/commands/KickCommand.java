@@ -44,7 +44,8 @@ public final class KickCommand extends AbstractSimplePunishControlCommand {
     tell("&aSuccessfully&7 kicked {target}"
         .replace("{target}", target.getName()));
 
-    Debugger.debug("Kick",
+    Debugger.debug(
+        "Kick",
         "Kicking '" + args[0] + "' for '" + reasonBuilder.toString() + "'");
   }
 }

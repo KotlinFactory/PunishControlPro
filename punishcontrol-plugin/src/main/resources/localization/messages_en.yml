@@ -59,6 +59,10 @@ Punish:
     - "&eYou have been warned: {reason}"
     - "&eExpiration: {expiration}"
 
+  Kick_Message:
+    - "&3You have been kicked!"
+    - "&6Reason: &7{reason}"
+
 #
 # Hash value used in menus
 # Link: https://minecraft-heads.com/custom-heads/miscellaneous/27577-united-kingdom

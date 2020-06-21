@@ -67,6 +67,10 @@ Punish:
     - "&eExpiration: {expiration}"
     - ""
 
+  Kick_Message:
+    - "&3You have been kicked!"
+    - "&6Reason: &7{reason}"
+
 Menu:
   Proxy:
     TemplateCreator:

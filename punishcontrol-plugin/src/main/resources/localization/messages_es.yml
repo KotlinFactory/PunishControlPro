@@ -62,6 +62,10 @@ Punish:
     - "&eSe le ha advertido: {reason}"
     - "&eExpiración: {expiration}"
 
+  Kick_Message:
+    - "&3You have been kicked!"
+    - "&6Reason: &7{reason}"
+
 #
 # Hash value used in menus
 # Link: https://minecraft-heads.com/custom-heads/miscellaneous/23236-spain
