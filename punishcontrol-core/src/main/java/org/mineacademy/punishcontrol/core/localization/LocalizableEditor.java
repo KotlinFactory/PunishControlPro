@@ -8,21 +8,22 @@ import java.util.Collection;
 import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Named;
+import lombok.Getter;
 import lombok.NonNull;
+import lombok.experimental.Accessors;
 import org.mineacademy.punishcontrol.core.DaggerCoreComponent;
 import org.mineacademy.punishcontrol.core.providers.ExceptionHandler;
 import org.mineacademy.punishcontrol.core.setting.Replacer;
 
+@Accessors(fluent = true)
 public final class LocalizableEditor {
 
   private final Yaml localization;
   private final ExceptionHandler exceptionHandler;
+  @Getter
   private final Localizable localizable;
+  @Getter
   private final List<String> value;
-
-  public static LocalizableEditor.Builder builder() {
-    return DaggerCoreComponent.create().localizableEditorBuilder();
-  }
 
   public LocalizableEditor(
       Yaml localization,
@@ -34,6 +35,10 @@ public final class LocalizableEditor {
     this.value = new ArrayList<>(localizable.value());
   }
 
+  public static LocalizableEditor.Builder builder() {
+    return DaggerCoreComponent.create().localizableEditorBuilder();
+  }
+
   public boolean canMultiline() {
     return localizable.rawValue() instanceof Collection<?>
            || localizable.rawValue() instanceof String[]
@@ -41,7 +46,7 @@ public final class LocalizableEditor {
   }
 
   public void set(final int index, final String string) {
-    value.add(index, string);
+    value.set(index, string);
   }
 
   public void add(final String element) {
@@ -71,19 +76,25 @@ public final class LocalizableEditor {
     if (rawValue == null)
       return;
 
-    if (rawValue instanceof String)
+    if (rawValue instanceof String) {
+      localizable.rawValue(value.get(0));
       localizable.field().set(null, value.get(0));
-
-    if (rawValue instanceof Collection<?>)
+      localization.set(localizable.path(), value.get(0));
+    } else if (rawValue instanceof Collection<?>) {
+      localizable.rawValue(value);
       localizable.field().set(null, value);
-
-    if (rawValue instanceof String[])
-      localizable.field().set(null, value.toArray(new String[0]));
-
-    if (rawValue instanceof Replacer)
-      localizable.field().set(null, Replacer.of(value));
-
-    localization.set(localizable.path(), value);
+      localization.set(localizable.path(), value);
+    } else if (rawValue instanceof String[]) {
+      final String[] rawValueAsArray = this.value.toArray(new String[0]);
+      localizable.rawValue(rawValueAsArray);
+      localizable.field().set(null, rawValueAsArray);
+      localization.set(localizable.path(), value);
+    } else if (rawValue instanceof Replacer) {
+      final Replacer replacer = Replacer.of(value);
+      localizable.rawValue(replacer);
+      localizable.field().set(null, replacer);
+      localization.set(localizable.path(), value);
+    }
   }
 
   public static final class Builder {

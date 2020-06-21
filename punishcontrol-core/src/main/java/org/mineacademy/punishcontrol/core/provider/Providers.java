@@ -10,6 +10,7 @@ import de.leonhard.storage.util.FileUtils;
 import de.leonhard.storage.util.Valid;
 import java.io.File;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 import javax.inject.Named;
@@ -66,6 +67,9 @@ public final class Providers {
   @Setter
   @NonNull
   private static Yaml settings;
+
+  @NonNull @Setter
+  private static List<Yaml> localizableFiles;
 
   @Setter
   @NonNull
@@ -133,7 +137,8 @@ public final class Providers {
     if (localization != null)
       return localization;
 
-    return localization = createLocalizationYaml(pluginDataProvider(),
+    return localization = createLocalizationYaml(
+        pluginDataProvider(),
         SimpleSettings.LOCALE_PREFIX);
   }
 
@@ -168,7 +173,11 @@ public final class Providers {
    */
   @Provides
   public static Collection<Yaml> localizationFiles() {
-    return FileUtils.listFiles(new File(
+
+    if (localizableFiles != null) {
+      return localizableFiles;
+    }
+    return localizableFiles = FileUtils.listFiles(new File(
         pluginDataProvider().getDataFolder() + "/localization"), ".yml")
         .stream()
         .map(Yaml::new)

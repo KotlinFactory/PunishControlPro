@@ -37,24 +37,17 @@ Commands:
 # Message's when a player is punished
 #
 Punish:
-  # Placeholders: {console_line}, {player}, {type}, {reason}, {duration}, {expiration}, {ip}
   Ban_Message:
     - ""
     - '&eDu wurdest gebannt'
     - '&eGrund: {reason}'
     - '&eEnde: {expiration}'
     - ""
-  Warn_Message:
-    - '&eDu wurdest gewarnt: {reason}'
-    - '&eEnde: {expiration}'
-    - ""
-
-  Mute_Message:
-    - '&eDu wurdest gemuted'
-    - '&eGrund: {reason}'
-    - '&eEnde: {expiration}'
-    - ""
-
+  Parts:
+    Month: Month
+    Year: Year
+    Day: Day
+    Hour: Hour
   Message_To_Broadcast:
     - '&7{chat_line}'
     - '&7Der Spieler {player} wurde bestraft.'
@@ -62,22 +55,164 @@ Punish:
     - '&7Grund: {reason}'
     - '&7Ip: {ip}'
     - '&7{chat_line}'
+  Warn_Message:
+    - '&eDu wurdest gewarnt: {reason}'
+    - '&eEnde: {expiration}'
+    - ""
+  Hash:
+    Month:
+      Hash: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDljNDVhMjRhYWFiZjQ5ZTIxN2MxNTQ4MzIwNDg0OGE3MzU4MmFiYTdmYWUxMGVlMmM1N2JkYjc2NDgyZiJ9fX0=
+    Year:
+      Hash: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzUyZmIzODhlMzMyMTJhMjQ3OGI1ZTE1YTk2ZjI3YWNhNmM2MmFjNzE5ZTFlNWY4N2ExY2YwZGU3YjE1ZTkxOCJ9fX0=
+    Day:
+      Hash: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzE5M2RjMGQ0YzVlODBmZjlhOGEwNWQyZmNmZTI2OTUzOWNiMzkyNzE5MGJhYzE5ZGEyZmNlNjFkNzEifX19
+    Hour:
+      Hash: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzFmMzQ2MmE0NzM1NDlmMTQ2OWY4OTdmODRhOGQ0MTE5YmM3MWQ0YTVkODUyZTg1YzI2YjU4OGE1YzBjNzJmIn19fQ==
+  Mute_Message:
+    - '&eDu wurdest gemuted'
+    - '&eGrund: {reason}'
+    - '&eEnde: {expiration}'
+    - ""
 
 #
 # Messages in Menus
 #
 Menu:
   Proxy:
+    TemplateCreator:
+      Choose_Duration:
+        Lore:
+          - '&7Choose the'
+          - '&7duration of the'
+          - '&7punish'
+      Already:
+        SuperSilent: '&cPunishment is already super-silent'
+      Name: Template Creator
+      ChoosePermission:
+        Name: Choose permission
+    Results_Found: Found {results} result(s)
+    PlayerPermissionBrowser:
+      Lore:
+        - '&7Menu to view'
+        - '&7the permissions'
+        - '&7a player has'
+        - '&7changes will '
+        - '&7be temporary'
+    Create_New_Lore:
+      - ' '
+      - '&7Create new punishment'
+    Template:
+      Make:
+        SuperSilent:
+          Lore:
+            - ""
+            - '&7Click to make'
+            - '&7the punish'
+            - '&7super silent'
+          Name: Make super silent
+        Silent:
+          Lore:
+            - ""
+            - '&7Click to make'
+            - '&7the punish'
+            - '&7silent'
+        Not:
+          SuperSilent:
+            Lore:
+              - ""
+              - '&7Click to make'
+              - '&7the punish'
+              - '&7Not super silent'
+          Silent:
+            Lore:
+              - ' '
+              - '&7Click to make'
+              - '&7the punish'
+              - '&7not silent'
+        Silen:
+          Namet: Make silent
     ChooseAction:
       Lore:
         - '&7Menu um eine'
         - '&7Aktion für einen Spieler'
         - '&7zu wählen'
+    LocalizablesBrowser:
+      Information:
+        - Menu to browse and alter
+        - localizable messages in PunishControl
+    LocalizableEditorMenu:
+      Edit: Edit localizable
+    PlayerBrowser:
+      Information:
+        - '&7Menu to select'
+        - '&7an player'
+      Compass_Lore:
+        - '&7Search for a player'
+    StorageSettingsMenu:
+      AlreadyConnecting: Already connecting
+      AlreadyConnected: Already connected
+      ConnectionFailed:
+        - ' '
+        - '&7Try to connect '
+        - '&7to MySQL using'
+        - '&7these settings'
+        - '&7Current state: &cNot connected'
+      Can_t_Connect: Can't connect - See console
+    Punish:
+      Title: Browse Punishes
+      Lore:
+        - ""
+        - '&6Target: &7{target}'
+        - '&6Reason: &7{reason}'
+        - '&6Creation: &7{creation}'
+        - '&6Duration: &7{duration}'
+        - '&6End: &7{end}'
+        - '&6Creator: &7{creator}'
+        - '&7Right click to remove'
+      Remove: Right-Click to remove
+      Already_Removed: Punish is already removed
+    Main:
+      Player_Lore:
+        - '&7View players'
+        - '&7to select'
+        - '&7one for more'
+        - '&7actions'
+      View_Settings_Lore: View Settings for
+    Material-Browser:
+      Information:
+        - ""
+        - '&7Menu to select materials'
+        - '&7that fit your wishes best'
+        - '&7more items will be added soon'
+    GroupBrowser:
+      Information:
+        - '&7Menu to view'
+        - '&7the groups'
+        - '&7a player has'
+        - '&7changes can''t'
+        - '&7be yet made'
+      Lore:
+        - '&6Priority: &7{priority}'
+        - '&6Ban-Limit: &7{ban-limit}'
+        - '&6Mute-Limit: &7{mute-limit}'
+        - '&6Warn-Limit: &7{warn-limit}'
+        - '&6Override-Punishes: &7{override}'
+        - '&6Template only: &7{template_only}'
   TemplateCreator:
     Choose_Duration:
       Lore:
         - '&7Stelle die'
         - '&7Dauer der Bestrafung ein'
+  Templates:
+    Information:
+      - '&7Menü zum Betrachten von'
+      - '&7Bestrafungs-Templates'
+  Choose_Duration: Zeit wählen
+  Main:
+    Punish_Lore:
+      - Durchsuche bereits erstellte Bestrafungen
+      - Rechts klick, um
+      - bestrafte Spieler zu durchsuchen
   Already:
     SuperSilent: '&cBestrafung ist bereits super silent'
     Name: Templates erstellen
@@ -168,16 +303,6 @@ Menu:
         - '&6Warn-Limit: &7{warn-limit}'
         - '&6Bestrafungen überrschreiben: &7{override}'
         - '&6Template only: &7{template_only}'
-  Templates:
-    Information:
-      - '&7Menü zum Betrachten von'
-      - '&7Bestrafungs-Templates'
-  Choose_Duration: Zeit wählen
-  Main:
-    Punish_Lore:
-      - Durchsuche bereits erstellte Bestrafungen
-      - Rechts klick, um
-      - bestrafte Spieler zu durchsuchen
   Settings:
     Information:
       - '&7Menü um eine Einstellung'
@@ -190,6 +315,7 @@ Menu:
         - '&7Füge ein weiteres Template hinzu'
       Name: Template hinzufügen
     Lore:
+      - 'Typ: {type}'
       - '&6Art: &7{type}'
       - '&6Dauer: &7{duration}'
       - '&6Grund: &7{reason}'
@@ -203,6 +329,7 @@ Menu:
 # Single words
 #
 Parts:
+  Add: Hinzufügen
   Currently: Aktuell
   Has_No_Access: Kein Zugang
   Yes: Ja
@@ -210,6 +337,7 @@ Parts:
   Materials: Materialien
   Break: Breakup
   Confirm: Bestätigen
+  Languages: Languages
   Reason: Grund
   Has_Access: Zugang
   Groups: Groups
@@ -221,12 +349,14 @@ Parts:
   Players: Spieler
   No: Nein
   StorageType: Speicher-Art
+  Messages: Messages
   Connect: Verbinden
   Silent: silent
   Duration: '&6Dauer'
   Permission_To: Berechtigung für
   SuperSilent: super silent
   Not: nicht
+  Part: Part
   Action_For: Aktion für
   Select: Auswählen
   CreateNew: Erstellen
@@ -240,5 +370,4 @@ Skull_Hash: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3Jh
 #
 # Internal do not touch!
 #
-Version: 1
-
+Version: '1'

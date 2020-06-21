@@ -8,6 +8,7 @@ import org.jetbrains.annotations.Nullable;
 import org.mineacademy.bfo.conversation.SimpleConversation;
 import org.mineacademy.bfo.conversation.SimplePrompt;
 import org.mineacademy.punishcontrol.core.localization.LocalizableEditor;
+import org.mineacademy.punishcontrol.proxy.menus.LocalizableEditorMenu;
 
 public final class LocalizableEditConversation extends SimpleConversation {
 
@@ -50,7 +51,9 @@ public final class LocalizableEditConversation extends SimpleConversation {
     @Override
     protected @Nullable SimplePrompt acceptValidatedInput(String input) {
       localizableEditor.set(index, input);
+//      System.out.println(localizableEditor.value());
       localizableEditor.save();
+      LocalizableEditorMenu.showTo(getPlayer(), localizableEditor.localizable());
       return null;
     }
   }

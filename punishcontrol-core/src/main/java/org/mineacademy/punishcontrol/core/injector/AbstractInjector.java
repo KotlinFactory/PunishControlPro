@@ -21,6 +21,14 @@ public abstract class AbstractInjector<C extends Annotation, F extends Annotatio
   protected final Class<C> classAnnotationClass;
   protected final Class<F> fieldAnnotationClass;
 
+  private static void debugRep(final Object replacer) {
+    if (!(replacer instanceof Replacer))
+      return;
+    final Replacer rep = (Replacer) replacer;
+    for (final String s : rep.replacedMessage())
+      System.out.println(s);
+  }
+
   @Override
   public final void startInjecting(final List<Class<?>> classes) {
     for (final Class<?> clazz : classes) {
@@ -73,6 +81,7 @@ public abstract class AbstractInjector<C extends Annotation, F extends Annotatio
           } catch (final Throwable throwable) {
             System.err.println("Exception while injecting!");
             System.err.println("Path:  '" + path + "'");
+            System.err.println("Class: '" + clazz.getSimpleName() + "'");
             throwable.printStackTrace();
           }
         }
@@ -80,19 +89,11 @@ public abstract class AbstractInjector<C extends Annotation, F extends Annotatio
     }
   }
 
-  protected void onInjected(final Class<?> clazz,
+  protected void onInjected(
+      final Class<?> clazz,
       final Field field,
       final String path,
       final Object value) {
 
-  }
-
-
-  private static void debugRep(final Object replacer) {
-    if (!(replacer instanceof Replacer))
-      return;
-    final Replacer rep = (Replacer) replacer;
-    for (final String s : rep.replacedMessage())
-      System.out.println(s);
   }
 }

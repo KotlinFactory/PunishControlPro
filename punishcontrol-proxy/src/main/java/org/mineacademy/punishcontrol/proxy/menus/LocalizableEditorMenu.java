@@ -38,12 +38,12 @@ public final class LocalizableEditorMenu extends AbstractMenu {
   private final LocalizableEditor localizabeEditor;
 
   private LocalizableEditorMenu(
-      final LocalizablesBrowser localizablesBrowser,
-      final Localizable localizable) {
+      @NonNull final LocalizablesBrowser localizablesBrowser,
+      @NonNull final Localizable localizable) {
     super("LocalizableEditorMenu", localizablesBrowser, 9 * 3);
     this.localizable = localizable;
     this.localizabeEditor = LocalizableEditor.builder().build(localizable);
-    setTitle("&6" + EDIT_LOCALIZABLE);
+    setTitle("&8" + EDIT_LOCALIZABLE);
   }
 
   // ----------------------------------------------------------------------------------------------------
@@ -64,12 +64,13 @@ public final class LocalizableEditorMenu extends AbstractMenu {
 
   @Override
   public void updateInventory() {
+    super.updateInventory();
 
     for (int i = 0; i < localizable.value().size(); i++) {
       set(
           Item
               .of(ItemType.PAPER)
-              .name("&3" + PART + " &7" + i + 1)
+              .name("&3" + PART + "&7-" + (i + 1))
               .lore(
                   " ",
                   "&7" + VALUE + ": " + localizable.value().get(i),
@@ -123,13 +124,24 @@ public final class LocalizableEditorMenu extends AbstractMenu {
     showTo(player, localizable);
   }
 
+  @Override
+  protected String[] getInfo() {
+    return new String[]{
+        "",
+        ""
+    };
+  }
+
+  // ----------------------------------------------------------------------------------------------------
+  // Builder
+  // ----------------------------------------------------------------------------------------------------
+
   public static final class Builder {
 
     private final LocalizablesBrowser localizablesBrowser;
 
-
     @Inject
-    public Builder(LocalizablesBrowser localizablesBrowser) {
+    public Builder(@NonNull LocalizablesBrowser localizablesBrowser) {
       this.localizablesBrowser = localizablesBrowser;
     }
 
