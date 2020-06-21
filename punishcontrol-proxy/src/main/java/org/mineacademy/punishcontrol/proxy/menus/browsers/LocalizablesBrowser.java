@@ -13,6 +13,7 @@ import javax.inject.Named;
 import lombok.NonNull;
 import lombok.SneakyThrows;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
+import org.mineacademy.bfo.plugin.SimplePlugin;
 import org.mineacademy.burst.item.Item;
 import org.mineacademy.burst.menu.AbstractSearchableBrowser;
 import org.mineacademy.burst.util.Scheduler;
@@ -20,10 +21,19 @@ import org.mineacademy.punishcontrol.core.Searcher;
 import org.mineacademy.punishcontrol.core.localization.Localizable;
 import org.mineacademy.punishcontrol.core.localization.Localizables;
 import org.mineacademy.punishcontrol.proxy.DaggerProxyComponent;
+import org.mineacademy.punishcontrol.proxy.menus.LocalizableEditorMenu;
 
+@org.mineacademy.punishcontrol.core.injector.annotations.Localizable
 public final class LocalizablesBrowser extends AbstractSearchableBrowser<Localizable> {
 
-  private final SettingsBrowser browser;
+  @org.mineacademy.punishcontrol.core.injector.annotations.Localizable("Menu.Proxy.LocalizablesBrowser.Information")
+  private static String[] MENU_INFORMATION = {
+      "Menu to browse and alter",
+      "localizable messages in " + SimplePlugin.getNamed()
+  };
+  @org.mineacademy.punishcontrol.core.injector.annotations.Localizable("Parts.Messages")
+  private static String MESSAGES = "Messages";
+  private final LanguageBrowser browser;
 
   public static void showTo(@NonNull final ProxiedPlayer player) {
     Scheduler.runAsync(
@@ -33,10 +43,11 @@ public final class LocalizablesBrowser extends AbstractSearchableBrowser<Localiz
 
   @Inject
   public LocalizablesBrowser(
-      @NonNull final SettingsBrowser parent,
+      @NonNull final LanguageBrowser parent,
       @NonNull @Named("localizables") final Collection<Localizable> content) {
     super("LocalizableBrowser", parent, content);
     this.browser = parent;
+    setTitle("&8" + MESSAGES);
   }
 
   @Override
@@ -65,7 +76,7 @@ public final class LocalizablesBrowser extends AbstractSearchableBrowser<Localiz
 
   @Override
   protected void onClick(final ClickType clickType, final Localizable localizable) {
-
+    LocalizableEditorMenu.showTo(player, localizable);
   }
 
   @SneakyThrows
@@ -73,6 +84,7 @@ public final class LocalizablesBrowser extends AbstractSearchableBrowser<Localiz
   protected ItemStack convertToItemStack(final Localizable localizable) {
     final List<String> lore = new ArrayList<>();
 
+    lore.add(" ");
     lore.add("&3Value: ");
 
     for (String value : localizable.value())
@@ -83,9 +95,14 @@ public final class LocalizablesBrowser extends AbstractSearchableBrowser<Localiz
 
     return Item
         .of(ItemType.PAPER)
-        .name("&3" + localizable.path())
+        .name("&6" + localizable.path())
         .lore(lore)
         .build();
+  }
+
+  @Override
+  protected String[] getInfo() {
+    return MENU_INFORMATION;
   }
 
   @Override

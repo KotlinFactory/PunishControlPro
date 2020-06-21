@@ -6,9 +6,12 @@ import de.leonhard.storage.LightningBuilder;
 import de.leonhard.storage.Yaml;
 import de.leonhard.storage.internal.settings.ConfigSettings;
 import de.leonhard.storage.internal.settings.DataType;
+import de.leonhard.storage.util.FileUtils;
 import de.leonhard.storage.util.Valid;
+import java.io.File;
 import java.util.Collection;
 import java.util.UUID;
+import java.util.stream.Collectors;
 import javax.inject.Named;
 import lombok.NonNull;
 import lombok.Setter;
@@ -130,36 +133,63 @@ public final class Providers {
     if (localization != null)
       return localization;
 
-    final String name = "messages_" + SimpleSettings.LOCALE_PREFIX;
-    return localization = LightningBuilder
-        .fromPath(name, pluginDataProvider().getDataFolder().getAbsolutePath() +
-            "/localization/")
+    return localization = createLocalizationYaml(pluginDataProvider(),
+        SimpleSettings.LOCALE_PREFIX);
+  }
+
+  public static Yaml createLocalizationYaml(@NonNull final String localePrefix) {
+    return createLocalizationYaml(pluginDataProvider(), localePrefix);
+  }
+
+  private static Yaml createLocalizationYaml(
+      @NonNull final PluginDataProvider pluginDataProvider,
+      @NonNull final String localePrefix) {
+
+    final String name = "messages_" + localePrefix;
+
+    return LightningBuilder
+        .fromPath(name, pluginDataProvider.getDataFolder().getAbsolutePath() +
+                        "/localization/")
         .addInputStreamFromResource("localization/" + name + ".yml")
         .setConfigSettings(ConfigSettings.PRESERVE_COMMENTS)
         .setDataType(DataType.SORTED)
         .createConfig()
         .addDefaultsFromInputStream();
+
   }
 
   // ----------------------------------------------------------------------------------------------------
   // Dagger only
   // ----------------------------------------------------------------------------------------------------
 
+  /**
+   * Heavy-weight operation! Loads a lot of files! Be mindful with using this. --> Should
+   * be used asynchronously only!
+   */
+  @Provides
+  public static Collection<Yaml> localizationFiles() {
+    return FileUtils.listFiles(new File(
+        pluginDataProvider().getDataFolder() + "/localization"), ".yml")
+        .stream()
+        .map(Yaml::new)
+        .collect(Collectors.toList());
+  }
+
   @Provides
   @Named("localizables")
-  public Collection<Localizable> localizables() {
+  public static Collection<Localizable> localizables() {
     return Localizables.localizables();
   }
 
   @Provides
   @Named("offline-players")
-  public Collection<UUID> offlinePlayers() {
+  public static Collection<UUID> offlinePlayers() {
     return playerProvider().offlinePlayers();
   }
 
   @Provides
   @Named("importers")
-  public Collection<PunishImporter> importers() {
+  public static Collection<PunishImporter> importers() {
     return PunishImporters.importers();
   }
 

@@ -1,12 +1,19 @@
 package org.mineacademy.punishcontrol.core.settings;
 
+import de.leonhard.storage.LightningBuilder;
+import de.leonhard.storage.Yaml;
+import de.leonhard.storage.internal.settings.ConfigSettings;
+import de.leonhard.storage.internal.settings.DataType;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
+import org.mineacademy.punishcontrol.core.providers.PluginDataProvider;
 import org.mineacademy.punishcontrol.core.setting.Replacer;
 import org.mineacademy.punishcontrol.core.setting.SimpleLocalization;
 
 public final class Localization extends SimpleLocalization {
+
+
 
   public static final String TARGET_IS_OFFLINE = "&cTarget is offline!";
 

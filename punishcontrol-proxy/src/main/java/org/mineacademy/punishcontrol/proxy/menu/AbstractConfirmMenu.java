@@ -57,7 +57,7 @@ public abstract class AbstractConfirmMenu extends AbstractMenu {
       return CallResult.DENY_GRABBING;
     }));
 
-    registerActionHandler(CONFIRM, (click) -> {
+    registerActionHandler("Confirm", (click) -> {
       try {
         onConfirm();
       } catch (final Throwable throwable) {

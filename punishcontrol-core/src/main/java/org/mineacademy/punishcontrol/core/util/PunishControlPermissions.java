@@ -45,4 +45,13 @@ public class PunishControlPermissions {
           "Toggle whether punishments can be importer or not")
       .type(PermissionType.OTHER);
 
+  public Permission MENU_SETTINGS_LANGUAGE = Permission
+      .of("punishcontrol.settings.language",
+          "Change the language")
+      .type(PermissionType.MENU);
+
+  public Permission MENU_SETTINGS_LOCALIZATION = Permission
+      .of("punishcontrol.settings.localization",
+          "Change the messages of a given localization")
+      .type(PermissionType.MENU);
 }

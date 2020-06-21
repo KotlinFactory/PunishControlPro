@@ -4,19 +4,20 @@ import de.leonhard.storage.util.Valid;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import lombok.*;
+import lombok.Getter;
+import lombok.NonNull;
 import lombok.experimental.Accessors;
+import lombok.val;
 
 /**
  * Platform independent version of the Replacer
  */
 @Getter
 @Accessors(fluent = true)
-@RequiredArgsConstructor(access = AccessLevel.PRIVATE)
 public final class Replacer {
 
   public static final String DELIMITER = "\n";
-  private final String[] messages;
+  private final List<String> messages;
 
   //Messages to replace
   private final List<String> variables = new ArrayList<>();
@@ -26,16 +27,21 @@ public final class Replacer {
   // Static Factory methods
   // ----------------------------------------------------------------------------------------------------
   public static Replacer of(@NonNull final String... messages) {
-    return new Replacer(messages);
+    return new Replacer(Arrays.asList(messages));
   }
 
   public static Replacer of(@NonNull final List<String> messages) {
-    return new Replacer(messages.toArray(new String[0]));
+    return new Replacer(messages);
   }
 
   public static Replacer ofMultilineString(
       @NonNull final String multilineString) {
-    return new Replacer(multilineString.split(DELIMITER));
+    return new Replacer(Arrays.asList(multilineString.split(DELIMITER)));
+  }
+
+  private Replacer(List<String> messages) {
+    // Cloning our messages
+    this.messages = new ArrayList<>(messages);
   }
 
   public Replacer find(@NonNull final String... variables) {
@@ -48,6 +54,11 @@ public final class Replacer {
     this.replacements.clear();
 
     this.replacements.addAll(Arrays.asList(replacements));
+    return this;
+  }
+
+  public Replacer set(final int index, final String message) {
+    messages.set(index, message);
     return this;
   }
 
@@ -76,7 +87,7 @@ public final class Replacer {
   public String[] replacedMessage() {
     Valid.checkBoolean(replacements.size() == variables.size(),
         "Variables " + variables.size()
-            + " != replacements " + replacements.size(),
+        + " != replacements " + replacements.size(),
         "Variables: " + variables.toString(),
         "Replacments: " + replacements
     );

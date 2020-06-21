@@ -28,6 +28,10 @@ public class Localizables {
         .findFirst();
   }
 
+  public void clear() {
+    localizables.clear();
+  }
+
   public List<Localizable> localizables() {
     return Collections.unmodifiableList(localizables);
   }

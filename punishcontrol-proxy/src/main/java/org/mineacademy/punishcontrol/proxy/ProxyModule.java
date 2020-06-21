@@ -9,6 +9,8 @@ import java.util.List;
 import javax.inject.Named;
 import net.md_5.bungee.api.ProxyServer;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
+import org.mineacademy.bfo.ReflectionUtil;
+import org.mineacademy.bfo.plugin.SimplePlugin;
 import org.mineacademy.burst.provider.Providers;
 import org.mineacademy.burst.provider.TextureProvider;
 import org.mineacademy.burst.provider.UUIDNameProvider;
@@ -16,6 +18,8 @@ import org.mineacademy.punishcontrol.proxy.menus.settings.SettingTypes;
 
 @Module
 public final class ProxyModule {
+
+  private List<Class<?>> classes;
 
   @Provides
   public ProxyServer proxyServer() {
@@ -35,6 +39,25 @@ public final class ProxyModule {
   @Provides
   public TextureProvider textureProvider() {
     return Providers.getTextureProvider();
+  }
+
+  @Provides
+  public SimplePlugin simplePlugin() {
+    return SimplePlugin.getInstance();
+  }
+
+  /**
+   * List's the classes used in our plugin.
+   * Heavyweight operation!
+   * --> Use async only!
+   */
+  @Provides
+  public List<Class<?>> classes() {
+    if (classes != null) {
+      return classes;
+    }
+
+    return classes = new ArrayList<>(ReflectionUtil.getClasses(simplePlugin()));
   }
 
   @Provides

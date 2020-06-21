@@ -4,6 +4,7 @@ import dagger.Component;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.proxy.commands.*;
 import org.mineacademy.punishcontrol.proxy.listeners.ProxyDataSetter;
+import org.mineacademy.punishcontrol.proxy.menus.LocalizableEditorMenu;
 import org.mineacademy.punishcontrol.proxy.menus.MainMenu;
 import org.mineacademy.punishcontrol.proxy.menus.browsers.*;
 import org.mineacademy.punishcontrol.proxy.menus.punish.PunishCreatorMenu;
@@ -82,4 +83,8 @@ public interface ProxyComponent {
   PunishImporterBrowser punishImporterBrowser();
 
   LocalizablesBrowser localizableBrowser();
+
+  LanguageBrowser languageBrowser();
+
+  LocalizableEditorMenu.Builder localizableEditorMenuBuilder();
 }

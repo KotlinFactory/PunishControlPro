@@ -1,10 +1,7 @@
 package org.mineacademy.punishcontrol.core.localization;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import lombok.Builder;
 import lombok.Data;
@@ -38,12 +35,15 @@ public class Localizable {
   }
 
   @SuppressWarnings("unchecked")
-  public Collection<String> value() {
+  public List<String> value() {
     if (rawValue == null)
       return new ArrayList<>();
 
+    if (rawValue instanceof String)
+      return Collections.singletonList((String) rawValue);
+
     if (rawValue instanceof Collection<?>)
-      return (Collection<String>) rawValue;
+      return new ArrayList<>((Collection<String>) rawValue);
 
     if (rawValue instanceof String[])
       return Arrays.asList(((String[]) rawValue));
