@@ -17,7 +17,6 @@ public final class ProxyTextureProvider extends SecureJson
     implements TextureProvider,
     org.mineacademy.burst.provider.TextureProvider {
 
-
   private ProxyTextureProvider() {
     super(
         PunishControlManager.FILES.SKIN_STORAGE,

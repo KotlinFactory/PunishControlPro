@@ -63,7 +63,8 @@ public final class GroupBrowser extends AbstractBrowser<Group> {
     final CompMaterial compMaterial = CompMaterial.fromString(group.item());
 
     return ItemCreator
-        .of(compMaterial,
+        .of(
+            compMaterial,
             "&7" + group.name(),
             replacer.getReplacedMessage())
         .build()

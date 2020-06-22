@@ -52,7 +52,6 @@ public abstract class AbstractPlayerBrowser extends AbstractSearchableBrowser<UU
     this(playerProvider, textureProvider, null, false);
   }
 
-
   public AbstractPlayerBrowser(
       final PlayerProvider playerProvider,
       final TextureProvider textureProvider,

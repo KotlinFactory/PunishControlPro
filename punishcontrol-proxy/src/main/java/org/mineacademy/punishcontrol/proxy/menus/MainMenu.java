@@ -86,7 +86,8 @@ public final class MainMenu extends ChangingMenu {
 
   @Inject
   public MainMenu(final TextureProvider textureProvider) {
-    super("MainMenu",
+    super(
+        "MainMenu",
         Collections.singletonList(
             ChangingButton
                 .fromCustomHashes(
@@ -103,7 +104,6 @@ public final class MainMenu extends ChangingMenu {
   // Overridden methods
   // ----------------------------------------------------------------------------------------------------
 
-
   @Override
   public void updateInventory() {
     super.updateInventory();
@@ -112,7 +112,8 @@ public final class MainMenu extends ChangingMenu {
     {
       set(
           Item
-              .of(ItemType.CHEST,
+              .of(
+                  ItemType.CHEST,
                   "&6" + PUNISHMENTS,
                   punishLore)
               .slot(PUNISHES_BUTTON_SLOT)
@@ -124,7 +125,8 @@ public final class MainMenu extends ChangingMenu {
     {
       set(
           Item
-              .of(ItemType.CYAN_DYE,
+              .of(
+                  ItemType.CYAN_DYE,
                   "&6" + CREATE_NEW_NAME,
                   CREATE_NEW_LORE
               )
@@ -137,7 +139,8 @@ public final class MainMenu extends ChangingMenu {
     {
       set(
           Item
-              .of(ItemType.COMPARATOR,
+              .of(
+                  ItemType.COMPARATOR,
                   "&6" + SETTINGS,
                   " ",
                   VIEW_SETTINGS,
@@ -164,7 +167,8 @@ public final class MainMenu extends ChangingMenu {
     {
       set(
           Item
-              .of(ItemType.COMPARATOR,
+              .of(
+                  ItemType.COMPARATOR,
                   "&6" + SETTINGS,
                   "",
                   "&7" + VIEW_SETTINGS,
@@ -185,29 +189,33 @@ public final class MainMenu extends ChangingMenu {
   public void registerActionHandlers() {
     super.registerActionHandlers();
 
-    registerActionHandler("Changing", (changing -> {
-      PlayerBrowser.showTo(getPlayer());
-      return CallResult.DENY_GRABBING;
-    }));
+    registerActionHandler("Changing", (
+        changing -> {
+          PlayerBrowser.showTo(getPlayer());
+          return CallResult.DENY_GRABBING;
+        }));
 
-    registerActionHandler("Settings", (settings -> {
-      SettingsBrowser.showTo(getPlayer());
-      return CallResult.DENY_GRABBING;
-    }));
+    registerActionHandler("Settings", (
+        settings -> {
+          SettingsBrowser.showTo(getPlayer());
+          return CallResult.DENY_GRABBING;
+        }));
 
-    registerActionHandler("NewPunish", (newPunish -> {
-      PunishCreatorMenu.showTo(getPlayer());
-      return CallResult.DENY_GRABBING;
-    }));
+    registerActionHandler("NewPunish", (
+        newPunish -> {
+          PunishCreatorMenu.showTo(getPlayer());
+          return CallResult.DENY_GRABBING;
+        }));
 
-    registerActionHandler("ListPunishes", (listPunishes -> {
-      if (listPunishes.getClickType() == ClickType.RIGHT_CLICK) {
-        PunishedPlayerBrowser.showTo(getPlayer());
-        return CallResult.DENY_GRABBING;
-      }
+    registerActionHandler("ListPunishes", (
+        listPunishes -> {
+          if (listPunishes.getClickType() == ClickType.RIGHT_CLICK) {
+            PunishedPlayerBrowser.showTo(getPlayer());
+            return CallResult.DENY_GRABBING;
+          }
 
-      AllPunishesBrowser.showTo(getPlayer());
-      return CallResult.DENY_GRABBING;
-    }));
+          AllPunishesBrowser.showTo(getPlayer());
+          return CallResult.DENY_GRABBING;
+        }));
   }
 }

@@ -57,7 +57,7 @@ public class MojangUtils {
     final URL url_1 = new URL(
         SERVICE_URL + UUIDTypeAdapter
             .fromUUID(uuid)
-            + "?unsigned=false");
+        + "?unsigned=false");
     final InputStreamReader reader_1 = new InputStreamReader(url_1.openStream());
     final JsonObject textureProperty = new JsonParser().parse(reader_1).getAsJsonObject()
         .get("properties").getAsJsonArray().get(0).getAsJsonObject();

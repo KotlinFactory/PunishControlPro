@@ -39,12 +39,6 @@ public final class LanguageBrowser extends AbstractBrowser<Yaml> {
   private final ExceptionHandler exceptionHandler;
   private final List<Class<?>> classes;
 
-  public static void showTo(@NonNull final ProxiedPlayer player) {
-    Scheduler.runAsync(
-        () -> DaggerProxyComponent.create().languageBrowser().displayTo(player)
-    );
-  }
-
   @Inject
   public LanguageBrowser(
       SettingsBrowser parent,
@@ -57,6 +51,27 @@ public final class LanguageBrowser extends AbstractBrowser<Yaml> {
     this.exceptionHandler = exceptionHandler;
     this.classes = classes;
     setTitle("&8" + LANGUAGES);
+  }
+
+  public static void showTo(@NonNull final ProxiedPlayer player) {
+    Scheduler.runAsync(
+        () -> DaggerProxyComponent.create().languageBrowser().displayTo(player)
+    );
+  }
+
+  private static boolean isCurrentLanguageFile(Yaml yaml) {
+    final String CURRENT = Settings.LOCALE_PREFIX;
+
+    try {
+      final String prefix = yaml.getName().split("\\.")[0].split("_")[1];
+      return CURRENT.equalsIgnoreCase(prefix);
+    } catch (Throwable throwable) {
+      Debugger.saveError(
+          throwable,
+          "Invalid yaml name '" + yaml.getName() + "'",
+          "Skipping it.");
+      return false;
+    }
   }
 
   @Override
@@ -110,9 +125,11 @@ public final class LanguageBrowser extends AbstractBrowser<Yaml> {
     }
   }
 
-
   @Override
   protected ItemStack convertToItemStack(Yaml yaml) {
+    if (yaml == null) {
+      return null;
+    }
 
     final String loreString =
         isCurrentLanguageFile(yaml)
@@ -138,20 +155,5 @@ public final class LanguageBrowser extends AbstractBrowser<Yaml> {
   @Override
   public void reDisplay() {
     showTo(getPlayer());
-  }
-
-  private static boolean isCurrentLanguageFile(Yaml yaml) {
-    final String CURRENT = Settings.LOCALE_PREFIX;
-
-    try {
-      final String prefix = yaml.getName().split("\\.")[0].split("_")[1];
-      return CURRENT.equalsIgnoreCase(prefix);
-    } catch (Throwable throwable) {
-      Debugger.saveError(
-          throwable,
-          "Invalid yaml name '" + yaml.getName() + "'",
-          "Skipping it.");
-      return false;
-    }
   }
 }

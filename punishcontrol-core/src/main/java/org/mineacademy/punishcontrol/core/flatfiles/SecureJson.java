@@ -28,13 +28,15 @@ public abstract class SecureJson extends Json {
     canWrite = file.canWrite();
   }
 
-  protected SecureJson(final String name, final String path,
+  protected SecureJson(
+      final String name, final String path,
       final InputStream inputStream) {
     super(name, path, inputStream);
     canWrite = file.canWrite();
   }
 
-  protected SecureJson(final String name,
+  protected SecureJson(
+      final String name,
       @Nullable final String path,
       @Nullable final InputStream inputStream,
       @Nullable final ReloadSettings reloadSettings) {
@@ -54,7 +56,6 @@ public abstract class SecureJson extends Json {
   // Overridden methods for best usability & security
   // ----------------------------------------------------------------------------------------------------
 
-
   @Override
   public final <T> T getOrDefault(final String key, final T def) {
     try {
@@ -63,7 +64,7 @@ public abstract class SecureJson extends Json {
       final LightningValidationException lightningValidationException = new LightningValidationException(
           throwable,
           "Exception while getting '" + def.getClass().getSimpleName()
-              + "' from '" + file.getName() + "'",
+          + "' from '" + file.getName() + "'",
           "Directory: '" + FileUtils.getParentDirPath(file) + "'",
           "Have you altered the data?",
           "Additional data: searched: " + def.getClass().getSimpleName()

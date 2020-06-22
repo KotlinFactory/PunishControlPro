@@ -22,7 +22,6 @@ import org.mineacademy.punishcontrol.core.settings.ItemSettings;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 import org.mineacademy.punishcontrol.spigot.Players;
 
-
 @UtilityClass
 public class ItemStacks {
 
@@ -74,7 +73,6 @@ public class ItemStacks {
     }
     return CompMaterial.CYAN_STAINED_GLASS_PANE.toItem();
   }
-
 
   public ItemStack forPunishType(@NonNull final PunishType punishType) {
     switch (punishType) {
@@ -134,7 +132,6 @@ public class ItemStacks {
 
     return Arrays.asList(lores.getReplacedMessage());
   }
-
 
   public boolean isItem(@NonNull final CompMaterial material) {
     switch (material) {

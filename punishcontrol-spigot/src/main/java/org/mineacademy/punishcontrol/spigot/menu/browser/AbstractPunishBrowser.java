@@ -39,7 +39,6 @@ public abstract class AbstractPunishBrowser extends AbstractBrowser<Punish> {
       "&7Right click to remove"
   );
 
-
   protected final PlayerProvider playerProvider;
 
   protected AbstractPunishBrowser(

@@ -57,7 +57,8 @@ public abstract class AbstractUnPunishCommand extends
             checkBoolean(provider.removeMuteFor(target), "Player is not muted");
             break;
           case WARN:
-            checkBoolean(provider.removeWarnFor(target),
+            checkBoolean(
+                provider.removeWarnFor(target),
                 "Player is not warned");
             break;
         }

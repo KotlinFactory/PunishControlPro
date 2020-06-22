@@ -71,7 +71,8 @@ public final class PunishControl
     if (!SpigotConfig.bungee && !Bukkit.getServer().getOnlineMode()) {
       // TODO: find a better way doing this!
       final val cfg = LightningBuilder
-          .fromPath("settings.yml",
+          .fromPath(
+              "settings.yml",
               Providers.pluginDataProvider().getDataFolder().getAbsolutePath())
           .addInputStreamFromResource("settings.yml")
           .setConfigSettings(ConfigSettings.PRESERVE_COMMENTS)

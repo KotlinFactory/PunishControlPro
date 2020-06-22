@@ -23,7 +23,8 @@ public class Converters {
     return (T) converter.convert(source);
   }
 
-  private <S, T> Converter<S, T> getMultiConverter(final Class<S> source,
+  private <S, T> Converter<S, T> getMultiConverter(
+      final Class<S> source,
       final Class<T> to) {
     final List<Converter> converters = new ArrayList<>();
     findConversionRoute(converters, source, to);
@@ -39,7 +40,8 @@ public class Converters {
     };
   }
 
-  private boolean findConversionRoute(final List<Converter> converters,
+  private boolean findConversionRoute(
+      final List<Converter> converters,
       final Class<?> source, final Class<?> to) {
     for (final Map.Entry<Class, Class> entry : CONVERTER_MAP.keySet()) {
       if (entry.getKey().equals(source)) {
@@ -55,7 +57,8 @@ public class Converters {
     return false;
   }
 
-  private boolean buildRoute(final List<Converter> converters,
+  private boolean buildRoute(
+      final List<Converter> converters,
       final Map.Entry<Class, Class> entry, final Class<?> to) {
     if (entry.getValue().equals(to)) {
       return true;
@@ -71,12 +74,14 @@ public class Converters {
     return false;
   }
 
-  public void register(final Class<?> sourceType, final Class targetType,
+  public void register(
+      final Class<?> sourceType, final Class targetType,
       final Converter converter) {
     CONVERTER_MAP.put(new AbstractMap.SimpleEntry<>(sourceType, targetType), converter);
   }
 
-  public <S, T> Converter<S, T> getConverter(final Class<S> sourceType,
+  public <S, T> Converter<S, T> getConverter(
+      final Class<S> sourceType,
       final Class<T> targetType) {
     return CONVERTER_MAP.get(new AbstractMap.SimpleEntry<>(sourceType, targetType));
   }

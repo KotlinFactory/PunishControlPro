@@ -66,7 +66,8 @@ public final class PunishControl
     if (!ProxyServer.getInstance().getConfig().isOnlineMode()) {
       // TODO: find a better way doing this!
       final val cfg = LightningBuilder
-          .fromPath("settings.yml",
+          .fromPath(
+              "settings.yml",
               Providers.pluginDataProvider().getDataFolder().getAbsolutePath())
           .addInputStreamFromResource("settings.yml")
           .setConfigSettings(ConfigSettings.PRESERVE_COMMENTS)
@@ -153,7 +154,6 @@ public final class PunishControl
   // ----------------------------------------------------------------------------------------------------
   // Overridden methods from SimplePunishControl
   // ----------------------------------------------------------------------------------------------------
-
 
   @Override
   public List<Class<?>> classes() {

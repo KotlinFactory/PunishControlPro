@@ -83,7 +83,6 @@ public class ChangingMenu extends Menu implements Schedulable {
   // Overridden methods form Menu
   // ----------------------------------------------------------------------------------------------------
 
-
   @Override
   protected final void onMenuClose(final Player player, final Inventory inventory) {
     cancelled = true;

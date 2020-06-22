@@ -57,7 +57,8 @@ public abstract class AbstractConfirmMenu extends Menu implements Schedulable {
     }
 
     return ItemCreator
-        .of(ItemSettings.APPLY_ITEM.itemType(),
+        .of(
+            ItemSettings.APPLY_ITEM.itemType(),
             "&a" + CONFIRM,
             "",
             "&7Click to confirm")

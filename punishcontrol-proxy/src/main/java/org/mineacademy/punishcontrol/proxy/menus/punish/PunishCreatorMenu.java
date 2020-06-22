@@ -80,23 +80,28 @@ public final class PunishCreatorMenu extends AbstractMenu {
   private static final String MISSING_TARGET = "Missing target!";
   @NonNls
   private static final String MISSING_PUNISH_TYPE = "Missing punish-type!";
-  private static final String[] MAKE_SUPER_SILENT_LORE = {"",
+  private static final String[] MAKE_SUPER_SILENT_LORE = {
+      "",
       "&7Click to make",
       "&7the punish",
       "&7super silent"};
-  private static final String[] MAKE_NOT_SUPER_SILENT_LORE = {"",
+  private static final String[] MAKE_NOT_SUPER_SILENT_LORE = {
+      "",
       "&7Click to make",
       "&7the punish",
       "&7not silent"};
-  private static final String[] MAKE_SILENT_LORE = {"",
+  private static final String[] MAKE_SILENT_LORE = {
+      "",
       "&7Click to make",
       "&7the punish",
       "&7silent"};
-  private static final String[] MAKE_NOT_SILENT_LORE = {"",
+  private static final String[] MAKE_NOT_SILENT_LORE = {
+      "",
       "&7Click to make",
       "&7the punish",
       "&7not silent"};
-  private static final String[] CHOOSE_TARGET_LORE = {"&7Choose the",
+  private static final String[] CHOOSE_TARGET_LORE = {
+      "&7Choose the",
       "&7player the",
       "&7punish should be",
       "&7applied to"};
@@ -110,7 +115,8 @@ public final class PunishCreatorMenu extends AbstractMenu {
   private static final String CURRENT = "Current";
   @NonNls
   private static final String CHOOSE_A_DIFFERENT_REASON = "Choose a different reason";
-  private static final String[] CHOOSE_TEMPLATE_LORE = {"&7Create a punish",
+  private static final String[] CHOOSE_TEMPLATE_LORE = {
+      "&7Create a punish",
       "&7from an existing",
       "&7template"};
   @NonNls
@@ -124,7 +130,8 @@ public final class PunishCreatorMenu extends AbstractMenu {
   @NonNls
   private static final String NOT_SILENT = "not silent";
   private static Replacer TYPE_REPLACER = Replacer
-      .of("&7Change the type",
+      .of(
+          "&7Change the type",
           "&7of the punish",
           "&7" + CURRENT + "ly: {type}");
 
@@ -239,7 +246,8 @@ public final class PunishCreatorMenu extends AbstractMenu {
       } else {
         set(
             Item
-                .of(ItemType.CLOCK,
+                .of(
+                    ItemType.CLOCK,
                     "&6" + DURATION,
                     CHOOSE_DURATION_LORE)
                 .actionHandler("Duration")
@@ -294,7 +302,8 @@ public final class PunishCreatorMenu extends AbstractMenu {
     //Reason | "Reason"
     {
       if (punishBuilder().reason() != null) {
-        set(Item.of(ItemSettings.REASON_ITEM.itemType(),
+        set(Item.of(
+            ItemSettings.REASON_ITEM.itemType(),
             "&6" + REASON,
             "&7" + CHOOSE_A_DIFFERENT_REASON,
             "&7" + CURRENT + ": " + punishBuilder.reason())
@@ -303,7 +312,8 @@ public final class PunishCreatorMenu extends AbstractMenu {
         );
       } else {
         set(
-            Item.of(ItemSettings.REASON_ITEM.itemType(),
+            Item.of(
+                ItemSettings.REASON_ITEM.itemType(),
                 "&6" + REASON,
                 CHOOSE_REASON_LORE)
                 .slot(CHOOSE_REASON_SLOT)
@@ -329,7 +339,8 @@ public final class PunishCreatorMenu extends AbstractMenu {
       } else {
         set(
             Item
-                .of(ItemType.PLAYER_HEAD,
+                .of(
+                    ItemType.PLAYER_HEAD,
                     "&6" + CHOOSE_PLAYER,
                     CHOOSE_TARGET_LORE)
                 .slot(CHOOSE_PLAYER_SLOT)
@@ -396,7 +407,8 @@ public final class PunishCreatorMenu extends AbstractMenu {
     {
       set(
           Item
-              .of(ItemSettings.APPLY_ITEM.itemType(),
+              .of(
+                  ItemSettings.APPLY_ITEM.itemType(),
                   "&a" + APPLY,
                   "&7" + APPLY_PUNISHMENT)
               .slot(APPLY_SLOT)
@@ -417,187 +429,200 @@ public final class PunishCreatorMenu extends AbstractMenu {
   @Override
   public void registerActionHandlers() {
     //Duration
-    registerActionHandler("Duration", (duration -> {
-      punishTemplate = null;
-      new AbstractDurationChooser(PunishCreatorMenu.this) {
+    registerActionHandler("Duration", (
+        duration -> {
+          punishTemplate = null;
+          new AbstractDurationChooser(PunishCreatorMenu.this) {
 
-        @Override
-        protected void confirm() {
-          punishBuilder().duration(ms);
-          PunishCreatorMenu.this.displayTo(player);
-        }
-      }.displayTo(player);
+            @Override
+            protected void confirm() {
+              punishBuilder().duration(ms);
+              PunishCreatorMenu.this.displayTo(player);
+            }
+          }.displayTo(player);
 
-      return CallResult.DENY_GRABBING;
-    }));
+          return CallResult.DENY_GRABBING;
+        }));
 
     //Type
-    registerActionHandler("Type", (type -> {
-      punishTemplate = null;
-      new AbstractPunishTypeBrowser(this) {
-        @Override
-        protected void onClick(final ClickType clickType, final PunishType punishType) {
-          showTo(player, punishBuilder().punishType(punishType));
+    registerActionHandler("Type", (
+        type -> {
+          punishTemplate = null;
+          new AbstractPunishTypeBrowser(this) {
+            @Override
+            protected void onClick(
+                final ClickType clickType,
+                final PunishType punishType) {
+              showTo(player, punishBuilder().punishType(punishType));
 
-        }
-      }.displayTo(player);
-      return CallResult.DENY_GRABBING;
-    }));
+            }
+          }.displayTo(player);
+          return CallResult.DENY_GRABBING;
+        }));
 
     //Template
-    registerActionHandler("Template", (template -> {
+    registerActionHandler("Template", (
+        template -> {
 
-      new AbstractTemplateBrowser(PunishCreatorMenu.this) {
+          new AbstractTemplateBrowser(PunishCreatorMenu.this) {
 
-        @Override
-        protected void onClick(final ClickType clickType,
-            final PunishTemplate punishTemplate) {
-          //Applying new setting & showing up
-          if (!Groups.hasAccess(player.getUniqueId(), punishTemplate)) {
-            animateTitle("&c" + NO_ACCESS);
-            return;
-          }
+            @Override
+            protected void onClick(
+                final ClickType clickType,
+                final PunishTemplate punishTemplate) {
+              //Applying new setting & showing up
+              if (!Groups.hasAccess(player.getUniqueId(), punishTemplate)) {
+                animateTitle("&c" + NO_ACCESS);
+                return;
+              }
 
-          //Reinitialisation of our punishBuilder since this is easier & more safe to
-          //apply. (To many values are changed)
-          showTo(
-              player,
-              punishTemplate.toPunishBuilder().target(punishBuilder.target()),
-              punishTemplate);
-        }
-      }.displayTo(player);
-      return CallResult.DENY_GRABBING;
-    }));
+              //Reinitialisation of our punishBuilder since this is easier & more safe to
+              //apply. (To many values are changed)
+              showTo(
+                  player,
+                  punishTemplate.toPunishBuilder().target(punishBuilder.target()),
+                  punishTemplate);
+            }
+          }.displayTo(player);
+          return CallResult.DENY_GRABBING;
+        }));
 
     //Reason
-    registerActionHandler(REASON, (reason -> {
-      punishTemplate = null;
-      InventoryModule.closeAllInventories(getPlayer());
-      PunishReasonConversation.create(getPlayer(), this).start();
-      return CallResult.DENY_GRABBING;
-    }));
+    registerActionHandler(REASON, (
+        reason -> {
+          punishTemplate = null;
+          InventoryModule.closeAllInventories(getPlayer());
+          PunishReasonConversation.create(getPlayer(), this).start();
+          return CallResult.DENY_GRABBING;
+        }));
 
     //Player
-    registerActionHandler("Player", (player -> {
-      punishTemplate = null;
-      new AbstractPlayerBrowser(
-          Providers.playerProvider(),
-          Providers.textureProvider(),
-          PunishCreatorMenu.this) {
+    registerActionHandler("Player", (
+        player -> {
+          punishTemplate = null;
+          new AbstractPlayerBrowser(
+              Providers.playerProvider(),
+              Providers.textureProvider(),
+              PunishCreatorMenu.this) {
 
-        @Override
-        protected void onClick(final ClickType clickType, final UUID uuid) {
-          PunishCreatorMenu.showTo(player, punishBuilder().target(uuid));
-        }
-      }.displayTo(getPlayer());
-      return CallResult.DENY_GRABBING;
-    }));
+            @Override
+            protected void onClick(final ClickType clickType, final UUID uuid) {
+              PunishCreatorMenu.showTo(player, punishBuilder().target(uuid));
+            }
+          }.displayTo(getPlayer());
+          return CallResult.DENY_GRABBING;
+        }));
 
     // Silent
-    registerActionHandler("Silent", (silent -> {
-      if (punishBuilder.superSilent()) {
-        animateTitle("&c" + ALREADY_SUPER_SILENT);
-        return CallResult.DENY_GRABBING;
-      }
-      punishBuilder.silent(!punishBuilder.silent());
-      animateTitle(punishBuilder.silent()
-          ? "&a" + SILENT
-          : "&c" + NOT_SILENT);
+    registerActionHandler("Silent", (
+        silent -> {
+          if (punishBuilder.superSilent()) {
+            animateTitle("&c" + ALREADY_SUPER_SILENT);
+            return CallResult.DENY_GRABBING;
+          }
+          punishBuilder.silent(!punishBuilder.silent());
+          animateTitle(punishBuilder.silent()
+              ? "&a" + SILENT
+              : "&c" + NOT_SILENT);
 
-      build();
-      return CallResult.DENY_GRABBING;
-    }));
+          build();
+          return CallResult.DENY_GRABBING;
+        }));
 
     //Super-Silent
-    registerActionHandler("SuperSilent", (superSilent -> {
-      if (punishBuilder.silent()) {
-        punishBuilder.silent(false);
-      }
-      punishBuilder.superSilent(!punishBuilder.superSilent());
-      punishBuilder.silent(!punishBuilder.silent());
-      animateTitle(punishBuilder.silent()
-          ? "&a" + SUPER_SILENT
-          : "&c" + NOT_SUPER_SILENT);
+    registerActionHandler("SuperSilent", (
+        superSilent -> {
+          if (punishBuilder.silent()) {
+            punishBuilder.silent(false);
+          }
+          punishBuilder.superSilent(!punishBuilder.superSilent());
+          punishBuilder.silent(!punishBuilder.silent());
+          animateTitle(punishBuilder.silent()
+              ? "&a" + SUPER_SILENT
+              : "&c" + NOT_SUPER_SILENT);
 
-      build();
+          build();
 
-      return CallResult.DENY_GRABBING;
-    }));
+          return CallResult.DENY_GRABBING;
+        }));
 
     //Apply
-    registerActionHandler(APPLY, (apply -> {
+    registerActionHandler(APPLY, (
+        apply -> {
 
-      punishBuilder()
-          .creator(getPlayer().getUniqueId())
-          .creation(System.currentTimeMillis());
+          punishBuilder()
+              .creator(getPlayer().getUniqueId())
+              .creation(System.currentTimeMillis());
 
-      if (punishBuilder().punishType() == null) {
-        animateTitle("&c" + MISSING_PUNISH_TYPE);
-        return CallResult.DENY_GRABBING;
-      }
-      if (punishBuilder().target() == null) {
-        animateTitle("&c" + MISSING_TARGET);
-        return CallResult.DENY_GRABBING;
-      }
-      if (punishBuilder().creator() == null) {
-        animateTitle("&c" + MISSING_CREATOR);
-        return CallResult.DENY_GRABBING;
-      }
+          if (punishBuilder().punishType() == null) {
+            animateTitle("&c" + MISSING_PUNISH_TYPE);
+            return CallResult.DENY_GRABBING;
+          }
+          if (punishBuilder().target() == null) {
+            animateTitle("&c" + MISSING_TARGET);
+            return CallResult.DENY_GRABBING;
+          }
+          if (punishBuilder().creator() == null) {
+            animateTitle("&c" + MISSING_CREATOR);
+            return CallResult.DENY_GRABBING;
+          }
 
-      if (punishBuilder().reason() == null) {
-        animateTitle("&c" + MISSING_REASON);
-        return CallResult.DENY_GRABBING;
-      }
+          if (punishBuilder().reason() == null) {
+            animateTitle("&c" + MISSING_REASON);
+            return CallResult.DENY_GRABBING;
+          }
 
-      if (punishBuilder().duration() == null) {
-        animateTitle("&c" + MISSING_DURATION);
-        return CallResult.DENY_GRABBING;
-      }
+          if (punishBuilder().duration() == null) {
+            animateTitle("&c" + MISSING_DURATION);
+            return CallResult.DENY_GRABBING;
+          }
 
-      //Checking access
+          //Checking access
 
-      //Not from template
-      if (punishTemplate == null) {
-        if (!Groups.hasAccess(
-            getPlayer().getUniqueId(),
-            punishBuilder.punishType(),
-            punishBuilder.duration())) {
-          animateTitle("&c" + YOU_WOULD_EXCEED_YOUR_LIMITS);
+          //Not from template
+          if (punishTemplate == null) {
+            if (!Groups.hasAccess(
+                getPlayer().getUniqueId(),
+                punishBuilder.punishType(),
+                punishBuilder.duration())) {
+              animateTitle("&c" + YOU_WOULD_EXCEED_YOUR_LIMITS);
+              return CallResult.DENY_GRABBING;
+            }
+          } else {
+            if (!Groups.hasAccess(
+                getPlayer().getUniqueId(),
+                punishTemplate)) {
+              animateTitle("&c" + YOU_WOULD_EXCEED_YOUR_LIMITS);
+              return CallResult.DENY_GRABBING;
+            }
+          }
+
+          animateTitle("&7" + CREATED_PUNISH);
+          async(() -> {
+
+            if (storageProvider.isPunished(
+                punishBuilder.target(),
+                punishBuilder.punishType())
+                && !Groups
+                .canOverride(getPlayer().getUniqueId())) {
+              animateTitle("&c" + CAN_T_OVERRIDE_PUNISHES);
+              return;
+            }
+
+            if (!playerProvider.punishable(punishBuilder.target())) {
+              animateTitle("&c" + TARGET_IS_UNPUNISHABLE);
+              return;
+            }
+
+            punishBuilder().build().create();
+            if (getParentMenu() != null) {
+              getParentMenu().displayTo(getPlayer());
+            }
+
+          });
+
           return CallResult.DENY_GRABBING;
-        }
-      } else {
-        if (!Groups.hasAccess(
-            getPlayer().getUniqueId(),
-            punishTemplate)) {
-          animateTitle("&c" + YOU_WOULD_EXCEED_YOUR_LIMITS);
-          return CallResult.DENY_GRABBING;
-        }
-      }
-
-      animateTitle("&7" + CREATED_PUNISH);
-      async(() -> {
-
-        if (storageProvider.isPunished(punishBuilder.target(), punishBuilder.punishType())
-            && !Groups
-            .canOverride(getPlayer().getUniqueId())) {
-          animateTitle("&c" + CAN_T_OVERRIDE_PUNISHES);
-          return;
-        }
-
-        if (!playerProvider.punishable(punishBuilder.target())) {
-          animateTitle("&c" + TARGET_IS_UNPUNISHABLE);
-          return;
-        }
-
-        punishBuilder().build().create();
-        if (getParentMenu() != null) {
-          getParentMenu().displayTo(getPlayer());
-        }
-
-      });
-
-      return CallResult.DENY_GRABBING;
-    }));
+        }));
   }
 
   @Override

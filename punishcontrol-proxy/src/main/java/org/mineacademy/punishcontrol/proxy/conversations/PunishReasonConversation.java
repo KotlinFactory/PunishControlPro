@@ -31,7 +31,6 @@ public final class PunishReasonConversation extends SimpleConversation {
     return ReasonPrompt.create(this, menu);
   }
 
-
   private static final class ReasonPrompt extends SimplePrompt {
 
     private final PunishCreatorMenu menu;

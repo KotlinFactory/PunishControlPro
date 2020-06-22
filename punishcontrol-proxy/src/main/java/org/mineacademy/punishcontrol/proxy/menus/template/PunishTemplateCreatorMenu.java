@@ -1,6 +1,5 @@
 package org.mineacademy.punishcontrol.proxy.menus.template;
 
-
 import de.exceptionflug.mccommons.inventories.api.CallResult;
 import de.exceptionflug.mccommons.inventories.api.ClickType;
 import de.exceptionflug.protocolize.inventory.InventoryModule;
@@ -35,7 +34,6 @@ import org.mineacademy.punishcontrol.proxy.menus.browsers.PunishTemplateBrowser;
 @Localizable
 @Accessors(fluent = true)
 public final class PunishTemplateCreatorMenu extends AbstractMenu {
-
 
   // ----------------------------------------------------------------------------------------------------
   // Localization
@@ -190,7 +188,6 @@ public final class PunishTemplateCreatorMenu extends AbstractMenu {
   // Overridden methods
   // ----------------------------------------------------------------------------------------------------
 
-
   @Override
   public void updateInventory() {
     super.updateInventory();
@@ -202,7 +199,8 @@ public final class PunishTemplateCreatorMenu extends AbstractMenu {
     {
       if (punishTemplate().duration() != null) {
         set(
-            Item.of(ItemType.CLOCK,
+            Item.of(
+                ItemType.CLOCK,
                 "&6" + DURATION,
                 "&7" + CURRENTLY + ": ",
                 "&7" + punishTemplate.duration()
@@ -211,7 +209,7 @@ public final class PunishTemplateCreatorMenu extends AbstractMenu {
                 "&7" + Settings.Advanced
                     .formatDate(
                         System.currentTimeMillis()
-                            + punishTemplate
+                        + punishTemplate
                             .duration()
                             .toMs()),
                 "",
@@ -221,7 +219,8 @@ public final class PunishTemplateCreatorMenu extends AbstractMenu {
         );
       } else {
         set(
-            Item.of(ItemType.CLOCK,
+            Item.of(
+                ItemType.CLOCK,
                 "&6" + DURATION,
                 CHOOSE_DURATION_LORE)
                 .slot(CHOOSE_DURATION_SLOT)
@@ -249,7 +248,8 @@ public final class PunishTemplateCreatorMenu extends AbstractMenu {
       if (punishTemplate().reason() != null) {
         set(
             Item
-                .of(ItemSettings.REASON_ITEM.itemType(),
+                .of(
+                    ItemSettings.REASON_ITEM.itemType(),
                     "&6" + REASON,
                     "&7Choose different reason",
                     "&7Current: " + punishTemplate.reason())
@@ -276,7 +276,8 @@ public final class PunishTemplateCreatorMenu extends AbstractMenu {
     {
       set(
           Item
-              .of(ItemType.PAPER,
+              .of(
+                  ItemType.PAPER,
                   "&6" + CHOOSE_PERMISSION,
                   " ",
                   CURRENTLY + ": " + punishTemplate().permission())
@@ -368,79 +369,87 @@ public final class PunishTemplateCreatorMenu extends AbstractMenu {
     });
 
     // Duration
-    registerActionHandler("Duration", (duration -> {
+    registerActionHandler("Duration", (
+        duration -> {
 
-      new AbstractDurationChooser(PunishTemplateCreatorMenu.this) {
-        @Override
-        protected void confirm() {
-          punishTemplate.duration(PunishDuration.of(ms));
-        }
-      }.displayTo(player);
+          new AbstractDurationChooser(PunishTemplateCreatorMenu.this) {
+            @Override
+            protected void confirm() {
+              punishTemplate.duration(PunishDuration.of(ms));
+            }
+          }.displayTo(player);
 
-      return CallResult.DENY_GRABBING;
-    }));
+          return CallResult.DENY_GRABBING;
+        }));
 
     // Type
-    registerActionHandler("Type", (type -> {
-      new AbstractPunishTypeBrowser(PunishTemplateCreatorMenu.this) {
-        @Override
-        protected void onClick(final ClickType clickType, final PunishType punishType) {
-          punishTemplate.punishType(punishType);
-          punishTemplate.forceReload();
+    registerActionHandler("Type", (
+        type -> {
+          new AbstractPunishTypeBrowser(PunishTemplateCreatorMenu.this) {
+            @Override
+            protected void onClick(
+                final ClickType clickType,
+                final PunishType punishType) {
+              punishTemplate.punishType(punishType);
+              punishTemplate.forceReload();
 
-          punishTemplate.punishType();
-          PunishTemplateCreatorMenu.this.displayTo(player);
-        }
-      }.displayTo(player);
+              punishTemplate.punishType();
+              PunishTemplateCreatorMenu.this.displayTo(player);
+            }
+          }.displayTo(player);
 
-      return CallResult.DENY_GRABBING;
-    }));
+          return CallResult.DENY_GRABBING;
+        }));
 
     // Reason
-    registerActionHandler("Reason", (reason -> {
+    registerActionHandler("Reason", (
+        reason -> {
 
-      InventoryModule.closeAllInventories(getPlayer());
-      TemplateReasonConversation.create(getPlayer(), this).start();
-      return CallResult.DENY_GRABBING;
-    }));
+          InventoryModule.closeAllInventories(getPlayer());
+          TemplateReasonConversation.create(getPlayer(), this).start();
+          return CallResult.DENY_GRABBING;
+        }));
 
     // Permission
-    registerActionHandler("Permission", (permission -> {
-      InventoryModule.closeAllInventories(getPlayer());
-      TemplatePermissionConversation.create(getPlayer(), this).start();
-      return CallResult.DENY_GRABBING;
-    }));
+    registerActionHandler("Permission", (
+        permission -> {
+          InventoryModule.closeAllInventories(getPlayer());
+          TemplatePermissionConversation.create(getPlayer(), this).start();
+          return CallResult.DENY_GRABBING;
+        }));
 
     // Silent
-    registerActionHandler("Silent", (silent -> {
-      if (punishTemplate.superSilent()) {
-        animateTitle(ALREADY_SUPER_SILENT);
-        return CallResult.DENY_GRABBING;
-      }
+    registerActionHandler("Silent", (
+        silent -> {
+          if (punishTemplate.superSilent()) {
+            animateTitle(ALREADY_SUPER_SILENT);
+            return CallResult.DENY_GRABBING;
+          }
 
-      punishTemplate.silent(!punishTemplate.silent());
-      animateTitle(punishTemplate.silent()
-          ? "&8silent"
-          : "&8" + NOT + " silent");
-      build();
+          punishTemplate.silent(!punishTemplate.silent());
+          animateTitle(punishTemplate.silent()
+              ? "&8silent"
+              : "&8" + NOT + " silent");
+          build();
 
-      return CallResult.DENY_GRABBING;
-    }));
+          return CallResult.DENY_GRABBING;
+        }));
 
     // Super Silent
 
-    registerActionHandler("SuperSilent", (superSilent -> {
+    registerActionHandler("SuperSilent", (
+        superSilent -> {
 
-      if (punishTemplate.silent()) {
-        punishTemplate.silent(false);
-      }
-      punishTemplate.superSilent(!punishTemplate.superSilent());
-      animateTitle(punishTemplate.superSilent()
-          ? "&8" + SUPER_SILENT
-          : "&c" + NOT + " " + SUPER_SILENT.toLowerCase());
-      build();
-      return CallResult.DENY_GRABBING;
-    }));
+          if (punishTemplate.silent()) {
+            punishTemplate.silent(false);
+          }
+          punishTemplate.superSilent(!punishTemplate.superSilent());
+          animateTitle(punishTemplate.superSilent()
+              ? "&8" + SUPER_SILENT
+              : "&c" + NOT + " " + SUPER_SILENT.toLowerCase());
+          build();
+          return CallResult.DENY_GRABBING;
+        }));
   }
 
   @Override

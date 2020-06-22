@@ -37,7 +37,6 @@ public abstract class AbstractMaterialBrowser
   @Localizable("Parts.Materials")
   private static String MATERIALS = "Materials";
 
-
   private static List<ItemType> items = Arrays
       .stream(ItemType.values())
       .filter(AbstractMaterialBrowser::canApply)
@@ -66,7 +65,8 @@ public abstract class AbstractMaterialBrowser
       de.exceptionflug.mccommons.inventories.api.item.ItemType.valueOf(type.name());
       // Must be available in the latest & in the minimal supported minecraft version
       return type.getApplicableMapping(ProtocolVersions.MINECRAFT_LATEST) != null
-          && type.getApplicableMapping(Advanced.MIN_PROTOCOL_VERSION_SUPPORTED) != null;
+             && type.getApplicableMapping(Advanced.MIN_PROTOCOL_VERSION_SUPPORTED)
+                != null;
     } catch (final Throwable throwable) {
       return false;
     }

@@ -98,15 +98,18 @@ public class PunishTemplates {
 
     registeredTemplates.add(
         PunishTemplate.load(
-            new File(destination.getAbsolutePath() + "/templates/",
+            new File(
+                destination.getAbsolutePath() + "/templates/",
                 "default-ban.json")));
     registeredTemplates.add(
         PunishTemplate.load(
-            new File(destination.getAbsolutePath() + "/templates/",
+            new File(
+                destination.getAbsolutePath() + "/templates/",
                 "default-mute.json")));
     registeredTemplates.add(
         PunishTemplate.load(
-            new File(destination.getAbsolutePath() + "/templates/",
+            new File(
+                destination.getAbsolutePath() + "/templates/",
                 "default-warn.json")));
   }
 }

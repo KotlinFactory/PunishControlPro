@@ -1,6 +1,5 @@
 package org.mineacademy.punishcontrol.core.setting;
 
-
 import de.leonhard.storage.Config;
 import de.leonhard.storage.LightningBuilder;
 import de.leonhard.storage.internal.settings.ConfigSettings;
@@ -101,7 +100,8 @@ public abstract class SimpleSettings extends YamlStaticConfig {
    * YamlStaticConfig} class!
    */
   private static void init() {
-    Valid.checkBoolean(!settingsClassCalled,
+    Valid.checkBoolean(
+        !settingsClassCalled,
         "Settings class already loaded!");
 
     pathPrefix(null);
@@ -153,7 +153,8 @@ public abstract class SimpleSettings extends YamlStaticConfig {
       //We always have localizations
       final boolean keySet = isSet("Locale");
 
-      Valid.checkBoolean(isSet("Locale"),
+      Valid.checkBoolean(
+          isSet("Locale"),
           "You need to set the key: 'Locale' in your config as your plugin uses localization");
 
       LOCALE_PREFIX = keySet ? getString("Locale") : LOCALE_PREFIX;
@@ -223,7 +224,6 @@ public abstract class SimpleSettings extends YamlStaticConfig {
       set("Version", getConfigVersion());
     }
   }
-
 
   /**
    * Return the very latest config version

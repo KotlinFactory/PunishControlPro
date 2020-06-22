@@ -9,7 +9,6 @@ import org.mineacademy.fo.conversation.SimplePrompt;
 import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractSearchableBrowser;
 import org.mineacademy.punishcontrol.spigot.util.Schedulable;
 
-
 public final class SearchConversation
     extends SimpleConversation
     implements Schedulable {

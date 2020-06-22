@@ -7,7 +7,6 @@ import lombok.experimental.UtilityClass;
 import org.mineacademy.punishcontrol.core.listener.Listener;
 import org.mineacademy.punishcontrol.core.listener.Listeners;
 
-
 /**
  * Central utility class for handling events
  */

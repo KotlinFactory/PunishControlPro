@@ -13,8 +13,7 @@ import lombok.RequiredArgsConstructor;
  * <p>Before running queries make sure to call connect() methods.
  *
  * <p>You can also override {@link #onConnected()} to run your code after the connection
- * has been
- * established.
+ * has been established.
  *
  * <p>To use this class you must know the MySQL command syntax!
  */
@@ -98,7 +97,7 @@ public class SimpleDatabase {
       final boolean autoReconnect) {
     connect(
         "jdbc:mysql://" + host + ":" + port + "/" + database + "?autoReconnect="
-            + autoReconnect,
+        + autoReconnect,
         user,
         password,
         table);

@@ -41,20 +41,24 @@ public final class StorageSettingsMenu
   private static final String USER = "User";
   @NonNls
   private static final String CONNECT = "Connect";
-  private static final String[] CONNECTION_FAILED_LORE = {" ",
+  private static final String[] CONNECTION_FAILED_LORE = {
+      " ",
       "&7Try to connect ",
       "&7to MySQL using",
       "&7these settings",
       "&7Current state: &cfailed"};
-  private static final String[] CONNECTION_SUCCEEDED_LORE = {" ",
+  private static final String[] CONNECTION_SUCCEEDED_LORE = {
+      " ",
       "&7Try to connect ",
       "&7to MySQL using",
       "&7these settings",
       "&7Current state: &aSucceeded"};
-  private static final String[] USE_JSON_LORE = {"",
+  private static final String[] USE_JSON_LORE = {
+      "",
       "&7Click to use",
       "&7JSON as storage"};
-  private static final String[] USE_MYSQL_LORE = {"",
+  private static final String[] USE_MYSQL_LORE = {
+      "",
       "&7Click to use",
       "&7MySQL as storage"};
   @NonNls
@@ -82,9 +86,7 @@ public final class StorageSettingsMenu
   private final Button password;
   private final Button useButton;
 
-
   private boolean isConnecting;
-
 
   @Inject
   public StorageSettingsMenu(@NonNull final SettingsBrowser settingsBrowser) {
@@ -207,9 +209,10 @@ public final class StorageSettingsMenu
             .of(CompMaterial.YELLOW_STAINED_GLASS_PANE)
             .name("&7Host")
             .lores(Arrays.asList(
-                replacer.replaceAll("type", "host", "currently", (MySQL.HOST.isEmpty()
-                    ? "&cNot set"
-                    : MySQL.HOST)).replacedMessage()
+                replacer.replaceAll("type", "host", "currently", (
+                    MySQL.HOST.isEmpty()
+                        ? "&cNot set"
+                        : MySQL.HOST)).replacedMessage()
             ))
             .build()
             .makeMenuTool();
@@ -256,9 +259,10 @@ public final class StorageSettingsMenu
             .name("&7Database")
             .lores(Arrays.asList(
                 replacer
-                    .replaceAll("type", "database", "currently", (MySQL.DATABASE.isEmpty()
-                        ? "&cNot set"
-                        : MySQL.DATABASE)).replacedMessage()
+                    .replaceAll("type", "database", "currently", (
+                        MySQL.DATABASE.isEmpty()
+                            ? "&cNot set"
+                            : MySQL.DATABASE)).replacedMessage()
             ))
             .build()
             .makeMenuTool();
@@ -282,9 +286,10 @@ public final class StorageSettingsMenu
             .name("&7" + USER)
             .lores(Arrays.asList(
                 replacer
-                    .replaceAll("type", "user", "currently", (MySQL.USER.isEmpty()
-                        ? "&cNot set"
-                        : MySQL.USER)).replacedMessage()
+                    .replaceAll("type", "user", "currently", (
+                        MySQL.USER.isEmpty()
+                            ? "&cNot set"
+                            : MySQL.USER)).replacedMessage()
             ))
             .build()
             .makeMenuTool();
@@ -310,9 +315,10 @@ public final class StorageSettingsMenu
                 " ",
                 "&7Click to",
                 "&7set the password",
-                "&7Currently: " + (MySQL.PASSWORD.isEmpty()
-                    ? "&cnot set"
-                    : "****")
+                "&7Currently: " + (
+                    MySQL.PASSWORD.isEmpty()
+                        ? "&cnot set"
+                        : "****")
             ))
             .build()
             .makeMenuTool();

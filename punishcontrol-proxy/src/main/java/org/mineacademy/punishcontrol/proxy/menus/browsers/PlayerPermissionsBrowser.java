@@ -147,11 +147,12 @@ public final class PlayerPermissionsBrowser extends AbstractBrowser<Permission> 
 
   @Override
   protected void onClick(final ClickType clickType, final Permission permission) {
-    Players.find(target).ifPresent((player -> {
-      player.setPermission(
-          permission.permission(),
-          !player.hasPermission(permission.permission()));
-      reDisplay();
-    }));
+    Players.find(target).ifPresent((
+        player -> {
+          player.setPermission(
+              permission.permission(),
+              !player.hasPermission(permission.permission()));
+          reDisplay();
+        }));
   }
 }

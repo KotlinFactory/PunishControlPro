@@ -40,24 +40,24 @@ public class Searcher {
         continue;
       }
 
-      result.add((new SearchResult() {
-        @Override
-        public String result() {
-          return value;
-        }
+      result.add((
+          new SearchResult() {
+            @Override
+            public String result() {
+              return value;
+            }
 
-        @Override
-        public double similarity() {
-          return similarity;
-        }
-      }));
+            @Override
+            public double similarity() {
+              return similarity;
+            }
+          }));
     }
 
     result.sort((o1, o2) -> o1.similarity() == o2.similarity() ? 1 : -1);
 
     return result;
   }
-
 
   public interface SearchResult {
 

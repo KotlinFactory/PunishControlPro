@@ -7,7 +7,6 @@ import java.util.Optional;
 import lombok.NonNull;
 import lombok.experimental.UtilityClass;
 
-
 /**
  * Class to manage our localizable Strings. Can be used to display them in a menu in the
  * different platform's implementations such as Spigot or Proxy

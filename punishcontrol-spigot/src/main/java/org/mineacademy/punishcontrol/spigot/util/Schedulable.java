@@ -27,12 +27,14 @@ public interface Schedulable {
             ticks);
   }
 
-  default void repeat(final Consumer<Integer> runnable, final long tickPeriod,
+  default void repeat(
+      final Consumer<Integer> runnable, final long tickPeriod,
       final int times) {
     repeat(runnable, tickPeriod, tickPeriod, times);
   }
 
-  default void repeat(final Consumer<Integer> runnable, final long delay,
+  default void repeat(
+      final Consumer<Integer> runnable, final long delay,
       final long tickPeriod, final int times) {
     new BukkitRunnable() {
       private int count;
@@ -62,12 +64,14 @@ public interface Schedulable {
     }.runTaskTimerAsynchronously(SimplePlugin.getInstance(), delay, tickPeriod);
   }
 
-  default void repeatAsync(final Consumer<Integer> runnable,
+  default void repeatAsync(
+      final Consumer<Integer> runnable,
       final long tickPeriod, final int times) {
     repeatAsync(runnable, tickPeriod, tickPeriod, times);
   }
 
-  default void repeatAsync(final Consumer<Integer> runnable, final long delay,
+  default void repeatAsync(
+      final Consumer<Integer> runnable, final long delay,
       final long tickPeriod, final int times) {
     new BukkitRunnable() {
       private int count;

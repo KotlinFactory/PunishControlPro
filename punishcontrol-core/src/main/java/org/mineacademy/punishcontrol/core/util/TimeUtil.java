@@ -166,10 +166,10 @@ public class TimeUtil {
     }
 
     return hourMsg
-        + minute
-        + (minute > 0 ? (minute == 1 ? " minute" : " minutes") + " " : "")
-        + second
-        + (second == 1 ? " second" : " seconds");
+           + minute
+           + (minute > 0 ? (minute == 1 ? " minute" : " minutes") + " " : "")
+           + second
+           + (second == 1 ? " second" : " seconds");
   }
 
   /**
@@ -184,13 +184,13 @@ public class TimeUtil {
     final long days = hours / 24;
 
     return days
-        + " days "
-        + hours % 24
-        + " hours "
-        + minutes % 60
-        + " minutes "
-        + seconds % 60
-        + " seconds";
+           + " days "
+           + hours % 24
+           + " hours "
+           + minutes % 60
+           + " minutes "
+           + seconds % 60
+           + " seconds";
   }
 
   /**
@@ -210,12 +210,11 @@ public class TimeUtil {
     seconds = seconds % 60;
 
     return (days > 0 ? days + "d " : "")
-        + (hours > 0 ? hours + "h " : "")
-        + (minutes > 0 ? minutes + "m " : "")
-        + seconds
-        + "s";
+           + (hours > 0 ? hours + "h " : "")
+           + (minutes > 0 ? minutes + "m " : "")
+           + seconds
+           + "s";
   }
-
 
   public String formatMenuDate(long duration) {
     if (duration == -1) {

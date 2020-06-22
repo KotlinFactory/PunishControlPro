@@ -32,10 +32,11 @@ public final class BanListener implements Listener<JoinEvent> {
     final UUID target = event.targetUUID();
     final Optional<Ban> optionalBan = storageProvider.currentBan(target);
 
-    optionalBan.ifPresent((ban -> {
-      event.canceled(true);
-      //TODO format
-      event.cancelReason(Punishes.formPunishedMessage(ban));
-    }));
+    optionalBan.ifPresent((
+        ban -> {
+          event.canceled(true);
+          //TODO format
+          event.cancelReason(Punishes.formPunishedMessage(ban));
+        }));
   }
 }

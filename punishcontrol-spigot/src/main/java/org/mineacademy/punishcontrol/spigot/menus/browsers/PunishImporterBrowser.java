@@ -63,7 +63,8 @@ public final class PunishImporterBrowser extends AbstractBrowser<PunishImporter>
   }
 
   @Override
-  protected void onPageClick(Player player, PunishImporter punishImporter,
+  protected void onPageClick(
+      Player player, PunishImporter punishImporter,
       ClickType click) {
     if (!punishImporter.applicable()) {
       animateTitle("&cCan't import from this importer!");

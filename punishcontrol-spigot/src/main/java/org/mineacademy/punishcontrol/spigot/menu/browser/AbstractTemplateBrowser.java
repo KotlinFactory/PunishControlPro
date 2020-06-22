@@ -33,7 +33,6 @@ public abstract class AbstractTemplateBrowser
   @NonNls
   private static final String NO = "No";
 
-
   protected AbstractTemplateBrowser(final Menu parent) {
     super(parent, PunishTemplates.list());
     setTitle("&8Choose template");

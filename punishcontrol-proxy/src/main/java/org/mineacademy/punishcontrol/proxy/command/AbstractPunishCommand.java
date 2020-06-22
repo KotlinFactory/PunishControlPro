@@ -93,7 +93,7 @@ public abstract class AbstractPunishCommand
     // Args without params
     finalArgs.removeAll(Arrays.asList("-S", "-s", "-ss", "-SS", "-sS", "-Ss", "-silent",
         "-super"
-            + "-slient"));
+        + "-slient"));
 
     final int size = Math.min(finalArgs.size(), 3);
 
@@ -115,7 +115,8 @@ public abstract class AbstractPunishCommand
         if (!isPlayer())
           returnTell(MORE_ARGUMENTS_AS_CONSOLE_MESSAGE);
         // Choose action (PUNISH)
-        PunishCreatorMenu.showTo(getPlayer(),
+        PunishCreatorMenu.showTo(
+            getPlayer(),
             PunishBuilder.of(punishType).target(findTarget(finalArgs)));
         break;
       case 2:
@@ -157,9 +158,10 @@ public abstract class AbstractPunishCommand
           if (!punishType.shouldKick())
             return;
 
-          Players.find(target).ifPresent((player -> {
-            player.disconnect(reason.toString());
-          }));
+          Players.find(target).ifPresent((
+              player -> {
+                player.disconnect(reason.toString());
+              }));
         });
 
         // Open inv
@@ -170,12 +172,15 @@ public abstract class AbstractPunishCommand
             .of(finalArgs.get(1));
 
         //PunishDuration mustn't be empty: If its empty the given string had the wrong format
-        checkBoolean(!punishDuration.isEmpty(),
+        checkBoolean(
+            !punishDuration.isEmpty(),
             "&cInvalid time format! Example: 10days");
 
-        checkBoolean(Groups.hasAccess((senderUUID()),
-            punishType,
-            punishDuration),
+        checkBoolean(
+            Groups.hasAccess(
+                (senderUUID()),
+                punishType,
+                punishDuration),
             "&cThis action would exceed your limits."
         );
 

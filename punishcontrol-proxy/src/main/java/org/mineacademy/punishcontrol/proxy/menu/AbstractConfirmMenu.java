@@ -50,12 +50,13 @@ public abstract class AbstractConfirmMenu extends AbstractMenu {
 
   @Override
   public void registerActionHandlers() {
-    registerActionHandler("Break-Up", (breakUp -> {
+    registerActionHandler("Break-Up", (
+        breakUp -> {
 
-      showParent();
+          showParent();
 
-      return CallResult.DENY_GRABBING;
-    }));
+          return CallResult.DENY_GRABBING;
+        }));
 
     registerActionHandler("Confirm", (click) -> {
       try {

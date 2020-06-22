@@ -1,6 +1,5 @@
 package org.mineacademy.punishcontrol.proxy.menus.settings;
 
-
 import static org.mineacademy.punishcontrol.core.util.PunishControlPermissions.*;
 
 import de.exceptionflug.mccommons.inventories.api.ClickType;
@@ -26,7 +25,8 @@ public enum SettingTypes {
   PLAYER {
     @Override
     public Item itemCreator() {
-      return Item.of(ItemType.PLAYER_HEAD,
+      return Item.of(
+          ItemType.PLAYER_HEAD,
           "&6Player settings",
           "&7Show permissions",
           "&7to apply punishes",
@@ -159,12 +159,12 @@ public enum SettingTypes {
     @Override
     public Item itemCreator() {
       return Item
-          .of(ItemType.FIREWORK_ROCKET,
+          .of(
+              ItemType.FIREWORK_ROCKET,
               "&6Notifications",
               "&7",
               "&7Notifications");
     }
-
 
     @Override
     public void showMenu(final ProxiedPlayer player) {
@@ -186,7 +186,8 @@ public enum SettingTypes {
     @Override
     public Item itemCreator() {
       return Item
-          .of(ItemType.BOOKSHELF,
+          .of(
+              ItemType.BOOKSHELF,
               "&6Language",
               "&7",
               "&7Choose the language ",

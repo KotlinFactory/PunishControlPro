@@ -9,7 +9,6 @@ import lombok.NonNull;
 import lombok.experimental.Accessors;
 import org.mineacademy.punishcontrol.core.setting.Replacer;
 
-
 @Data
 @Builder
 @NonNull

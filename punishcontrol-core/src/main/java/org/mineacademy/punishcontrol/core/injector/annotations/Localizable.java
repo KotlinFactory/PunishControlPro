@@ -1,6 +1,5 @@
 package org.mineacademy.punishcontrol.core.injector.annotations;
 
-
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;

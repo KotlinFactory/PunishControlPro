@@ -85,7 +85,8 @@ public final class Replacer {
   }
 
   public String[] replacedMessage() {
-    Valid.checkBoolean(replacements.size() == variables.size(),
+    Valid.checkBoolean(
+        replacements.size() == variables.size(),
         "Variables " + variables.size()
         + " != replacements " + replacements.size(),
         "Variables: " + variables.toString(),

@@ -37,7 +37,6 @@ public final class StaffPunishesBrowser extends AbstractPunishBrowser {
     });
   }
 
-
   public StaffPunishesBrowser(
       @NonNull final MainMenu parent,
       @NonNull final PlayerProvider playerProvider,

@@ -9,7 +9,8 @@ import org.mineacademy.punishcontrol.spigot.command.AbstractUnPunishCommand;
 public final class UnBanCommand extends AbstractUnPunishCommand {
 
   @Inject
-  public UnBanCommand(final PlayerProvider playerProvider,
+  public UnBanCommand(
+      final PlayerProvider playerProvider,
       final StorageProvider storageProvider) {
     super(storageProvider, playerProvider, PunishType.BAN, "unban");
     setUsage("[player]");

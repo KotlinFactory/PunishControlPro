@@ -1,6 +1,5 @@
 package org.mineacademy.punishcontrol.proxy.menus.setting;
 
-
 import org.mineacademy.burst.menu.AbstractMenu;
 import org.mineacademy.punishcontrol.proxy.menus.browsers.SettingsBrowser;
 

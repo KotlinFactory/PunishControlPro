@@ -8,7 +8,6 @@ import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 
 public interface PunishImporter {
 
-
   boolean pluginInstalled();
 
   /**

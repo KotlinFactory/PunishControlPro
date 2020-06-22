@@ -170,14 +170,14 @@ public final class ReflectionUtil {
   public void listFields(final Object e) {
     System.out.println(
         e.getClass().getName()
-            + " contains "
-            + e.getClass().getDeclaredFields().length
-            + " declared fields.");
+        + " contains "
+        + e.getClass().getDeclaredFields().length
+        + " declared fields.");
     System.out.println(
         e.getClass().getName()
-            + " contains "
-            + e.getClass().getDeclaredClasses().length
-            + " declared classes.");
+        + " contains "
+        + e.getClass().getDeclaredClasses().length
+        + " declared classes.");
     final Field[] fds = e.getClass().getDeclaredFields();
     for (final Field fd : fds) {
       fd.setAccessible(true);

@@ -159,7 +159,7 @@ public final class SearchCommand
         "&7/" + getLabel() + " name <uuid>  &8*&7 get a player's name from UUID",
         "&7/" + getLabel() + " ip <player>  &8*&7 get a player's IP",
         "&7/" + getLabel() + " player <partial-name> &8* &7search for an "
-            + "player by its partial name",
+        + "player by its partial name",
         "&7" + getLabel() + " player <ip> &8*&7 search for players by ip",
         "&7/" + getLabel() + " alts <player> &8*&7 search for alts of a player",
         "&8" + Common.chatLineSmooth()

@@ -20,7 +20,6 @@ public class PunishCreateEvent extends Event implements Cancellable {
     return new PunishCreateEvent(punish);
   }
 
-
   @Override
   public boolean isCancelled() {
     return cancelled;

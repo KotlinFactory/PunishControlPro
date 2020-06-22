@@ -77,25 +77,28 @@ public final class SpigotPunishProvider implements PunishProvider {
     Common.runLater(() -> {
       if (punish.punishType().shouldKick()) {
         Common.runLater(
-            () -> Players.find(punish.target()).ifPresent((player -> player.kickPlayer(
-                Punishes.formOnPunishMessage(punish)))));
+            () -> Players.find(punish.target()).ifPresent((
+                player -> player.kickPlayer(
+                    Punishes.formOnPunishMessage(punish)))));
       }
 
       if (punish.punishType().shouldWarn()) {
 
-        Players.find(punish.target()).ifPresent((player -> {
-          Providers.playerProvider().sendIfOnline(
-              player.getUniqueId(),
-              Warn.messageType,
-              Punishes.formPunishedMessage(punish).split("\n"));
-        }));
+        Players.find(punish.target()).ifPresent((
+            player -> {
+              Providers.playerProvider().sendIfOnline(
+                  player.getUniqueId(),
+                  Warn.messageType,
+                  Punishes.formPunishedMessage(punish).split("\n"));
+            }));
       }
 
       if (punish.punishType().shouldMessage()) {
         Players.find(punish.target())
-            .ifPresent((player -> Providers.playerProvider().sendIfOnline(
-                player.getUniqueId(),
-                Punishes.formPunishedMessage(punish).split("\n"))));
+            .ifPresent((
+                player -> Providers.playerProvider().sendIfOnline(
+                    player.getUniqueId(),
+                    Punishes.formPunishedMessage(punish).split("\n"))));
       }
     });
 

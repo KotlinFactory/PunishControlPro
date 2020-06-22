@@ -30,7 +30,6 @@ public final class MuteIpListener implements Listener<ChatEvent> {
     return ChatEvent.class;
   }
 
-
   @Override
   public void handleEvent(final ChatEvent event) {
 
@@ -45,23 +44,24 @@ public final class MuteIpListener implements Listener<ChatEvent> {
     final InetAddress inetAddress = event.targetAddress();
     final Optional<Mute> optionalMute = storageProvider.currentMute(inetAddress);
 
-    optionalMute.ifPresent((mute -> {
-      //TODO format
-      if (Punish.Mute.DISABLED_COMMANDS.contains("*")) {
-        return;
-      }
+    optionalMute.ifPresent((
+        mute -> {
+          //TODO format
+          if (Punish.Mute.DISABLED_COMMANDS.contains("*")) {
+            return;
+          }
 
-      //Is a allowed commands
-      if (canByPass(event.message())) {
-        return;
-      }
+          //Is a allowed commands
+          if (canByPass(event.message())) {
+            return;
+          }
 
-      event.canceled(true);
-      event.cancelReason(Punishes.formPunishedMessage(mute));
-      playerProvider.sendIfOnline(
-          event.targetUUID(), Punishes.formPunishedMessage(mute)
-      );
-    }));
+          event.canceled(true);
+          event.cancelReason(Punishes.formPunishedMessage(mute));
+          playerProvider.sendIfOnline(
+              event.targetUUID(), Punishes.formPunishedMessage(mute)
+          );
+        }));
   }
 
   private boolean canByPass(final String message) {
@@ -80,6 +80,5 @@ public final class MuteIpListener implements Listener<ChatEvent> {
     }
     return true;
   }
-
 
 }

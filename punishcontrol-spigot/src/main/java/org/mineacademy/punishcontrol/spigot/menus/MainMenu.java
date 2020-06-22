@@ -38,7 +38,8 @@ public final class MainMenu extends ChangingMenu {
   private static final String PLAYERS = "Players";
   @NonNls
   private static final String PUNISHMENTS = "Punishments";
-  private static final String[] BROWSER_PUNISHMENTS_LORE = {"",
+  private static final String[] BROWSER_PUNISHMENTS_LORE = {
+      "",
       "Browse created punishments.",
       "Right click to view",
       "punished players"};
@@ -62,7 +63,8 @@ public final class MainMenu extends ChangingMenu {
 
   @Inject
   public MainMenu(final TextureProvider textureProvider) {
-    super(null,
+    super(
+        null,
         Collections.singletonList(
             ChangingButton
                 .fromCustomHashes(
@@ -90,7 +92,8 @@ public final class MainMenu extends ChangingMenu {
       @Override
       public ItemStack getItem() {
         return ItemCreator
-            .of(CompMaterial.CHEST,
+            .of(
+                CompMaterial.CHEST,
                 "&6" + PUNISHMENTS,
                 BROWSER_PUNISHMENTS_LORE
             )
@@ -122,7 +125,8 @@ public final class MainMenu extends ChangingMenu {
     settingsButton = new Button() {
 
       @Override
-      public void onClickedInMenu(final Player pl, final Menu menu,
+      public void onClickedInMenu(
+          final Player pl, final Menu menu,
           final ClickType click) {
         SettingsBrowser.showTo(pl);
       }
@@ -130,7 +134,8 @@ public final class MainMenu extends ChangingMenu {
       @Override
       public ItemStack getItem() {
         return ItemCreator
-            .of(CompMaterial.COMPARATOR,
+            .of(
+                CompMaterial.COMPARATOR,
                 "&6" + SETTINGS,
                 "&7" + VIEW_SETTINGS_FOR,
                 SimplePlugin.getNamed(),

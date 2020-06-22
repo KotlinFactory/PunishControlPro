@@ -113,8 +113,9 @@ public final class PunishImporterBrowser extends AbstractBrowser<PunishImporter>
         .lore(punishImporter.description())
         .addLore(" ")
         .addLore(
-            "&6" + IS_APPLICABLE + " " + (punishImporter.applicable() ? "&a" + YES
-                : "&c" + NO))
+            "&6" + IS_APPLICABLE + " " + (
+                punishImporter.applicable() ? "&a" + YES
+                    : "&c" + NO))
         .build();
   }
 

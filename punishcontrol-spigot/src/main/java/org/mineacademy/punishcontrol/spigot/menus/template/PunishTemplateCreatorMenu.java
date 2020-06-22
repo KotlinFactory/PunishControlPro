@@ -49,7 +49,6 @@ public final class PunishTemplateCreatorMenu extends Menu {
   private final Button makeSilent;
 //  private final Button fromTemplate;
 
-
   public static void showTo(
       final Player player,
       final PunishTemplate punishTemplate) {
@@ -115,7 +114,8 @@ public final class PunishTemplateCreatorMenu extends Menu {
       @Override
       public ItemStack getItem() {
         if (PunishTemplateCreatorMenu.this.punishTemplate.duration() != null) {
-          return ItemCreator.of(CompMaterial.CLOCK,
+          return ItemCreator.of(
+              CompMaterial.CLOCK,
               "&6Duration",
               "&7Currently: ",
               "&7" + PunishTemplateCreatorMenu.this.punishTemplate.duration()
@@ -124,7 +124,7 @@ public final class PunishTemplateCreatorMenu extends Menu {
               "&7" + Settings.Advanced
                   .formatDate(
                       System.currentTimeMillis()
-                          + PunishTemplateCreatorMenu.this.punishTemplate
+                      + PunishTemplateCreatorMenu.this.punishTemplate
                           .duration()
                           .toMs()),
               "",
@@ -133,7 +133,8 @@ public final class PunishTemplateCreatorMenu extends Menu {
               .make();
         }
 
-        return ItemCreator.of(CompMaterial.CLOCK,
+        return ItemCreator.of(
+            CompMaterial.CLOCK,
             "&6Duration",
             "&7Choose the",
             "&7duration of the",
@@ -156,7 +157,8 @@ public final class PunishTemplateCreatorMenu extends Menu {
       @Override
       public ItemStack getItem() {
         return ItemCreator
-            .of(ItemSettings.APPLY_ITEM.itemType(),
+            .of(
+                ItemSettings.APPLY_ITEM.itemType(),
                 "&aApply",
                 "&7Apply template")
             .build()
@@ -252,7 +254,6 @@ public final class PunishTemplateCreatorMenu extends Menu {
     };
   }
 
-
   public void redisplay() {
     showTo(getViewer(), punishTemplate);
   }
@@ -283,7 +284,8 @@ public final class PunishTemplateCreatorMenu extends Menu {
 
     if (slot == CHOOSE_REASON_SLOT) {
       if (punishTemplate.reason() != null) {
-        return ItemCreator.of(ItemSettings.REASON_ITEM.itemType(),
+        return ItemCreator.of(
+            ItemSettings.REASON_ITEM.itemType(),
             "&6Reason",
             "&7Choose different reason",
             "&7Current: " + punishTemplate.reason())
@@ -291,7 +293,8 @@ public final class PunishTemplateCreatorMenu extends Menu {
             .make();
       }
 
-      return ItemCreator.of(ItemSettings.REASON_ITEM.itemType(),
+      return ItemCreator.of(
+          ItemSettings.REASON_ITEM.itemType(),
           "&6Reason",
           "&7Choose the",
           "&7reason of the",
@@ -306,7 +309,8 @@ public final class PunishTemplateCreatorMenu extends Menu {
 
     if (slot == CHOOSE_PERMISSION_SLOT) {
       return ItemCreator
-          .of(CompMaterial.PAPER,
+          .of(
+              CompMaterial.PAPER,
               "&6Choose permission",
               " ",
               "Currently: " + punishTemplate().permission())

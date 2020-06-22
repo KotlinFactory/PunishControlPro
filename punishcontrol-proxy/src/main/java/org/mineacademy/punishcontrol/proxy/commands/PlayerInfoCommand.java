@@ -73,8 +73,8 @@ public class PlayerInfoCommand extends AbstractSimplePunishControlCommand {
                 : Settings.Advanced.formatDate(punish.getEndTime());
         tell("&7[&8" + punish.punishType() + "&7] " + isActive + " " + punish
             .reason() + "§7 ┃ Creation: "
-            + Settings.Advanced.formatDate(punish.creation())
-            + " - End: " + end
+             + Settings.Advanced.formatDate(punish.creation())
+             + " - End: " + end
 
         );
       }

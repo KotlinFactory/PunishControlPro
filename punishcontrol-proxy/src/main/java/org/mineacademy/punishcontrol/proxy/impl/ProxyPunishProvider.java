@@ -35,21 +35,24 @@ public final class ProxyPunishProvider implements PunishProvider {
       final boolean superSilent) {
 
     if (punish.punishType().shouldKick())
-      Players.find(punish.target()).ifPresent((player -> player.disconnect(
-          Punishes.formOnPunishMessage(punish))));
+      Players.find(punish.target()).ifPresent((
+          player -> player.disconnect(
+              Punishes.formOnPunishMessage(punish))));
 
     if (punish.punishType().shouldWarn())
       Players.find(punish.target())
-          .ifPresent((player -> Providers.playerProvider().sendIfOnline(
-              player.getUniqueId(),
-              Warn.messageType,
-              Punishes.formPunishedMessage(punish).split("\n"))));
+          .ifPresent((
+              player -> Providers.playerProvider().sendIfOnline(
+                  player.getUniqueId(),
+                  Warn.messageType,
+                  Punishes.formPunishedMessage(punish).split("\n"))));
 
     if (punish.punishType().shouldMessage())
       Players.find(punish.target())
-          .ifPresent((player -> Providers.playerProvider().sendIfOnline(
-              player.getUniqueId(),
-              Punishes.formPunishedMessage(punish).split("\n"))));
+          .ifPresent((
+              player -> Providers.playerProvider().sendIfOnline(
+                  player.getUniqueId(),
+                  Punishes.formPunishedMessage(punish).split("\n"))));
 
     final val targetName = Providers.playerProvider().findName(punish.target())
         .orElse("");

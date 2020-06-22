@@ -62,7 +62,8 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
       @Override
       public ItemStack getItem() {
         return ItemCreator
-            .of(CompMaterial.OBSIDIAN,
+            .of(
+                CompMaterial.OBSIDIAN,
                 "&6Groups",
                 " ",
                 "&7View groups",
@@ -90,7 +91,8 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
       public ItemStack getItem() {
         if (!targetOnline) {
           return ItemCreator
-              .of(CompMaterial.ICE,
+              .of(
+                  CompMaterial.ICE,
                   "&6Permissions",
                   "",
                   "&7Cant be used:",
@@ -100,7 +102,8 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
         }
 
         return ItemCreator
-            .of(CompMaterial.ICE,
+            .of(
+                CompMaterial.ICE,
                 "&6Permissions",
                 "",
                 "&7View which",

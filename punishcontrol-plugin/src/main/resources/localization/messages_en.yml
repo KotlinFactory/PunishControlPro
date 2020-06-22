@@ -27,41 +27,229 @@ Name: English
 #
 Commands:
   Player:
-    Never_Played: "&cPlayer {player} has never played on the server."
-    Not_Online: "&cPlayer {player} &cis not online on this server."
-    Not_Exists: "&cPlayer {player} &cdoes not exist."
+    Never_Played: '&cPlayer {player} has never played on the server.'
+    Not_Online: '&cPlayer {player} &cis not online on this server.'
+    Not_Exists: '&cPlayer {player} &cdoes not exist.'
 
 Punish:
-  # Placeholders: {console_line}, {player}, {type}, {reason}, {duration}, {expiration}, {ip}
-  Message_To_Broadcast:
-    - "&7{chat_line}"
-    - "&7The player {player} was punished."
-    - "&7Type: &6{type}"
-    - "&7Reason: {reason}"
-    - "&7IP: {ip}"
-    - "&7{chat_line}"
 
+  Message_To_Broadcast:
+    - '&7{chat_line}'
+    - '&7The player {player} was punished.'
+    - '&7Type: &6{type}'
+    - '&7Reason: {reason}'
+    - '&7IP: {ip}'
+    - '&7{chat_line}'
 
   Ban_Message:
     - ""
-    - "&eYou have been banned"
-    - "&eReason: {reason}"
-    - "&eExpiration: {expiration}"
-    - "&eCreator: {creator}"
+    - '&eYou have been banned'
+    - '&eReason: {reason}'
+    - '&eExpiration: {expiration}'
+    - '&eCreator: {creator}'
+
+  Warn_Message:
+    - '&eYou have been warned: {reason}'
+    - '&eExpiration: {expiration}'
 
   Mute_Message:
-    - "&eYou have been muted"
-    - "&eReason: {reason}"
-    - "&eExpiration: {expiration}"
+    - '&eYou have been muted'
+    - '&eReason: {reason}'
+    - '&eExpiration: {expiration}'
     - ""
-  #
-  Warn_Message:
-    - "&eYou have been warned: {reason}"
-    - "&eExpiration: {expiration}"
 
   Kick_Message:
     - "&3You have been kicked!"
     - "&6Reason: &7{reason}"
+
+
+Menu:
+  Proxy:
+    TemplateCreator:
+      Choose_Duration:
+        Lore:
+          - '&7Choose the'
+          - '&7duration of the'
+          - '&7punish'
+      Already:
+        SuperSilent: '&cPunishment is already super-silent'
+      Name: Template Creator
+      ChoosePermission:
+        Name: Choose permission
+    Results_Found: Found {results} result(s)
+    PlayerPermissionBrowser:
+      Lore:
+        - '&7Menu to view'
+        - '&7the permissions'
+        - '&7a player has'
+        - '&7changes will '
+        - '&7be temporary'
+    Create_New_Lore:
+      - ' '
+      - '&7Create new punishment'
+    Template:
+      Make:
+        SuperSilent:
+          Lore:
+            - ""
+            - '&7Click to make'
+            - '&7the punish'
+            - '&7super silent'
+          Name: Make super silent
+        Silent:
+          Lore:
+            - ""
+            - '&7Click to make'
+            - '&7the punish'
+            - '&7silent'
+        Not:
+          SuperSilent:
+            Lore:
+              - ""
+              - '&7Click to make'
+              - '&7the punish'
+              - '&7Not super silent'
+          Silent:
+            Lore:
+              - ' '
+              - '&7Click to make'
+              - '&7the punish'
+              - '&7not silent'
+        Silen:
+          Namet: Make silent
+    ChooseAction:
+      Lore:
+        - '&7Menu to select '
+        - '&7Action for players'
+    LocalizablesBrowser:
+      Information:
+        - Menu to browse and alter
+        - localizable messages in PunishControl
+    LocalizableEditorMenu:
+      Edit: Edit localizable
+    PlayerBrowser:
+      Information:
+        - '&7Menu to select'
+        - '&7an player'
+      Compass_Lore:
+        - '&7Search for a player'
+    StorageSettingsMenu:
+      AlreadyConnecting: Already connecting
+      AlreadyConnected: Already connected
+      ConnectionFailed:
+        - ' '
+        - '&7Try to connect '
+        - '&7to MySQL using'
+        - '&7these settings'
+        - '&7Current state: &cNot connected'
+      Can_t_Connect: Can't connect - See console
+    Punish:
+      Title: Browse Punishes
+      Lore:
+        - ""
+        - '&6Target: &7{target}'
+        - '&6Reason: &7{reason}'
+        - '&6Creation: &7{creation}'
+        - '&6Duration: &7{duration}'
+        - '&6End: &7{end}'
+        - '&6Creator: &7{creator}'
+        - '&7Right click to remove'
+      Remove: Right-Click to remove
+      Already_Removed: Punish is already removed
+    Main:
+      Player_Lore:
+        - '&7View players'
+        - '&7to select'
+        - '&7one for more'
+        - '&7actions'
+      View_Settings_Lore: View Settings for
+    Material-Browser:
+      Information:
+        - ""
+        - '&7Menu to select materials'
+        - '&7that fit your wishes best'
+        - '&7more items will be added soon'
+    GroupBrowser:
+      Information:
+        - '&7Menu to view'
+        - '&7the groups'
+        - '&7a player has'
+        - '&7changes can''t'
+        - '&7be yet made'
+      Lore:
+        - '&6Priority: &7{priority}'
+        - '&6Ban-Limit: &7{ban-limit}'
+        - '&6Mute-Limit: &7{mute-limit}'
+        - '&6Warn-Limit: &7{warn-limit}'
+        - '&6Override-Punishes: &7{override}'
+        - '&6Template only: &7{template_only}'
+  Templates:
+    Information:
+      - '&7Menu to view templates'
+      - '&7You can edit'
+      - '&7the templates, too'
+  Choose_Duration: Choose duration
+  Main:
+    Punish_Lore:
+      - Browse created punishments.
+      - Right click to view
+      - punished players
+  Settings:
+    Information:
+      - '&7Menu to choose'
+      - '&7a setting'
+    Choose:
+      Name: Choose Settings
+  Template:
+    Add:
+      Lore:
+        - '&7Click here to'
+        - '&7Add custom templates'
+      Name: Add template
+    Lore:
+      - '&6Type: &7{type}'
+      - '&6Duration: &7{duration}'
+      - '&6Reason: &7{reason}'
+      - '&6Permission: &7{permission}'
+      - '&6Silent: {silent}'
+      - '&6Super-Silent: {super-silent}'
+      - '&6Access: &7{access}'
+      - Right-Click to remove
+
+
+
+Parts:
+  Add: Hinzufügen
+  Has_No_Access: Has no access
+  Currently: Currently
+  Yes: Yes
+  Apply: Apply
+  Materials: Materials
+  Break: Breakup
+  Confirm: Confirm
+  Languages: Languages
+  Reason: Reason
+  Has_Access: Has access
+  Groups: Groups
+  Change_Type: Change type
+  Permission: Permission
+  Permissions: Permissions
+  Settings: Settings
+  Punishments: Punishments
+  Players: Players
+  No: No
+  Messages: Messages
+  StorageType: Storage Type
+  Connect: Connect
+  Silent: Silent
+  Duration: '&6Duration'
+  Permission_To: Permission to
+  SuperSilent: Super-Silent
+  Not: not
+  Part: Part
+  Action_For: Action for
+  Select: Select
+  CreateNew: Create New
 
 #
 # Hash value used in menus
@@ -72,4 +260,4 @@ Skull_Hash: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3Jh
 #
 # Internal do not touch!
 #
-Version: 1
+Version: '1'

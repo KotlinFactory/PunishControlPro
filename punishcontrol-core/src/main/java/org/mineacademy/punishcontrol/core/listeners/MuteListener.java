@@ -38,23 +38,24 @@ public final class MuteListener implements Listener<ChatEvent> {
 
     final UUID target = event.targetUUID();
     final Optional<Mute> optionalMute = storageProvider.currentMute(target);
-    optionalMute.ifPresent((mute -> {
-      //TODO format
-      if (Punish.Mute.DISABLED_COMMANDS.contains("*")) {
-        return;
-      }
+    optionalMute.ifPresent((
+        mute -> {
+          //TODO format
+          if (Punish.Mute.DISABLED_COMMANDS.contains("*")) {
+            return;
+          }
 
-      //Is a allowed commands
-      if (canByPass(event.message())) {
-        return;
-      }
+          //Is a allowed commands
+          if (canByPass(event.message())) {
+            return;
+          }
 
-      event.canceled(true);
-      event.cancelReason(Punishes.formPunishedMessage(mute));
-      playerProvider.sendIfOnline(
-          event.targetUUID(), Punishes.formPunishedMessage(mute)
-      );
-    }));
+          event.canceled(true);
+          event.cancelReason(Punishes.formPunishedMessage(mute));
+          playerProvider.sendIfOnline(
+              event.targetUUID(), Punishes.formPunishedMessage(mute)
+          );
+        }));
   }
 
   private boolean canByPass(final String message) {

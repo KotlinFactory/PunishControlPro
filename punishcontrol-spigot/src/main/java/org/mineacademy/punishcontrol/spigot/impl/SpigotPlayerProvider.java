@@ -40,7 +40,8 @@ public final class SpigotPlayerProvider extends AbstractPlayerProvider {
   }
 
   @Override
-  public boolean hasPermission(final @NonNull UUID uuid,
+  public boolean hasPermission(
+      final @NonNull UUID uuid,
       final @NonNull String permission) {
     final Player player = Bukkit.getPlayer(uuid);
     if (player == null) {
@@ -51,7 +52,8 @@ public final class SpigotPlayerProvider extends AbstractPlayerProvider {
   }
 
   @Override
-  public void sendIfOnline(@NonNull final UUID uuid,
+  public void sendIfOnline(
+      @NonNull final UUID uuid,
       final @NonNull String... messages) {
     final Player player = Bukkit.getPlayer(uuid);
 
@@ -93,9 +95,10 @@ public final class SpigotPlayerProvider extends AbstractPlayerProvider {
   public void kickIfOnline(@NonNull final UUID uuid, @NonNull final String... reason) {
     //Might be executed async.
     Scheduler.runSync(() -> {
-      Players.find(uuid).ifPresent((player -> {
-        player.kickPlayer(String.join("\n", reason));
-      }));
+      Players.find(uuid).ifPresent((
+          player -> {
+            player.kickPlayer(String.join("\n", reason));
+          }));
     });
   }
 

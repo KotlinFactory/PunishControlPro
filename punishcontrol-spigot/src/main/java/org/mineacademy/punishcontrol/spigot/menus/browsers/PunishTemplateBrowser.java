@@ -21,7 +21,8 @@ public class PunishTemplateBrowser extends AbstractTemplateBrowser {
 
   @NonNls
   private static final String ADD_TEMPLATE = "Add template";
-  private static final String[] ADD_TEMPLATE_LORE = {"&7Click here to",
+  private static final String[] ADD_TEMPLATE_LORE = {
+      "&7Click here to",
       "&7Add custom templates"};
   private final Button addTemplateButton;
 
@@ -70,7 +71,6 @@ public class PunishTemplateBrowser extends AbstractTemplateBrowser {
 
     return null;
   }
-
 
   @Override
   protected String[] getInfo() {

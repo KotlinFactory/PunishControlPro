@@ -54,9 +54,9 @@ public abstract class AbstractPunishCommand
         "&7/" + getLabel() + " &8* &7See a list of all players",
         "&7/" + getLabel() + " &6<player> &8* &7View options for a player",
         "&7/" + getLabel() + " &2[-s] [-S] &6<player"
-            + ""
-            + ""
-            + "> <duration> <reason>",
+        + ""
+        + ""
+        + "> <duration> <reason>",
         "&7/" + getLabel() + " &2[-s] [-S] &6<player> &6<template>",
         " ",
     };
@@ -102,7 +102,7 @@ public abstract class AbstractPunishCommand
     // Args without params
     finalArgs.removeAll(Arrays.asList("-S", "-s", "-ss", "-SS", "-sS", "-Ss", "-silent",
         "-super"
-            + "-slient"));
+        + "-slient"));
 
     final int size = Math.min(finalArgs.size(), 3);
 
@@ -127,7 +127,8 @@ public abstract class AbstractPunishCommand
           returnTell(MORE_ARGUMENTS_AS_CONSOLE_MESSAGE);
         }
         // Choose action (PUNISH)
-        PunishCreatorMenu.showTo(getPlayer(),
+        PunishCreatorMenu.showTo(
+            getPlayer(),
             PunishBuilder.of(punishType).target(findTarget(finalArgs)));
         break;
       case 2:
@@ -170,10 +171,11 @@ public abstract class AbstractPunishCommand
             return;
           }
 
-          Players.find(target).ifPresent((player -> {
+          Players.find(target).ifPresent((
+              player -> {
 //          TODO: Format Reason!
-            player.kickPlayer(reason.toString());
-          }));
+                player.kickPlayer(reason.toString());
+              }));
         });
 
         // Open inv
@@ -184,12 +186,15 @@ public abstract class AbstractPunishCommand
             .of(finalArgs.get(1));
 
         //PunishDuration mustn't be empty: If its empty the given string had the wrong format
-        checkBoolean(!punishDuration.isEmpty(),
+        checkBoolean(
+            !punishDuration.isEmpty(),
             "&cInvalid time format! Example: 10days");
 
-        checkBoolean(Groups.hasAccess((senderUUID()),
-            punishType,
-            punishDuration),
+        checkBoolean(
+            Groups.hasAccess(
+                (senderUUID()),
+                punishType,
+                punishDuration),
             "&cThis action would exceed your limits."
         );
 

@@ -30,7 +30,6 @@ public abstract class AbstractPlayerBrowser extends AbstractSearchableBrowser<UU
   private static Replacer results = Replacer
       .of("Found {results} result(s)");
 
-
   public AbstractPlayerBrowser(
       final PlayerProvider playerProvider,
       final TextureProvider textureProvider,
@@ -74,7 +73,6 @@ public abstract class AbstractPlayerBrowser extends AbstractSearchableBrowser<UU
   }
 
   public abstract void onClick(final UUID data);
-
 
   @Override
   protected final ItemStack convertToItemStack(final UUID uuid) {

@@ -18,7 +18,7 @@ public abstract class AbstractPlayerProvider
     super(
         PunishControlManager.FILES.UUID_STORAGE,
         Providers.pluginDataProvider().getDataFolder().getAbsolutePath()
-            + "/data/");
+        + "/data/");
   }
 
   @Override

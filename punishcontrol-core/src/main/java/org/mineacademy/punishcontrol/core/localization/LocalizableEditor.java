@@ -1,6 +1,5 @@
 package org.mineacademy.punishcontrol.core.localization;
 
-
 import de.leonhard.storage.Yaml;
 import de.leonhard.storage.util.Valid;
 import java.util.ArrayList;

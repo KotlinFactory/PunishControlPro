@@ -13,7 +13,6 @@ import org.mineacademy.punishcontrol.core.storage.StorageType;
 
 public final class Settings extends SimpleSettings {
 
-
   public static List<String> COMMAND_ALIASES = new ArrayList<>();
   public static StorageType STORAGE_TYPE;
 
@@ -21,7 +20,6 @@ public final class Settings extends SimpleSettings {
     STORAGE_TYPE = Enum.valueOf(StorageType.class, getString("Storage").toUpperCase());
     COMMAND_ALIASES = getStringList("Command_Aliases");
   }
-
 
   @Override
   protected int getConfigVersion() {
@@ -45,7 +43,6 @@ public final class Settings extends SimpleSettings {
       PASSWORD = getOrDefault("Password", "*");
     }
   }
-
 
   public static final class Punish {
 

@@ -20,7 +20,6 @@ import org.mineacademy.punishcontrol.core.punishes.Warn;
 
 public final class JsonStorageProvider extends SecureJson implements StorageProvider {
 
-
   private static final String BANS_PATH_PREFIX = "bans";
   private static final String MUTES_PATH_PREFIX = "mutes";
   private static final String WARN_PATH_PREFIX = "warns";
@@ -72,7 +71,8 @@ public final class JsonStorageProvider extends SecureJson implements StorageProv
   }
 
   @SuppressWarnings("unchecked")
-  private Map<String, Object> parseMap(final String path,
+  private Map<String, Object> parseMap(
+      final String path,
       @NonNull final Object rawData) {
     try {
       return (Map<String, Object>) rawData;
@@ -109,7 +109,8 @@ public final class JsonStorageProvider extends SecureJson implements StorageProv
       for (final val entry : bans.entrySet()) { // MS
         // Actual ban
 
-        final long creation = parseMSFromKey(BANS_PATH_PREFIX + "." + key,
+        final long creation = parseMSFromKey(
+            BANS_PATH_PREFIX + "." + key,
             entry.getKey());
         final Map<String, Object> banRawData = parseMap(key, entry.getValue());
 
@@ -134,7 +135,8 @@ public final class JsonStorageProvider extends SecureJson implements StorageProv
       for (final val entry : bans.entrySet()) { // MS
         // Actual ban
 
-        final long creation = parseMSFromKey(MUTES_PATH_PREFIX + "." + key,
+        final long creation = parseMSFromKey(
+            MUTES_PATH_PREFIX + "." + key,
             entry.getKey());
         final Map<String, Object> muteRawData = parseMap(key, entry.getValue());
 
@@ -160,7 +162,8 @@ public final class JsonStorageProvider extends SecureJson implements StorageProv
       for (final val entry : bans.entrySet()) { // MS
         // Actual ban
 
-        final long creation = parseMSFromKey(WARN_PATH_PREFIX + "." + key,
+        final long creation = parseMSFromKey(
+            WARN_PATH_PREFIX + "." + key,
             entry.getKey());
         final Map<String, Object> warnRawData = parseMap(key, entry.getValue());
 
@@ -188,7 +191,8 @@ public final class JsonStorageProvider extends SecureJson implements StorageProv
     for (final val entry : bans.entrySet()) { // MS
       // Actual ban
 
-      final long creation = parseMSFromKey(BANS_PATH_PREFIX + "." + uuid,
+      final long creation = parseMSFromKey(
+          BANS_PATH_PREFIX + "." + uuid,
           entry.getKey());
       final Map<String, Object> banRawData =
           parseMap(BANS_PATH_PREFIX + "." + uuid, entry.getValue());
@@ -212,7 +216,8 @@ public final class JsonStorageProvider extends SecureJson implements StorageProv
     for (final val entry : bans.entrySet()) { // MS
       // Actual ban
 
-      final long creation = parseMSFromKey(MUTES_PATH_PREFIX + "." + uuid,
+      final long creation = parseMSFromKey(
+          MUTES_PATH_PREFIX + "." + uuid,
           entry.getKey());
       final Map<String, Object> muteRawData =
           parseMap(MUTES_PATH_PREFIX + "." + uuid, entry.getValue());
@@ -236,7 +241,8 @@ public final class JsonStorageProvider extends SecureJson implements StorageProv
     for (final val entry : bans.entrySet()) { // MS
       // Actual ban
 
-      final long creation = parseMSFromKey(WARN_PATH_PREFIX + "." + uuid,
+      final long creation = parseMSFromKey(
+          WARN_PATH_PREFIX + "." + uuid,
           entry.getKey());
       final Map<String, Object> warnRawData =
           parseMap(WARN_PATH_PREFIX + "." + uuid, entry.getValue());

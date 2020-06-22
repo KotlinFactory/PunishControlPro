@@ -119,7 +119,8 @@ public final class PunishBuilder {
             .isSilent(silent)
             .isSuperSilent(superSilent);
     }
-    Valid.error("Invalid punishtype! Neither WARN/BAN/MUTE!",
+    Valid.error(
+        "Invalid punishtype! Neither WARN/BAN/MUTE!",
         "What have you done to your JDK?!");
     return build(); // Will never be executed. Just here because of the java-compiler.
   }

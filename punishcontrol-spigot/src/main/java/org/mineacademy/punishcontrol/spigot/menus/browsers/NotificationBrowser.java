@@ -53,7 +53,8 @@ public final class NotificationBrowser extends AbstractBrowser<Notification> {
   }
 
   @Override
-  protected void onPageClick(final Player player, final Notification item,
+  protected void onPageClick(
+      final Player player, final Notification item,
       final ClickType click) {
     if (!click.isRightClick()) {
       return;

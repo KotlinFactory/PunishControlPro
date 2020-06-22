@@ -1,6 +1,5 @@
 package org.mineacademy.punishcontrol.core.injector;
 
-
 import de.leonhard.storage.util.Valid;
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Field;
@@ -8,6 +7,7 @@ import java.lang.reflect.Modifier;
 import java.util.List;
 import lombok.AccessLevel;
 import lombok.Getter;
+import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.experimental.Accessors;
 import org.mineacademy.punishcontrol.core.setting.Replacer;
@@ -33,7 +33,7 @@ public abstract class AbstractInjector<C extends Annotation, F extends Annotatio
   public final void startInjecting(final List<Class<?>> classes) {
     for (final Class<?> clazz : classes) {
 
-      if (!clazz.isAnnotationPresent(classAnnotationClass))
+      if (!isAnnotationPresent(clazz, classAnnotationClass))
         continue;
 //      if (!clazz.getSimpleName().equalsIgnoreCase("AbstractPunishBrowser"))
 //        continue;
@@ -77,7 +77,7 @@ public abstract class AbstractInjector<C extends Annotation, F extends Annotatio
             onInjected(clazz, field, path, valueByPath);
 //            System.out.println("After: ");
 //            debugRep(getValueByPath(path, raw));
-//            System.out.println("Injected: " + field.getName() + " in " + clazz.getName());
+            System.out.println("Injected: " + field.getName() + " in " + clazz.getName());
           } catch (final Throwable throwable) {
             System.err.println("Exception while injecting!");
             System.err.println("Path:  '" + path + "'");
@@ -86,6 +86,24 @@ public abstract class AbstractInjector<C extends Annotation, F extends Annotatio
           }
         }
       }
+    }
+  }
+
+  private boolean isAnnotationPresent(
+      @NonNull final Class<?> clazz,
+      @NonNull final Class<? extends Annotation> annotationClass) {
+    try {
+      return clazz.isAnnotationPresent(annotationClass);
+    } catch (final Throwable throwable) {
+      Valid.error(
+          throwable,
+          "Exception while looking up annotation '"
+          + annotationClass.getName()
+          + "' for "
+          + clazz.getSimpleName(),
+          "Possibly this is caused by proguard."
+      );
+      return false;
     }
   }
 

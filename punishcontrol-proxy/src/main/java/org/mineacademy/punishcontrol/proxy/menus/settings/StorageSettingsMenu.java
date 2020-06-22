@@ -1,6 +1,5 @@
 package org.mineacademy.punishcontrol.proxy.menus.settings;
 
-
 import de.exceptionflug.mccommons.inventories.api.CallResult;
 import de.exceptionflug.protocolize.inventory.InventoryModule;
 import de.exceptionflug.protocolize.items.ItemType;
@@ -103,7 +102,6 @@ public final class StorageSettingsMenu
     setTitle("&8MySQL");
   }
 
-
   @Override
   public void reDisplay() {
     showTo(getPlayer());
@@ -176,7 +174,8 @@ public final class StorageSettingsMenu
     // Host | "Host"
     {
       final Replacer HOST_REPLACER = Replacer
-          .of(" ",
+          .of(
+              " ",
               "&7Click to",
               "&7set the host",
               "&7Currently: {currently}");
@@ -222,9 +221,10 @@ public final class StorageSettingsMenu
                   " ",
                   "&7Click to",
                   "&7set the database",
-                  "&7Currently: " + (MySQL.DATABASE.isEmpty()
-                      ? "&cNot set"
-                      : MySQL.DATABASE))
+                  "&7Currently: " + (
+                      MySQL.DATABASE.isEmpty()
+                          ? "&cNot set"
+                          : MySQL.DATABASE))
               .actionHandler("Database")
               .slot(DATABASE_SLOT)
       );
@@ -240,9 +240,10 @@ public final class StorageSettingsMenu
                   " ",
                   "&7Click to",
                   "&7set the user",
-                  "&7Currently: " + (MySQL.USER.isEmpty()
-                      ? "&cNot set"
-                      : MySQL.USER))
+                  "&7Currently: " + (
+                      MySQL.USER.isEmpty()
+                          ? "&cNot set"
+                          : MySQL.USER))
               .actionHandler("User")
               .slot(USER_SLOT)
       );
@@ -258,9 +259,10 @@ public final class StorageSettingsMenu
                   " ",
                   "&7Click to",
                   "&7set the password",
-                  "&7Currently: " + (MySQL.PASSWORD.isEmpty()
-                      ? "&cnot set"
-                      : "****"))
+                  "&7Currently: " + (
+                      MySQL.PASSWORD.isEmpty()
+                          ? "&cnot set"
+                          : "****"))
               .actionHandler("Password")
               .slot(PASSWORD_SLOT)
       );
@@ -275,86 +277,93 @@ public final class StorageSettingsMenu
   public void registerActionHandlers() {
     super.registerActionHandlers();
 
-    registerActionHandler("Use", (use -> {
-      if (PunishControlManager.storageType() == StorageType.JSON) {
-        if (!StorageTypes.mySQLStorageProvider.isConnected()) {
-          animateTitle("&cNot connected!");
-          return CallResult.DENY_GRABBING;
-        }
-        //Switching to json
-        setToConfig("Storage", "MYSQL");
-        PunishControlManager.setStorageType(StorageType.MYSQL);
-        Providers.storageProvider(StorageTypes.mySQLStorageProvider);
-      } else {
-        //Switching to json
-        setToConfig("Storage", "JSON");
-        PunishControlManager.setStorageType(StorageType.JSON);
-        Providers.storageProvider(StorageType.JSON.getStorageProvider());
-      }
-      build();
-      return CallResult.DENY_GRABBING;
-    }));
-
-    registerActionHandler("Connect", (connect -> {
-      if (isConnecting) {
-        animateTitle("&c" + ALREADY_CONNECTING);
-        return CallResult.DENY_GRABBING;
-      }
-
-      if (StorageTypes.mySQLStorageProvider.isConnected()) {
-        animateTitle("&c" + ALREADY_CONNECTED);
-        return CallResult.DENY_GRABBING;
-      }
-
-      isConnecting = true;
-      build();
-      async(() -> {
-        try {
-          StorageTypes.mySQLStorageProvider.connect();
-          isConnecting = false;
-          Debugger.debug("MySQL", "Connected");
+    registerActionHandler("Use", (
+        use -> {
+          if (PunishControlManager.storageType() == StorageType.JSON) {
+            if (!StorageTypes.mySQLStorageProvider.isConnected()) {
+              animateTitle("&cNot connected!");
+              return CallResult.DENY_GRABBING;
+            }
+            //Switching to json
+            setToConfig("Storage", "MYSQL");
+            PunishControlManager.setStorageType(StorageType.MYSQL);
+            Providers.storageProvider(StorageTypes.mySQLStorageProvider);
+          } else {
+            //Switching to json
+            setToConfig("Storage", "JSON");
+            PunishControlManager.setStorageType(StorageType.JSON);
+            Providers.storageProvider(StorageType.JSON.getStorageProvider());
+          }
           build();
-        } catch (final Throwable throwable) {
-          animateTitle("&c" + CAN_T_CONNECT);
-          Debugger.saveError(throwable);
-        } finally {
-          isConnecting = false;
-        }
-      });
-      return CallResult.DENY_GRABBING;
-    }));
+          return CallResult.DENY_GRABBING;
+        }));
 
-    registerActionHandler("Host", (click -> {
-      InventoryModule.closeAllInventories(getPlayer());
-      MySQLStorageConversation.create(getPlayer(), "Host").start();
-      return CallResult.DENY_GRABBING;
-    }));
+    registerActionHandler("Connect", (
+        connect -> {
+          if (isConnecting) {
+            animateTitle("&c" + ALREADY_CONNECTING);
+            return CallResult.DENY_GRABBING;
+          }
 
-    registerActionHandler("Port", (port -> {
-      InventoryModule.closeAllInventories(getPlayer());
-      MySQLStorageConversation.create(getPlayer(), "Port").start();
-      return CallResult.DENY_GRABBING;
-    }));
+          if (StorageTypes.mySQLStorageProvider.isConnected()) {
+            animateTitle("&c" + ALREADY_CONNECTED);
+            return CallResult.DENY_GRABBING;
+          }
 
-    registerActionHandler("Database", (database -> {
-      InventoryModule.closeAllInventories(getPlayer());
+          isConnecting = true;
+          build();
+          async(() -> {
+            try {
+              StorageTypes.mySQLStorageProvider.connect();
+              isConnecting = false;
+              Debugger.debug("MySQL", "Connected");
+              build();
+            } catch (final Throwable throwable) {
+              animateTitle("&c" + CAN_T_CONNECT);
+              Debugger.saveError(throwable);
+            } finally {
+              isConnecting = false;
+            }
+          });
+          return CallResult.DENY_GRABBING;
+        }));
 
-      MySQLStorageConversation.create(getPlayer(), "Database").start();
-      return CallResult.DENY_GRABBING;
-    }));
+    registerActionHandler("Host", (
+        click -> {
+          InventoryModule.closeAllInventories(getPlayer());
+          MySQLStorageConversation.create(getPlayer(), "Host").start();
+          return CallResult.DENY_GRABBING;
+        }));
 
-    registerActionHandler("User", (user -> {
-      InventoryModule.closeAllInventories(getPlayer());
+    registerActionHandler("Port", (
+        port -> {
+          InventoryModule.closeAllInventories(getPlayer());
+          MySQLStorageConversation.create(getPlayer(), "Port").start();
+          return CallResult.DENY_GRABBING;
+        }));
 
-      MySQLStorageConversation.create(getPlayer(), "User").start();
-      return CallResult.DENY_GRABBING;
-    }));
+    registerActionHandler("Database", (
+        database -> {
+          InventoryModule.closeAllInventories(getPlayer());
 
-    registerActionHandler("Password", (password -> {
-      InventoryModule.closeAllInventories(getPlayer());
+          MySQLStorageConversation.create(getPlayer(), "Database").start();
+          return CallResult.DENY_GRABBING;
+        }));
 
-      MySQLStorageConversation.create(getPlayer(), "Password").start();
-      return CallResult.DENY_GRABBING;
-    }));
+    registerActionHandler("User", (
+        user -> {
+          InventoryModule.closeAllInventories(getPlayer());
+
+          MySQLStorageConversation.create(getPlayer(), "User").start();
+          return CallResult.DENY_GRABBING;
+        }));
+
+    registerActionHandler("Password", (
+        password -> {
+          InventoryModule.closeAllInventories(getPlayer());
+
+          MySQLStorageConversation.create(getPlayer(), "Password").start();
+          return CallResult.DENY_GRABBING;
+        }));
   }
 }

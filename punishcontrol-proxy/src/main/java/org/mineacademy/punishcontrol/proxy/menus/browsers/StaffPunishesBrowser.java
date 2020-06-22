@@ -40,7 +40,6 @@ public final class StaffPunishesBrowser extends AbstractPunishBrowser {
     });
   }
 
-
   public StaffPunishesBrowser(
       @NonNull final MainMenu parent,
       @NonNull final PlayerProvider playerProvider,
@@ -61,26 +60,29 @@ public final class StaffPunishesBrowser extends AbstractPunishBrowser {
     setTitle("&8Punishments by " + playerProvider.findName(staffMember).orElse(
         "unknown"));
 
-    registerActionHandler("Back", (back -> {
-      new AbstractPlayerBrowser(
-          playerProvider,
-          textureProvider,
-          this) {
-        @Override
-        protected void onClick(final ClickType clickType, final UUID target) {
-          StaffPunishesBrowser.showTo(getPlayer(), target);
-        }
+    registerActionHandler("Back", (
+        back -> {
+          new AbstractPlayerBrowser(
+              playerProvider,
+              textureProvider,
+              this) {
+            @Override
+            protected void onClick(final ClickType clickType, final UUID target) {
+              StaffPunishesBrowser.showTo(getPlayer(), target);
+            }
 
-        @Override
-        protected List<String> lore(final UUID uuid) {
-          return Collections.singletonList(
-              SHOW_PUNISHMENTS_CREATED_BY + " " + playerProvider.findName(uuid).orElse(
-                  "unknown")
-          );
-        }
-      }.displayTo(getPlayer());
-      return CallResult.DENY_GRABBING;
-    }));
+            @Override
+            protected List<String> lore(final UUID uuid) {
+              return Collections.singletonList(
+                  SHOW_PUNISHMENTS_CREATED_BY + " " + playerProvider
+                      .findName(uuid)
+                      .orElse(
+                          "unknown")
+              );
+            }
+          }.displayTo(getPlayer());
+          return CallResult.DENY_GRABBING;
+        }));
   }
 
   @Override

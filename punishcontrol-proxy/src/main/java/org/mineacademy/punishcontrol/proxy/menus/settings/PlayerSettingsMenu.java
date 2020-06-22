@@ -53,7 +53,8 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
     {
       set(
           Item
-              .of(ItemType.OBSIDIAN,
+              .of(
+                  ItemType.OBSIDIAN,
                   "&6Groups",
                   " ",
                   "&7View groups",
@@ -69,7 +70,8 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
     {
       if (!targetOnline) {
         Item
-            .of(ItemType.ICE,
+            .of(
+                ItemType.ICE,
                 "&6Permissions",
                 "",
                 "&7Cant be used:",
@@ -79,7 +81,8 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
       } else {
         set(
             Item
-                .of(ItemType.ICE,
+                .of(
+                    ItemType.ICE,
                     "&6Permissions",
                     "",
                     "&7View which",
@@ -132,28 +135,31 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
 
   @Override
   public void registerActionHandlers() {
-    registerActionHandler("Groups", (groups -> {
-      GroupBrowser.showTo(getPlayer(), target, this);
-      return CallResult.DENY_GRABBING;
-    }));
+    registerActionHandler("Groups", (
+        groups -> {
+          GroupBrowser.showTo(getPlayer(), target, this);
+          return CallResult.DENY_GRABBING;
+        }));
 
-    registerActionHandler("Permissions", (permissions -> {
-      PlayerPermissionsBrowser.showTo(getPlayer(), target, this);
-      return CallResult.DENY_GRABBING;
-    }));
+    registerActionHandler("Permissions", (
+        permissions -> {
+          PlayerPermissionsBrowser.showTo(getPlayer(), target, this);
+          return CallResult.DENY_GRABBING;
+        }));
 
-    registerActionHandler("Punishable", (punishable -> {
-      if (!player.hasPermission(
-          PunishControlPermissions.TOGGLE_PUNISHABLE.permission()
-      )) {
-        animateTitle("&cNo access");
-        return CallResult.DENY_GRABBING;
-      }
-      Providers.playerProvider().punishable(target, !targetPunishable);
-      showTo(getPlayer(), target);
+    registerActionHandler("Punishable", (
+        punishable -> {
+          if (!player.hasPermission(
+              PunishControlPermissions.TOGGLE_PUNISHABLE.permission()
+          )) {
+            animateTitle("&cNo access");
+            return CallResult.DENY_GRABBING;
+          }
+          Providers.playerProvider().punishable(target, !targetPunishable);
+          showTo(getPlayer(), target);
 
-      return CallResult.DENY_GRABBING;
-    }));
+          return CallResult.DENY_GRABBING;
+        }));
   }
 }
 

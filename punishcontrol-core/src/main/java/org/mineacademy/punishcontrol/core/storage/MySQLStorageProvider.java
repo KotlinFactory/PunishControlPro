@@ -73,7 +73,7 @@ public final class MySQLStorageProvider
   public void connect() {
     connect(
         "jdbc:mysql://" + MySQL.HOST + ":" + MySQL.PORT + "/" + MySQL.DATABASE
-            + "?characterEncoding=latin1",
+        + "?characterEncoding=latin1",
         MySQL.USER,
         MySQL.PASSWORD);
   }
@@ -82,14 +82,14 @@ public final class MySQLStorageProvider
   protected void onConnected() {
     update(
         "CREATE TABLE IF NOT EXISTS Punishes("
-            + "Type varchar(64), "
-            + "Target varchar(64), "
-            + "Creator varchar(64), "
-            + "Reason varchar(64), "
-            + "IP varchar(64), "
-            + "Duration bigint, "
-            + "Creation bigint, "
-            + "Removed boolean, PRIMARY KEY (Creation))");
+        + "Type varchar(64), "
+        + "Target varchar(64), "
+        + "Creator varchar(64), "
+        + "Reason varchar(64), "
+        + "IP varchar(64), "
+        + "Duration bigint, "
+        + "Creation bigint, "
+        + "Removed boolean, PRIMARY KEY (Creation))");
 
     connected = true;
   }
@@ -134,8 +134,9 @@ public final class MySQLStorageProvider
   @Override
   public List<Ban> listBans() {
     final List<Ban> result = new ArrayList<>();
-    try (final ResultSet resultSet = query(
-        "SELECT * FROM Punishes WHERE Type='BAN'")) {
+    try (
+        final ResultSet resultSet = query(
+            "SELECT * FROM Punishes WHERE Type='BAN'")) {
       // No bans found
       if (resultSet == null) {
         return result;
@@ -153,8 +154,9 @@ public final class MySQLStorageProvider
   @Override
   public List<Mute> listMutes() {
     final List<Mute> result = new ArrayList<>();
-    try (final ResultSet resultSet = query(
-        "SELECT * FROM Punishes WHERE Type='MUTE'")) {
+    try (
+        final ResultSet resultSet = query(
+            "SELECT * FROM Punishes WHERE Type='MUTE'")) {
       // No bans found
       if (resultSet == null) {
         return result;
@@ -172,8 +174,9 @@ public final class MySQLStorageProvider
   @Override
   public List<Warn> listWarns() {
     final List<Warn> result = new ArrayList<>();
-    try (final ResultSet resultSet = query(
-        "SELECT * FROM Punishes WHERE TYPE='WARN'")) {
+    try (
+        final ResultSet resultSet = query(
+            "SELECT * FROM Punishes WHERE TYPE='WARN'")) {
       // No bans found
       if (resultSet == null) {
         return result;
@@ -191,9 +194,10 @@ public final class MySQLStorageProvider
   @Override
   public List<Ban> listBans(@NonNull final UUID uuid) {
     final List<Ban> result = new ArrayList<>();
-    try (final ResultSet resultSet =
-        query("SELECT * FROM Punishes WHERE Type='BAN' AND Target='" + uuid
-            + "'")) {
+    try (
+        final ResultSet resultSet =
+            query("SELECT * FROM Punishes WHERE Type='BAN' AND Target='" + uuid
+                  + "'")) {
       // No bans found
       if (resultSet == null) {
         return result;
@@ -211,9 +215,10 @@ public final class MySQLStorageProvider
   @Override
   public List<Mute> listMutes(@NonNull final UUID uuid) {
     final List<Mute> result = new ArrayList<>();
-    try (final ResultSet resultSet =
-        query("SELECT * FROM Punishes WHERE Type='MUTE' AND Target='" + uuid
-            + "'")) {
+    try (
+        final ResultSet resultSet =
+            query("SELECT * FROM Punishes WHERE Type='MUTE' AND Target='" + uuid
+                  + "'")) {
       // No bans found
       if (resultSet == null) {
         return result;
@@ -231,9 +236,10 @@ public final class MySQLStorageProvider
   @Override
   public List<Warn> listWarns(@NonNull final UUID uuid) {
     final List<Warn> result = new ArrayList<>();
-    try (final ResultSet resultSet =
-        query("SELECT * FROM Punishes WHERE Type='WARN' AND Target='" + uuid
-            + "'")) {
+    try (
+        final ResultSet resultSet =
+            query("SELECT * FROM Punishes WHERE Type='WARN' AND Target='" + uuid
+                  + "'")) {
       // No bans found
       if (resultSet == null) {
         return result;
@@ -278,21 +284,21 @@ public final class MySQLStorageProvider
   @Override
   public void removeBan(final @NonNull Ban ban) {
     update("UPDATE Punishes SET removed=true WHERE Creation=" + ban.creation()
-        + " AND Type='BAN'");
+           + " AND Type='BAN'");
   }
 
   @Override
   public void removeMute(final @NonNull Mute mute) {
     update(
         "UPDATE Punishes SET removed=true WHERE Creation=" + mute.creation()
-            + " AND Type='MUTE'");
+        + " AND Type='MUTE'");
   }
 
   @Override
   public void removeWarn(final @NonNull Warn warn) {
     update(
         "UPDATE Punishes SET removed=true WHERE Creation=" + warn.creation()
-            + " AND Type='WARN'");
+        + " AND Type='WARN'");
   }
 
   private void saveData(

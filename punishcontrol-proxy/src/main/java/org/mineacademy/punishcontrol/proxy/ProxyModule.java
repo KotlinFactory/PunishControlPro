@@ -47,9 +47,7 @@ public final class ProxyModule {
   }
 
   /**
-   * List's the classes used in our plugin.
-   * Heavyweight operation!
-   * --> Use async only!
+   * List's the classes used in our plugin. Heavyweight operation! --> Use async only!
    */
   @Provides
   public List<Class<?>> classes() {

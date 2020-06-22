@@ -39,10 +39,11 @@ public final class BanIpListener implements Listener<JoinEvent> {
     final Optional<Ban> optionalBan = storageProvider
         .currentBan(targetAddress);
 
-    optionalBan.ifPresent((ban -> {
-      //TODO format
-      event.canceled(true);
-      event.cancelReason(Punishes.formOnPunishMessage(ban));
-    }));
+    optionalBan.ifPresent((
+        ban -> {
+          //TODO format
+          event.canceled(true);
+          event.cancelReason(Punishes.formOnPunishMessage(ban));
+        }));
   }
 }

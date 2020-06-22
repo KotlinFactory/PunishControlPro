@@ -47,7 +47,6 @@ public final class PermissionsBrowser extends AbstractBrowser<Permission> {
     });
   }
 
-
   private PermissionsBrowser(
       final UUID target,
       final PlayerSettingsMenu parent) {
@@ -96,7 +95,6 @@ public final class PermissionsBrowser extends AbstractBrowser<Permission> {
         "&7" + PERMISSION + " to: ",
         "&7" + String.join(" ", item.description()));
   }
-
 
   @Override
   protected void onPageClick(

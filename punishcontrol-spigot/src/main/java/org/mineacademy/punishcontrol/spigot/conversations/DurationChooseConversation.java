@@ -35,7 +35,8 @@ public class DurationChooseConversation extends SimpleConversation {
     }
 
     @Override
-    protected boolean isInputValid(final ConversationContext context,
+    protected boolean isInputValid(
+        final ConversationContext context,
         final String input) {
       return PunishDuration.of(input).toMs() != Long.MIN_VALUE;
     }

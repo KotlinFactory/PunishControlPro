@@ -83,7 +83,8 @@ public abstract class AbstractTemplateBrowser
   }
 
   @Override
-  protected void onClick(final ClickType clickType,
+  protected void onClick(
+      final ClickType clickType,
       final PunishTemplate punishTemplate) {
     if (clickType == ClickType.RIGHT_CLICK) {
       new AbstractConfirmMenu(this) {

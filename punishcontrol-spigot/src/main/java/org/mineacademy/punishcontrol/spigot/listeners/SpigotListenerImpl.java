@@ -52,7 +52,7 @@ public final class SpigotListenerImpl implements Listener {
                 event.setCancelled(chatEvent.canceled());
               } catch (final Throwable throwable) {
                 Debugger.saveError(throwable, "Exception while calling chat-event "
-                    + "using protocollib!");
+                                              + "using protocollib!");
               }
             }
           });

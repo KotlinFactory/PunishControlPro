@@ -59,7 +59,8 @@ public final class ProxyPlayerProvider
   }
 
   @Override
-  public void sendIfOnline(@NonNull final UUID uuid,
+  public void sendIfOnline(
+      @NonNull final UUID uuid,
       final @NonNull String... messages) {
     final ProxiedPlayer player = proxyServer.getPlayer(uuid);
 

@@ -23,7 +23,8 @@ public final class Warn extends Punish {
     super(creation, rawData, PunishType.WARN);
   }
 
-  public static Warn ofRawData(final long creation,
+  public static Warn ofRawData(
+      final long creation,
       @NonNull final Map<String, Object> rawData) {
     return new Warn(creation, rawData);
   }
@@ -32,7 +33,8 @@ public final class Warn extends Punish {
   // Static-Factory-Methods
   // ----------------------------------------------------------------------------------------------------
 
-  public static Warn of(@NonNull final UUID target, @NonNull final UUID creator,
+  public static Warn of(
+      @NonNull final UUID target, @NonNull final UUID creator,
       final long ms) {
     return new Warn(target, creator, ms);
   }

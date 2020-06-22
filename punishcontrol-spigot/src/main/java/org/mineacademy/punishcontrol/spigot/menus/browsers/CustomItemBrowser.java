@@ -43,7 +43,6 @@ public final class CustomItemBrowser extends AbstractSearchableBrowser<CustomIte
     setTitle("&8" + CUSTOM_ITEMS);
   }
 
-
   public void redisplay() {
     redisplay(ItemSettings.items());
   }

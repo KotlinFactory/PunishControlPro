@@ -53,7 +53,6 @@ public class Permissions {
     }
   }
 
-
   public void writeToFile() {
     final File dataFile = FileUtils.getAndMake(
         PLUGIN_DATA_PROVIDER.getNamed() + ".perms",
@@ -76,6 +75,5 @@ public class Permissions {
 
     FileUtils.write(dataFile, out);
   }
-
 
 }

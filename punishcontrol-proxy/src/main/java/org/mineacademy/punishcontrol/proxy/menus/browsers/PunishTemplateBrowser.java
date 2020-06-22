@@ -72,12 +72,13 @@ public class PunishTemplateBrowser extends AbstractTemplateBrowser {
 
   @Override
   public void registerActionHandlers() {
-    registerActionHandler("Add", (add -> {
+    registerActionHandler("Add", (
+        add -> {
 
-      InventoryModule.closeAllInventories(getPlayer());
-      AddTemplateConversation.create(getPlayer()).start();
-      return CallResult.DENY_GRABBING;
-    }));
+          InventoryModule.closeAllInventories(getPlayer());
+          AddTemplateConversation.create(getPlayer()).start();
+          return CallResult.DENY_GRABBING;
+        }));
   }
 
   @Override

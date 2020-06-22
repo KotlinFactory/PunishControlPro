@@ -27,7 +27,8 @@ public enum SettingTypes {
   PLAYER {
     @Override
     public ItemCreator itemCreator() {
-      return ItemCreator.of(CompMaterial.PLAYER_HEAD,
+      return ItemCreator.of(
+          CompMaterial.PLAYER_HEAD,
           "&6Player settings",
           "&7Show permissions",
           "&7to apply punishes",
@@ -66,7 +67,8 @@ public enum SettingTypes {
     @Override
     public ItemCreator itemCreator() {
       return ItemCreator
-          .of(CompMaterial.ENDER_CHEST,
+          .of(
+              CompMaterial.ENDER_CHEST,
               "&6Punish storage",
               "&7Click to setup MySQL",
               "&7or to change the",
@@ -89,7 +91,8 @@ public enum SettingTypes {
   PUNISH_TEMPLATE {
     @Override
     public ItemCreator itemCreator() {
-      return ItemCreator.of(CompMaterial.PAPER,
+      return ItemCreator.of(
+          CompMaterial.PAPER,
           "&6Punish templates",
           "&7View and add",
           "&7Punish-Templates")
@@ -165,7 +168,8 @@ public enum SettingTypes {
   NOTIFICATION {
     @Override
     public ItemCreator itemCreator() {
-      return ItemCreator.of(CompMaterial.FIREWORK_ROCKET,
+      return ItemCreator.of(
+          CompMaterial.FIREWORK_ROCKET,
           "&6Notifications",
           "&7",
           "&7View notifications")

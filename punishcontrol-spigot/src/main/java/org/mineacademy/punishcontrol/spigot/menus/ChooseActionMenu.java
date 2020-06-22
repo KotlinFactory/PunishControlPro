@@ -40,15 +40,19 @@ public final class ChooseActionMenu extends Menu {
   private static final String PUNISHMENTS = "Punishments";
   @NonNls
   private static final String VIEW_PUNISHMENTS = "View punishments";
-  private static final String[] PLAYER_OFFLINE_LORE = {" ",
+  private static final String[] PLAYER_OFFLINE_LORE = {
+      " ",
       "&cDisabled:",
       "&7Player is offline"};
-  private static final String[] SETTINGS_FOR_PLAYER_LORE = {" ",
+  private static final String[] SETTINGS_FOR_PLAYER_LORE = {
+      " ",
       "&7Settings for player"};
-  private static final String[] DISABLED_OFFLINE_LORE = {"",
+  private static final String[] DISABLED_OFFLINE_LORE = {
+      "",
       "&cDisabled:",
       "&7Player is offline"};
-  private static final String[] MENU_INFORMATION = {"&7Menu to select an",
+  private static final String[] MENU_INFORMATION = {
+      "&7Menu to select an",
       "&7Action for players"};
   @NonNls
   private static final String DATA_FOR = "Data for";
@@ -81,7 +85,6 @@ public final class ChooseActionMenu extends Menu {
         target);
   }
 
-
   public ChooseActionMenu(
       final MainMenu mainMenu,
       final PlayerProvider playerProvider,
@@ -102,7 +105,8 @@ public final class ChooseActionMenu extends Menu {
       public void onClickedInMenu(
           final Player player, final Menu menu, final ClickType click) {
 
-        PunishCreatorMenu.showTo(getViewer(),
+        PunishCreatorMenu.showTo(
+            getViewer(),
             PunishBuilder
                 .of(PunishType.BAN)
                 .target(target));
@@ -147,14 +151,16 @@ public final class ChooseActionMenu extends Menu {
       public ItemStack getItem() {
         if (!targetOnline()) {
           return ItemCreator
-              .of(CompMaterial.COMPARATOR,
+              .of(
+                  CompMaterial.COMPARATOR,
                   "&6Settings",
                   PLAYER_OFFLINE_LORE)
               .build()
               .makeMenuTool();
         }
         return ItemCreator
-            .of(CompMaterial.COMPARATOR,
+            .of(
+                CompMaterial.COMPARATOR,
                 "&6Settings",
                 SETTINGS_FOR_PLAYER_LORE)
             .build()
@@ -208,7 +214,6 @@ public final class ChooseActionMenu extends Menu {
   // ----------------------------------------------------------------------------------------------------
   // Overridden methods from menu
   // ----------------------------------------------------------------------------------------------------
-
 
   @Override
   public ItemStack getItemAt(final int slot) {

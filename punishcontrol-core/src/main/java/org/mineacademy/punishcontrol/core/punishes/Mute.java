@@ -19,7 +19,8 @@ public final class Mute extends Punish {
     super(creation, rawData, PunishType.MUTE);
   }
 
-  public static Mute ofRawData(final long creation,
+  public static Mute ofRawData(
+      final long creation,
       @NonNull final Map<String, Object> rawData) {
     return new Mute(creation, rawData);
   }
@@ -42,7 +43,8 @@ public final class Mute extends Punish {
     return Mute.of(parseUUIDSave(target), parseUUIDSave(creator), punishDuration);
   }
 
-  public static Mute of(@NonNull final UUID target, @NonNull final UUID creator,
+  public static Mute of(
+      @NonNull final UUID target, @NonNull final UUID creator,
       final long ms) {
     return new Mute(target, creator, ms);
   }

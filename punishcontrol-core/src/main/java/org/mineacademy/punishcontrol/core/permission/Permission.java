@@ -3,7 +3,6 @@ package org.mineacademy.punishcontrol.core.permission;
 import lombok.*;
 import lombok.experimental.Accessors;
 
-
 @Setter
 @Getter
 @Accessors(fluent = true, chain = true)

@@ -49,7 +49,6 @@ public final class ItemSettings extends AbstractItemSettings {
       .itemType("RED_STAINED_GLASS_PANE")
       .description("Item presententing something disabled");
 
-
   @Inject
   public ItemSettings(
       @NonNull final PluginDataProvider pluginDataProvider,

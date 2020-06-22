@@ -30,7 +30,6 @@ public final class StaffRollbackCommand extends AbstractSimplePunishControlComma
       .build();
   private final StorageProvider storageProvider;
 
-
   @Inject
   public StaffRollbackCommand(
       @NonNull final PlayerProvider playerProvider,
@@ -67,14 +66,21 @@ public final class StaffRollbackCommand extends AbstractSimplePunishControlComma
             .of(args[1]);
 
         //PunishDuration mustn't be empty: If its empty the given string had the wrong format
-        checkBoolean(!punishDuration.isEmpty(),
+        checkBoolean(
+            !punishDuration.isEmpty(),
             "&cInvalid time format! Example: 10days");
 
         final List<Punish> punishmentsToRemove = storageProvider.listPunishes()
             .stream()
-            .filter(punish -> punish.creator().equals(target)).filter(punish -> ((
-                // Time elapsed since creation must be greater than our duration
-                System.currentTimeMillis() - punish.creation())) < punishDuration.toMs())
+            .filter(punish -> punish.creator().equals(target)).filter(punish -> (
+                                                                                    (
+                                                                                        // Time elapsed since creation must be greater than our duration
+                                                                                        System
+                                                                                            .currentTimeMillis()
+                                                                                        - punish
+                                                                                            .creation()))
+                                                                                < punishDuration
+                                                                                    .toMs())
             .collect(Collectors.toList());
 
         if (punishmentsToRemove.size() < 1) {
@@ -94,7 +100,7 @@ public final class StaffRollbackCommand extends AbstractSimplePunishControlComma
         applyQueue.put(confirmCode, punishmentsToRemove);
 
         tell("&7This action would remove " + punishmentsToRemove.size() + " "
-            + "&7punishments");
+             + "&7punishments");
 
         SimpleComponent
             .of("&7Please use")

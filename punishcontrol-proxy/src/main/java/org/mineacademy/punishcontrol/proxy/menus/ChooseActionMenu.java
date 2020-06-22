@@ -42,7 +42,6 @@ public final class ChooseActionMenu extends AbstractMenu implements Listener {
       "&7Menu to select ",
       "&7Action for players"};
 
-
   @NonNls
   @Localizable("Parts.Action_For")
   private static String ACTION_FOR = "Action for";
@@ -77,7 +76,8 @@ public final class ChooseActionMenu extends AbstractMenu implements Listener {
     this.target = target;
     targetName = playerProvider.findNameUnsafe(target);
     ProxyServer.getInstance().getPluginManager()
-        .registerListener(SimplePlugin.getInstance(),
+        .registerListener(
+            SimplePlugin.getInstance(),
             this);
 
     setTitle("§8" + ACTION_FOR + " " + targetName);
@@ -122,7 +122,8 @@ public final class ChooseActionMenu extends AbstractMenu implements Listener {
 
     set(
         Item
-            .of(ItemType.ANVIL,
+            .of(
+                ItemType.ANVIL,
                 "&6Punish",
                 " ",
                 "&7Punishment: " + playerProvider.findNameUnsafe(target))
@@ -132,7 +133,8 @@ public final class ChooseActionMenu extends AbstractMenu implements Listener {
 
     set(
         Item
-            .of(ItemType.CHEST,
+            .of(
+                ItemType.CHEST,
                 "&6Punishments",
                 "",
                 "&7View punishments")
@@ -142,7 +144,8 @@ public final class ChooseActionMenu extends AbstractMenu implements Listener {
 
     if (!targetOnline()) {
       set(Item
-          .of(ItemType.COMPARATOR,
+          .of(
+              ItemType.COMPARATOR,
               "&6Settings",
               " ",
               "&cDisabled:",
@@ -153,7 +156,8 @@ public final class ChooseActionMenu extends AbstractMenu implements Listener {
     } else {
       set(
           Item
-              .of(ItemType.COMPARATOR,
+              .of(
+                  ItemType.COMPARATOR,
                   "&6Settings",
                   " ",
                   "&7Settings for player")
@@ -196,38 +200,42 @@ public final class ChooseActionMenu extends AbstractMenu implements Listener {
   @Override
   public void registerActionHandlers() {
     registerActionHandler("Punish", (punish) -> {
-      PunishCreatorMenu.showTo(getPlayer(),
+      PunishCreatorMenu.showTo(
+          getPlayer(),
           PunishBuilder
               .of(PunishType.BAN)
               .target(target));
       return CallResult.DENY_GRABBING;
     });
 
-    registerActionHandler("ListPunishes", (listPunishes -> {
-      PlayerPunishBrowser.showTo(getPlayer(), target);
-      return CallResult.DENY_GRABBING;
-    }));
+    registerActionHandler("ListPunishes", (
+        listPunishes -> {
+          PlayerPunishBrowser.showTo(getPlayer(), target);
+          return CallResult.DENY_GRABBING;
+        }));
 
-    registerActionHandler("Settings", (settings -> {
-      if (!targetOnline()) {
-        animateTitle(Localization.TARGET_IS_OFFLINE);
-        return CallResult.DENY_GRABBING;
-      }
+    registerActionHandler("Settings", (
+        settings -> {
+          if (!targetOnline()) {
+            animateTitle(Localization.TARGET_IS_OFFLINE);
+            return CallResult.DENY_GRABBING;
+          }
 
-      PlayerSettingsMenu.showTo(getPlayer(), target);
-      return CallResult.DENY_GRABBING;
-    }));
+          PlayerSettingsMenu.showTo(getPlayer(), target);
+          return CallResult.DENY_GRABBING;
+        }));
 
-    registerActionHandler("Kick", (kick -> {
-      if (!targetOnline()) {
-        animateTitle(Localization.TARGET_IS_OFFLINE);
-        return CallResult.DENY_GRABBING;
-      }
+    registerActionHandler("Kick", (
+        kick -> {
+          if (!targetOnline()) {
+            animateTitle(Localization.TARGET_IS_OFFLINE);
+            return CallResult.DENY_GRABBING;
+          }
 
-      InventoryModule.closeAllInventories(getPlayer());
-      KickConversation.create(getPlayer(), this, target, targetName).start();
-      return CallResult.DENY_GRABBING;
-    }));
+          InventoryModule.closeAllInventories(getPlayer());
+          KickConversation.create(getPlayer(), this, target, targetName).start();
+          return CallResult.DENY_GRABBING;
+        }));
   }
 
   private boolean targetOnline() {

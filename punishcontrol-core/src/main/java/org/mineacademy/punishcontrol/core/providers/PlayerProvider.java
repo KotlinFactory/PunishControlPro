@@ -14,7 +14,8 @@ import org.mineacademy.punishcontrol.core.Searcher.SearchResult;
  */
 public interface PlayerProvider {
 
-  void saveData(@NonNull UUID uuid, @NonNull String name,
+  void saveData(
+      @NonNull UUID uuid, @NonNull String name,
       @NonNull final String ip);
 
   /**
@@ -35,7 +36,8 @@ public interface PlayerProvider {
   @Deprecated
   default String findNameUnsafe(@NonNull final UUID uuid) {
     final val result = findName(uuid).orElse(null);
-    Valid.notNull(result,
+    Valid.notNull(
+        result,
         "Couldn't find '" + uuid + "' on Mojang side",
         "Maybe we were banned?",
         "Try restarting our server & join again");
@@ -47,7 +49,8 @@ public interface PlayerProvider {
   @Deprecated
   default UUID findUUIDUnsafe(@NonNull final String name) {
     final val result = findUUID(name).orElse(null);
-    Valid.notNull(result,
+    Valid.notNull(
+        result,
         "Couldn't find '" + name + "' on Mojang side",
         "Maybe we were banned?",
         "Try restarting our server & join again");

@@ -38,9 +38,10 @@ public final class LitebansPunishImporter extends AbstractPunishImporter {
     final Database database = Database.get();
     final List<Punish> out = new ArrayList<>();
 
-    try (final PreparedStatement preparedStatement = database.prepareStatement("SELECT "
-        + "* "
-        + "FROM {bans}")) {
+    try (
+        final PreparedStatement preparedStatement = database.prepareStatement("SELECT "
+                                                                              + "* "
+                                                                              + "FROM {bans}")) {
       try (final ResultSet resultSet = preparedStatement.executeQuery()) {
 
         while (resultSet.next()) {
@@ -68,9 +69,10 @@ public final class LitebansPunishImporter extends AbstractPunishImporter {
           "Exception while fetching bans from LiteBans");
     }
 
-    try (final PreparedStatement preparedStatement = database.prepareStatement("SELECT "
-        + "* "
-        + "FROM {mutes}")) {
+    try (
+        final PreparedStatement preparedStatement = database.prepareStatement("SELECT "
+                                                                              + "* "
+                                                                              + "FROM {mutes}")) {
       try (final ResultSet resultSet = preparedStatement.executeQuery()) {
 
         while (resultSet.next()) {
@@ -98,9 +100,10 @@ public final class LitebansPunishImporter extends AbstractPunishImporter {
           "Exception while fetching mutes from LiteBans");
     }
 
-    try (final PreparedStatement preparedStatement = database.prepareStatement("SELECT "
-        + "* "
-        + "FROM {warnings}")) {
+    try (
+        final PreparedStatement preparedStatement = database.prepareStatement("SELECT "
+                                                                              + "* "
+                                                                              + "FROM {warnings}")) {
       try (final ResultSet resultSet = preparedStatement.executeQuery()) {
 
         while (resultSet.next()) {

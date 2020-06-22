@@ -12,7 +12,6 @@ import org.mineacademy.punishcontrol.core.util.LoadingCache;
 @UtilityClass
 public class UUIDs {
 
-
   private final LoadingCache<UUID, String> STRING_UUID_CACHE = new LoadingCache<UUID, String>(
       30, TimeUnit.MINUTES) {
     @Override

@@ -53,7 +53,8 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
   private static final String CHOOSE_TEMPLATE = "Choose template";
   @NonNls
   private static final String NO_ACCESS = "You don't have access to the template";
-  private static final String[] FROM_TEMPLATE_LORE = {"&7Create an punish",
+  private static final String[] FROM_TEMPLATE_LORE = {
+      "&7Create an punish",
       "&7from an existing",
       "&7template"};
   @NonNls
@@ -86,21 +87,25 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
   private static final String CURRENT = "Current";
   @NonNls
   private static final String PUNISHMENT_IS_ALREADY_SUPER_SILENT = "Punishment is already super-silent!";
-  private static final String[] MAKE_NOT_SUPER_SILENT_LORE = {"",
+  private static final String[] MAKE_NOT_SUPER_SILENT_LORE = {
+      "",
       "&7Click to make",
       "&7the punish",
       "&7not silent"};
-  private static final String[] MAKE_SUPER_SILENT_LORE = {"",
+  private static final String[] MAKE_SUPER_SILENT_LORE = {
+      "",
       "&7Click to make",
       "&7the punish",
       "&7super-silent"};
   private static final String[] MENU_INFORMATION = {"&7Menu to", "&7create punishes"};
   @NonNls
   private static final String REASON = "Reason";
-  private static final String[] CHOOSE_REASON_LORE = {"&7Choose the",
+  private static final String[] CHOOSE_REASON_LORE = {
+      "&7Choose the",
       "&7reason of the",
       "&7punish"};
-  private static final String[] CHOOSE_PLAYER_LORE = {"&7Choose the",
+  private static final String[] CHOOSE_PLAYER_LORE = {
+      "&7Choose the",
       "&7player the",
       "&7punish should be",
       "&7applied to"};
@@ -124,7 +129,6 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
   private PunishBuilder punishBuilder;
   private PunishTemplate punishTemplate;
   private final PunishType punishType = PunishType.BAN;
-
 
   public static void showTo(@NonNull final Player player) {
     DaggerSpigotComponent.create().punishCreatorMenu().displayTo(player);
@@ -192,7 +196,8 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
               : Settings.Advanced
                   .formatDate(
                       System.currentTimeMillis() + punishBuilder().duration().toMs());
-          return ItemCreator.of(CompMaterial.CLOCK,
+          return ItemCreator.of(
+              CompMaterial.CLOCK,
               "&6Duration",
               "&7" + CURRENT + "ly: ",
               "&7" + punishBuilder().duration().toString(),
@@ -204,7 +209,8 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
               .make();
         }
 
-        return ItemCreator.of(CompMaterial.CLOCK,
+        return ItemCreator.of(
+            CompMaterial.CLOCK,
             "&6Duration",
             "&7Choose the",
             "&7duration of the",
@@ -328,7 +334,8 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
           }
 
           if (storageProvider
-              .isPunished(punishBuilder.target(), punishBuilder.punishType()) && !Groups
+                  .isPunished(punishBuilder.target(), punishBuilder.punishType())
+              && !Groups
               .canOverride(getViewer().getUniqueId())) {
             animateTitle("&c" + CAN_T_OVERRIDE_PUNISHES);
             return;
@@ -346,7 +353,8 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
       @Override
       public ItemStack getItem() {
         return ItemCreator
-            .of(ItemSettings.APPLY_ITEM.itemType(),
+            .of(
+                ItemSettings.APPLY_ITEM.itemType(),
                 "&a" + APPLY,
                 "&7" + APPLY_PUNISH)
             .build()
@@ -381,7 +389,8 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
           return ItemCreator
               .ofSkullHash(textureProvider.getSkinTexture(target))
               .name("&6" + CHOOSE_PLAYER)
-              .lores(Arrays.asList("&7Choose different player",
+              .lores(Arrays.asList(
+                  "&7Choose different player",
                   "&7" + CURRENT + ": " + playerProvider.findName(target)
                       .orElse("unknown")))
               .build()
@@ -514,7 +523,8 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
 
     if (slot == CHOOSE_REASON_SLOT) {
       if (punishBuilder().reason() != null) {
-        return ItemCreator.of(ItemSettings.REASON_ITEM.itemType(),
+        return ItemCreator.of(
+            ItemSettings.REASON_ITEM.itemType(),
             "&6" + REASON,
             "&7Choose different reason",
             "&7" + CURRENT + ": " + punishBuilder.reason())
@@ -522,7 +532,8 @@ public final class PunishCreatorMenu extends Menu implements Schedulable {
             .make();
       }
 
-      return ItemCreator.of(ItemSettings.REASON_ITEM.itemType(),
+      return ItemCreator.of(
+          ItemSettings.REASON_ITEM.itemType(),
           "&6" + REASON,
           CHOOSE_REASON_LORE)
           .build()

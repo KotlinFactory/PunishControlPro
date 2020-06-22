@@ -30,7 +30,6 @@ import org.mineacademy.punishcontrol.core.util.PunishControlPermissions;
  */
 public interface PunishControlPluginBootstrap {
 
-
   CoreComponent coreComponent = DaggerCoreComponent.builder().build();
   String PREFIX = "§3Punish§bControl§5+ §7┃ ";
   List<String> KNOWN_LANGUAGES = Arrays.asList(
@@ -204,7 +203,8 @@ public interface PunishControlPluginBootstrap {
       }
 
     // Logging an random message
-    final int index = getRandomNumberInRange(0,
+    final int index = getRandomNumberInRange(
+        0,
         getStartupFinishedMessages().length - 1);
 
     log(getStartupFinishedMessages()[index]);

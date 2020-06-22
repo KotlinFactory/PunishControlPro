@@ -21,7 +21,6 @@ import org.mineacademy.punishcontrol.proxy.conversations.DurationChooseConversat
 @Accessors(fluent = true)
 public abstract class AbstractDurationChooser extends AbstractMenu {
 
-
   private static final int SIZE = 9 * 5;
 
   // ----------------------------------------------------------------------------------------------------
@@ -144,16 +143,18 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
   @Override
   public void registerActionHandlers() {
 
-    registerActionHandler("Clock", (clock -> {
-      DurationChooseConversation.create(getPlayer(), this).start();
-      return CallResult.DENY_GRABBING;
-    }));
+    registerActionHandler("Clock", (
+        clock -> {
+          DurationChooseConversation.create(getPlayer(), this).start();
+          return CallResult.DENY_GRABBING;
+        }));
 
-    registerActionHandler("Apply", (apply -> {
-      confirm();
-      getParent().reDisplay();
-      return CallResult.DENY_GRABBING;
-    }));
+    registerActionHandler("Apply", (
+        apply -> {
+          confirm();
+          getParent().reDisplay();
+          return CallResult.DENY_GRABBING;
+        }));
 
     registerActionHandler("Perma", (perma) -> {
       makePermanent();
@@ -223,7 +224,6 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
     }
     updateClock();
   }
-
 
   private void addOrRemoveYear(final ClickType clickType) {
     if (clickType == de.exceptionflug.mccommons.inventories.api.ClickType.LEFT_CLICK) {

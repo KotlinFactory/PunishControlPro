@@ -2,70 +2,7 @@
 <project xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
   xmlns="http://maven.apache.org/POM/4.0.0"
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <parent>
-    <artifactId>PunishControlPro</artifactId>
-    <groupId>org.mineacademy</groupId>
-    <version>1.0-SNAPSHOT</version>
-  </parent>
-  <modelVersion>4.0.0</modelVersion>
-  <version>1.1.3</version>
   <artifactId>punishcontrol-plugin</artifactId>
-
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <author>kangarko</author>
-    <plugin.name>punishcontrol</plugin.name>
-
-    <!-- Our main-classes-->
-    <proxy.main>
-      org.mineacademy.punishcontrol.proxy.PunishControl
-    </proxy.main>
-    <spigot.main>
-      org.mineacademy.punishcontrol.spigot.PunishControl
-    </spigot.main>
-    <mainClass>${project.groupId}.${plugin.name}.${project.artifactId}</mainClass>
-  </properties>
-
-  <repositories>
-    <repository>
-      <id>jitpack.io</id>
-      <url>https://jitpack.io</url>
-    </repository>
-  </repositories>
-
-  <dependencies>
-    <dependency>
-      <groupId>org.projectlombok</groupId>
-      <artifactId>lombok</artifactId>
-      <version>1.18.10</version>
-      <scope>provided</scope>
-    </dependency>
-
-    <dependency>
-      <groupId>org.mineacademy</groupId>
-      <artifactId>punishcontrol-core</artifactId>
-      <version>1.0.0</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.mineacademy</groupId>
-      <artifactId>punishcontrol-importers</artifactId>
-      <version>1.0.0</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.mineacademy</groupId>
-      <artifactId>punishcontrol-proxy</artifactId>
-      <version>1.0.0</version>
-    </dependency>
-
-    <dependency>
-      <groupId>org.mineacademy</groupId>
-      <artifactId>punishcontrol-spigot</artifactId>
-      <version>1.0.0</version>
-    </dependency>
-  </dependencies>
-
   <build>
     <defaultGoal>clean verify -U</defaultGoal>
     <pluginManagement>
@@ -89,19 +26,8 @@
     </pluginManagement>
     <plugins>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-shade-plugin</artifactId>
-        <version>3.2.1</version>
-        <executions>
-          <execution>
-            <phase>package</phase>
-            <goals>
-              <goal>shade</goal>
-            </goals>
-          </execution>
-        </executions>
         <configuration>
-          <createDependencyReducedPom>false</createDependencyReducedPom>
           <artifactSet>
             <includes>
               <!-- We want our other modules in our final jar-->
@@ -127,57 +53,50 @@
               <include>javax.inject:javax.inject*</include>
             </includes>
           </artifactSet>
+          <createDependencyReducedPom>false</createDependencyReducedPom>
           <relocations>
             <relocation>
               <pattern>de.leonhard.storage</pattern>
-              <shadedPattern>org.mineacademy.lib.storage</shadedPattern>
               <pattern>org.mineacademy.fo</pattern>
-              <shadedPattern>org.mineacademy.${plugin.name}.lib</shadedPattern>
               <pattern>org.mineacademy.bfo</pattern>
-              <shadedPattern>org.mineacademy.${plugin.name}.lib</shadedPattern>
               <pattern>de.exceptionflug.protocolize</pattern>
-              <shadedPattern>org.mineacademy.lib.proto</shadedPattern>
               <pattern>de.exceptionflug.mccommons</pattern>
+              <shadedPattern>org.mineacademy.lib.storage</shadedPattern>
+              <shadedPattern>org.mineacademy.${plugin.name}.lib</shadedPattern>
+              <shadedPattern>org.mineacademy.${plugin.name}.lib</shadedPattern>
+              <shadedPattern>org.mineacademy.lib.proto</shadedPattern>
               <shadedPattern>org.mineacademy.lib.mcc</shadedPattern>
             </relocation>
           </relocations>
         </configuration>
+        <executions>
+          <execution>
+            <goals>
+              <goal>shade</goal>
+            </goals>
+            <phase>package</phase>
+          </execution>
+        </executions>
+        <groupId>org.apache.maven.plugins</groupId>
+        <version>3.2.1</version>
       </plugin>
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-jar-plugin</artifactId>
-        <version>3.1.2</version>
         <configuration>
           <archive>
             <addMavenDescriptor>false</addMavenDescriptor>
             <manifestEntries>
-              <Manifest-Version>${project.version}</Manifest-Version>
               <Built-By>${project.name} Development Team</Built-By>
+              <Manifest-Version>${project.version}</Manifest-Version>
             </manifestEntries>
           </archive>
         </configuration>
+        <groupId>org.apache.maven.plugins</groupId>
+        <version>3.1.2</version>
       </plugin>
 
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.8.1</version>
-        <executions>
-          <execution>
-            <id>compile</id>
-            <phase>compile</phase>
-            <goals>
-              <goal>compile</goal>
-            </goals>
-          </execution>
-          <execution>
-            <id>testCompile</id>
-            <phase>test-compile</phase>
-            <goals>
-              <goal>testCompile</goal>
-            </goals>
-          </execution>
-        </executions>
         <configuration>
           <source>1.8</source>
           <target>1.8</target>
@@ -185,47 +104,65 @@
         </configuration>
         <dependencies>
           <dependency>
-            <groupId>org.codehaus.plexus</groupId>
             <artifactId>plexus-compiler-eclipse</artifactId>
+            <groupId>org.codehaus.plexus</groupId>
             <version>2.8.1</version>
-          </dependency>
-        </dependencies>
-      </plugin>
-
-      <plugin>
-        <groupId>com.github.wvengen</groupId>
-        <artifactId>proguard-maven-plugin</artifactId>
-        <version>2.2.0</version>
-        <dependencies>
-          <dependency>
-            <groupId>net.sf.proguard</groupId>
-            <artifactId>proguard-base</artifactId>
-            <version>6.3.0beta1</version>
           </dependency>
         </dependencies>
         <executions>
           <execution>
-            <phase>package</phase>
             <goals>
-              <goal>proguard</goal>
+              <goal>compile</goal>
             </goals>
+            <id>compile</id>
+            <phase>compile</phase>
+          </execution>
+          <execution>
+            <goals>
+              <goal>testCompile</goal>
+            </goals>
+            <id>testCompile</id>
+            <phase>test-compile</phase>
           </execution>
         </executions>
+        <groupId>org.apache.maven.plugins</groupId>
+        <version>3.8.1</version>
+      </plugin>
+
+      <plugin>
+        <artifactId>proguard-maven-plugin</artifactId>
         <configuration>
           <libs>
             <lib>${java.home}/lib/rt.jar</lib>
             <lib>${java.home}/lib/jce.jar</lib>
           </libs>
         </configuration>
+        <dependencies>
+          <dependency>
+            <artifactId>proguard-base</artifactId>
+            <groupId>net.sf.proguard</groupId>
+            <version>6.3.0beta1</version>
+          </dependency>
+        </dependencies>
+        <executions>
+          <execution>
+            <goals>
+              <goal>proguard</goal>
+            </goals>
+            <phase>package</phase>
+          </execution>
+        </executions>
+        <groupId>com.github.wvengen</groupId>
+        <version>2.2.0</version>
       </plugin>
 
       <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-deploy-plugin</artifactId>
-        <version>3.0.0-M1</version>
         <configuration>
           <skip>true</skip>
         </configuration>
+        <groupId>org.apache.maven.plugins</groupId>
+        <version>3.0.0-M1</version>
       </plugin>
     </plugins>
 
@@ -236,4 +173,67 @@
       </resource>
     </resources>
   </build>
+  <dependencies>
+    <dependency>
+      <artifactId>lombok</artifactId>
+      <groupId>org.projectlombok</groupId>
+      <scope>provided</scope>
+      <version>1.18.10</version>
+    </dependency>
+
+    <dependency>
+      <artifactId>punishcontrol-core</artifactId>
+      <groupId>org.mineacademy</groupId>
+      <version>1.0.0</version>
+    </dependency>
+
+    <dependency>
+      <artifactId>punishcontrol-importers</artifactId>
+      <groupId>org.mineacademy</groupId>
+      <version>1.0.0</version>
+    </dependency>
+
+    <dependency>
+      <artifactId>punishcontrol-proxy</artifactId>
+      <groupId>org.mineacademy</groupId>
+      <version>1.0.0</version>
+    </dependency>
+
+    <dependency>
+      <artifactId>punishcontrol-spigot</artifactId>
+      <groupId>org.mineacademy</groupId>
+      <version>1.0.0</version>
+    </dependency>
+  </dependencies>
+  <modelVersion>4.0.0</modelVersion>
+
+  <parent>
+    <artifactId>PunishControlPro</artifactId>
+    <groupId>org.mineacademy</groupId>
+    <version>1.0-SNAPSHOT</version>
+  </parent>
+
+  <properties>
+    <author>kangarko</author>
+    <mainClass>${project.groupId}.${plugin.name}.${project.artifactId}</mainClass>
+    <plugin.name>punishcontrol</plugin.name>
+
+    <!-- Our main-classes-->
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <proxy.main>
+      org.mineacademy.punishcontrol.proxy.PunishControl
+    </proxy.main>
+    <spigot.main>
+      org.mineacademy.punishcontrol.spigot.PunishControl
+    </spigot.main>
+  </properties>
+
+  <repositories>
+    <repository>
+      <id>jitpack.io</id>
+      <url>https://jitpack.io</url>
+    </repository>
+  </repositories>
+
+  <version>1.2.0</version>
 </project>

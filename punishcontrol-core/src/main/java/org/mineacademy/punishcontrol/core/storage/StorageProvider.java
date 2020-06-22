@@ -57,7 +57,6 @@ public interface StorageProvider {
   // Listing all current punishes/warns/reports
   // ----------------------------------------------------------------------------------------------------
 
-
   default List<Punish> listCurrentPunishes() {
     final List<Punish> result = new ArrayList<>();
 
@@ -90,7 +89,6 @@ public interface StorageProvider {
     return warnStream.filter((mute) -> !mute.isOld())
         .collect(Collectors.toList());
   }
-
 
   default List<Warn> listCurrentWarns() {
     final List<Warn> warns = listWarns();
@@ -133,7 +131,6 @@ public interface StorageProvider {
   // Methods to handle the data of specific players
   // ----------------------------------------------------------------------------------------------------
 
-
   default Optional<Ban> currentBan(@NonNull final UUID uuid) {
 
     for (final Ban ban : listBans(uuid))
@@ -153,7 +150,6 @@ public interface StorageProvider {
     }
     return Optional.empty();
   }
-
 
   default Optional<Mute> currentMute(@NonNull final UUID uuid) {
     for (final Mute mute : listMutes(uuid))

@@ -107,11 +107,13 @@ public abstract class YamlStaticConfig {
   // Primitive getters used in our other methods
   // ----------------------------------------------------------------------------------------------------
 
-  protected static <T> T getOrError(@NonNull final String key,
+  protected static <T> T getOrError(
+      @NonNull final String key,
       @NonNull final Class<T> type) {
     final val raw = get(key);
 
-    Valid.checkBoolean(raw != null,
+    Valid.checkBoolean(
+        raw != null,
         "Your config names '" + getFileName() + "'lacks '" + type.getSimpleName() +
         "' at '" + key + "'");
 
@@ -134,7 +136,6 @@ public abstract class YamlStaticConfig {
     return colorize(getOrError(path, String.class));
   }
 
-
   protected static int getInteger(final String path) {
     return getOrError(path, int.class);
   }
@@ -144,7 +145,8 @@ public abstract class YamlStaticConfig {
   }
 
   protected static Yaml temporaryInstance() {
-    Valid.notNull(TEMPORARY_INSTANCE,
+    Valid.notNull(
+        TEMPORARY_INSTANCE,
         "Temporary instance is null",
         "Make sure to set your temporaryInstance.");
     return TEMPORARY_INSTANCE;
@@ -281,7 +283,8 @@ public abstract class YamlStaticConfig {
       field.setAccessible(true);
 
       if (Modifier.isPublic(field.getModifiers()))
-        Valid.checkBoolean(!field.getType().isPrimitive(),
+        Valid.checkBoolean(
+            !field.getType().isPrimitive(),
             "Field '" + field.getName() + "' in " + clazz
             + " must not be primitive!");
 

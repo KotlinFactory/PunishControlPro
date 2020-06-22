@@ -9,7 +9,8 @@ import org.mineacademy.punishcontrol.core.provider.Providers;
 public interface StorageSettable {
 
   Yaml yaml = LightningBuilder
-      .fromPath("settings.yml",
+      .fromPath(
+          "settings.yml",
           Providers.pluginDataProvider().getDataFolder().getAbsolutePath())
       .addInputStreamFromResource("settings.yml")
       .setConfigSettings(ConfigSettings.PRESERVE_COMMENTS)

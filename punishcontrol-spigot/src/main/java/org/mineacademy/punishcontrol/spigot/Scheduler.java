@@ -38,13 +38,15 @@ public class Scheduler {
         .runTaskLater(SimplePlugin.getInstance(), runnable, delay);
   }
 
-  public BukkitTask runTaskTimer(final long delay, final long period,
+  public BukkitTask runTaskTimer(
+      final long delay, final long period,
       final Runnable runnable) {
     return Bukkit.getScheduler()
         .runTaskTimer(SimplePlugin.getInstance(), runnable, delay, period);
   }
 
-  public BukkitTask runTaskTimerAsync(final int delay, final int period,
+  public BukkitTask runTaskTimerAsync(
+      final int delay, final int period,
       final Runnable runnable) {
     return Bukkit.getScheduler()
         .runTaskTimerAsynchronously(SimplePlugin.getInstance(), runnable,

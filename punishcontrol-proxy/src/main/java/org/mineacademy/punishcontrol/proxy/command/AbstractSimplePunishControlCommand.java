@@ -71,7 +71,6 @@ public abstract class AbstractSimplePunishControlCommand
     return false;
   }
 
-
   protected UUID findTarget() {
     return findTarget(Arrays.asList(args));
   }

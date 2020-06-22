@@ -27,7 +27,6 @@ public abstract class AbstractDurationChooser
     extends Menu
     implements Schedulable {
 
-
   public static final int SIZE = 9 * 5;
   public static final int EXPIRATION_CLOCK_SLOT = 26;
   public static final int YEAR_SLOT = 0;
@@ -39,7 +38,8 @@ public abstract class AbstractDurationChooser
   public static final int MAKE_PERMA_SLOT = 8;
   @NonNls
   private static final String CHOOSE_DURATION = "Choose duration";
-  private static final String[] DURATION_LORE = {"&7Left-Click to add",
+  private static final String[] DURATION_LORE = {
+      "&7Left-Click to add",
       "&7Right-Click to remove"};
   @NonNls
   private static final String MAKE_PERMANENT = "Make permanent";
@@ -59,7 +59,6 @@ public abstract class AbstractDurationChooser
 
   @Setter
   protected long ms;
-
 
   public AbstractDurationChooser(@NonNull final Menu parent) {
     this(parent, 0);
@@ -186,7 +185,8 @@ public abstract class AbstractDurationChooser
       @Override
       public ItemStack getItem() {
         return ItemCreator
-            .of(CompMaterial.EMERALD,
+            .of(
+                CompMaterial.EMERALD,
                 "&a" + CONFIRM,
                 "&7" + CONFIRM_THE_DURATION)
             .build()
@@ -195,13 +195,11 @@ public abstract class AbstractDurationChooser
     };
   }
 
-
   protected abstract void confirm();
 
   // ----------------------------------------------------------------------------------------------------
   // Overridden methods from Menu
   // ----------------------------------------------------------------------------------------------------
-
 
   @Override
   protected void onDisplay(final InventoryDrawer drawer) {
@@ -242,7 +240,8 @@ public abstract class AbstractDurationChooser
 
   //Manually handle the clicks since custom skins are not working probably
   @Override
-  protected void onMenuClick(final Player player, final int slot,
+  protected void onMenuClick(
+      final Player player, final int slot,
       final InventoryAction action, final ClickType click,
       final ItemStack cursor, final ItemStack clicked,
       final boolean cancelled) {
@@ -300,7 +299,6 @@ public abstract class AbstractDurationChooser
     }
   }
 
-
   public void updateClock() {
     laterAsync(() -> {
       final String expiration = isPermanent()
@@ -309,7 +307,8 @@ public abstract class AbstractDurationChooser
               .formatDate(System.currentTimeMillis() + ms);
 
       expirationClock = ItemCreator
-          .of(CompMaterial.CLOCK,
+          .of(
+              CompMaterial.CLOCK,
               "&6Expiration",
               "&7This punish ",
               "&7will expire on",
