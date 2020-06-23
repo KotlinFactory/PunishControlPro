@@ -48,6 +48,11 @@ public final class PunishReasonConversation extends SimpleConversation {
     protected @Nullable Prompt acceptValidatedInput(
         @NotNull final ConversationContext conversationContext,
         @NotNull final String s) {
+      if (s.contains("--")) {
+        tell("Reason must not contain --");
+        return null;
+      }
+      
       menu.setReason(s);
       menu.displayTo(getPlayer(conversationContext), true);
       return null;

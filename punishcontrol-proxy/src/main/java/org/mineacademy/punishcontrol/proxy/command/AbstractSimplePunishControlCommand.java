@@ -53,21 +53,17 @@ public abstract class AbstractSimplePunishControlCommand
   // ----------------------------------------------------------------------------------------------------
 
   protected boolean checkSilent() {
-    for (final String arg : args) {
-      if (arg.equals("-s") || arg.equals("-silent")) {
+    for (final String arg : args)
+      if (arg.equals("-s") || arg.equals("-silent"))
         return true;
-      }
-    }
     return false;
   }
 
   protected boolean checkSuperSilent() {
-    for (final String arg : args) {
-      // TODO Rework
-      if (arg.equals("-S") || arg.equals("-Super-Silent")) {
+    // TODO Rework
+    for (final String arg : args)
+      if (arg.equals("-S") || arg.equals("-Super-Silent"))
         return true;
-      }
-    }
     return false;
   }
 
@@ -83,21 +79,19 @@ public abstract class AbstractSimplePunishControlCommand
 
   protected UUID findTarget(final String name) {
     //UUID!
-    if (name.length() == 36) {
+    if (name.length() == 36)
       try {
         return UUID.fromString(name);
       } catch (final Throwable throwable) {
         returnTell("UUID-String is malformatted!");
       }
-    }
 
     final val optionalTarget = Providers.playerProvider().findUUID(name);
 //    checkNotNull(target, UNKNOWN_PLAYER);
     //
     checkBoolean(optionalTarget.isPresent(), UNKNOWN_PLAYER);
-    if (!optionalTarget.isPresent()) {
+    if (!optionalTarget.isPresent())
       throw new Error();
-    }
     return optionalTarget.get();
   }
 }

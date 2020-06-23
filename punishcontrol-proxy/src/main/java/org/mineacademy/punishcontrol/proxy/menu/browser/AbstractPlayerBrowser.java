@@ -30,18 +30,20 @@ public abstract class AbstractPlayerBrowser extends AbstractSearchableBrowser<UU
   // Localization
 
   @Localizable("Menu.Proxy.PlayerBrowser.Information")
-  private static String[] PLAYER_BROWSER_INFORMATION = {
+  private static final String[] PLAYER_BROWSER_INFORMATION = {
       "&7Menu to select",
       "&7an player"
   };
   @Localizable("Menu.Proxy.PlayerBrowser.Compass_Lore")
-  private static String[] COMPASS_LORE = {"&7Search for a player"};
+  private static final String[] COMPASS_LORE = {"&7Search for a player"};
 
   @Localizable("Menu.Proxy.Results_Found")
-  private static Replacer results = Replacer
+  private static final Replacer results = Replacer
       .of("Found {results} result(s)");
 
+  // ----------------------------------------------------------------------------------------------------
   // Fields & Constructor's
+  // ----------------------------------------------------------------------------------------------------
 
   protected final PlayerProvider playerProvider;
   protected final TextureProvider textureProvider;
@@ -114,11 +116,10 @@ public abstract class AbstractPlayerBrowser extends AbstractSearchableBrowser<UU
 
     final Item item = Item.of(hash).name("§3" + name);
 
-    if (lore(uuid) == null) {
+    if (lore(uuid) == null)
       item.lore("&7Choose action");
-    } else {
+    else
       item.lore(lore(uuid));
-    }
 
     return ItemUtils.addGlow(item.stack());
   }
@@ -128,7 +129,8 @@ public abstract class AbstractPlayerBrowser extends AbstractSearchableBrowser<UU
     return PLAYER_BROWSER_INFORMATION;
   }
 
-  public void redisplay(@NonNull Collection<UUID> newContent) {
+  @Override
+  public void redisplay(@NonNull final Collection<UUID> newContent) {
     async(() -> {
       val menu = new AbstractPlayerBrowser(
           playerProvider,
@@ -137,12 +139,12 @@ public abstract class AbstractPlayerBrowser extends AbstractSearchableBrowser<UU
           newContent) {
 
         @Override
-        protected void onClick(ClickType clickType, UUID uuid) {
+        protected void onClick(final ClickType clickType, final UUID uuid) {
           AbstractPlayerBrowser.this.onClick(clickType, uuid);
         }
 
         @Override
-        public Collection<UUID> searchByPartialString(String partial) {
+        public Collection<UUID> searchByPartialString(final String partial) {
           return AbstractPlayerBrowser.this.searchByPartialString(partial);
         }
       };
@@ -156,7 +158,7 @@ public abstract class AbstractPlayerBrowser extends AbstractSearchableBrowser<UU
   }
 
   @Override
-  public Collection<UUID> searchByPartialString(String partial) {
+  public Collection<UUID> searchByPartialString(final String partial) {
     return playerProvider
         .search(partial)
         .stream()

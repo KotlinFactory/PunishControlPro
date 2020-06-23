@@ -44,9 +44,8 @@ public final class PunishControl
     Providers.pluginDataProvider(SpigotPluginDataProvider.create());
     Providers.exceptionHandler(SpigotExceptionHandler.create());
 
-    if (getDataFolder().exists()) {
+    if (getDataFolder().exists())
       return;
-    }
 
     Notifications.register(
         Notification
@@ -93,7 +92,7 @@ public final class PunishControl
         Providers.pluginManager());
 
     // After startup
-    if (SpigotConfig.bungee && Advanced.ENCOURAGE_BUNGEE_USAGE) {
+    if (SpigotConfig.bungee && Advanced.ENCOURAGE_BUNGEE_USAGE)
       Notifications.register(
           Notification
               .of("&6Use on Bungee")
@@ -108,7 +107,6 @@ public final class PunishControl
               )
               .itemType(CompMaterial.GREEN_STAINED_GLASS)
       );
-    }
   }
 
   // ----------------------------------------------------------------------------------------------------
@@ -173,9 +171,8 @@ public final class PunishControl
     final val result = new ArrayList<Permission>();
     for (final SimpleCommand command : SimpleCommand.getRegisteredCommands()) {
 
-      if (command.getPermission() == null) {
+      if (command.getPermission() == null)
         continue;
-      }
 
       result.add(Permission.of(command.getPermission(), command.getDescription()));
     }

@@ -57,6 +57,11 @@ public final class TemplateReasonConversation extends SimpleConversation {
     @Override
     protected @Nullable SimplePrompt acceptValidatedInput(@NotNull final String input) {
 
+      if (input.contains("--")) {
+        tell("Reason must not contain --");
+        return null;
+      }
+
       Scheduler.runAsync(() -> {
         menu.punishTemplate().reason(input);
         menu.reDisplay();

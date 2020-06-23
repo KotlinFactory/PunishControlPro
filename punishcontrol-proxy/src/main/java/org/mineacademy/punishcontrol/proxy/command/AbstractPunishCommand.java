@@ -208,6 +208,9 @@ public abstract class AbstractPunishCommand
             reason.append(finalArgs.get(i)).append(" ");
           }
 
+          if (reason.toString().contains("--"))
+            returnTell("Reason must not contain --");
+
           final Punish punish =
               PunishBuilder.of(punishType)
                   .target(target)

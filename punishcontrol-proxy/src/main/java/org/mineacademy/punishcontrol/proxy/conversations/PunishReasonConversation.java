@@ -50,11 +50,15 @@ public final class PunishReasonConversation extends SimpleConversation {
 
     @Override
     public String getPrompt() {
-      return "&7Please choose a punish reason";
+      return "&7Please choose a punishment reason";
     }
 
     @Override
     public @Nullable SimplePrompt acceptValidatedInput(@NotNull final String s) {
+      if (s.contains("--")) {
+        tell("Reason must not contain --");
+        return null;
+      }
       menu.setReason(s);
       menu.reDisplay();
       return null;

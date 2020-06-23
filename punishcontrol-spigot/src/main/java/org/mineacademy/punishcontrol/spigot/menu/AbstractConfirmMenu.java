@@ -7,14 +7,19 @@ import org.mineacademy.fo.Common;
 import org.mineacademy.fo.debug.Debugger;
 import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.fo.menu.model.ItemCreator;
+import org.mineacademy.punishcontrol.core.injector.annotations.Localizable;
 import org.mineacademy.punishcontrol.core.settings.ItemSettings;
 import org.mineacademy.punishcontrol.spigot.util.Schedulable;
 
+@Localizable
 public abstract class AbstractConfirmMenu extends Menu implements Schedulable {
 
   @NonNls
-  private static final String CONFIRM = "Confirm";
-  private static final String[] MENU_INFORMATION = {"&7Apply action"};
+  @Localizable("Parts.Confirm")
+  private static String CONFIRM = "Confirm";
+
+  @Localizable("Menu.Proxy.ConfirmMenu.ApplyAction.Lore")
+  private static String[] MENU_INFORMATION = {"&7Apply action"};
 
   public AbstractConfirmMenu() {
     setSize(9);

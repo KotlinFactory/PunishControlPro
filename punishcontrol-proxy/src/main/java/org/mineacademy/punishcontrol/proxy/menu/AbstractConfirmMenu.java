@@ -13,9 +13,9 @@ import org.mineacademy.punishcontrol.core.settings.ItemSettings;
 public abstract class AbstractConfirmMenu extends AbstractMenu {
 
   @Localizable(value = "Parts.Confirm")
-  private static String CONFIRM = "Confirm";
+  private static final String CONFIRM = "Confirm";
   @Localizable(value = "Parts.Break")
-  private static String BREAKUP = "Breakup";
+  private static final String BREAKUP = "Breakup";
 
 //  public AbstractConfirmMenu() {
 //    super("Confirm", 9);
@@ -52,9 +52,7 @@ public abstract class AbstractConfirmMenu extends AbstractMenu {
   public void registerActionHandlers() {
     registerActionHandler("Break-Up", (
         breakUp -> {
-
           showParent();
-
           return CallResult.DENY_GRABBING;
         }));
 
@@ -76,13 +74,11 @@ public abstract class AbstractConfirmMenu extends AbstractMenu {
   public abstract void onConfirm();
 
   protected void showParent() {
-    if (getParent() == null) {
+    if (getParent() == null)
       return;
-    }
 
-    if (getPlayer() == null) {
+    if (getPlayer() == null)
       return;
-    }
 
     getParent().reDisplay();
   }
@@ -96,5 +92,4 @@ public abstract class AbstractConfirmMenu extends AbstractMenu {
   public void reDisplay() {
 
   }
-
 }

@@ -84,72 +84,62 @@ public abstract class Punish {
    * @param rawData Map to validate
    */
   private static void validateRaWData(final Map<String, Object> rawData) {
-    if (!(rawData.get("target") instanceof String)) {
+    if (!(rawData.get("target") instanceof String))
       Valid.error(
           "PunishRaw-Data is missing an String named 'target'",
           "Have you altered data?",
           "Data: '" + rawData.toString() + "'");
-    }
 
-    if (!(rawData.get("creator") instanceof String)) {
+    if (!(rawData.get("creator") instanceof String))
       Valid.error(
           "PunishRaw-Data is missing an String named 'creator'",
           "Have you altered data?",
           "Data: '" + rawData.toString() + "'");
-    }
 
-    if (!(rawData.get("reason") instanceof String)) {
+    if (!(rawData.get("reason") instanceof String))
       Valid.error(
           "PunishRaw-Data is missing an String named 'reason'",
           "Have you altered data?",
           "Data: '" + rawData.toString() + "'");
-    }
 
-    if (!(rawData.get("ip") instanceof String)) {
+    if (!(rawData.get("ip") instanceof String))
       Valid.error(
           "PunishRaw-Data is missing an String named 'ip'",
           "Have you altered data?",
           "Data: '" + rawData.toString() + "'");
-    }
 
-    if (!(rawData.containsKey("removed"))) {
+    if (!(rawData.containsKey("removed")))
       Valid.error(
           "PunishRaw-Data is missing an Boolean named 'removed'",
           "Have you altered data?",
           "Data: '" + rawData.toString() + "'");
-    }
 
-    if (!(rawData.containsKey("duration"))) {
+    if (!(rawData.containsKey("duration")))
       Valid.error(
           "PunishRaw-Data is missing an long named 'duration'",
           "Have you altered data?",
           "Data: '" + rawData.toString() + "'");
-    }
   }
 
   public final boolean isOld() {
-    if (removed()) {
+    if (removed())
       return true;
-    }
 
-    if (punishDuration.isPermanent()) {
+    if (punishDuration.isPermanent())
       return false;
-    }
 
     return getEndTime() < System.currentTimeMillis();
   }
 
   public final long getEndTime() {
-    if (punishDuration.isPermanent()) {
+    if (punishDuration.isPermanent())
       return -1;
-    }
     return creation + punishDuration.toMs();
   }
 
   public final Optional<String> ip() {
-    if ("unknown".equalsIgnoreCase(ip)) {
+    if ("unknown".equalsIgnoreCase(ip))
       return Optional.empty();
-    }
     return Optional.ofNullable(ip);
   }
 
@@ -183,13 +173,16 @@ public abstract class Punish {
       return;
     }
 
-    if (reason.isEmpty()) {
+    if (reason.isEmpty())
       reason = "unknown";
-    }
 
     Valid.checkBoolean(
         PLAYER_PROVIDER.punishable(target),
         "target is not punishable");
+
+    Valid.checkBoolean(
+        !reason.contains("--"),
+        "Reason contains --");
 
     try {
       STORAGE_PROVIDER.savePunish(this);
@@ -209,21 +202,19 @@ public abstract class Punish {
           creator, "&cException while creating a punishment!",
           "&7Please check your console.");
 
-      if (punishType().shouldWarn()) {
+      if (punishType().shouldWarn())
         PLAYER_PROVIDER.sendIfOnline(
             target,
             Warn.messageType,
             "&eYou have been warned", "&7Reason: " + reason());
-      }
 
       throwable.printStackTrace();
     }
   }
 
   protected static UUID parseUUIDSave(@NonNull final String uuidString) {
-    if (uuidString.equalsIgnoreCase("CONSOLE")) {
+    if (uuidString.equalsIgnoreCase("CONSOLE"))
       return FoConstants.CONSOLE;
-    }
     return UUID.fromString(uuidString);
   }
 }

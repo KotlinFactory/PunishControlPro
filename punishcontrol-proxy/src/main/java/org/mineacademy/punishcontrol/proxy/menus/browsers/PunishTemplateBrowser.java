@@ -16,19 +16,23 @@ import org.mineacademy.punishcontrol.proxy.conversations.AddTemplateConversation
 import org.mineacademy.punishcontrol.proxy.menu.browser.AbstractTemplateBrowser;
 
 @Localizable
-public class PunishTemplateBrowser extends AbstractTemplateBrowser {
+public class
+PunishTemplateBrowser extends AbstractTemplateBrowser {
 
   @NonNls
   @Localizable("Menu.Template.Add.Name")
-  private static String ADD_TEMPLATE = "Add template";
+  private static final String ADD_TEMPLATE = "Add template";
   @Localizable("Menu.Template.Add.Lore")
-  private static String[] ADD_LORE = {"&7Click here to", "&7Add custom templates"};
+  private static final String[] ADD_LORE = {"&7Click here to", "&7Add custom templates"};
   @Localizable("Menu.Templates.Information")
-  private static String[] MENU_INFORMATION = {
+  private static final String[] MENU_INFORMATION = {
       "&7Menu to view templates",
       "&7You can edit",
       "&7the templates, too"
   };
+
+  @Localizable("Parts.Punish_Templates")
+  @NonNls private static final String PUNISH_TEMPLATES = "PunishTemplates";
 
   public static void showTo(@NonNull final ProxiedPlayer player) {
     Scheduler.runAsync(() -> {
@@ -41,7 +45,7 @@ public class PunishTemplateBrowser extends AbstractTemplateBrowser {
   @Inject
   public PunishTemplateBrowser(final SettingsBrowser settingsBrowser) {
     super(settingsBrowser);
-    setTitle("&8PunishTemplates");
+    setTitle("&8" + PUNISH_TEMPLATES);
   }
 
   // ----------------------------------------------------------------------------------------------------
@@ -74,7 +78,6 @@ public class PunishTemplateBrowser extends AbstractTemplateBrowser {
   public void registerActionHandlers() {
     registerActionHandler("Add", (
         add -> {
-
           InventoryModule.closeAllInventories(getPlayer());
           AddTemplateConversation.create(getPlayer()).start();
           return CallResult.DENY_GRABBING;

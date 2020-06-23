@@ -1,6 +1,5 @@
 package org.mineacademy.punishcontrol.proxy;
 
-import de.exceptionflug.mccommons.commands.proxy.Commands;
 import de.exceptionflug.protocolize.items.ItemType;
 import de.leonhard.storage.LightningBuilder;
 import de.leonhard.storage.internal.settings.ConfigSettings;
@@ -104,19 +103,19 @@ public final class PunishControl
     if (Advanced.ENABLE_BACKUPS)
       registerCommand(BackupCommand.create());
 
-    Commands.registerCommand(proxyComponent.commandKick());
-    Commands.registerCommand(proxyComponent.commandBan());
-    Commands.registerCommand(proxyComponent.commandMute());
-    Commands.registerCommand(proxyComponent.commandWarn());
+    registerCommand(proxyComponent.commandKick());
+    registerCommand(proxyComponent.commandBan());
+    registerCommand(proxyComponent.commandMute());
+    registerCommand(proxyComponent.commandWarn());
 
-    Commands.registerCommand(proxyComponent.commandUnBan());
-    Commands.registerCommand(proxyComponent.commandUnMute());
-    Commands.registerCommand(proxyComponent.commandUnWarn());
-    Commands.registerCommand(proxyComponent.commandPlayerInfo());
-    Commands.registerCommand(proxyComponent.searchCommand());
-    Commands.registerCommand(proxyComponent.chooseActionCommand());
-    Commands.registerCommand(proxyComponent.staffHistoryCommand());
-    Commands.registerCommand(proxyComponent.staffRollbackCommand());
+    registerCommand(proxyComponent.commandUnBan());
+    registerCommand(proxyComponent.commandUnMute());
+    registerCommand(proxyComponent.commandUnWarn());
+    registerCommand(proxyComponent.commandPlayerInfo());
+    registerCommand(proxyComponent.searchCommand());
+    registerCommand(proxyComponent.chooseActionCommand());
+    registerCommand(proxyComponent.staffHistoryCommand());
+    registerCommand(proxyComponent.staffRollbackCommand());
   }
 
   @Override

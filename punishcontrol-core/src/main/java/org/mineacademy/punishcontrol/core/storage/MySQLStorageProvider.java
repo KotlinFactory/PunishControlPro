@@ -27,9 +27,14 @@ public final class MySQLStorageProvider
   //
 
   private static final String INSERT_QUERY =
-      "INSERT INTO {table} (Type, Target, Creator, Reason, IP, Duration, Creation, Removed) VALUES('{type}', '{target}', '{creator}', '{reason}', '{ip}', {duration}, {creation}, {removed})";
+      "INSERT INTO {table} (type, target, targetLastName, creator, creatorLastName, reason, lastIp, duration, creation, removed)"
+      + " VALUES('{type}', '{target}', '{targetLastName}', '{creator}', '{creatorLastName}', '{reason}', '{lastIp}, {duration}', {creation}, {removed})";
   private final ExceptionHandler exceptionHandler;
   private boolean connected;
+
+  /*
+  `id`, `type`, `target`, `targetLastName`, `creator`, `creatorLastName`, `reason`, `lastIp`, `duration`, `creation`, `removed`
+   */
 
   // We need the mysql config here
 
@@ -80,16 +85,33 @@ public final class MySQLStorageProvider
 
   @Override
   protected void onConnected() {
+    update("CREATE TABLE IF NOT EXISTS `punishment` (\n"
+           + "  `id` int(11) NOT NULL,\n"
+           + "  `type` enum('BAN','MUTE','WARN','KICK') NOT NULL,\n"
+           + "  `target` varchar(36) NOT NULL,\n"
+           + "  `targetLastName` varchar(40) NOT NULL,\n"
+           + "  `creator` varchar(36) NOT NULL,\n"
+           + "  `creatorLastName` varchar(40) NOT NULL,\n"
+           + "  `reason` varchar(255) NOT NULL,\n"
+           + "  `lastIp` varchar(45) NOT NULL,\n"
+           + "  `duration` bigint(20) NOT NULL,\n"
+           + "  `creation` timestamp NULL DEFAULT NULL,\n"
+           + "  `removed` tinyint(1) DEFAULT NULL\n"
+           + ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;\n");
+
+    update("ALTER TABLE `punishment`\n"
+           + "  ADD PRIMARY KEY (`id`),\n"
+           + "  ADD KEY `target` (`target`),\n"
+           + "  ADD KEY `creator` (`creator`),\n"
+           + "  ADD KEY `type` (`type`),\n"
+           + "  ADD KEY `targetLastName` (`targetLastName`),\n"
+           + "  ADD KEY `creatorLastName` (`creatorLastName`),\n"
+           + "  ADD KEY `duration` (`duration`),\n"
+           + "  ADD KEY `lastIp` (`lastIp`),\n"
+           + "  ADD KEY `creation` (`creation`)");
+
     update(
-        "CREATE TABLE IF NOT EXISTS Punishes("
-        + "Type varchar(64), "
-        + "Target varchar(64), "
-        + "Creator varchar(64), "
-        + "Reason varchar(64), "
-        + "IP varchar(64), "
-        + "Duration bigint, "
-        + "Creation bigint, "
-        + "Removed boolean, PRIMARY KEY (Creation))");
+        "ALTER TABLE `punishment` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 3; COMMIT");
 
     connected = true;
   }
@@ -136,15 +158,13 @@ public final class MySQLStorageProvider
     final List<Ban> result = new ArrayList<>();
     try (
         final ResultSet resultSet = query(
-            "SELECT * FROM Punishes WHERE Type='BAN'")) {
+            "SELECT * FROM punishment WHERE Type='BAN'")) {
       // No bans found
-      if (resultSet == null) {
+      if (resultSet == null)
         return result;
-      }
 
-      while (resultSet.next()) {
+      while (resultSet.next())
         result.add(banFromResultSet(resultSet));
-      }
     } catch (final SQLException ex) {
       handleMySQLException(ex, "ListBans");
     }
@@ -156,15 +176,13 @@ public final class MySQLStorageProvider
     final List<Mute> result = new ArrayList<>();
     try (
         final ResultSet resultSet = query(
-            "SELECT * FROM Punishes WHERE Type='MUTE'")) {
+            "SELECT * FROM punishment WHERE Type='MUTE'")) {
       // No bans found
-      if (resultSet == null) {
+      if (resultSet == null)
         return result;
-      }
 
-      while (resultSet.next()) {
+      while (resultSet.next())
         result.add(muteFromResultSet(resultSet));
-      }
     } catch (final SQLException ex) {
       handleMySQLException(ex, "ListMutes");
     }
@@ -176,15 +194,13 @@ public final class MySQLStorageProvider
     final List<Warn> result = new ArrayList<>();
     try (
         final ResultSet resultSet = query(
-            "SELECT * FROM Punishes WHERE TYPE='WARN'")) {
+            "SELECT * FROM punishment WHERE TYPE='WARN'")) {
       // No bans found
-      if (resultSet == null) {
+      if (resultSet == null)
         return result;
-      }
 
-      while (resultSet.next()) {
+      while (resultSet.next())
         result.add(warnFromResultSet(resultSet));
-      }
     } catch (final SQLException ex) {
       handleMySQLException(ex, "ListWarns");
     }
@@ -196,16 +212,14 @@ public final class MySQLStorageProvider
     final List<Ban> result = new ArrayList<>();
     try (
         final ResultSet resultSet =
-            query("SELECT * FROM Punishes WHERE Type='BAN' AND Target='" + uuid
+            query("SELECT * FROM punishment WHERE Type='BAN' AND Target='" + uuid
                   + "'")) {
       // No bans found
-      if (resultSet == null) {
+      if (resultSet == null)
         return result;
-      }
 
-      while (resultSet.next()) {
+      while (resultSet.next())
         result.add(banFromResultSet(resultSet));
-      }
     } catch (final SQLException ex) {
       handleMySQLException(ex, "ListBans-UUID");
     }
@@ -217,16 +231,14 @@ public final class MySQLStorageProvider
     final List<Mute> result = new ArrayList<>();
     try (
         final ResultSet resultSet =
-            query("SELECT * FROM Punishes WHERE Type='MUTE' AND Target='" + uuid
+            query("SELECT * FROM punishment WHERE Type='MUTE' AND Target='" + uuid
                   + "'")) {
       // No bans found
-      if (resultSet == null) {
+      if (resultSet == null)
         return result;
-      }
 
-      while (resultSet.next()) {
+      while (resultSet.next())
         result.add(muteFromResultSet(resultSet));
-      }
     } catch (final SQLException ex) {
       handleMySQLException(ex, "ListMutes-UUID");
     }
@@ -238,15 +250,13 @@ public final class MySQLStorageProvider
     final List<Warn> result = new ArrayList<>();
     try (
         final ResultSet resultSet =
-            query("SELECT * FROM Punishes WHERE Type='WARN' AND Target='" + uuid
+            query("SELECT * FROM punishment WHERE Type='WARN' AND Target='" + uuid
                   + "'")) {
       // No bans found
-      if (resultSet == null) {
+      if (resultSet == null)
         return result;
-      }
-      while (resultSet.next()) {
+      while (resultSet.next())
         result.add(warnFromResultSet(resultSet));
-      }
 
     } catch (final SQLException ex) {
       handleMySQLException(ex, "ListWarns-UUID");

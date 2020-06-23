@@ -45,6 +45,11 @@ public class TemplateReasonConversation extends SimpleConversation {
         @NotNull final ConversationContext context,
         @NotNull final String input) {
 
+      if (input.contains("--")) {
+        tell("Reason must not contain --");
+        return null;
+      }
+
       Scheduler.runAsync(() -> {
         menu.punishTemplate().reason(input);
         menu.displayTo(getPlayer(context));

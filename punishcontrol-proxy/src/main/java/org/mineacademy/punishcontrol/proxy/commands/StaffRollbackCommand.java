@@ -44,9 +44,8 @@ public final class StaffRollbackCommand extends AbstractSimplePunishControlComma
   @Override
   protected void onCommand() {
 
-    if (args.length < 1) {
+    if (args.length < 1)
       returnTell("&c" + getUsage());
-    }
 
     async(() -> {
 
@@ -72,15 +71,16 @@ public final class StaffRollbackCommand extends AbstractSimplePunishControlComma
 
         final List<Punish> punishmentsToRemove = storageProvider.listPunishes()
             .stream()
-            .filter(punish -> punish.creator().equals(target)).filter(punish -> (
-                                                                                    (
-                                                                                        // Time elapsed since creation must be greater than our duration
-                                                                                        System
-                                                                                            .currentTimeMillis()
-                                                                                        - punish
-                                                                                            .creation()))
-                                                                                < punishDuration
-                                                                                    .toMs())
+            .filter(punish -> punish.creator().equals(target)).filter(
+                punish -> (
+                              (
+                                  // Time elapsed since creation must be greater than our duration
+                                  System
+                                      .currentTimeMillis()
+                                  - punish
+                                      .creation()))
+                          < punishDuration
+                              .toMs())
             .collect(Collectors.toList());
 
         if (punishmentsToRemove.size() < 1) {
@@ -92,10 +92,10 @@ public final class StaffRollbackCommand extends AbstractSimplePunishControlComma
 
         // Number to type in to confirm
         int confirmCode;
-        do {
+        // Code mustn't be known
+        do
           confirmCode = nextBetween(1000, 9999);
-          // Code mustn't be known
-        } while (applyQueue.containsKey(confirmCode));
+        while (applyQueue.containsKey(confirmCode));
 
         applyQueue.put(confirmCode, punishmentsToRemove);
 
@@ -131,9 +131,8 @@ public final class StaffRollbackCommand extends AbstractSimplePunishControlComma
           return;
         }
 
-        for (Punish punish : raw) {
+        for (Punish punish : raw)
           storageProvider.removePunish(punish);
-        }
 
         applyQueue.remove(number);
         tell("&aSuccessfully removed &6" + raw.size() + " &apunishments");
@@ -169,17 +168,14 @@ public final class StaffRollbackCommand extends AbstractSimplePunishControlComma
   }
 
   private static boolean isNumeric(String str) {
-    if (str == null) {
+    if (str == null)
       return false;
-    }
 
     int sz = str.length();
 
-    for (int i = 0; i < sz; i++) {
-      if (!Character.isDigit(str.charAt(i))) {
+    for (int i = 0; i < sz; i++)
+      if (!Character.isDigit(str.charAt(i)))
         return false;
-      }
-    }
 
     return true;
   }

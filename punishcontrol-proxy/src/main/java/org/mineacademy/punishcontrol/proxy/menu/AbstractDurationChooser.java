@@ -7,6 +7,7 @@ import java.util.concurrent.TimeUnit;
 import lombok.NonNull;
 import lombok.Setter;
 import lombok.experimental.Accessors;
+import org.jetbrains.annotations.NonNls;
 import org.mineacademy.burst.item.Item;
 import org.mineacademy.burst.menu.AbstractMenu;
 import org.mineacademy.burst.menu.BurstMenu;
@@ -37,7 +38,16 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
   // Localization
   // ----------------------------------------------------------------------------------------------------
   @Localizable(value = "Menu.Choose_Duration")
-  private static String CHOOSE_DURATION = "Choose duration";
+  private static final String CHOOSE_DURATION = "Choose duration";
+  @NonNls private static final String EXPIRATION = "Expiration";
+  private static final String[] RIGHT_LEFT_CLICK_LORE = {
+      "&7Left click to add",
+      "&7Right click to remove"};
+
+  // ----------------------------------------------------------------------------------------------------
+  // Fields & Constructors
+  // ----------------------------------------------------------------------------------------------------
+
   @Setter
   protected long ms;
 
@@ -56,12 +66,10 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
     updateClock();
   }
 
-  protected abstract void confirm();
 
   // ----------------------------------------------------------------------------------------------------
   // Overridden methods from OnePageProxyInventoryWrapper
   // ----------------------------------------------------------------------------------------------------
-
   @Override
   public final void updateInventory() {
     super.updateInventory();
@@ -77,7 +85,7 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
     set(
         Item
             .of(ItemType.CLOCK)
-            .name("&6Expiration")
+            .name("&6" + EXPIRATION)
             .lore(
                 "&7This punish will",
                 "&7Expire on",
@@ -90,9 +98,7 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
         Item
             .of(Time.YEAR.hash())
             .name("&6" + Time.YEAR.localized())
-            .lore(
-                "&7Left click to add",
-                "&7Right click to remove")
+            .lore(RIGHT_LEFT_CLICK_LORE)
             .slot(YEAR_SLOT)
             .actionHandler("Year")
     );
@@ -101,9 +107,7 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
         Item
             .of(Time.MONTH.hash())
             .name("&6" + Time.MONTH.localized())
-            .lore(
-                "&7Left click to add",
-                "&7Right click to remove")
+            .lore(RIGHT_LEFT_CLICK_LORE)
             .slot(MONTH_SLOT)
             .actionHandler("Month")
     );
@@ -112,9 +116,7 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
         Item
             .of(Time.DAY.hash())
             .name("&6" + Time.DAY.localized())
-            .lore(
-                "&7Left click to add",
-                "&7Right click to remove")
+            .lore(RIGHT_LEFT_CLICK_LORE)
             .slot(DAY_SLOT)
             .actionHandler("Day")
     );
@@ -123,9 +125,7 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
         Item
             .of(Time.HOUR.hash())
             .name("&6" + Time.HOUR.localized())
-            .lore(
-                "&7Left click to add",
-                "&7Right click to remove")
+            .lore(RIGHT_LEFT_CLICK_LORE)
             .slot(HOUR_SLOT)
             .actionHandler("Hour")
     );
@@ -139,6 +139,8 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
             .slot(PERMANENT_SLOT)
     );
   }
+
+  protected abstract void confirm();
 
   @Override
   public void registerActionHandlers() {
@@ -204,65 +206,58 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
   }
 
   private void normalizeIfNeeded() {
-    if (ms < 0 && !isPermanent()) {
+    if (ms < 0 && !isPermanent())
       ms = 0;
-    }
   }
 
   private void updateClock() {
     normalizeIfNeeded();
-    if (getViewer().isPresent()) {
+    if (getViewer().isPresent())
       build();
-    }
   }
 
   private void updateTitle() {
-    if (ms == -1) {
+    if (ms == -1)
       setTitle("&cPermanent");
-    } else {
+    else
       setTitle(TimeUtil.formatMenuDate(ms));
-    }
     updateClock();
   }
 
   private void addOrRemoveYear(final ClickType clickType) {
-    if (clickType == de.exceptionflug.mccommons.inventories.api.ClickType.LEFT_CLICK) {
+    if (clickType == de.exceptionflug.mccommons.inventories.api.ClickType.LEFT_CLICK)
       ms += TimeUnit.DAYS.toMillis(1) * 365;
-    } else {
+    else
       ms -= TimeUnit.DAYS.toMillis(1) * 365;
-    }
     setTitle(TimeUtil.formatMenuDate(ms));
     updateClock();
   }
 
   private void addOrRemoveMonth(final ClickType clickType) {
 
-    if (clickType == ClickType.LEFT_CLICK) {
+    if (clickType == ClickType.LEFT_CLICK)
       ms += TimeUnit.DAYS.toMillis(1) * 30;
-    } else {
+    else
       ms -= TimeUnit.DAYS.toMillis(1) * 30;
-    }
     setTitle(TimeUtil.formatMenuDate(ms));
     updateClock();
   }
 
   private void addOrRemoveDay(final ClickType clickType) {
-    if (clickType == ClickType.LEFT_CLICK) {
+    if (clickType == ClickType.LEFT_CLICK)
       ms += TimeUnit.DAYS.toMillis(1);
-    } else {
+    else
       ms -= TimeUnit.DAYS.toMillis(1);
-    }
     setTitle(TimeUtil.formatMenuDate(ms));
     updateClock();
   }
 
   private void addOrRemoveHour(final ClickType clickType) {
 
-    if (clickType == ClickType.LEFT_CLICK) {
+    if (clickType == ClickType.LEFT_CLICK)
       ms += TimeUnit.HOURS.toMillis(1);
-    } else {
+    else
       ms -= TimeUnit.HOURS.toMillis(1);
-    }
     setTitle(TimeUtil.formatMenuDate(ms));
     normalizeIfNeeded();
     updateClock();
@@ -273,4 +268,3 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
     throw new AbstractMethodError("Not implemented");
   }
 }
-

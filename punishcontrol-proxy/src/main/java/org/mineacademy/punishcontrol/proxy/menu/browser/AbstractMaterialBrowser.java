@@ -27,21 +27,29 @@ public abstract class AbstractMaterialBrowser
   // Localization
   // ----------------------------------------------------------------------------------------------------
 
-  @Localizable("Menu.Proxy.Material-Browser.Information")
-  private static String[] MENU_INFORMATION = {
+  @Localizable("Menu.Proxy.Material-Browser.MenuInformation")
+  private static final String[] MENU_INFORMATION = {
       "",
       "&7Menu to select materials",
       "&7that fit your wishes best",
       "&7more items will be added soon"
   };
   @Localizable("Parts.Materials")
-  private static String MATERIALS = "Materials";
+  private static final String MATERIALS = "Materials";
 
-  private static List<ItemType> items = Arrays
+  // ----------------------------------------------------------------------------------------------------
+  // Static fields
+  // ----------------------------------------------------------------------------------------------------
+
+  private static final List<ItemType> items = Arrays
       .stream(ItemType.values())
       .filter(AbstractMaterialBrowser::canApply)
       .filter(mat -> mat != ItemType.AIR)
       .collect(Collectors.toList());
+
+  // ----------------------------------------------------------------------------------------------------
+  // Fields and constructors
+  // ----------------------------------------------------------------------------------------------------
 
   protected AbstractMaterialBrowser(@NonNull final BurstMenu parent) {
     this(parent, items);
@@ -73,7 +81,7 @@ public abstract class AbstractMaterialBrowser
   }
 
   @Override
-  protected ItemStack convertToItemStack(ItemType item) {
+  protected ItemStack convertToItemStack(final ItemType item) {
     val creator = Item.of(item);
 
     creator.name("&3" + item.name());
@@ -101,14 +109,14 @@ public abstract class AbstractMaterialBrowser
       }
 
       @Override
-      protected void onClick(ClickType clickType, ItemType itemType) {
+      protected void onClick(final ClickType clickType, final ItemType itemType) {
         AbstractMaterialBrowser.this.onClick(clickType, itemType);
       }
     }.displayTo(getPlayer()));
   }
 
   @Override
-  public final Collection<ItemType> searchByPartialString(String partial) {
+  public final Collection<ItemType> searchByPartialString(final String partial) {
     return Searcher.search(
         partial,
         items
@@ -134,7 +142,7 @@ public abstract class AbstractMaterialBrowser
       }
 
       @Override
-      protected void onClick(ClickType clickType, ItemType itemType) {
+      protected void onClick(final ClickType clickType, final ItemType itemType) {
         AbstractMaterialBrowser.this.onClick(clickType, itemType);
       }
     }.displayTo(getPlayer()));
