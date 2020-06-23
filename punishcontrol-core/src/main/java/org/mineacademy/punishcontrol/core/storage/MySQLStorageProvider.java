@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
 import org.mineacademy.punishcontrol.core.providers.ExceptionHandler;
+import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.punish.Punish;
 import org.mineacademy.punishcontrol.core.punish.PunishDuration;
 import org.mineacademy.punishcontrol.core.punish.PunishType;
@@ -25,11 +26,13 @@ public final class MySQLStorageProvider
     implements StorageProvider {
 
   //
-
   private static final String INSERT_QUERY =
       "INSERT INTO {table} (type, target, targetLastName, creator, creatorLastName, reason, lastIp, duration, creation, removed)"
       + " VALUES('{type}', '{target}', '{targetLastName}', '{creator}', '{creatorLastName}', '{reason}', '{lastIp}, {duration}', {creation}, {removed})";
+
+  //
   private final ExceptionHandler exceptionHandler;
+  private final PlayerProvider playerProvider;
   private boolean connected;
 
   /*
@@ -52,8 +55,11 @@ public final class MySQLStorageProvider
   */
 
   @Inject
-  public MySQLStorageProvider(final ExceptionHandler exceptionHandler) {
+  public MySQLStorageProvider(
+      @NonNull final ExceptionHandler exceptionHandler,
+      @NonNull final PlayerProvider playerProvider) {
     this.exceptionHandler = exceptionHandler;
+    this.playerProvider = playerProvider;
     addVariable("table", "Punishes");
   }
 
@@ -324,6 +330,7 @@ public final class MySQLStorageProvider
         INSERT_QUERY
             .replace("{type}", punishType.toString())
             .replace("{target}", target.toString())
+            .replace("{targetLastName}", )
             .replace("{creator}", creator.toString())
             .replace("{reason}", reason)
             .replace("{ip}", ip)
@@ -331,4 +338,9 @@ public final class MySQLStorageProvider
             .replace("{creation}", creation + "")
             .replace("{removed}", removed + ""));
   }
+
+  /*
+     "INSERT INTO {table} (type, target, targetLastName, creator, creatorLastName, reason, lastIp, duration, creation, removed)"
+      + " VALUES('{type}', '{target}', '{targetLastName}', '{creator}', '{creatorLastName}', '{reason}', '{lastIp}, {duration}', {creation}, {removed})";
+   */
 }
