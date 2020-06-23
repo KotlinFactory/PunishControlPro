@@ -30,15 +30,15 @@ public abstract class AbstractPlayerBrowser extends AbstractSearchableBrowser<UU
   // Localization
 
   @Localizable("Menu.Proxy.PlayerBrowser.Information")
-  private static final String[] PLAYER_BROWSER_INFORMATION = {
+  private static String[] PLAYER_BROWSER_INFORMATION = {
       "&7Menu to select",
       "&7an player"
   };
   @Localizable("Menu.Proxy.PlayerBrowser.Compass_Lore")
-  private static final String[] COMPASS_LORE = {"&7Search for a player"};
+  private static String[] COMPASS_LORE = {"&7Search for a player"};
 
   @Localizable("Menu.Proxy.Results_Found")
-  private static final Replacer results = Replacer
+  private static Replacer results = Replacer
       .of("Found {results} result(s)");
 
   // ----------------------------------------------------------------------------------------------------
@@ -72,7 +72,7 @@ public abstract class AbstractPlayerBrowser extends AbstractSearchableBrowser<UU
         onlineOnly
             ? playerProvider.getOnlinePlayers()
             : playerProvider.offlinePlayers()
-    );
+        );
   }
 
   protected AbstractPlayerBrowser(
@@ -80,7 +80,7 @@ public abstract class AbstractPlayerBrowser extends AbstractSearchableBrowser<UU
       final TextureProvider textureProvider,
       final BurstMenu mainMenu,
       final Collection<UUID> players
-  ) {
+                                 ) {
     super(
         "Players",
         mainMenu,

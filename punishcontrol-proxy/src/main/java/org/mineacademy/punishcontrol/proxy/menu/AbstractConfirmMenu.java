@@ -13,9 +13,9 @@ import org.mineacademy.punishcontrol.core.settings.ItemSettings;
 public abstract class AbstractConfirmMenu extends AbstractMenu {
 
   @Localizable(value = "Parts.Confirm")
-  private static final String CONFIRM = "Confirm";
+  private static String CONFIRM = "Confirm";
   @Localizable(value = "Parts.Break")
-  private static final String BREAKUP = "Breakup";
+  private static String BREAKUP = "Breakup";
 
 //  public AbstractConfirmMenu() {
 //    super("Confirm", 9);
@@ -37,7 +37,7 @@ public abstract class AbstractConfirmMenu extends AbstractMenu {
             .lore("&7" + CONFIRM)
             .slot(0)
             .actionHandler("Confirm")
-    );
+       );
 
     set(
         Item
@@ -45,7 +45,7 @@ public abstract class AbstractConfirmMenu extends AbstractMenu {
             .name("&3" + BREAKUP)
             .slot(8)
             .actionHandler("Break-Up")
-    );
+       );
   }
 
   @Override

@@ -14,6 +14,7 @@ import org.mineacademy.punishcontrol.core.group.Group;
 import org.mineacademy.punishcontrol.core.group.Groups;
 import org.mineacademy.punishcontrol.core.listener.Listener;
 import org.mineacademy.punishcontrol.core.listener.Listeners;
+import org.mineacademy.punishcontrol.core.localization.Localizables;
 import org.mineacademy.punishcontrol.core.permission.Permission;
 import org.mineacademy.punishcontrol.core.permission.Permissions;
 import org.mineacademy.punishcontrol.core.provider.Providers;
@@ -202,13 +203,6 @@ public interface PunishControlPluginBootstrap {
             "Likewise this is caused be wrong or missing credentials.");
       }
 
-    // Logging an random message
-    final int index = getRandomNumberInRange(
-        0,
-        getStartupFinishedMessages().length - 1);
-
-    log(getStartupFinishedMessages()[index]);
-
     try {
       Permissions.writeToFile();
     } catch (final Throwable throwable) {
@@ -220,7 +214,16 @@ public interface PunishControlPluginBootstrap {
       coreComponent.localizationInjector().startInjecting(classes());
     } catch (final Throwable throwable) {
       saveError(throwable);
+    } finally {
+      log("Injected: " + Localizables.localizables().size() + " localizable's");
     }
+
+    // Logging an random message
+    final int randomIndex = getRandomNumberInRange(
+        0,
+        getStartupFinishedMessages().length - 1);
+
+    log(getStartupFinishedMessages()[randomIndex]);
 
     for (final String knownLanguage : KNOWN_LANGUAGES)
       FileUtils.extractResource(
@@ -267,7 +270,7 @@ public interface PunishControlPluginBootstrap {
           groupRawData.get("Template_Only").toString().equalsIgnoreCase("true"));
       builder.templateByPasses(
           (List<String>) groupRawData.get("Template_Bypasses")
-      );
+                              );
 
       Groups.registerGroup(builder.build());
     }
@@ -275,7 +278,7 @@ public interface PunishControlPluginBootstrap {
     for (final Group group : Groups.registeredGroups())
       Permissions.register(
           Permission.of(group.permission(), "The group " + group.name())
-      );
+                          );
   }
 
   default void registerEvents(final Listener<?> listener) {

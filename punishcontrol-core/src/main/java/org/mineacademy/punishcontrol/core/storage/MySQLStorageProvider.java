@@ -145,10 +145,10 @@ public final class MySQLStorageProvider
 
   private Mute muteFromResultSet(final ResultSet resultSet) throws SQLException {
     return Mute.of(
-        resultSet.getString("Target"),
-        resultSet.getString("Creator"),
+        resultSet.getString("target"),
+        resultSet.getString("creator"),
         PunishDuration.of(resultSet.getLong("Duration")))
-        .ip(resultSet.getString("IP"))
+        .ip(resultSet.getString("lastIp"))
         .creation(resultSet.getTimestamp("Creation"))
         .removed(resultSet.getBoolean("Removed"))
         .reason(resultSet.getString("Reason"));
@@ -156,10 +156,10 @@ public final class MySQLStorageProvider
 
   private Warn warnFromResultSet(final ResultSet resultSet) throws SQLException {
     return Warn.of(
-        resultSet.getString("Target"),
-        resultSet.getString("Creator"),
+        resultSet.getString("target"),
+        resultSet.getString("creator"),
         PunishDuration.of(resultSet.getLong("Duration")))
-        .ip(resultSet.getString("IP"))
+        .ip(resultSet.getString("lastIp"))
         .creation(resultSet.getTimestamp("Creation"))
         .removed(resultSet.getBoolean("Removed"))
         .reason(resultSet.getString("Reason"));

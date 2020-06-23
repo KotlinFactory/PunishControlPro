@@ -9,5 +9,7 @@ public class StorageTypes {
   public final MySQLStorageProvider mySQLStorageProvider =
       Providers.storageProvider() instanceof MySQLStorageProvider
           ? (MySQLStorageProvider) Providers.storageProvider()
-          : new MySQLStorageProvider(Providers.exceptionHandler());
+          : new MySQLStorageProvider(
+              Providers.exceptionHandler(),
+              Providers.playerProvider());
 }

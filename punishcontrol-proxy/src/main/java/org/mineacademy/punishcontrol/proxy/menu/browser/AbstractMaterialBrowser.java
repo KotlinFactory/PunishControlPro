@@ -28,14 +28,14 @@ public abstract class AbstractMaterialBrowser
   // ----------------------------------------------------------------------------------------------------
 
   @Localizable("Menu.Proxy.Material-Browser.MenuInformation")
-  private static final String[] MENU_INFORMATION = {
+  private static String[] MENU_INFORMATION = {
       "",
       "&7Menu to select materials",
       "&7that fit your wishes best",
       "&7more items will be added soon"
   };
   @Localizable("Parts.Materials")
-  private static final String MATERIALS = "Materials";
+  private static String MATERIALS = "Materials";
 
   // ----------------------------------------------------------------------------------------------------
   // Static fields

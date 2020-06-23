@@ -37,10 +37,10 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
   // ----------------------------------------------------------------------------------------------------
   // Localization
   // ----------------------------------------------------------------------------------------------------
-  @Localizable(value = "Menu.Choose_Duration")
-  private static final String CHOOSE_DURATION = "Choose duration";
-  @NonNls private static final String EXPIRATION = "Expiration";
-  private static final String[] RIGHT_LEFT_CLICK_LORE = {
+  @NonNls @Localizable(value = "Menu.Choose_Duration")
+  private static String CHOOSE_DURATION = "Choose duration";
+  private static String EXPIRATION = "Expiration";
+  private static String[] RIGHT_LEFT_CLICK_LORE = {
       "&7Left click to add",
       "&7Right click to remove"};
 
@@ -66,7 +66,6 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
     updateClock();
   }
 
-
   // ----------------------------------------------------------------------------------------------------
   // Overridden methods from OnePageProxyInventoryWrapper
   // ----------------------------------------------------------------------------------------------------
@@ -80,7 +79,7 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
             .lore("")
             .slot(APPLY_SLOT)
             .actionHandler("Apply")
-    );
+       );
 
     set(
         Item
@@ -92,7 +91,7 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
                 "&7" + Settings.Advanced.formatDate(System.currentTimeMillis() + ms))
             .slot(CLOCK_SLOT)
             .actionHandler("Clock")
-    );
+       );
 
     set(
         Item
@@ -101,7 +100,7 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
             .lore(RIGHT_LEFT_CLICK_LORE)
             .slot(YEAR_SLOT)
             .actionHandler("Year")
-    );
+       );
 
     set(
         Item
@@ -110,7 +109,7 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
             .lore(RIGHT_LEFT_CLICK_LORE)
             .slot(MONTH_SLOT)
             .actionHandler("Month")
-    );
+       );
 
     set(
         Item
@@ -119,7 +118,7 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
             .lore(RIGHT_LEFT_CLICK_LORE)
             .slot(DAY_SLOT)
             .actionHandler("Day")
-    );
+       );
 
     set(
         Item
@@ -128,7 +127,7 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
             .lore(RIGHT_LEFT_CLICK_LORE)
             .slot(HOUR_SLOT)
             .actionHandler("Hour")
-    );
+       );
 
     set(
         Item
@@ -137,7 +136,7 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
             .lore("")
             .actionHandler("Perma")
             .slot(PERMANENT_SLOT)
-    );
+       );
   }
 
   protected abstract void confirm();

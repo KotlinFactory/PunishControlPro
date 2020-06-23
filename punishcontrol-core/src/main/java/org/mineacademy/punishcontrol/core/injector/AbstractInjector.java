@@ -77,7 +77,7 @@ public abstract class AbstractInjector<C extends Annotation, F extends Annotatio
             onInjected(clazz, field, path, valueByPath);
 //            System.out.println("After: ");
 //            debugRep(getValueByPath(path, raw));
-            System.out.println("Injected: " + field.getName() + " in " + clazz.getName());
+//            System.out.println("Injected: " + field.getName() + " in " + clazz.getName());
           } catch (final Throwable throwable) {
             System.err.println("Exception while injecting!");
             System.err.println("Path:  '" + path + "'");
@@ -95,14 +95,14 @@ public abstract class AbstractInjector<C extends Annotation, F extends Annotatio
     try {
       return clazz.isAnnotationPresent(annotationClass);
     } catch (final Throwable throwable) {
-      Valid.error(
-          throwable,
-          "Exception while looking up annotation '"
-          + annotationClass.getName()
-          + "' for "
-          + clazz.getSimpleName(),
-          "Possibly this is caused by proguard."
-      );
+//      Valid.error(
+//          throwable,
+//          "Exception while looking up annotation '"
+//          + annotationClass.getName()
+//          + "' for "
+//          + clazz.getSimpleName(),
+//          "Possibly this is caused by proguard."
+//      );
       return false;
     }
   }
