@@ -1,5 +1,6 @@
 package org.mineacademy.punishcontrol.core.punishes;
 
+import java.sql.Timestamp;
 import java.util.Map;
 import java.util.UUID;
 import lombok.NonNull;
@@ -69,8 +70,18 @@ public final class Ban extends Punish {
   }
 
   @Override
-  public Ban creation(@NonNull final long creation) {
-    return (Ban) super.creation(creation);
+  public Ban creation(@NonNull final Timestamp timestamp) {
+    return (Ban) super.creation(timestamp);
+  }
+
+  @Override
+  public Ban creation(@NonNull final Long millis) {
+    return (Ban) super.creation(millis);
+  }
+
+  @Override
+  public Ban creation(@NonNull final PunishDuration punishDuration) {
+    return (Ban) super.creation(punishDuration);
   }
 
   @Override

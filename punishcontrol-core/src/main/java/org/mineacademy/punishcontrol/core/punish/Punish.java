@@ -2,6 +2,7 @@ package org.mineacademy.punishcontrol.core.punish;
 
 import de.leonhard.storage.util.ClassWrapper;
 import de.leonhard.storage.util.Valid;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
@@ -141,6 +142,21 @@ public abstract class Punish {
     if ("unknown".equalsIgnoreCase(ip))
       return Optional.empty();
     return Optional.ofNullable(ip);
+  }
+
+  public Punish creation(@NonNull final Timestamp timestamp) {
+    this.creation = timestamp.getTime();
+    return this;
+  }
+
+  public Punish creation(@NonNull final Long millis) {
+    this.creation = millis;
+    return this;
+  }
+
+  public Punish creation(@NonNull final PunishDuration punishDuration) {
+    this.creation = punishDuration.toMs();
+    return this;
   }
 
   public Punish ip(@Nullable final String ip) {

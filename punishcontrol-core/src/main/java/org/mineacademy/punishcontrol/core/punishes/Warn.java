@@ -1,5 +1,6 @@
 package org.mineacademy.punishcontrol.core.punishes;
 
+import java.sql.Timestamp;
 import java.util.Map;
 import java.util.UUID;
 import lombok.NonNull;
@@ -72,9 +73,20 @@ public final class Warn extends Punish {
     return (Warn) super.removed(removed);
   }
 
+
   @Override
-  public Warn creation(@NonNull final long creation) {
-    return (Warn) super.creation(creation);
+  public Warn creation(@NonNull final Timestamp timestamp) {
+    return (Warn) super.creation(timestamp);
+  }
+
+  @Override
+  public Warn creation(@NonNull final Long millis) {
+    return (Warn) super.creation(millis);
+  }
+
+  @Override
+  public Warn creation(@NonNull final PunishDuration punishDuration) {
+    return (Warn) super.creation(punishDuration);
   }
 
   @Override

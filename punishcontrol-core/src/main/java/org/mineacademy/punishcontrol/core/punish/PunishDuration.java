@@ -1,5 +1,6 @@
 package org.mineacademy.punishcontrol.core.punish;
 
+import java.sql.Timestamp;
 import java.util.OptionalInt;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
@@ -24,6 +25,10 @@ public final class PunishDuration {
    */
   public static PunishDuration empty() {
     return new PunishDuration(Long.MIN_VALUE);
+  }
+
+  public static PunishDuration of(@NonNull final Timestamp timestamp) {
+    return of(timestamp.getTime());
   }
 
   public static PunishDuration of(@NonNull String humanReadableTime) {

@@ -2,6 +2,7 @@ package org.mineacademy.punishcontrol.core.storage;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -126,13 +127,18 @@ public final class MySQLStorageProvider
     return connected;
   }
 
+   /*
+     "INSERT INTO {table} (type, target, targetLastName, creator, creatorLastName, reason, lastIp, duration, creation, removed)"
+      + " VALUES('{type}', '{target}', '{targetLastName}', '{creator}', '{creatorLastName}', '{reason}', '{lastIp}, {duration}', {creation}, {removed})";
+   */
+
   private Ban banFromResultSet(final ResultSet resultSet) throws SQLException {
     return Ban.of(
-        resultSet.getString("Target"),
-        resultSet.getString("Creator"),
+        resultSet.getString("target"),
+        resultSet.getString("creator"),
         PunishDuration.of(resultSet.getLong("Duration")))
-        .ip(resultSet.getString("IP"))
-        .creation(resultSet.getLong("Creation"))
+        .ip(resultSet.getString("lastIp"))
+        .creation(resultSet.getTimestamp("Creation"))
         .removed(resultSet.getBoolean("Removed"))
         .reason(resultSet.getString("Reason"));
   }
@@ -143,7 +149,7 @@ public final class MySQLStorageProvider
         resultSet.getString("Creator"),
         PunishDuration.of(resultSet.getLong("Duration")))
         .ip(resultSet.getString("IP"))
-        .creation(resultSet.getLong("Creation"))
+        .creation(resultSet.getTimestamp("Creation"))
         .removed(resultSet.getBoolean("Removed"))
         .reason(resultSet.getString("Reason"));
   }
@@ -154,7 +160,7 @@ public final class MySQLStorageProvider
         resultSet.getString("Creator"),
         PunishDuration.of(resultSet.getLong("Duration")))
         .ip(resultSet.getString("IP"))
-        .creation(resultSet.getLong("Creation"))
+        .creation(resultSet.getTimestamp("Creation"))
         .removed(resultSet.getBoolean("Removed"))
         .reason(resultSet.getString("Reason"));
   }
@@ -299,21 +305,21 @@ public final class MySQLStorageProvider
 
   @Override
   public void removeBan(final @NonNull Ban ban) {
-    update("UPDATE Punishes SET removed=true WHERE Creation=" + ban.creation()
+    update("UPDATE punishment SET removed=true WHERE creation=" + ban.creation()
            + " AND Type='BAN'");
   }
 
   @Override
   public void removeMute(final @NonNull Mute mute) {
     update(
-        "UPDATE Punishes SET removed=true WHERE Creation=" + mute.creation()
+        "UPDATE punishment SET removed=true WHERE creation=" + mute.creation()
         + " AND Type='MUTE'");
   }
 
   @Override
   public void removeWarn(final @NonNull Warn warn) {
     update(
-        "UPDATE Punishes SET removed=true WHERE Creation=" + warn.creation()
+        "UPDATE punishment SET removed=true WHERE creation=" + warn.creation()
         + " AND Type='WARN'");
   }
 
@@ -330,12 +336,17 @@ public final class MySQLStorageProvider
         INSERT_QUERY
             .replace("{type}", punishType.toString())
             .replace("{target}", target.toString())
-            .replace("{targetLastName}", )
+            .replace(
+                "{targetLastName}",
+                playerProvider.findName(target).orElse("unknown"))
             .replace("{creator}", creator.toString())
+            .replace(
+                "{creatorLastName}",
+                playerProvider.findName(creator).orElse("unknown"))
             .replace("{reason}", reason)
-            .replace("{ip}", ip)
+            .replace("{lastIp}", ip)
             .replace("{duration}", duration + "")
-            .replace("{creation}", creation + "")
+            .replace("{creation}", new Timestamp(creation).toString())
             .replace("{removed}", removed + ""));
   }
 

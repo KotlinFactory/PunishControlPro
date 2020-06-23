@@ -1,5 +1,6 @@
 package org.mineacademy.punishcontrol.core.punishes;
 
+import java.sql.Timestamp;
 import java.util.Map;
 import java.util.UUID;
 import lombok.NonNull;
@@ -71,8 +72,18 @@ public final class Mute extends Punish {
   }
 
   @Override
-  public Mute creation(@NonNull final long creation) {
-    return (Mute) super.creation(creation);
+  public Mute creation(@NonNull final Timestamp timestamp) {
+    return (Mute) super.creation(timestamp);
+  }
+
+  @Override
+  public Mute creation(@NonNull final Long millis) {
+    return (Mute) super.creation(millis);
+  }
+
+  @Override
+  public Mute creation(@NonNull final PunishDuration punishDuration) {
+    return (Mute) super.creation(punishDuration);
   }
 
   @Override
