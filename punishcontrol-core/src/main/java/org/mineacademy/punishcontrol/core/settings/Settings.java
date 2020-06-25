@@ -33,7 +33,7 @@ public final class Settings extends SimpleSettings {
     public static Integer PORT;
     public static String USER;
     public static String PASSWORD;
-    public static boolean REMIGRATE;
+    public static Boolean REMIGRATE;
 
     private static void init() {
       pathPrefix("MySQL");
