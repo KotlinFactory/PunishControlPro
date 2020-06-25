@@ -2,7 +2,6 @@ package org.mineacademy.punishcontrol.spigot.menu;
 
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NonNls;
 import org.mineacademy.fo.Common;
 import org.mineacademy.fo.debug.Debugger;
 import org.mineacademy.fo.menu.Menu;
@@ -14,11 +13,12 @@ import org.mineacademy.punishcontrol.spigot.util.Schedulable;
 @Localizable
 public abstract class AbstractConfirmMenu extends Menu implements Schedulable {
 
-  @NonNls
-  @Localizable("Parts.Confirm")
+  @Localizable(value = "Parts.Confirm")
   private static String CONFIRM = "Confirm";
+  @Localizable(value = "Parts.Break")
+  private static String BREAKUP = "Breakup";
 
-  @Localizable("Menu.Proxy.ConfirmMenu.ApplyAction.Lore")
+  @Localizable("Menu.Spigot.ConfirmMenu.ApplyAction.Lore")
   private static String[] MENU_INFORMATION = {"&7Apply action"};
 
   public AbstractConfirmMenu() {
@@ -43,12 +43,10 @@ public abstract class AbstractConfirmMenu extends Menu implements Schedulable {
   public abstract void onConfirm();
 
   protected void showParent() {
-    if (getParent() == null) {
+    if (getParent() == null)
       return;
-    }
-    if (getViewer() == null) {
+    if (getViewer() == null)
       return;
-    }
     async(() -> {
       getParent().displayTo(getViewer());
       getParent().restartMenu();
@@ -57,18 +55,22 @@ public abstract class AbstractConfirmMenu extends Menu implements Schedulable {
 
   @Override
   public final ItemStack getItemAt(final int slot) {
-    if (slot != 4) {
-      return null;
-    }
+    if (slot == 0)
+      return ItemCreator
+          .of(
+              ItemSettings.APPLY_ITEM.itemType(),
+              "&a" + CONFIRM,
+              "",
+              "&7Click to confirm")
+          .build()
+          .makeMenuTool();
 
-    return ItemCreator
-        .of(
-            ItemSettings.APPLY_ITEM.itemType(),
-            "&a" + CONFIRM,
-            "",
-            "&7Click to confirm")
-        .build()
-        .makeMenuTool();
+    if (slot == 8)
+      ItemCreator
+          .ofString(ItemSettings.BREAK_UP_ITEM.itemType())
+          .name("&3" + BREAKUP);
+
+    return null;
   }
 
   @Override
@@ -77,19 +79,21 @@ public abstract class AbstractConfirmMenu extends Menu implements Schedulable {
       final int slot,
       final ItemStack clicked) {
     super.onMenuClick(player, slot, clicked);
-    if (slot != 4) {
-      return;
+    if (slot == 0) {
+      try {
+        onConfirm();
+      } catch (final Throwable throwable) {
+        Debugger.saveError(throwable, "Exception while confirming");
+        Common.tell(
+            player,
+            "&cException while confirming",
+            "&7See console & report this error with your error.log");
+      }
+      showParent();
     }
-    try {
-      onConfirm();
-    } catch (final Throwable throwable) {
-      Debugger.saveError(throwable, "Exception while confirming");
-      Common.tell(
-          player,
-          "&cException while confirming",
-          "&7See console & report this error with your error.log");
-    }
-    showParent();
+
+    if (slot == 8)
+      showParent();
   }
 
   @Override

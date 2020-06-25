@@ -12,15 +12,12 @@ import org.mineacademy.punishcontrol.core.settings.ItemSettings;
 @Localizable
 public abstract class AbstractConfirmMenu extends AbstractMenu {
 
+  @Localizable("Menu.Proxy.ConfirmMenu.ApplyAction.Lore")
+  private static String[] MENU_INFORMATION = {"&7Apply action"};
   @Localizable(value = "Parts.Confirm")
   private static String CONFIRM = "Confirm";
   @Localizable(value = "Parts.Break")
   private static String BREAKUP = "Breakup";
-
-//  public AbstractConfirmMenu() {
-//    super("Confirm", 9);
-//    setTitle("&aConfirm");
-//  }
 
   public AbstractConfirmMenu(final BurstMenu parent) {
     super(CONFIRM, parent, 9);
@@ -85,7 +82,7 @@ public abstract class AbstractConfirmMenu extends AbstractMenu {
 
   @Override
   protected String[] getInfo() {
-    return new String[]{"&7Apply action"};
+    return MENU_INFORMATION;
   }
 
   @Override

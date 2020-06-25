@@ -1,6 +1,7 @@
 package org.mineacademy.punishcontrol.proxy.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 import lombok.AccessLevel;
@@ -74,11 +75,16 @@ public final class ProxyPlayerProvider
   public void sendIfOnline(
       @NonNull final UUID uuid,
       @NonNull final MessageType messageType,
-      @NonNull final String... messages) {
+      @NonNull final String... messages0) {
     final ProxiedPlayer player = Players.find(uuid).orElse(null);
 
     if (player == null)
       return;
+
+    final String[] messages = Arrays
+        .stream(messages0)
+        .filter(line -> !line.isEmpty())
+        .toArray(String[]::new);
 
     switch (messageType) {
       case CHAT:
@@ -88,10 +94,12 @@ public final class ProxyPlayerProvider
         final String title = messages.length >= 1 ? messages[0] : "";
         final String subTitle = messages.length >= 2 ? messages[1] : "";
         Debugger.debug("Warn", "Title: '" + title + "'", "SubTitle: '" + subTitle + "'");
+        Debugger.debug("Warn", Arrays.toString(messages));
         PlayerUtil.sendTitle(player, title, subTitle);
         return;
       case ACTION_BAR:
         PlayerUtil.sendActionBar(player, String.join(" ", messages));
+        break;
     }
   }
 
