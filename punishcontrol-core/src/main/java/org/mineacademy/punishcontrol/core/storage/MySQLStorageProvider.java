@@ -111,10 +111,10 @@ public final class MySQLStorageProvider
            + "  `removed` tinyint(1) DEFAULT NULL\n"
            + ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;\n");
 
-    if (needsUpgrade && settings.getBoolean("MySQL.Remigrate"))
+    if (needsUpgrade)
       onInitialize();
 
-    if (tableExist(connection, "Punishes"))
+    if (tableExist(connection, "Punishes") && settings.getBoolean("MySQL.Remigrate"))
       onMigrate();
 
     connected = true;
@@ -125,9 +125,8 @@ public final class MySQLStorageProvider
     System.out.println("Started Migration");
     try {
       ResultSet resultSet = query("SELECT * FROM Punishes");
-      if (resultSet == null) {
+      if (resultSet == null)
         return;
-      }
 
       while (resultSet.next())
         saveData(
