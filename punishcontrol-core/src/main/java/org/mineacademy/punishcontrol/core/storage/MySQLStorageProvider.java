@@ -1,5 +1,7 @@
 package org.mineacademy.punishcontrol.core.storage;
 
+import de.leonhard.storage.Yaml;
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
@@ -7,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import javax.inject.Inject;
+import javax.inject.Named;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.experimental.Accessors;
@@ -29,11 +32,16 @@ public final class MySQLStorageProvider
   //
   private static final String INSERT_QUERY =
       "INSERT INTO {table} (type, target, targetLastName, creator, creatorLastName, reason, lastIp, duration, creation, removed)"
-      + " VALUES('{type}', '{target}', '{targetLastName}', '{creator}', '{creatorLastName}', '{reason}', '{lastIp}, {duration}', {creation}, {removed})";
+      + " VALUES('{type}', '{target}', '{targetLastName}', '{creator}', '{creatorLastName}', '{reason}', '{lastIp}', {duration}, '{creation}', {removed})";
 
+  /*
+"INSERT INTO {table} (type, target, targetLastName, creator, creatorLastName, reason, lastIp, duration, creation, removed)"
+ + " VALUES('{type}', '{target}', '{targetLastName}', '{creator}', '{creatorLastName}', '{reason}', '{lastIp}, {duration}', {creation}, {removed})";
+*/
   //
   private final ExceptionHandler exceptionHandler;
   private final PlayerProvider playerProvider;
+  private final Yaml settings;
   private boolean connected;
 
   /*
@@ -42,26 +50,15 @@ public final class MySQLStorageProvider
 
   // We need the mysql config here
 
-  /*
-  "warns": {
-      "UUID": {
-        "MS": {
-          "creator": "UUID",
-          "target-name": "NAME",
-          "reason": "REASON",
-          "duration": 39393033093393033093039,
-
-          "removed": "false"
-        }
-  */
-
   @Inject
   public MySQLStorageProvider(
       @NonNull final ExceptionHandler exceptionHandler,
-      @NonNull final PlayerProvider playerProvider) {
+      @NonNull final PlayerProvider playerProvider,
+      @NonNull @Named("settings") final Yaml settings) {
     this.exceptionHandler = exceptionHandler;
     this.playerProvider = playerProvider;
-    addVariable("table", "Punishes");
+    this.settings = settings;
+    addVariable("table", "punishment");
   }
 
   private void handleMySQLException(final SQLException ex, final String name) {
@@ -92,6 +89,14 @@ public final class MySQLStorageProvider
 
   @Override
   protected void onConnected() {
+    boolean needsUpgrade = false;
+
+    try {
+      query0("SELECT * FROM punishment WHERE targetLastName = 1 LIMIT 1");
+    } catch (final Throwable throwable) {
+      needsUpgrade = true;
+    }
+
     update("CREATE TABLE IF NOT EXISTS `punishment` (\n"
            + "  `id` int(11) NOT NULL,\n"
            + "  `type` enum('BAN','MUTE','WARN','KICK') NOT NULL,\n"
@@ -106,7 +111,46 @@ public final class MySQLStorageProvider
            + "  `removed` tinyint(1) DEFAULT NULL\n"
            + ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;\n");
 
-    update("ALTER TABLE `punishment`\n"
+    if (needsUpgrade && settings.getBoolean("MySQL.Remigrate"))
+      onInitialize();
+
+    if (tableExist(connection, "Punishes"))
+      onMigrate();
+
+    connected = true;
+  }
+
+  private void onMigrate() {
+    // Migrating from old data
+    System.out.println("Started Migration");
+    try {
+      ResultSet resultSet = query("SELECT * FROM Punishes");
+      if (resultSet == null) {
+        return;
+      }
+
+      while (resultSet.next())
+        saveData(
+            PunishType.valueOf(resultSet.getString("Type")),
+            UUID.fromString(resultSet.getString("Creator")),
+            UUID.fromString(resultSet.getString("Target")),
+            resultSet.getString("reason"),
+            resultSet.getString("Ip"),
+            resultSet.getLong("Duration"),
+            resultSet.getLong("Creation"),
+            resultSet.getBoolean("Removed"));
+
+    } catch (final Throwable throwable) {
+      //
+      throwable.printStackTrace();
+    } finally {
+      settings.set("MySQL.Remigrate", false);
+    }
+  }
+
+  private void onInitialize() {
+    System.out.println("Initialized MySQL");
+    update("ALTER TABLE punishment \n"
            + "  ADD PRIMARY KEY (`id`),\n"
            + "  ADD KEY `target` (`target`),\n"
            + "  ADD KEY `creator` (`creator`),\n"
@@ -118,52 +162,17 @@ public final class MySQLStorageProvider
            + "  ADD KEY `creation` (`creation`)");
 
     update(
-        "ALTER TABLE `punishment` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 3; COMMIT");
+        "ALTER TABLE `punishment` MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT = 3");
 
-    connected = true;
   }
 
   public boolean connected() {
     return connected;
   }
 
-   /*
-     "INSERT INTO {table} (type, target, targetLastName, creator, creatorLastName, reason, lastIp, duration, creation, removed)"
-      + " VALUES('{type}', '{target}', '{targetLastName}', '{creator}', '{creatorLastName}', '{reason}', '{lastIp}, {duration}', {creation}, {removed})";
-   */
-
-  private Ban banFromResultSet(final ResultSet resultSet) throws SQLException {
-    return Ban.of(
-        resultSet.getString("target"),
-        resultSet.getString("creator"),
-        PunishDuration.of(resultSet.getLong("Duration")))
-        .ip(resultSet.getString("lastIp"))
-        .creation(resultSet.getTimestamp("Creation"))
-        .removed(resultSet.getBoolean("Removed"))
-        .reason(resultSet.getString("Reason"));
-  }
-
-  private Mute muteFromResultSet(final ResultSet resultSet) throws SQLException {
-    return Mute.of(
-        resultSet.getString("target"),
-        resultSet.getString("creator"),
-        PunishDuration.of(resultSet.getLong("Duration")))
-        .ip(resultSet.getString("lastIp"))
-        .creation(resultSet.getTimestamp("Creation"))
-        .removed(resultSet.getBoolean("Removed"))
-        .reason(resultSet.getString("Reason"));
-  }
-
-  private Warn warnFromResultSet(final ResultSet resultSet) throws SQLException {
-    return Warn.of(
-        resultSet.getString("target"),
-        resultSet.getString("creator"),
-        PunishDuration.of(resultSet.getLong("Duration")))
-        .ip(resultSet.getString("lastIp"))
-        .creation(resultSet.getTimestamp("Creation"))
-        .removed(resultSet.getBoolean("Removed"))
-        .reason(resultSet.getString("Reason"));
-  }
+  // ----------------------------------------------------------------------------------------------------
+  // Listing punishments
+  // ----------------------------------------------------------------------------------------------------
 
   @Override
   public List<Ban> listBans() {
@@ -276,17 +285,9 @@ public final class MySQLStorageProvider
     return result;
   }
 
-  private void savePunishData(@NonNull final Punish punish) {
-    saveData(
-        punish.punishType(),
-        punish.target(),
-        punish.creator(),
-        punish.reason(),
-        punish.ip().orElse("Unknown"),
-        punish.punishDuration().toMs(),
-        punish.creation(),
-        punish.removed());
-  }
+  // ----------------------------------------------------------------------------------------------------
+  // Saving punishments
+  // ----------------------------------------------------------------------------------------------------
 
   @Override
   public void saveBan(@NonNull final Ban ban) {
@@ -303,24 +304,80 @@ public final class MySQLStorageProvider
     savePunishData(warn);
   }
 
+  // ----------------------------------------------------------------------------------------------------
+  // Removing punishments
+  // ----------------------------------------------------------------------------------------------------
+
   @Override
   public void removeBan(final @NonNull Ban ban) {
-    update("UPDATE punishment SET removed=true WHERE creation=" + ban.creation()
+    update("UPDATE punishment SET removed=true WHERE creation="
+           + "'" + new Timestamp(ban.creation()).toString() + "'"
            + " AND Type='BAN'");
   }
 
   @Override
   public void removeMute(final @NonNull Mute mute) {
     update(
-        "UPDATE punishment SET removed=true WHERE creation=" + mute.creation()
+        "UPDATE punishment SET removed=true WHERE creation="
+        + "'" + new Timestamp(mute.creation()).toString() + "'"
         + " AND Type='MUTE'");
   }
 
   @Override
   public void removeWarn(final @NonNull Warn warn) {
     update(
-        "UPDATE punishment SET removed=true WHERE creation=" + warn.creation()
+        "UPDATE punishment SET removed=true WHERE creation="
+        + "'" + new Timestamp(warn.creation()).toString() + "'"
         + " AND Type='WARN'");
+  }
+
+  // ----------------------------------------------------------------------------------------------------
+  // Internal helper methods
+  // ----------------------------------------------------------------------------------------------------
+
+  private Ban banFromResultSet(final ResultSet resultSet) throws SQLException {
+    return Ban.of(
+        resultSet.getString("target"),
+        resultSet.getString("creator"),
+        PunishDuration.of(resultSet.getLong("Duration")))
+        .ip(resultSet.getString("lastIp"))
+        .creation(resultSet.getTimestamp("Creation"))
+        .removed(resultSet.getBoolean("Removed"))
+        .reason(resultSet.getString("Reason"));
+  }
+
+  private Mute muteFromResultSet(final ResultSet resultSet) throws SQLException {
+    return Mute.of(
+        resultSet.getString("target"),
+        resultSet.getString("creator"),
+        PunishDuration.of(resultSet.getLong("Duration")))
+        .ip(resultSet.getString("lastIp"))
+        .creation(resultSet.getTimestamp("Creation"))
+        .removed(resultSet.getBoolean("Removed"))
+        .reason(resultSet.getString("Reason"));
+  }
+
+  private Warn warnFromResultSet(final ResultSet resultSet) throws SQLException {
+    return Warn.of(
+        resultSet.getString("target"),
+        resultSet.getString("creator"),
+        PunishDuration.of(resultSet.getLong("Duration")))
+        .ip(resultSet.getString("lastIp"))
+        .creation(resultSet.getTimestamp("Creation"))
+        .removed(resultSet.getBoolean("Removed"))
+        .reason(resultSet.getString("Reason"));
+  }
+
+  private void savePunishData(@NonNull final Punish punish) {
+    saveData(
+        punish.punishType(),
+        punish.target(),
+        punish.creator(),
+        punish.reason(),
+        punish.ip().orElse("Unknown"),
+        punish.punishDuration().toMs(),
+        punish.creation(),
+        punish.removed());
   }
 
   private void saveData(
@@ -347,11 +404,27 @@ public final class MySQLStorageProvider
             .replace("{lastIp}", ip)
             .replace("{duration}", duration + "")
             .replace("{creation}", new Timestamp(creation).toString())
-            .replace("{removed}", removed + ""));
+            .replace("{removed}", (removed ? 1 + "" : 0 + "")));
   }
 
-  /*
-     "INSERT INTO {table} (type, target, targetLastName, creator, creatorLastName, reason, lastIp, duration, creation, removed)"
-      + " VALUES('{type}', '{target}', '{targetLastName}', '{creator}', '{creatorLastName}', '{reason}', '{lastIp}, {duration}', {creation}, {removed})";
-   */
+  private static boolean tableExist(final Connection connection, final String tableName) {
+    try {
+      return tableExist0(connection, tableName);
+    } catch (final SQLException sqlException) {
+      return false;
+    }
+  }
+
+  private static boolean tableExist0(
+      Connection conn,
+      String tableName) throws SQLException {
+    try (ResultSet rs = conn.getMetaData().getTables(null, null, tableName, null)) {
+      while (rs.next()) {
+        String tName = rs.getString("TABLE_NAME");
+        if (tName != null && tName.equals(tableName))
+          return true;
+      }
+      return false;
+    }
+  }
 }

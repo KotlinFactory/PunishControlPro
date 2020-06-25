@@ -31,17 +31,11 @@ public abstract class AbstractInjector<C extends Annotation, F extends Annotatio
 
   @Override
   public final void startInjecting(final List<Class<?>> classes) {
-    for (final Class<?> clazz : classes) {
-
-      if (!isAnnotationPresent(clazz, classAnnotationClass))
-        continue;
-//      if (!clazz.getSimpleName().equalsIgnoreCase("AbstractPunishBrowser"))
-//        continue;
-
-//      System.out.println("Trying to inject: " + clazz.getName());
-
-      {
-
+    //      if (!clazz.getSimpleName().equalsIgnoreCase("AbstractPunishBrowser"))
+    //        continue;
+    //      System.out.println("Trying to inject: " + clazz.getName());
+    for (Class<?> clazz : classes) {
+      if (isAnnotationPresent(clazz, classAnnotationClass)) {
         for (final Field field : clazz.getDeclaredFields()) {
 
           // We only inject static fields

@@ -3,6 +3,7 @@ package org.mineacademy.punishcontrol.core.notification;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.Setter;
@@ -11,6 +12,7 @@ import lombok.experimental.Accessors;
 @Getter
 @Setter
 @Accessors(fluent = true)
+@EqualsAndHashCode
 public class Notification {
 
   private Object itemType;

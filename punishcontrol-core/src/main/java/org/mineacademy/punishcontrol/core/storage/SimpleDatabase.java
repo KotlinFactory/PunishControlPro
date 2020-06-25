@@ -234,8 +234,8 @@ public class SimpleDatabase {
       sql = replaceVariables(sql);
 
       //			Debugger.debug("mysql", "Querying MySQL with: " + sql);
-
       try {
+
         final Statement statement = connection.createStatement();
         final ResultSet resultSet = statement.executeQuery(sql);
 
@@ -248,6 +248,26 @@ public class SimpleDatabase {
     }
 
     return null;
+  }
+
+  protected final ResultSet query0(String sql) throws SQLException {
+    checkEstablished();
+
+    synchronized (connection) {
+      if (!isConnected()) {
+        connectUsingLastCredentials();
+      }
+
+      sql = replaceVariables(sql);
+
+      //			Debugger.debug("mysql", "Querying MySQL with: " + sql);
+
+      final Statement statement = connection.createStatement();
+      final ResultSet resultSet = statement.executeQuery(sql);
+
+      return resultSet;
+
+    }
   }
 
   /**

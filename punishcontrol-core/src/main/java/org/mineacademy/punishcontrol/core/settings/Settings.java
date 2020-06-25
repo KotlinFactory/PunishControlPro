@@ -33,6 +33,7 @@ public final class Settings extends SimpleSettings {
     public static Integer PORT;
     public static String USER;
     public static String PASSWORD;
+    public static boolean REMIGRATE;
 
     private static void init() {
       pathPrefix("MySQL");
@@ -40,6 +41,7 @@ public final class Settings extends SimpleSettings {
       PORT = getOrDefault("Port", 3306);
       DATABASE = getOrDefault("Database", "Not set");
       USER = getOrDefault("User", "Not set");
+      REMIGRATE = getOrDefault("Remigrate", true);
       PASSWORD = getOrDefault("Password", "*");
     }
   }

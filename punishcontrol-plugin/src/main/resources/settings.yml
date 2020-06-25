@@ -54,6 +54,8 @@ MySQL:
   Port: 3306
   User: ''
   Password: ''
+  # Defines whether the migrartion of the old database was already done
+  Remigrate: true
 
 Punishes:
   # Should punishing plugins only be possible with a template

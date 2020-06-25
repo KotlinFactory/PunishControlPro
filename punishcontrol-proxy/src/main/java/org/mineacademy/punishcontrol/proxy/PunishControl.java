@@ -13,8 +13,10 @@ import org.mineacademy.bfo.Common;
 import org.mineacademy.bfo.ReflectionUtil;
 import org.mineacademy.bfo.bungee.SimpleBungee;
 import org.mineacademy.bfo.command.SimpleCommand;
+import org.mineacademy.bfo.debug.Debugger;
 import org.mineacademy.bfo.plugin.SimplePlugin;
 import org.mineacademy.burst.Burst;
+import org.mineacademy.burst.util.Scheduler;
 import org.mineacademy.punishcontrol.core.PunishControlPluginBootstrap;
 import org.mineacademy.punishcontrol.core.notification.Notification;
 import org.mineacademy.punishcontrol.core.notification.Notifications;
@@ -190,5 +192,15 @@ public final class PunishControl
   @Override
   public String getWorkingDirectory() {
     return getData().getAbsolutePath();
+  }
+
+  @Override
+  public void runAsync(@NonNull Runnable runnable) {
+    Scheduler.runAsync(runnable);
+  }
+
+  @Override
+  public void debug(String section, String... messages) {
+    Debugger.debug(section, messages);
   }
 }

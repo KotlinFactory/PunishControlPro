@@ -209,14 +209,18 @@ public interface PunishControlPluginBootstrap {
       saveError(throwable);
     }
 
-    try {
-      coreComponent.settingsInjector().startInjecting(classes());
-      coreComponent.localizationInjector().startInjecting(classes());
-    } catch (final Throwable throwable) {
-      saveError(throwable);
-    } finally {
-      log("Injected: " + Localizables.localizables().size() + " localizable's");
-    }
+    runAsync(() -> {
+      try {
+        coreComponent.settingsInjector().startInjecting(classes());
+        coreComponent.localizationInjector().startInjecting(classes());
+      } catch (final Throwable throwable) {
+        saveError(throwable);
+      } finally {
+        debug(
+            "PunishControl-Localization",
+            "Injected " + Localizables.localizables().size() + " localizable's");
+      }
+    });
 
     // Logging an random message
     final int randomIndex = getRandomNumberInRange(
@@ -297,6 +301,8 @@ public interface PunishControlPluginBootstrap {
   // Abstract methods for startup
   // ----------------------------------------------------------------------------------------------------
 
+  void runAsync(@NonNull final Runnable runnable);
+
   List<Class<?>> classes();
 
   void registerCommands();
@@ -308,4 +314,6 @@ public interface PunishControlPluginBootstrap {
   List<Permission> permissions();
 
   void saveError(@NonNull Throwable t);
+
+  void debug(String section, String... messages);
 }

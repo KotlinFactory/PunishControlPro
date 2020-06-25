@@ -1,6 +1,7 @@
 package org.mineacademy.punishcontrol.core.api;
 
 import de.leonhard.storage.util.Valid;
+import java.util.UUID;
 import lombok.Setter;
 
 public abstract class PunishControlAPI {
@@ -26,4 +27,6 @@ public abstract class PunishControlAPI {
 
     return instance;
   }
+
+  public abstract void punishPlayer(UUID test);
 }

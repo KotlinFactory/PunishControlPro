@@ -11,5 +11,6 @@ public class StorageTypes {
           ? (MySQLStorageProvider) Providers.storageProvider()
           : new MySQLStorageProvider(
               Providers.exceptionHandler(),
-              Providers.playerProvider());
+              Providers.playerProvider(),
+              Providers.settings());
 }

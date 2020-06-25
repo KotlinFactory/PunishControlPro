@@ -2,6 +2,7 @@ package org.mineacademy.punishcontrol.proxy.menus.browsers;
 
 import de.exceptionflug.mccommons.inventories.api.ClickType;
 import de.exceptionflug.protocolize.items.ItemStack;
+import de.exceptionflug.protocolize.items.ItemType;
 import de.leonhard.storage.Yaml;
 import java.util.Collection;
 import java.util.List;
@@ -19,6 +20,8 @@ import org.mineacademy.burst.util.Scheduler;
 import org.mineacademy.punishcontrol.core.injector.annotations.Localizable;
 import org.mineacademy.punishcontrol.core.injectors.LocalizationInjector;
 import org.mineacademy.punishcontrol.core.localization.Localizables;
+import org.mineacademy.punishcontrol.core.notification.Notification;
+import org.mineacademy.punishcontrol.core.notification.Notifications;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.ExceptionHandler;
 import org.mineacademy.punishcontrol.core.setting.YamlStaticConfig;
@@ -56,7 +59,7 @@ public final class LanguageBrowser extends AbstractBrowser<Yaml> {
   public static void showTo(@NonNull final ProxiedPlayer player) {
     Scheduler.runAsync(
         () -> DaggerProxyComponent.create().languageBrowser().displayTo(player)
-    );
+                      );
   }
 
   private static boolean isCurrentLanguageFile(Yaml yaml) {
@@ -85,7 +88,6 @@ public final class LanguageBrowser extends AbstractBrowser<Yaml> {
 
         @Override
         public void onConfirm() {
-          System.out.println("confirm triggered");
           Debugger.debug("Localization", "We're here");
           try {
             async(() -> {
@@ -105,13 +107,11 @@ public final class LanguageBrowser extends AbstractBrowser<Yaml> {
               YamlStaticConfig.loadAll(Settings.class, Localization.class);
               final LocalizationInjector localizationInjector = new LocalizationInjector(
                   locale);
-              System.out.println(locale.getName());
-              System.out.println("Name: " + localizationInjector.dataStorage()
-                  .getString("Name"));
-
               Localizables.clear();
               localizationInjector.startInjecting(classes);
-              System.out.println("Injected: " + Localizables.localizables().size());
+              Debugger.debug(
+                  "Localization",
+                  "Injected: " + Localizables.localizables().size());
               Debugger.debug("Localization", "Changed localization");
             });
           } catch (final Throwable throwable) {
@@ -127,7 +127,25 @@ public final class LanguageBrowser extends AbstractBrowser<Yaml> {
 
   @Override
   protected ItemStack convertToItemStack(Yaml yaml) {
-    if (yaml == null) {
+    if (yaml == null)
+      return null;
+
+    if (!yaml.contains("Skull_Hash")) {
+      String name;
+      try {
+        name = yaml.getName();
+      } catch (final Throwable throwable) {
+        name = "unknown";
+      }
+
+      Notifications.register(
+          Notification
+              .of("Invalid localization file!")
+              .text(
+                  "One of the localization",
+                  "files is not formatted probably",
+                  "File: " + name)
+              .itemType(ItemType.BARRIER));
       return null;
     }
 

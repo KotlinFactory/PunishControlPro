@@ -12,6 +12,7 @@ import org.mineacademy.fo.Common;
 import org.mineacademy.fo.MinecraftVersion.V;
 import org.mineacademy.fo.ReflectionUtil;
 import org.mineacademy.fo.command.SimpleCommand;
+import org.mineacademy.fo.debug.Debugger;
 import org.mineacademy.fo.plugin.SimplePlugin;
 import org.mineacademy.fo.remain.CompMaterial;
 import org.mineacademy.punishcontrol.core.PunishControlPluginBootstrap;
@@ -200,4 +201,13 @@ public final class PunishControl
     return V.v1_8;
   }
 
+  @Override
+  public void runAsync(@NonNull Runnable runnable) {
+    Scheduler.runAsync(runnable);
+  }
+
+  @Override
+  public void debug(String section, String... messages) {
+    Debugger.debug(section, messages);
+  }
 }
