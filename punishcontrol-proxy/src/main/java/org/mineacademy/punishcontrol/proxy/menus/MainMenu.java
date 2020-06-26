@@ -56,7 +56,7 @@ public final class MainMenu extends ChangingMenu {
       "&7actions");
 
   @Localizable(value = "Parts.Players")
-  private static String PLAYER = "Players";
+  private static String PLAYERS = "Players";
 
   @Localizable(value = "Menu.Main.Punish_Lore")
   private static List<String> punishLore = Arrays.asList(
@@ -84,6 +84,10 @@ public final class MainMenu extends ChangingMenu {
     });
   }
 
+  // ----------------------------------------------------------------------------------------------------
+  // Constructor's and field's
+  // ----------------------------------------------------------------------------------------------------
+
   @Inject
   public MainMenu(final TextureProvider textureProvider) {
     super(
@@ -92,7 +96,7 @@ public final class MainMenu extends ChangingMenu {
             ChangingButton
                 .fromCustomHashes(
                     textureProvider.listTextures())
-                .name("&6" + PLAYER)
+                .name("&6" + PLAYERS)
                 .slot(24)
                 .lore(PLAYER_LORE)),
         9 * 5

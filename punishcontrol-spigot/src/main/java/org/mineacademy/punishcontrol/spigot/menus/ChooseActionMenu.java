@@ -11,6 +11,7 @@ import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.fo.menu.button.Button;
 import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.fo.remain.CompMaterial;
+import org.mineacademy.punishcontrol.core.injector.annotations.Localizable;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.providers.TextureProvider;
@@ -27,35 +28,57 @@ import org.mineacademy.punishcontrol.spigot.menus.punish.PunishCreatorMenu;
 import org.mineacademy.punishcontrol.spigot.menus.settings.PlayerSettingsMenu;
 import org.mineacademy.punishcontrol.spigot.util.ItemStacks;
 
+@Localizable
 public final class ChooseActionMenu extends Menu {
+// ----------------------------------------------------------------------------------------------------
+  // Localization
+  // ----------------------------------------------------------------------------------------------------
 
-  private static final int PUNISH_SLOT = 1;
+  @Localizable("Menu.Proxy.ChooseAction.Lore")
+  private static String[] MENU_INFORMATION = {
+      "&7Menu to select ",
+      "&7Action for players"};
+
+  @NonNls
+  @Localizable("Parts.Action_For")
+  private static String ACTION_FOR = "Action for";
+
+  @NonNls @Localizable("Parts.Punishments")
+  private static String PUNISHMENTS = "Punishments";
+  @NonNls @Localizable("Menu.Proxy.ChooseAction.Player_Offline_Lore")
+  private static String[] PLAYER_IS_OFFLINE_LORE = {
+      " ",
+      "&cDisabled:",
+      "&7Player is offline"};
+  @NonNls @Localizable("Menu.Proxy.ChooseAction.View_Punishments")
+  private static String[] VIEW_PUNISHMENT_LORE = {
+      "",
+      "&7View punishments"};
+  @NonNls @Localizable("Parts.Settings")
+  private static String SETTINGS = "Settings";
+  @NonNls @Localizable("Parts.Kick")
+  private static String KICK = "Kick";
+  @NonNls @Localizable("Parts.Data_For")
+  private static String DATA_FOR = "Data for";
+  @NonNls @Localizable("Parts.Punish")
+  private static String PUNISH = "Punish";
+  @NonNls @Localizable("Menu.Proxy.ChooseAction.Settings_Lore")
+  private static String[] SETTINGS_LORE = {
+      " ",
+      "&7Settings for player"};
+
+  // ----------------------------------------------------------------------------------------------------
+  // Button positions
+  // ---------------------------------------------------------------------------------------------------
   private static final int LIST_PUNISHES_SLOT = 11;
   private static final int PLAYER_HEAD_SLOT = 13;
   private static final int SETTINGS_SLOT = 15;
   private static final int KICK_SLOT = 7;
-  @NonNls
-  private static final String ACTION_FOR = "Action for";
-  @NonNls
-  private static final String PUNISHMENTS = "Punishments";
-  @NonNls
-  private static final String VIEW_PUNISHMENTS = "View punishments";
-  private static final String[] PLAYER_OFFLINE_LORE = {
-      " ",
-      "&cDisabled:",
-      "&7Player is offline"};
-  private static final String[] SETTINGS_FOR_PLAYER_LORE = {
-      " ",
-      "&7Settings for player"};
-  private static final String[] DISABLED_OFFLINE_LORE = {
-      "",
-      "&cDisabled:",
-      "&7Player is offline"};
-  private static final String[] MENU_INFORMATION = {
-      "&7Menu to select an",
-      "&7Action for players"};
-  @NonNls
-  private static final String DATA_FOR = "Data for";
+  private static final int PUNISH_SLOT = 1;
+
+  // ----------------------------------------------------------------------------------------------------
+  // Constructors & Fields
+  // ----------------------------------------------------------------------------------------------------
 
   private final Button punish;
   private final Button listPunishes;
@@ -96,7 +119,7 @@ public final class ChooseActionMenu extends Menu {
     this.textureProvider = textureProvider;
     this.storageProvider = storageProvider;
     this.target = target;
-    targetName = playerProvider.findNameUnsafe(target);
+    targetName = playerProvider.findName(target).orElse("unknown");
     setSize(9 * 3);
     setTitle("§8" + ACTION_FOR + " " + targetName);
 
@@ -114,8 +137,8 @@ public final class ChooseActionMenu extends Menu {
 
       @Override
       public ItemStack getItem() {
-        return ItemCreator.of(CompMaterial.ANVIL, "&6Punish", " ",
-            "&7Punishment: " + playerProvider.findNameUnsafe(target)).build()
+        return ItemCreator.of(CompMaterial.ANVIL, "&6" + PUNISH, " ",
+            "&7Punish: " + playerProvider.findName(target).orElse("unknown")).build()
             .makeMenuTool();
       }
     };
@@ -130,7 +153,7 @@ public final class ChooseActionMenu extends Menu {
       @Override
       public ItemStack getItem() {
         return ItemCreator
-            .of(CompMaterial.CHEST, "&6" + PUNISHMENTS, "", "&7" + VIEW_PUNISHMENTS)
+            .of(CompMaterial.CHEST, "&6" + PUNISHMENTS, VIEW_PUNISHMENT_LORE)
             .build()
             .makeMenuTool();
       }
@@ -149,20 +172,19 @@ public final class ChooseActionMenu extends Menu {
 
       @Override
       public ItemStack getItem() {
-        if (!targetOnline()) {
+        if (!targetOnline())
           return ItemCreator
               .of(
                   CompMaterial.COMPARATOR,
                   "&6Settings",
-                  PLAYER_OFFLINE_LORE)
+                  PLAYER_IS_OFFLINE_LORE)
               .build()
               .makeMenuTool();
-        }
         return ItemCreator
             .of(
                 CompMaterial.COMPARATOR,
                 "&6Settings",
-                SETTINGS_FOR_PLAYER_LORE)
+                PLAYER_IS_OFFLINE_LORE)
             .build()
             .makeMenuTool();
       }
@@ -181,21 +203,20 @@ public final class ChooseActionMenu extends Menu {
 
       @Override
       public ItemStack getItem() {
-        if (!targetOnline()) {
+        if (!targetOnline())
           return ItemCreator
               .of(
                   CompMaterial.BLAZE_POWDER,
-                  "&6Kick",
-                  DISABLED_OFFLINE_LORE)
+                  "&6" + KICK,
+                  PLAYER_IS_OFFLINE_LORE)
               .build().makeMenuTool();
-        }
 
         return ItemCreator
             .of(
                 CompMaterial.BLAZE_POWDER,
-                "&6Kick",
+                "&6" + KICK,
                 "",
-                "&7Kick " + targetName)
+                "&7" + KICK + targetName)
             .build().makeMenuTool();
 
       }
@@ -218,30 +239,25 @@ public final class ChooseActionMenu extends Menu {
   @Override
   public ItemStack getItemAt(final int slot) {
 
-    if (slot == PUNISH_SLOT) {
+    if (slot == PUNISH_SLOT)
       return punish.getItem();
-    }
 
-    if (slot == LIST_PUNISHES_SLOT) {
+    if (slot == LIST_PUNISHES_SLOT)
       return listPunishes.getItem();
-    }
 
-    if (slot == ChooseActionMenu.PLAYER_HEAD_SLOT) {
+    if (slot == ChooseActionMenu.PLAYER_HEAD_SLOT)
       return ItemCreator
           .ofSkullHash(textureProvider.getSkinTexture(target))
           .name("&7" + DATA_FOR + ": &6" + (targetOnline() ? "&a" : "&7") + targetName)
           .lores(ItemStacks.loreForPlayer(target, storageProvider, playerProvider))
           .build()
           .makeMenuTool();
-    }
 
-    if (slot == SETTINGS_SLOT) {
+    if (slot == SETTINGS_SLOT)
       return settings.getItem();
-    }
 
-    if (slot == KICK_SLOT) {
+    if (slot == KICK_SLOT)
       return kick.getItem();
-    }
 
     return null;
   }

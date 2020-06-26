@@ -8,17 +8,30 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NonNls;
 import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.fo.menu.model.ItemCreator;
-import org.mineacademy.fo.model.Replacer;
+import org.mineacademy.punishcontrol.core.injector.annotations.Localizable;
 import org.mineacademy.punishcontrol.core.punish.template.PunishTemplate;
 import org.mineacademy.punishcontrol.core.punish.template.PunishTemplates;
+import org.mineacademy.punishcontrol.core.setting.Replacer;
 import org.mineacademy.punishcontrol.spigot.menu.AbstractConfirmMenu;
 import org.mineacademy.punishcontrol.spigot.menus.template.PunishTemplateCreatorMenu;
 import org.mineacademy.punishcontrol.spigot.util.ItemStacks;
 
+@Localizable
 public abstract class AbstractTemplateBrowser
     extends AbstractBrowser<PunishTemplate> {
 
-  private static final Replacer replacer = Replacer.of(
+  // ----------------------------------------------------------------------------------------------------
+  // Localization
+  // ----------------------------------------------------------------------------------------------------
+
+  @NonNls
+  @Localizable("Parts.Yes")
+  private static String YES = "Yes";
+  @NonNls
+  @Localizable("Parts.No")
+  private static String NO = "No";
+  @Localizable("Menu.Template.Lore")
+  private static org.mineacademy.punishcontrol.core.setting.Replacer replacer = Replacer.of(
       "&6Type: &7{type}",
       "&6Duration: &7{duration}",
       "&6Reason: &7{reason}",
@@ -27,11 +40,11 @@ public abstract class AbstractTemplateBrowser
       "&6Super-Silent: {super-silent}",
       "&6Access: &7{access}",
       "Right-Click to remove"
-  );
-  @NonNls
-  private static final String YES = "Yes";
-  @NonNls
-  private static final String NO = "No";
+                                                                                           );
+
+  // ----------------------------------------------------------------------------------------------------
+  // Constructors & Fields
+  // ----------------------------------------------------------------------------------------------------
 
   protected AbstractTemplateBrowser(final Menu parent) {
     super(parent, PunishTemplates.list());
@@ -63,9 +76,9 @@ public abstract class AbstractTemplateBrowser
         PunishTemplates.hasAccess(getViewer().getUniqueId(), item)
             ? "&a" + YES
             : "&c" + NO
-    );
+                    );
 
-    creator.lores(Arrays.asList(replacer.getReplacedMessage()));
+    creator.lores(Arrays.asList(replacer.replacedMessage()));
     return creator.build().makeMenuTool();
   }
 

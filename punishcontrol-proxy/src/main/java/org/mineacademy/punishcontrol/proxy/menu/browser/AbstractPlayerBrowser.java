@@ -9,6 +9,7 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 import lombok.NonNull;
 import lombok.val;
+import org.jetbrains.annotations.NonNls;
 import org.jetbrains.annotations.Nullable;
 import org.mineacademy.burst.item.Item;
 import org.mineacademy.burst.menu.AbstractSearchableBrowser;
@@ -27,10 +28,17 @@ import org.mineacademy.punishcontrol.core.setting.Replacer;
 @Localizable
 public abstract class AbstractPlayerBrowser extends AbstractSearchableBrowser<UUID> {
 
+  // ----------------------------------------------------------------------------------------------------
   // Localization
+  // ----------------------------------------------------------------------------------------------------
+
+  @NonNls @Localizable("Parts.Players")
+  private static String PLAYERS = "Players";
+  @NonNls @Localizable("Parts.Choose_Action")
+  private static String CHOOSE_ACTION = "Choose action";
 
   @Localizable("Menu.Proxy.PlayerBrowser.Information")
-  private static String[] PLAYER_BROWSER_INFORMATION = {
+  private static String[] MENU_INFORMATION = {
       "&7Menu to select",
       "&7an player"
   };
@@ -87,7 +95,7 @@ public abstract class AbstractPlayerBrowser extends AbstractSearchableBrowser<UU
         players);
     this.playerProvider = playerProvider;
     this.textureProvider = textureProvider;
-    setTitle("&8Players");
+    setTitle("&8" + PLAYERS);
 
     players.remove(FoConstants.CONSOLE);
   }
@@ -117,7 +125,7 @@ public abstract class AbstractPlayerBrowser extends AbstractSearchableBrowser<UU
     final Item item = Item.of(hash).name("§3" + name);
 
     if (lore(uuid) == null)
-      item.lore("&7Choose action");
+      item.lore("&7" + CHOOSE_ACTION);
     else
       item.lore(lore(uuid));
 
@@ -126,7 +134,7 @@ public abstract class AbstractPlayerBrowser extends AbstractSearchableBrowser<UU
 
   @Override
   protected final String[] getInfo() {
-    return PLAYER_BROWSER_INFORMATION;
+    return MENU_INFORMATION;
   }
 
   @Override

@@ -14,15 +14,17 @@ import org.mineacademy.bfo.debug.Debugger;
 import org.mineacademy.burst.item.Item;
 import org.mineacademy.burst.menu.AbstractSearchableBrowser;
 import org.mineacademy.punishcontrol.core.Searcher;
+import org.mineacademy.punishcontrol.core.injector.annotations.Localizable;
 import org.mineacademy.punishcontrol.core.setting.CustomItem;
 import org.mineacademy.punishcontrol.core.settings.ItemSettings;
 import org.mineacademy.punishcontrol.proxy.DaggerProxyComponent;
 import org.mineacademy.punishcontrol.proxy.menu.browser.AbstractMaterialBrowser;
 
+@Localizable
 public final class CustomItemBrowser extends AbstractSearchableBrowser<CustomItem> {
 
-  @NonNls
-  private static final String CUSTOM_ITEMS = "Custom items";
+  @NonNls @Localizable("Menu.Proxy.Custom_Item_Browser.Name")
+  private static String CUSTOM_ITEMS = "Custom items";
   private final ItemSettings itemSettings;
 
   public static void showTo(@NonNull final ProxiedPlayer player) {

@@ -15,9 +15,12 @@ public abstract class AbstractPunishTypeBrowser extends AbstractBrowser<PunishTy
 
   @Localizable("Parts.Select")
   private static String SELECT = "Select";
+  @Localizable("Menu.Proxy.PunishTypes.ChooseType_Lore")
+  private static String CHOOSE_TYPE = "Choose type";
 
   protected AbstractPunishTypeBrowser(final AbstractMenu parent) {
     super("PunishTypes", parent, Arrays.asList(PunishType.values()));
+    setTitle("&8" + CHOOSE_TYPE);
   }
 
   @Override

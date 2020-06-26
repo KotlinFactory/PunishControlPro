@@ -53,9 +53,13 @@ public class ChangingButton {
   // ----------------------------------------------------------------------------------------------------
 
   public ChangingButton lore(final String... lores) {
-    lore = new ArrayList<>(Arrays.asList(lores));
+    return lore(Arrays.asList(lores));
+  }
+
+  public ChangingButton lore(final List<String> lore) {
+    this.lore = lore;
     for (final ItemCreatorBuilder creator : creators)
-      creator.lores(Arrays.asList(lores));
+      creator.lores(lore);
     return this;
   }
 
@@ -92,5 +96,4 @@ public class ChangingButton {
     final Random random = new Random();
     return random.nextInt((max - min) + 1) + min;
   }
-
 }

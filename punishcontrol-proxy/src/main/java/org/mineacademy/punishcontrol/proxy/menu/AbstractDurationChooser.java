@@ -37,6 +37,10 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
   // ----------------------------------------------------------------------------------------------------
   // Localization
   // ----------------------------------------------------------------------------------------------------
+  @NonNls @Localizable("Parts.Apply")
+  private static final String APPLY = "Apply";
+  @NonNls @Localizable("Parts.Make_Permanent")
+  private static String MAKE_PERMANENT = "Make permanent";
   @NonNls @Localizable(value = "Menu.Choose_Duration")
   private static String CHOOSE_DURATION = "Choose duration";
   private static String EXPIRATION = "Expiration";
@@ -75,7 +79,7 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
     set(
         Item
             .of(ItemSettings.APPLY_ITEM.itemType())
-            .name("&aApply")
+            .name("&a" + APPLY)
             .lore("")
             .slot(APPLY_SLOT)
             .actionHandler("Apply")
@@ -132,7 +136,7 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
     set(
         Item
             .of(ItemType.REDSTONE_BLOCK)
-            .name("&4Make permanent")
+            .name("&4" + MAKE_PERMANENT)
             .lore("")
             .actionHandler("Perma")
             .slot(PERMANENT_SLOT)

@@ -48,8 +48,11 @@ public final class GroupBrowser extends AbstractBrowser<Group> {
       "&6Mute-Limit: &7{mute-limit}",
       "&6Warn-Limit: &7{warn-limit}",
       "&6Override-Punishes: &7{override}",
-      "&6Template only: &7{template_only}"
-  );
+      "&6Template only: &7{template_only}");
+
+  // ----------------------------------------------------------------------------------------------------
+  // Displaying
+  // ----------------------------------------------------------------------------------------------------
 
   public static void showTo(
       final ProxiedPlayer player,
@@ -57,7 +60,7 @@ public final class GroupBrowser extends AbstractBrowser<Group> {
       final PlayerSettingsMenu parent) {
     Scheduler.runAsync(
         () -> new GroupBrowser(parent, target).displayTo(player)
-    );
+                      );
   }
 
   public static void showTo(
@@ -65,7 +68,7 @@ public final class GroupBrowser extends AbstractBrowser<Group> {
       @NonNull final PlayerSettingsMenu parent) {
     Scheduler.runAsync(
         () -> new GroupBrowser(parent).displayTo(player)
-    );
+                      );
   }
 
   // ----------------------------------------------------------------------------------------------------
@@ -122,7 +125,7 @@ public final class GroupBrowser extends AbstractBrowser<Group> {
         group.overridePunishes() ? "&a" + YES : "&c" + NO,
         group.templateOnly() ? "&a" + YES : "&c" + NO
 
-    );
+                          );
 
     //TODO CHECK FOR ERRORS: WHAT IF THE MATERIAL IS INVALID
     final ItemType material = ItemType.valueOf(group.item());
@@ -142,10 +145,9 @@ public final class GroupBrowser extends AbstractBrowser<Group> {
 
   @Override
   public void reDisplay() {
-    if (target == null) {
+    if (target == null)
       showTo(player, parent);
-    } else {
+    else
       showTo(getPlayer(), target, parent);
-    }
   }
 }

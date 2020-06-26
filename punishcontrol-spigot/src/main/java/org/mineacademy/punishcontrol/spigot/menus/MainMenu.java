@@ -2,6 +2,7 @@ package org.mineacademy.punishcontrol.spigot.menus;
 
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import javax.inject.Inject;
 import lombok.NonNull;
 import lombok.val;
@@ -14,6 +15,7 @@ import org.mineacademy.fo.menu.button.Button;
 import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.fo.plugin.SimplePlugin;
 import org.mineacademy.fo.remain.CompMaterial;
+import org.mineacademy.punishcontrol.core.injector.annotations.Localizable;
 import org.mineacademy.punishcontrol.core.providers.TextureProvider;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
 import org.mineacademy.punishcontrol.spigot.Scheduler;
@@ -28,38 +30,69 @@ import org.mineacademy.punishcontrol.spigot.util.ItemStacks;
 
 public final class MainMenu extends ChangingMenu {
 
-  public static final int PLAYER_BROWSER_SLOT = 9 * 2 + 6;
-  private static final String[] BROWSE_PLAYERS_LORE = {
+// ----------------------------------------------------------------------------------------------------
+  // Localization
+  // ----------------------------------------------------------------------------------------------------
+
+  @NonNls
+  @Localizable("Parts.Punishments")
+  private static String PUNISHMENTS = "Punishments";
+  @Localizable("Parts.CreateNew")
+  private static String CREATE_NEW_NAME = "Create New";
+  @Localizable("Menu.Proxy.Create_New_Lore")
+  private static String[] CREATE_NEW_LORE = {
+      " ",
+      "&7Create new punishment"};
+
+  @Localizable("Parts.Settings")
+  private static String SETTINGS = "Settings";
+
+  @Localizable(value = "Menu.Proxy.Main.View_Settings_Lore")
+  private static String VIEW_SETTINGS = "View Settings for";
+
+  @Localizable(value = "Menu.Proxy.Main.Player_Lore")
+  private static List<String> PLAYER_LORE = Arrays.asList(
       "&7View players",
       "&7to select",
       "&7one for more",
-      "&7actions"};
-  @NonNls
-  private static final String PLAYERS = "Players";
-  @NonNls
-  private static final String PUNISHMENTS = "Punishments";
-  private static final String[] BROWSER_PUNISHMENTS_LORE = {
-      "",
+      "&7actions");
+
+  @Localizable(value = "Parts.Players")
+  private static String PLAYERS = "Players";
+
+  @Localizable(value = "Menu.Main.Punish_Lore")
+  private static List<String> punishLore = Arrays.asList(
       "Browse created punishments.",
       "Right click to view",
-      "punished players"};
-  private static final String[] CREATE_NEW_PUNISHMENT_LORE = {" ", "Make new punishment"};
-  @NonNls
-  private static final String CREATE_NEW = "Create New";
-  @NonNls
-  private static final String SETTINGS = "Settings";
-  @NonNls
-  private static final String VIEW_SETTINGS_FOR = "View Settings for";
-  private final Button punishesButton;
-  private final Button newButton;
-  private final Button settingsButton;
+      "punished players");
+
+  // ----------------------------------------------------------------------------------------------------
+  // Button positions
+  // ----------------------------------------------------------------------------------------------------
+
+  private static final int PLAYER_BROWSER_SLOT = 9 * 2 + 6; // 24
+  private static final int PUNISHES_BUTTON_SLOT = 9 * 2 + 2; // 20
+  private static final int NEW_PUNISH_BUTTON_SLOT = 9 + 4; // 12
+  private static final int SETTINGS_BUTTON_SLOT = 9 * 3 + 4; // 30
+
+  // ----------------------------------------------------------------------------------------------------
+  // Displaying
+  // ----------------------------------------------------------------------------------------------------
 
   public static void showTo(@NonNull final Player player) {
     Scheduler.runAsync(() -> {
       final val menu = DaggerSpigotComponent.create().menuMain();
-      menu.displayTo(player, true);
+      menu.displayTo(player);
     });
   }
+
+  // ----------------------------------------------------------------------------------------------------
+  // Fields & Constructor's
+  // ----------------------------------------------------------------------------------------------------
+
+  private final Button punishesButton;
+  private final Button newButton;
+  private final Button settingsButton;
 
   @Inject
   public MainMenu(final TextureProvider textureProvider) {
@@ -70,10 +103,8 @@ public final class MainMenu extends ChangingMenu {
                 .fromCustomHashes(
                     textureProvider.listTextures())
                 .name("&6" + PLAYERS)
-                .slot(24)
-                .lore(
-                    BROWSE_PLAYERS_LORE)
-        ));
+                .slot(PLAYER_BROWSER_SLOT)
+                .lore(PLAYER_LORE)));
 
     setSize(9 * 5);
     setTitle("§3Punish§bControl");
@@ -95,8 +126,8 @@ public final class MainMenu extends ChangingMenu {
             .of(
                 CompMaterial.CHEST,
                 "&6" + PUNISHMENTS,
-                BROWSER_PUNISHMENTS_LORE
-            )
+                punishLore
+               )
             .glow(true).build().make();
       }
     };
@@ -116,8 +147,8 @@ public final class MainMenu extends ChangingMenu {
       public ItemStack getItem() {
         return ItemCreator
             .of(ItemStacks.cyanDye())
-            .name("&6" + CREATE_NEW)
-            .lores(Arrays.asList(CREATE_NEW_PUNISHMENT_LORE))
+            .name("&6" + CREATE_NEW_NAME)
+            .lores(Arrays.asList(CREATE_NEW_LORE))
             .build().make();
       }
     };
@@ -137,10 +168,10 @@ public final class MainMenu extends ChangingMenu {
             .of(
                 CompMaterial.COMPARATOR,
                 "&6" + SETTINGS,
-                "&7" + VIEW_SETTINGS_FOR,
+                "&7" + VIEW_SETTINGS,
                 SimplePlugin.getNamed(),
                 ""
-            )
+               )
             .build().make();
       }
     };

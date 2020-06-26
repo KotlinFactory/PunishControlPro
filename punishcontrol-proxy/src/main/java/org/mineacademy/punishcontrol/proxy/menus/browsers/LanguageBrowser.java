@@ -34,7 +34,7 @@ import org.mineacademy.punishcontrol.proxy.menu.AbstractConfirmMenu;
 public final class LanguageBrowser extends AbstractBrowser<Yaml> {
 
   @NonNls
-  @Localizable("IRGEND_EIN_PATH")
+  @Localizable("Menu.Proxy.LanguageBrowser.IS_CURRENT_LANGUAGE_CLICK_TO_EDIT")
   private static String IS_CURRENT_LANGUAGE_CLICK_TO_EDIT = "Is current language. Click to edit";
   @Localizable("Parts.Languages")
   private static String LANGUAGES = "Languages";

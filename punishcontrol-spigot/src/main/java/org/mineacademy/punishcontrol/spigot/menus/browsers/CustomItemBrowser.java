@@ -13,16 +13,18 @@ import org.mineacademy.fo.debug.Debugger;
 import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.fo.remain.CompMaterial;
 import org.mineacademy.punishcontrol.core.Searcher;
+import org.mineacademy.punishcontrol.core.injector.annotations.Localizable;
 import org.mineacademy.punishcontrol.core.setting.CustomItem;
 import org.mineacademy.punishcontrol.core.settings.ItemSettings;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
 import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractMaterialBrowser;
 import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractSearchableBrowser;
 
+@Localizable
 public final class CustomItemBrowser extends AbstractSearchableBrowser<CustomItem> {
 
-  @NonNls
-  private static final String CUSTOM_ITEMS = "Custom items";
+  @NonNls @Localizable("Menu.Proxy.Custom_Item_Browser.Name")
+  private static String CUSTOM_ITEMS = "Custom items";
   private final ItemSettings itemSettings;
 
   public static void showTo(@NonNull final Player player) {

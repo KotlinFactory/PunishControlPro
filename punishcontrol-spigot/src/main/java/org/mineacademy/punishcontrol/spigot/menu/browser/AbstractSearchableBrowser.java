@@ -11,12 +11,16 @@ import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.fo.menu.button.Button;
 import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.fo.remain.CompMaterial;
+import org.mineacademy.punishcontrol.core.injector.annotations.Localizable;
 import org.mineacademy.punishcontrol.spigot.conversations.SearchConversation;
 
+@Localizable
 public abstract class AbstractSearchableBrowser<T> extends AbstractBrowser<T> {
 
   @NonNls
-  private static final String SEARCH = "Search";
+  @Localizable("Parts.Search")
+  private static String SEARCH = "Search";
+  @Localizable("Menus.Proxy.AbstractSearchableBrowser.Search_Lore")
   private static final String[] SEARCH_FOR_A_VALUE = {
       "&7Search for a value",
   };
@@ -61,13 +65,11 @@ public abstract class AbstractSearchableBrowser<T> extends AbstractBrowser<T> {
 
     val superReturnValue = super.getItemAt(slot);
 
-    if (superReturnValue != null) {
+    if (superReturnValue != null)
       return superReturnValue;
-    }
 
-    if (slot == getSize() - 5) {
+    if (slot == getSize() - 5)
       return searchButton.getItem();
-    }
 
     return null;
   }

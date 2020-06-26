@@ -20,6 +20,10 @@ import org.mineacademy.punishcontrol.proxy.menus.template.PunishTemplateCreatorM
 public abstract class AbstractTemplateBrowser
     extends AbstractBrowser<PunishTemplate> {
 
+  // ----------------------------------------------------------------------------------------------------
+  // Localization
+  // ----------------------------------------------------------------------------------------------------
+
   @NonNls
   @Localizable("Parts.Yes")
   private static String YES = "Yes";
@@ -36,7 +40,7 @@ public abstract class AbstractTemplateBrowser
       "&6Super-Silent: {super-silent}",
       "&6Access: &7{access}",
       "Right-Click to remove"
-  );
+                                                );
 
   // ----------------------------------------------------------------------------------------------------
   // Constructors & Fields
@@ -76,7 +80,7 @@ public abstract class AbstractTemplateBrowser
         PunishTemplates.hasAccess(getPlayer().getUniqueId(), item)
             ? "&a" + YES
             : "&c" + NO
-    );
+                    );
 
     creator.lore(Arrays.asList(replacer.replacedMessage()));
     return creator.build();

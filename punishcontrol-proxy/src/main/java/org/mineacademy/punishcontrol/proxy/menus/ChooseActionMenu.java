@@ -46,16 +46,42 @@ public final class ChooseActionMenu extends AbstractMenu implements Listener {
   @Localizable("Parts.Action_For")
   private static String ACTION_FOR = "Action for";
 
+  @NonNls @Localizable("Parts.Punishments")
+  private static String PUNISHMENTS = "Punishments";
+  @NonNls @Localizable("Menu.Proxy.ChooseAction.Player_Offline_Lore")
+  private static String[] PLAYER_IS_OFFLINE_LORE = {
+      " ",
+      "&cDisabled:",
+      "&7Player is offline"};
+  @NonNls @Localizable("Menu.Proxy.ChooseAction.View_Punishments")
+  private static String[] VIEW_PUNISHMENT_LORE = {
+      "",
+      "&7View punishments"};
+  @NonNls @Localizable("Parts.Settings")
+  private static String SETTINGS = "Settings";
+  @NonNls @Localizable("Parts.Kick")
+  private static String KICK = "Kick";
+  @NonNls @Localizable("Parts.Data_For")
+  private static String DATA_FOR = "Data for";
+  @NonNls @Localizable("Parts.Punish")
+  private static String PUNISH = "Punish";
+  @NonNls @Localizable("Menu.Proxy.ChooseAction.Settings_Lore")
+  private static String[] SETTINGS_LORE = {
+      " ",
+      "&7Settings for player"};
+
   // ----------------------------------------------------------------------------------------------------
   // Button positions
-  // ----------------------------------------------------------------------------------------------------
+  // ---------------------------------------------------------------------------------------------------
   private static final int LIST_PUNISHES_SLOT = 11;
   private static final int PLAYER_HEAD_SLOT = 13;
   private static final int SETTINGS_SLOT = 15;
   private static final int KICK_SLOT = 7;
   private static final int PUNISH_SLOT = 1;
 
-  // Fields
+  // ----------------------------------------------------------------------------------------------------
+  // Constructors & Fields
+  // ----------------------------------------------------------------------------------------------------
 
   private final PlayerProvider playerProvider;
   private final TextureProvider textureProvider;
@@ -74,7 +100,7 @@ public final class ChooseActionMenu extends AbstractMenu implements Listener {
     this.textureProvider = textureProvider;
     this.storageProvider = storageProvider;
     this.target = target;
-    targetName = playerProvider.findNameUnsafe(target);
+    targetName = playerProvider.findName(target).orElse("unknown");
     ProxyServer.getInstance().getPluginManager()
         .registerListener(
             SimplePlugin.getInstance(),
@@ -114,82 +140,74 @@ public final class ChooseActionMenu extends AbstractMenu implements Listener {
     set(
         Item
             .of(textureProvider.getSkinTexture(target))
-            .name("&7Data for: &6" + (targetOnline() ? "&a" : "&7") + targetName)
+            .name("&7" + DATA_FOR + ": &6" + (targetOnline() ? "&a" : "&7") + targetName)
             .lore(ItemUtil.loreForPlayer(target, storageProvider, playerProvider))
             .slot(PLAYER_HEAD_SLOT)
             .actionHandler("NoAction")
-    );
+       );
 
     set(
         Item
             .of(
                 ItemType.ANVIL,
-                "&6Punish",
+                "&6" + PUNISH,
                 " ",
-                "&7Punishment: " + playerProvider.findNameUnsafe(target))
+                "&7" + PUNISH + ": " + playerProvider.findName(target).orElse("unknown"))
             .slot(PUNISH_SLOT)
             .actionHandler("Punish")
-    );
+       );
 
     set(
         Item
             .of(
                 ItemType.CHEST,
-                "&6Punishments",
-                "",
-                "&7View punishments")
+                "&6" + PUNISHMENTS,
+                VIEW_PUNISHMENT_LORE)
             .slot(LIST_PUNISHES_SLOT)
             .actionHandler("ListPunishes")
-    );
+       );
 
-    if (!targetOnline()) {
+    if (!targetOnline())
       set(Item
           .of(
               ItemType.COMPARATOR,
-              "&6Settings",
-              " ",
-              "&cDisabled:",
-              "&7Player is offline")
+              "&6" + SETTINGS,
+              PLAYER_IS_OFFLINE_LORE)
           .slot(SETTINGS_SLOT)
           .actionHandler("Settings")
-      );
-    } else {
+         );
+    else
       set(
           Item
               .of(
                   ItemType.COMPARATOR,
-                  "&6Settings",
-                  " ",
-                  "&7Settings for player")
+                  "&6" + SETTINGS,
+                  SETTINGS_LORE)
               .slot(SETTINGS_SLOT)
               .actionHandler("Settings")
-      );
-    }
+         );
 
-    if (!targetOnline()) {
+    if (!targetOnline())
       set(
           Item
               .of(
                   ItemType.BLAZE_POWDER,
-                  "&6Kick",
-                  "",
-                  "&cDisabled:",
-                  "&7Player is offline")
+                  "&6" + KICK,
+                  PLAYER_IS_OFFLINE_LORE)
               .slot(KICK_SLOT)
               .actionHandler("Kick")
-      );
-    } else {
+         );
+    else
       set(
           Item
               .of(
                   ItemType.BLAZE_POWDER,
-                  "&6Kick",
+                  "&6" + KICK,
                   "",
                   "&7Kick " + targetName)
               .slot(KICK_SLOT)
               .actionHandler("Kick")
-      );
-    }
+         );
   }
 
   @Override

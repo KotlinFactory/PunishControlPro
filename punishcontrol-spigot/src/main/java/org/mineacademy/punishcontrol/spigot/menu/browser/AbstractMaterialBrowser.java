@@ -11,28 +11,39 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NonNls;
 import org.mineacademy.fo.MinecraftVersion;
 import org.mineacademy.fo.MinecraftVersion.V;
 import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.fo.remain.CompMaterial;
 import org.mineacademy.punishcontrol.core.Searcher;
+import org.mineacademy.punishcontrol.core.injector.annotations.Localizable;
 import org.mineacademy.punishcontrol.spigot.util.ItemStacks;
 import org.mineacademy.punishcontrol.spigot.util.Schedulable;
 
+@Localizable
 public abstract class AbstractMaterialBrowser
     extends AbstractSearchableBrowser<CompMaterial>
     implements Schedulable {
 
-  private static final String[] MENU_INFORMATION = {
+  // ----------------------------------------------------------------------------------------------------
+  // Localization
+  // ----------------------------------------------------------------------------------------------------
+
+  @Localizable("Menu.Proxy.Material-Browser.MenuInformation")
+  private static String[] MENU_INFORMATION = {
       "",
       "&7Menu to select materials",
       "&7that fit your wishes best",
       "&7more items will be added soon"
   };
-  @NonNls
-  private static final String MATERIALS = "Materials";
+  @Localizable("Parts.Materials")
+  private static String MATERIALS = "Materials";
+
+  // ----------------------------------------------------------------------------------------------------
+  // Static fields
+  // ----------------------------------------------------------------------------------------------------
+
   private static List<CompMaterial> items = Arrays
       .stream(Material.values())
       .map(CompMaterial::fromMaterial)
@@ -41,11 +52,13 @@ public abstract class AbstractMaterialBrowser
       .filter(Objects::nonNull)
       .filter(AbstractMaterialBrowser::isItem)
       .collect(Collectors.toList());
+  // ----------------------------------------------------------------------------------------------------
+  // Fields and constructors
+  // ----------------------------------------------------------------------------------------------------
 
   private static boolean isItem(final CompMaterial material) {
-    if (MinecraftVersion.newerThan(V.v1_13)) {
+    if (MinecraftVersion.newerThan(V.v1_13))
       return material.getMaterial().isItem() && !material.getMaterial().isItem();
-    }
     return ItemStacks.isItem(material) && material.getMaterial() != Material.AIR;
   }
 

@@ -28,13 +28,17 @@ public abstract class AbstractPunishBrowser extends AbstractBrowser<Punish> {
   // Localization
   // ----------------------------------------------------------------------------------------------------
 
+  @Localizable("Menu.Proxy.Menu.Punish.Menu_Information")
+  private static String[] MENU_INFORMATION = {"View punishes"};
+
   @NonNls
   @Localizable("Menu.Proxy.Punish.Title")
   private static String BROWSE_PUNISHES = "Browse Punishes";
-
   @NonNls
   @Localizable("Menu.Proxy.Punish.Remove")
   private static String RIGHT_CLICK_TO_REMOVE = "Right-Click to remove";
+  @NonNls @Localizable("Parts.Removed")
+  private static String REMOVED = "Removed";
   @Localizable("Menu.Proxy.Punish.Already_Removed")
   private static String PUNISH_IS_ALREADY_REMOVED = "Punish is already removed";
 
@@ -47,11 +51,10 @@ public abstract class AbstractPunishBrowser extends AbstractBrowser<Punish> {
       "&6Duration: &7{duration}",
       "&6End: &7{end}",
       "&6Creator: &7{creator}",
-      "&7Right click to remove"
-  );
+      "&7Right click to remove");
 
   // ----------------------------------------------------------------------------------------------------
-  // Class
+  // Fields & constructor
   // ----------------------------------------------------------------------------------------------------
 
   protected final PlayerProvider playerProvider;
@@ -77,7 +80,7 @@ public abstract class AbstractPunishBrowser extends AbstractBrowser<Punish> {
 
     final String end =
         punish.isOld()
-            ? "&cRemoved"
+            ? "&c" + REMOVED
             : Settings.Advanced.formatDate(punish.getEndTime());
 
     LORE_REPLACER.find("target", "reason", "creation", "duration", "end", "creator");
@@ -131,6 +134,6 @@ public abstract class AbstractPunishBrowser extends AbstractBrowser<Punish> {
 
   @Override
   protected String[] getInfo() {
-    return new String[]{"View punishes"};
+    return MENU_INFORMATION;
   }
 }

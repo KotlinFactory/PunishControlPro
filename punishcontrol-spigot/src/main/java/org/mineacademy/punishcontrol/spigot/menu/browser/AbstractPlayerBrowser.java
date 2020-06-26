@@ -15,20 +15,43 @@ import org.jetbrains.annotations.Nullable;
 import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.punishcontrol.core.fo.constants.FoConstants;
+import org.mineacademy.punishcontrol.core.injector.annotations.Localizable;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.providers.TextureProvider;
 import org.mineacademy.punishcontrol.core.setting.Replacer;
 import org.mineacademy.punishcontrol.spigot.util.ItemStacks;
 
+@Localizable
 public abstract class AbstractPlayerBrowser extends AbstractSearchableBrowser<UUID> {
 
-  private static final String CHOOSE_ACTION = "&7Choose action";
-  @NonNls
-  private static final String PLAYERS = "Players";
-  protected final PlayerProvider playerProvider;
-  protected final TextureProvider textureProvider;
+  // ----------------------------------------------------------------------------------------------------
+  // Localization
+  // ----------------------------------------------------------------------------------------------------
+
+  @NonNls @Localizable("Parts.Players")
+  private static String PLAYERS = "Players";
+
+  @NonNls @Localizable("Parts.Choose_Action")
+  private static String CHOOSE_ACTION = "Choose action";
+
+  @Localizable("Menu.Proxy.PlayerBrowser.Information")
+  private static String[] MENU_INFORMATION = {
+      "&7Menu to select",
+      "&7an player"
+  };
+  @Localizable("Menu.Proxy.PlayerBrowser.Compass_Lore")
+  private static String[] COMPASS_LORE = {"&7Search for a player"};
+
+  @Localizable("Menu.Proxy.Results_Found")
   private static Replacer results = Replacer
       .of("Found {results} result(s)");
+
+  // ----------------------------------------------------------------------------------------------------
+  // Fields & Constructor's
+  // ----------------------------------------------------------------------------------------------------
+
+  protected final PlayerProvider playerProvider;
+  protected final TextureProvider textureProvider;
 
   public AbstractPlayerBrowser(
       final PlayerProvider playerProvider,
@@ -50,7 +73,7 @@ public abstract class AbstractPlayerBrowser extends AbstractSearchableBrowser<UU
         onlineOnly
             ? playerProvider.getOnlinePlayers()
             : playerProvider.offlinePlayers()
-    );
+        );
   }
 
   protected AbstractPlayerBrowser(
@@ -58,7 +81,7 @@ public abstract class AbstractPlayerBrowser extends AbstractSearchableBrowser<UU
       final TextureProvider textureProvider,
       final Menu mainMenu,
       final Collection<UUID> players
-  ) {
+                                 ) {
 
     super(mainMenu, players);
     this.playerProvider = playerProvider;
@@ -103,10 +126,7 @@ public abstract class AbstractPlayerBrowser extends AbstractSearchableBrowser<UU
 
   @Override
   protected final String[] getInfo() {
-    return new String[]{
-        "&7Menu to select",
-        "&7an player"
-    };
+    return MENU_INFORMATION;
   }
 
   public void redisplay(@NonNull Collection<UUID> newContent) {
@@ -147,6 +167,6 @@ public abstract class AbstractPlayerBrowser extends AbstractSearchableBrowser<UU
 
   @Override
   protected String[] compassLore() {
-    return new String[]{"&7Search for a player"};
+    return COMPASS_LORE;
   }
 }
