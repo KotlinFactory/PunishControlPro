@@ -208,7 +208,7 @@ public final class PunishCreatorMenu extends AbstractMenu {
     this.storageProvider = storageProvider;
     if (punishBuilder().target() != null) {
       setTitle("&8Punish " + playerProvider
-          .findNameUnsafe(punishBuilder().target()));
+          .findName(punishBuilder().target()).orElse("unknown"));
     } else {
       setTitle("&8Create punish");
     }
@@ -280,7 +280,7 @@ public final class PunishCreatorMenu extends AbstractMenu {
         set(
             Item
                 .of(ItemUtil.forPunishType(punishBuilder().punishType()))
-                .name("&6#" + CHOOSE_ACTION)
+                .name("&6" + CHOOSE_ACTION)
                 .lore(CHOOSE_TEMPLATE_LORE)
                 .addLore("&7" + CURRENT + ": &6" + punishTemplate.name())
                 .slot(CHOOSE_TEMPLATE_SLOT)

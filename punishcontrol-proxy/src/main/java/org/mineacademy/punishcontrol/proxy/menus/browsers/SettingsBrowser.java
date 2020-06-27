@@ -21,17 +21,29 @@ import org.mineacademy.punishcontrol.proxy.menus.settings.SettingTypes;
 @Localizable
 public final class SettingsBrowser extends AbstractSearchableBrowser<SettingTypes> {
 
+  // ----------------------------------------------------------------------------------------------------
+  // Localization
+  // ----------------------------------------------------------------------------------------------------
+
   @NonNls
   private static final String INSUFFICIENT_PERMISSION = "Insufficient permission";
   @Localizable("Menu.Settings.Information")
-  private static String[] MENU_INFORMATION = {"&7Menu to choose", "&7a setting"};
+  private static final String[] MENU_INFORMATION = {"&7Menu to choose", "&7a setting"};
   @NonNls
   @Localizable("Menu.Settings.Choose.Name")
-  private static String CHOOSE_SETTINGS = "Choose Settings";
+  private static final String CHOOSE_SETTINGS = "Choose Settings";
+
+  // ----------------------------------------------------------------------------------------------------
+  // Displaying
+  // ----------------------------------------------------------------------------------------------------
 
   public static void showTo(@NonNull final ProxiedPlayer player) {
     DaggerProxyComponent.create().settingsBrowser().displayTo(player);
   }
+
+  // ----------------------------------------------------------------------------------------------------
+  // Fields & Constructor's
+  // ----------------------------------------------------------------------------------------------------
 
   @Inject
   public SettingsBrowser(
@@ -47,6 +59,10 @@ public final class SettingsBrowser extends AbstractSearchableBrowser<SettingType
     super("SettingsBrowser", mainMenu, settings);
     setTitle("&8" + CHOOSE_SETTINGS);
   }
+
+  // ----------------------------------------------------------------------------------------------------
+  // Overridden methods
+  // ----------------------------------------------------------------------------------------------------
 
   @Override
   protected void onClick(final ClickType clickType, final SettingTypes item) {

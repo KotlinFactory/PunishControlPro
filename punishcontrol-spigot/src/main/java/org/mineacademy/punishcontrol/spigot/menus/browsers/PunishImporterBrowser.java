@@ -19,12 +19,24 @@ import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractBrowser;
 
 public final class PunishImporterBrowser extends AbstractBrowser<PunishImporter> {
 
+  // Localization
   @NonNls
-  private static final String IMPORT_PUNISHMENTS = "Import punishments";
+  private static final String STARTED_IMPORTING = "Started importing";
+  @NonNls
+  private static final String FINISHED_IMPORTING = "Finished importing;)";
+  @NonNls
+  private static final String CAN_T_IMPORT_FROM_THIS_IMPORTER = "Can't import from this importer!";
   @NonNls
   private static final String YES = "yes";
   @NonNls
   private static final String NO = "no";
+  @NonNls
+  private static final String IMPORT_PUNISHMENTS = "Import punishments";
+  private static final String[] MENU_INFORMATION = {
+      "Menu to import punishment"
+  };
+  @NonNls
+  private static final String IS_APPLICABLE = "Is applicable:";
 
   public static void showTo(@NonNull final Player player) {
     Scheduler.runAsync(() -> {
@@ -67,7 +79,7 @@ public final class PunishImporterBrowser extends AbstractBrowser<PunishImporter>
       Player player, PunishImporter punishImporter,
       ClickType click) {
     if (!punishImporter.applicable()) {
-      animateTitle("&cCan't import from this importer!");
+      animateTitle("&c" + CAN_T_IMPORT_FROM_THIS_IMPORTER);
       return;
     }
 
@@ -75,10 +87,10 @@ public final class PunishImporterBrowser extends AbstractBrowser<PunishImporter>
 
       @Override
       public void onConfirm() {
-        animateTitle("&8Started importing");
+        animateTitle("&8" + STARTED_IMPORTING);
         async(() -> {
           punishImporter.importAll();
-          animateTitle("&aFinished importing;)");
+          animateTitle("&a" + FINISHED_IMPORTING);
         });
       }
 
@@ -87,13 +99,6 @@ public final class PunishImporterBrowser extends AbstractBrowser<PunishImporter>
         PunishImporterBrowser.showTo(getViewer());
       }
     }.displayTo(getViewer());
-
-    later(() -> {
-
-      animateTitle("&6Imported punishments");
-      setTitle("&6Imported punishments");
-
-    }, 2 * 20);
   }
 
   @Override

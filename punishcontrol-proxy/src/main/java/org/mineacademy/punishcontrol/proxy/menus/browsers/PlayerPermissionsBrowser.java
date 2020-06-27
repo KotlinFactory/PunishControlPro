@@ -53,6 +53,10 @@ public final class PlayerPermissionsBrowser extends AbstractBrowser<Permission> 
       "&7be temporary"
   };
 
+  // ----------------------------------------------------------------------------------------------------
+  // Displaying
+  // ----------------------------------------------------------------------------------------------------
+
   public static void showTo(
       final ProxiedPlayer player,
       final UUID target,

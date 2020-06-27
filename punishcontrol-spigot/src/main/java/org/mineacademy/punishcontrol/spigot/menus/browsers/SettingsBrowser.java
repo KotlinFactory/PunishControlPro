@@ -12,37 +12,57 @@ import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NonNls;
 import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.punishcontrol.core.Searcher;
+import org.mineacademy.punishcontrol.core.injector.annotations.Localizable;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
 import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractSearchableBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.MainMenu;
 import org.mineacademy.punishcontrol.spigot.menus.settings.SettingTypes;
 
+@Localizable
 public final class SettingsBrowser extends AbstractSearchableBrowser<SettingTypes> {
+
+  // ----------------------------------------------------------------------------------------------------
+  // Localization
+  // ----------------------------------------------------------------------------------------------------
 
   @NonNls
   private static final String INSUFFICIENT_PERMISSION = "Insufficient permission";
-  @NonNls
-  private static final String CHOOSE_SETTING = "Choose Setting";
+  @Localizable("Menu.Settings.Information")
   private static final String[] MENU_INFORMATION = {"&7Menu to choose", "&7a setting"};
+  @NonNls
+  @Localizable("Menu.Settings.Choose.Name")
+  private static final String CHOOSE_SETTINGS = "Choose Settings";
+
+  // ----------------------------------------------------------------------------------------------------
+  // Displaying
+  // ----------------------------------------------------------------------------------------------------
 
   public static void showTo(@NonNull final Player player) {
     DaggerSpigotComponent.create().settingsBrowser().displayTo(player, true);
   }
+
+  // ----------------------------------------------------------------------------------------------------
+  // Fields & Constructor's
+  // ----------------------------------------------------------------------------------------------------
 
   @Inject
   public SettingsBrowser(
       @NonNull final MainMenu mainMenu,
       @NonNull @Named("settings") final Collection<SettingTypes> settings) {
     super(mainMenu, settings);
-    setTitle("&8" + CHOOSE_SETTING + "s");
+    setTitle("&8" + CHOOSE_SETTINGS + "s");
   }
 
   public SettingsBrowser(
       @NonNull final Menu mainMenu,
       @NonNull @Named("settings") final Collection<SettingTypes> settings) {
     super(mainMenu, settings);
-    setTitle("&8" + CHOOSE_SETTING + "s");
+    setTitle("&8" + CHOOSE_SETTINGS + "s");
   }
+
+  // ----------------------------------------------------------------------------------------------------
+  // Overridden methods
+  // ----------------------------------------------------------------------------------------------------
 
   @Override
   protected ItemStack convertToItemStack(final SettingTypes item) {

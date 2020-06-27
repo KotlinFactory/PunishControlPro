@@ -3,11 +3,7 @@ package org.mineacademy.punishcontrol.proxy.menus.browsers;
 import de.exceptionflug.mccommons.inventories.api.ClickType;
 import de.exceptionflug.protocolize.items.ItemStack;
 import de.exceptionflug.protocolize.items.ItemType;
-import de.exceptionflug.protocolize.world.Sound;
-import de.exceptionflug.protocolize.world.SoundCategory;
-import de.exceptionflug.protocolize.world.WorldModule;
 import java.util.Collection;
-import java.util.concurrent.TimeUnit;
 import javax.inject.Inject;
 import javax.inject.Named;
 import lombok.NonNull;
@@ -28,7 +24,7 @@ public final class PunishImporterBrowser extends AbstractBrowser<PunishImporter>
   @NonNls
   private static final String FINISHED_IMPORTING = "Finished importing;)";
   @NonNls
-  private static final String CAN_T_IMPORT_FROM_THIS_IMPORTER = "cCan't import from this importer!";
+  private static final String CAN_T_IMPORT_FROM_THIS_IMPORTER = "Can't import from this importer!";
   @NonNls
   private static final String YES = "yes";
   @NonNls
@@ -40,6 +36,10 @@ public final class PunishImporterBrowser extends AbstractBrowser<PunishImporter>
   };
   @NonNls
   private static final String IS_APPLICABLE = "Is applicable:";
+
+  // ----------------------------------------------------------------------------------------------------
+  // Showing up
+  // ----------------------------------------------------------------------------------------------------
 
   public static void showTo(@NonNull final ProxiedPlayer player) {
     Scheduler.runAsync(() -> {
@@ -83,17 +83,17 @@ public final class PunishImporterBrowser extends AbstractBrowser<PunishImporter>
       }
     }.displayTo(getPlayer());
 
-    later(() -> {
-      setTitle("&6Imported punishments");
-      build();
-
-      WorldModule.playSound(
-          getPlayer(),
-          Sound.ENTITY_ARROW_HIT_PLAYER,
-          SoundCategory.NEUTRAL,
-          20f,
-          10f);
-    }, 3, TimeUnit.SECONDS);
+//    later(() -> {
+//      setTitle("&6Imported punishments");
+//      build();
+//
+//      WorldModule.playSound(
+//          getPlayer(),
+//          Sound.ENTITY_ARROW_HIT_PLAYER,
+//          SoundCategory.NEUTRAL,
+//          20f,
+//          10f);
+//    }, 3, TimeUnit.SECONDS);
   }
 
   @Override

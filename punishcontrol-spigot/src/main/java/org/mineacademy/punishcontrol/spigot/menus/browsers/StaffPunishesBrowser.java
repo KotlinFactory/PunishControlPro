@@ -8,6 +8,8 @@ import javax.inject.Inject;
 import lombok.NonNull;
 import lombok.val;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NonNls;
+import org.mineacademy.punishcontrol.core.injector.annotations.Localizable;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.providers.TextureProvider;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
@@ -21,21 +23,33 @@ import org.mineacademy.punishcontrol.spigot.menus.MainMenu;
  * Browser to browse punishments created by a given staff member
  */
 public final class StaffPunishesBrowser extends AbstractPunishBrowser {
+  // ----------------------------------------------------------------------------------------------------
+  // Localization
+  // ----------------------------------------------------------------------------------------------------
 
-  private static final String SHOW_PUNISHMENTS_CREATED_BY = "Show punishments created by {target}";
-  private static final String PUNISHMENTS_BY_TARGET = "Punishments by {target}";
-  private final UUID staffMember;
+  @NonNls @Localizable("Menu.Proxy.StaffPunishesBrowser.Show_Punishments_By")
+  private static final String SHOW_PUNISHMENTS_CREATED_BY = "Show punishments created by";
+
+  // ----------------------------------------------------------------------------------------------------
+  // Displaying
+  // ----------------------------------------------------------------------------------------------------
 
   public static void showTo(
       @NonNull final Player player,
       @NonNull final UUID staffMember) {
     Scheduler.runAsync(() -> {
-      Builder builder =
+      final StaffPunishesBrowser.Builder builder =
           DaggerSpigotComponent.create().staffPunishesBrowserBuilder();
       val browser = builder.build(staffMember);
       browser.displayTo(player);
     });
   }
+
+  // ----------------------------------------------------------------------------------------------------
+  // Fields & Constructor's
+  // ----------------------------------------------------------------------------------------------------
+
+  private final UUID staffMember;
 
   public StaffPunishesBrowser(
       @NonNull final MainMenu parent,
@@ -70,7 +84,7 @@ public final class StaffPunishesBrowser extends AbstractPunishBrowser {
 
     this.staffMember = staffMember;
 
-    setTitle("&8" + PUNISHMENTS_BY_TARGET
+    setTitle("&8" + SHOW_PUNISHMENTS_CREATED_BY
         .replace("{target}", playerProvider.findName(staffMember).orElse("unknown")));
 
 //   .displayTo(getPlayer());

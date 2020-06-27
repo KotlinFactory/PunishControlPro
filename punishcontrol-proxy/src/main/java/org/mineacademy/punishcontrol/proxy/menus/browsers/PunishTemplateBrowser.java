@@ -16,8 +16,7 @@ import org.mineacademy.punishcontrol.proxy.conversations.AddTemplateConversation
 import org.mineacademy.punishcontrol.proxy.menu.browser.AbstractTemplateBrowser;
 
 @Localizable
-public class
-PunishTemplateBrowser extends AbstractTemplateBrowser {
+public class PunishTemplateBrowser extends AbstractTemplateBrowser {
 
   @NonNls
   @Localizable("Menu.Template.Add.Name")
@@ -33,6 +32,10 @@ PunishTemplateBrowser extends AbstractTemplateBrowser {
 
   @Localizable("Parts.Punish_Templates")
   @NonNls private static String PUNISH_TEMPLATES = "PunishTemplates";
+
+  // ----------------------------------------------------------------------------------------------------
+  // Displaying
+  // ----------------------------------------------------------------------------------------------------
 
   public static void showTo(@NonNull final ProxiedPlayer player) {
     Scheduler.runAsync(() -> {
@@ -65,7 +68,7 @@ PunishTemplateBrowser extends AbstractTemplateBrowser {
               .lore(ADD_LORE)
               .slot(getMaxSize() - 5)
               .actionHandler("Add")
-         );
+      );
     }
   }
 

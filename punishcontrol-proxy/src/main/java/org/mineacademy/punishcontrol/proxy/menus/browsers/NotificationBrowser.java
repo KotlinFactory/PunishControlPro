@@ -20,15 +20,15 @@ import org.mineacademy.punishcontrol.proxy.menu.AbstractConfirmMenu;
 @Localizable
 public final class NotificationBrowser extends AbstractBrowser<Notification> {
 
-  @NonNls
-  private static final String NOTIFICATIONS = "Notifications";
-  @NonNls
-  private static final String RIGHT_CLICK_TO_DISMISS = "Right click to dismiss";
-
   // ----------------------------------------------------------------------------------------------------
   // Localization
   // ----------------------------------------------------------------------------------------------------
 
+  @NonNls
+  private static final String NOTIFICATIONS = "Notifications";
+  @NonNls
+  private static final String RIGHT_CLICK_TO_DISMISS = "Right click to dismiss";
+  @Localizable("Menu.Proxy.NotificationBrowser.Menu_Information")
   private static String[] MENU_INFORMATION = {
       "&7All current notifications",
       "&7are listed here"
@@ -60,9 +60,8 @@ public final class NotificationBrowser extends AbstractBrowser<Notification> {
 
   @Override
   protected void onClick(final ClickType clickType, final Notification notification) {
-    if (clickType != ClickType.RIGHT_CLICK) {
+    if (clickType != ClickType.RIGHT_CLICK)
       return;
-    }
     new AbstractConfirmMenu(this) {
       @Override
       public void onConfirm() {

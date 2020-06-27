@@ -16,7 +16,7 @@ import org.mineacademy.punishcontrol.core.util.PunishControlPermissions;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
 import org.mineacademy.punishcontrol.spigot.Players;
 import org.mineacademy.punishcontrol.spigot.menus.browsers.GroupBrowser;
-import org.mineacademy.punishcontrol.spigot.menus.browsers.PermissionsBrowser;
+import org.mineacademy.punishcontrol.spigot.menus.browsers.PlayerPermissionBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.setting.AbstractSettingsMenu;
 
 public final class PlayerSettingsMenu extends AbstractSettingsMenu {
@@ -84,12 +84,12 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
           animateTitle("&cTarget is offline");
           return;
         }
-        PermissionsBrowser.showTo(player, target, PlayerSettingsMenu.this);
+        PlayerPermissionBrowser.showTo(player, target, PlayerSettingsMenu.this);
       }
 
       @Override
       public ItemStack getItem() {
-        if (!targetOnline) {
+        if (!targetOnline)
           return ItemCreator
               .of(
                   CompMaterial.ICE,
@@ -99,7 +99,6 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
                   "&7target is offline")
               .build()
               .makeMenuTool();
-        }
 
         return ItemCreator
             .of(
@@ -119,7 +118,7 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
       public void onClickedInMenu(Player player, Menu menu, ClickType click) {
         if (!player.hasPermission(
             PunishControlPermissions.TOGGLE_PUNISHABLE.permission()
-        )) {
+                                 )) {
           animateTitle("&cNo access");
           return;
         }
@@ -129,7 +128,7 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
 
       @Override
       public ItemStack getItem() {
-        if (targetPunishable) {
+        if (targetPunishable)
           return ItemCreator
               .ofString(ItemSettings.DISABLED.itemType())
               .name("&6Toggle punishable")
@@ -138,12 +137,10 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
                       "",
                       "&7Click to make target unpunishable",
                       "&7Target is currently punishable"
-                  )
-              )
+                               )
+                    )
               .build()
               .makeMenuTool();
-
-        }
 
         return ItemCreator
             .ofString(ItemSettings.ENABLED.itemType())
@@ -153,8 +150,8 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
                     "",
                     "&7Click to make target punishable",
                     "&7Target is currently unpunishable"
-                )
-            )
+                             )
+                  )
             .build()
             .makeMenuTool();
 
@@ -164,22 +161,16 @@ public final class PlayerSettingsMenu extends AbstractSettingsMenu {
 
   @Override
   public ItemStack getItemAt(final int slot) {
-    if (slot == PERMISSION_BROWSER_SLOT) {
+    if (slot == PERMISSION_BROWSER_SLOT)
       return permissionBrowser.getItem();
-    }
-    if (slot == GROUP_BROWSER_SLOT) {
+    if (slot == GROUP_BROWSER_SLOT)
       return groupBrowser.getItem();
-    }
 
-    if (slot == TOGGLE_PUNISHABLE_SLOT) {
+    if (slot == TOGGLE_PUNISHABLE_SLOT)
       return togglePunishable.getItem();
-    }
 
     return null;
   }
 }
 
-// ----------------------------------------------------------------------------------------------------
-// Sub-Classes that are only needed for this menu
-// ----------------------------------------------------------------------------------------------------
 

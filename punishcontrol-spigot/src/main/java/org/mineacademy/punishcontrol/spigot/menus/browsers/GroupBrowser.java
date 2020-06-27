@@ -22,6 +22,10 @@ public final class GroupBrowser extends AbstractBrowser<Group> {
   // Localization
   // ----------------------------------------------------------------------------------------------------
 
+  @NonNls
+  @Localizable("Menu.Proxy.LanguageBrowser.IS_CURRENT_LANGUAGE_CLICK_TO_EDIT")
+  private static String IS_CURRENT_LANGUAGE_CLICK_TO_EDIT = "Is current language. Click to edit";
+
   @Localizable("Menu.Proxy.GroupBrowser.Information")
   public static String[] MENU_INFORMATION = {
       "&7Menu to view",

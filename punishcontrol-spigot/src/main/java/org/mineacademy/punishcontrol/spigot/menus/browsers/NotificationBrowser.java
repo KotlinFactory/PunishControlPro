@@ -9,6 +9,7 @@ import org.jetbrains.annotations.NonNls;
 import org.mineacademy.fo.Common;
 import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.fo.remain.CompMaterial;
+import org.mineacademy.punishcontrol.core.injector.annotations.Localizable;
 import org.mineacademy.punishcontrol.core.notification.Notification;
 import org.mineacademy.punishcontrol.core.notification.Notifications;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
@@ -18,18 +19,31 @@ import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractBrowser;
 
 public final class NotificationBrowser extends AbstractBrowser<Notification> {
 
+  // ----------------------------------------------------------------------------------------------------
+  // Localization
+  // ----------------------------------------------------------------------------------------------------
+
   @NonNls
   private static final String NOTIFICATIONS = "Notifications";
   @NonNls
   private static final String RIGHT_CLICK_TO_DISMISS = "Right click to dismiss";
-  private static final String[] MENU_INFORMATION = {
+  @Localizable("Menu.Proxy.NotificationBrowser.Menu_Information")
+  private static String[] MENU_INFORMATION = {
       "&7All current notifications",
       "&7are listed here"
   };
 
+  // ----------------------------------------------------------------------------------------------------
+  // Static methods
+  // ----------------------------------------------------------------------------------------------------
+
   public static void showTo(@NonNull final Player player) {
     Scheduler.runAsync(() -> new NotificationBrowser().displayTo(player));
   }
+
+  // ----------------------------------------------------------------------------------------------------
+  // Constructors
+  // ----------------------------------------------------------------------------------------------------
 
   private NotificationBrowser() {
     super(
@@ -56,9 +70,8 @@ public final class NotificationBrowser extends AbstractBrowser<Notification> {
   protected void onPageClick(
       final Player player, final Notification item,
       final ClickType click) {
-    if (!click.isRightClick()) {
+    if (!click.isRightClick())
       return;
-    }
 
     new AbstractConfirmMenu(this) {
       @Override

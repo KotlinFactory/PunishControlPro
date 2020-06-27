@@ -38,6 +38,7 @@ public final class PunishTemplateCreatorMenu extends AbstractMenu {
   // ----------------------------------------------------------------------------------------------------
   // Localization
   // ----------------------------------------------------------------------------------------------------
+
   @NonNls
   @Localizable("Menu.Proxy.TemplateCreator.Name")
   private static String TEMPLATE_CREATOR = "Template Creator";

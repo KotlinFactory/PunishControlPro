@@ -12,6 +12,7 @@ import lombok.val;
 import net.md_5.bungee.api.connection.ProxiedPlayer;
 import org.jetbrains.annotations.NonNls;
 import org.mineacademy.burst.util.Scheduler;
+import org.mineacademy.punishcontrol.core.injector.annotations.Localizable;
 import org.mineacademy.punishcontrol.core.providers.PlayerProvider;
 import org.mineacademy.punishcontrol.core.providers.TextureProvider;
 import org.mineacademy.punishcontrol.core.storage.StorageProvider;
@@ -23,11 +24,19 @@ import org.mineacademy.punishcontrol.proxy.menus.MainMenu;
 /**
  * Browser to browse punishments created by a given staff member
  */
+@Localizable
 public final class StaffPunishesBrowser extends AbstractPunishBrowser {
 
-  @NonNls
+  // ----------------------------------------------------------------------------------------------------
+  // Localization
+  // ----------------------------------------------------------------------------------------------------
+
+  @NonNls @Localizable("Menu.Proxy.StaffPunishesBrowser.Show_Punishments_By")
   private static final String SHOW_PUNISHMENTS_CREATED_BY = "Show punishments created by";
-  private final UUID staffMember;
+
+  // ----------------------------------------------------------------------------------------------------
+  // Displaying
+  // ----------------------------------------------------------------------------------------------------
 
   public static void showTo(
       @NonNull final ProxiedPlayer player,
@@ -39,6 +48,12 @@ public final class StaffPunishesBrowser extends AbstractPunishBrowser {
       browser.displayTo(player);
     });
   }
+
+  // ----------------------------------------------------------------------------------------------------
+  // Fields & Constructor's
+  // ----------------------------------------------------------------------------------------------------
+
+  private final UUID staffMember;
 
   public StaffPunishesBrowser(
       @NonNull final MainMenu parent,
