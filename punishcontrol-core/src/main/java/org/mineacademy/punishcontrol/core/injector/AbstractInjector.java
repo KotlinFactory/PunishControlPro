@@ -34,8 +34,8 @@ public abstract class AbstractInjector<C extends Annotation, F extends Annotatio
     //      if (!clazz.getSimpleName().equalsIgnoreCase("AbstractPunishBrowser"))
     //        continue;
     //      System.out.println("Trying to inject: " + clazz.getName());
-    for (Class<?> clazz : classes) {
-      if (isAnnotationPresent(clazz, classAnnotationClass)) {
+    for (Class<?> clazz : classes)
+      if (isAnnotationPresent(clazz, classAnnotationClass))
         for (final Field field : clazz.getDeclaredFields()) {
 
           // We only inject static fields
@@ -50,8 +50,8 @@ public abstract class AbstractInjector<C extends Annotation, F extends Annotatio
           Valid.checkBoolean(
               !Modifier.isFinal(field.getModifiers()),
               "Can't inject final field '" + field.getName() + "'",
-              "Field is final!",
-              "Class: " + clazz.getName());
+              "Class: " + clazz.getName(),
+              "Field is final!");
 
           final F fieldAnnotation = field.getAnnotation(fieldAnnotationClass);
           final String path = pathFromAnnotation(fieldAnnotation);
@@ -79,8 +79,6 @@ public abstract class AbstractInjector<C extends Annotation, F extends Annotatio
             throwable.printStackTrace();
           }
         }
-      }
-    }
   }
 
   private boolean isAnnotationPresent(

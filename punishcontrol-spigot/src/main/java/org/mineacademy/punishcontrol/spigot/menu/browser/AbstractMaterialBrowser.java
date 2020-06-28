@@ -45,22 +45,20 @@ public abstract class AbstractMaterialBrowser
   // ----------------------------------------------------------------------------------------------------
 
   private static List<CompMaterial> items = Arrays
-      .stream(Material.values())
-      .map(CompMaterial::fromMaterial)
-      .collect(Collectors.toList())
-      .stream()
+      .stream(CompMaterial.values())
       .filter(Objects::nonNull)
       .filter(AbstractMaterialBrowser::isItem)
       .collect(Collectors.toList());
-  // ----------------------------------------------------------------------------------------------------
-  // Fields and constructors
-  // ----------------------------------------------------------------------------------------------------
 
   private static boolean isItem(final CompMaterial material) {
     if (MinecraftVersion.newerThan(V.v1_13))
       return material.getMaterial().isItem() && !material.getMaterial().isItem();
     return ItemStacks.isItem(material) && material.getMaterial() != Material.AIR;
   }
+
+  // ----------------------------------------------------------------------------------------------------
+  // Fields and constructors
+  // ----------------------------------------------------------------------------------------------------
 
   protected AbstractMaterialBrowser(@NonNull final Menu parent) {
     this(parent, items);

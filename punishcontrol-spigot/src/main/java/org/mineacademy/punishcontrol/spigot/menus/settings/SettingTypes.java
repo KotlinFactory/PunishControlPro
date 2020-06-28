@@ -1,6 +1,7 @@
 package org.mineacademy.punishcontrol.spigot.menus.settings;
 
 import static org.mineacademy.punishcontrol.core.util.PunishControlPermissions.IMPORT_PUNISHMENTS;
+import static org.mineacademy.punishcontrol.core.util.PunishControlPermissions.MENU_SETTINGS_LANGUAGE;
 
 import java.util.Arrays;
 import java.util.UUID;
@@ -9,16 +10,14 @@ import lombok.experimental.Accessors;
 import lombok.val;
 import org.bukkit.entity.Player;
 import org.mineacademy.fo.menu.model.ItemCreator;
+import org.mineacademy.fo.plugin.SimplePlugin;
 import org.mineacademy.fo.remain.CompMaterial;
 import org.mineacademy.punishcontrol.core.provider.Providers;
 import org.mineacademy.punishcontrol.core.util.PunishControlPermissions;
 import org.mineacademy.punishcontrol.spigot.DaggerSpigotComponent;
 import org.mineacademy.punishcontrol.spigot.Scheduler;
 import org.mineacademy.punishcontrol.spigot.menu.browser.AbstractPlayerBrowser;
-import org.mineacademy.punishcontrol.spigot.menus.browsers.CustomItemBrowser;
-import org.mineacademy.punishcontrol.spigot.menus.browsers.NotificationBrowser;
-import org.mineacademy.punishcontrol.spigot.menus.browsers.PunishImporterBrowser;
-import org.mineacademy.punishcontrol.spigot.menus.browsers.PunishTemplateBrowser;
+import org.mineacademy.punishcontrol.spigot.menus.browsers.*;
 
 @Getter
 @Accessors(fluent = true)
@@ -116,7 +115,7 @@ public enum SettingTypes {
     public boolean hasAccess(Player player) {
       return player.hasPermission(
           PunishControlPermissions.MENU_SETTINGS_CUSTOMIZATION.permission()
-      );
+                                 );
     }
 
     @Override
@@ -128,8 +127,8 @@ public enum SettingTypes {
               Arrays.asList(
                   "",
                   "&7Customize menus"
-              )
-          )
+                           )
+                )
           .build();
     }
 
@@ -154,8 +153,8 @@ public enum SettingTypes {
               Arrays.asList(
                   "Import punishments from",
                   "other plugins or from vanialla"
-              )
-          )
+                           )
+                )
           .build();
     }
 
@@ -186,6 +185,31 @@ public enum SettingTypes {
       return player.hasPermission(
           PunishControlPermissions.MENU_SETTINGS_NOTIFICATIONS.permission());
     }
+  },
+
+  LANGUAGE {
+    @Override
+    public boolean hasAccess(Player player) {
+      return player.hasPermission(MENU_SETTINGS_LANGUAGE.permission());
+    }
+
+    @Override
+    public ItemCreator itemCreator() {
+      return ItemCreator
+          .of(
+              CompMaterial.BOOKSHELF,
+              "&6Language",
+              "&7",
+              "&7Choose the language ",
+              "&7" + SimplePlugin.getNamed() + " is using")
+          .build();
+    }
+
+    @Override
+    public void showMenu(Player player) {
+      LanguageBrowser.showTo(player);
+    }
+
   };
 
   public boolean hasAccess(final Player player) {

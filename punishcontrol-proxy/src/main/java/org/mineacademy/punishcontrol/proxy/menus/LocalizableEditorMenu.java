@@ -66,7 +66,7 @@ public final class LocalizableEditorMenu extends AbstractMenu {
   public void updateInventory() {
     super.updateInventory();
 
-    for (int i = 0; i < localizable.value().size(); i++) {
+    for (int i = 0; i < localizable.value().size(); i++)
       set(
           Item
               .of(ItemType.PAPER)
@@ -75,16 +75,13 @@ public final class LocalizableEditorMenu extends AbstractMenu {
                   " ",
                   "&7" + VALUE + ": " + localizable.value().get(i),
                   " ",
-                  "&7" + CLICK_TO_EDIT
-              )
+                  "&7" + CLICK_TO_EDIT)
               .slot(i)
               .actionHandler("Edit")
-      );
-    }
+         );
 
-    if (!localizabeEditor.canMultiline()) {
+    if (!localizabeEditor.canMultiline())
       return;
-    }
 
     set(
         Item
@@ -93,7 +90,7 @@ public final class LocalizableEditorMenu extends AbstractMenu {
             .lore(ADD_A_NEW_)
             .slot(22)
             .actionHandler("Add")
-    );
+       );
   }
 
   @Override

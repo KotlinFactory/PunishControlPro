@@ -6,6 +6,7 @@ import org.mineacademy.punishcontrol.spigot.commands.*;
 import org.mineacademy.punishcontrol.spigot.importers.BukkitPunishImporter;
 import org.mineacademy.punishcontrol.spigot.listeners.SpigotDataSetter;
 import org.mineacademy.punishcontrol.spigot.listeners.SpigotListenerImpl;
+import org.mineacademy.punishcontrol.spigot.menus.LocalizableEditorMenu;
 import org.mineacademy.punishcontrol.spigot.menus.MainMenu;
 import org.mineacademy.punishcontrol.spigot.menus.browsers.*;
 import org.mineacademy.punishcontrol.spigot.menus.punish.PunishCreatorMenu;
@@ -84,6 +85,10 @@ public interface SpigotComponent {
 
   PunishImporterBrowser punishImporterBrowser();
 
+  LanguageBrowser languageBrowser();
+
+  LocalizablesBrowser localizableBrowser();
+
   // ----------------------------------------------------------------------------------------------------
   // PunishImporters
   // ----------------------------------------------------------------------------------------------------
@@ -91,4 +96,6 @@ public interface SpigotComponent {
   BukkitPunishImporter bukkitPunishImporter();
 
   StaffPunishesBrowser.Builder staffPunishesBrowserBuilder();
+
+  LocalizableEditorMenu.Builder localizableEditorMenuBuilder();
 }

@@ -95,9 +95,4 @@ public abstract class AbstractConfirmMenu extends Menu implements Schedulable {
     if (slot == 8)
       showParent();
   }
-
-  @Override
-  protected String[] getInfo() {
-    return MENU_INFORMATION;
-  }
 }

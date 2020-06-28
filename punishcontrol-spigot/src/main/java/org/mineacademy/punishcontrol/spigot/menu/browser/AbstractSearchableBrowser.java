@@ -21,7 +21,7 @@ public abstract class AbstractSearchableBrowser<T> extends AbstractBrowser<T> {
   @Localizable("Parts.Search")
   private static String SEARCH = "Search";
   @Localizable("Menus.Proxy.AbstractSearchableBrowser.Search_Lore")
-  private static final String[] SEARCH_FOR_A_VALUE = {
+  private static String[] SEARCH_FOR_A_VALUE = {
       "&7Search for a value",
   };
   private final Button searchButton;

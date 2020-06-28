@@ -13,6 +13,7 @@ import org.mineacademy.fo.menu.button.Button;
 import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.fo.remain.CompMaterial;
 import org.mineacademy.punishcontrol.core.PunishControlManager;
+import org.mineacademy.punishcontrol.core.injector.annotations.Localizable;
 import org.mineacademy.punishcontrol.core.setting.Replacer;
 import org.mineacademy.punishcontrol.core.settings.ItemSettings;
 import org.mineacademy.punishcontrol.core.settings.Settings.MySQL;
@@ -25,58 +26,77 @@ import org.mineacademy.punishcontrol.spigot.menus.browsers.SettingsBrowser;
 import org.mineacademy.punishcontrol.spigot.menus.setting.AbstractSettingsMenu;
 import org.mineacademy.punishcontrol.spigot.util.Schedulable;
 
+@Localizable
 public final class StorageSettingsMenu
     extends AbstractSettingsMenu
     implements Schedulable {
 
-  public static final int CONNECT_SLOT = 12;
-  public static final int USE_SLOT = 14;
-  public static final int HOST_SLOT = 2;
-  public static final int PORT_SLOT = 3;
-  public static final int DATABASE_SLOT = 4;
-  public static final int USER_SLOT = 5;
-  public static final int PASSWORD_SLOT = 6;
+  // ----------------------------------------------------------------------------------------------------
+  // Localization
+  // ----------------------------------------------------------------------------------------------------
 
   @NonNls
-  private static final String USER = "User";
+  @Localizable("Menu.Proxy.StorageSettingsMenu.Can_t_Connect")
+  private static String CAN_T_CONNECT = "Can't connect - See console";
+  @Localizable("Menu.Proxy.StorageSettingsMenu.AlreadyConnected")
   @NonNls
-  private static final String CONNECT = "Connect";
-  private static final String[] CONNECTION_FAILED_LORE = {
+  private static String ALREADY_CONNECTED = "Already connected";
+  @NonNls
+  @Localizable("Menu.Proxy.StorageSettingsMenu.AlreadyConnecting")
+  private static String ALREADY_CONNECTING = "Already connecting";
+  @Localizable("Menu.Proxy.StorageSettingsMenu.ConnectionFailed")
+  private static String[] CONNECT_FAILED_LORE = {
       " ",
       "&7Try to connect ",
       "&7to MySQL using",
       "&7these settings",
-      "&7Current state: &cfailed"};
-  private static final String[] CONNECTION_SUCCEEDED_LORE = {
+      "&7Current state: &cNot connected"};
+  @Localizable("Menu.Proxy.StorageSettingsMenu.ConnectionFailed")
+  private static String[] CONNECT_SUCCESS_LORE = {
       " ",
       "&7Try to connect ",
       "&7to MySQL using",
       "&7these settings",
       "&7Current state: &aSucceeded"};
-  private static final String[] USE_JSON_LORE = {
-      "",
-      "&7Click to use",
-      "&7JSON as storage"};
+  @Localizable("Parts.Connect")
+  private static String CONNECT = "Connect";
+  private static String PASSWORD = "Password";
+  @Localizable("Parts.StorageType")
+  private static String STORAGE_TYPE = "Storage Type";
+
   private static final String[] USE_MYSQL_LORE = {
       "",
       "&7Click to use",
       "&7MySQL as storage"};
-  @NonNls
-  private static final String STORAGE_TYPE = "Storage Type";
-  @NonNls
-  private static final String ALREADY_CONNECTING = "Already connecting";
-  @NonNls
-  private static final String ALREADY_CONNECTED = "Already connected";
-  @NonNls
-  private static final String STORAGE_SETTINGS = "Storage settings";
-  @NonNls
-  private static final String PASSWORD = "Password";
 
-  private static Replacer replacer = Replacer.of(
+  private static final String[] USE_JSON_LORE = {
+      "",
+      "&7Click to use",
+      "&7JSON as storage"};
+
+  private static final Replacer replacer = Replacer.of(
       " ",
       "&7Click to",
       "&7set the {type}",
       "&7Currently: {currently}");
+
+  private static final String USER = "User";
+
+  // ----------------------------------------------------------------------------------------------------
+  // Button positions
+  // ----------------------------------------------------------------------------------------------------
+
+  private static final int CONNECT_SLOT = 12;
+  private static final int USE_SLOT = 14;
+  private static final int HOST_SLOT = 2;
+  private static final int PORT_SLOT = 3;
+  private static final int DATABASE_SLOT = 4;
+  private static final int USER_SLOT = 5;
+  private static final int PASSWORD_SLOT = 6;
+
+  // ----------------------------------------------------------------------------------------------------
+  // Showing up
+  // ----------------------------------------------------------------------------------------------------
 
   private final Button connect;
   private final Button host;
@@ -92,7 +112,7 @@ public final class StorageSettingsMenu
   public StorageSettingsMenu(@NonNull final SettingsBrowser settingsBrowser) {
     super(settingsBrowser);
 
-    setTitle("&8" + STORAGE_SETTINGS);
+    setTitle("&8MySQL");
     setSize(9 * 2);
     useButton = new Button() {
       @Override
@@ -105,7 +125,7 @@ public final class StorageSettingsMenu
 
       @Override
       public ItemStack getItem() {
-        if (PunishControlManager.storageType() == StorageType.JSON) {
+        if (PunishControlManager.storageType() == StorageType.JSON)
           return
               ItemCreator
                   .of(CompMaterial.COMMAND_BLOCK)
@@ -113,22 +133,21 @@ public final class StorageSettingsMenu
                   .lores(
                       Arrays.asList(
                           USE_MYSQL_LORE
-                      )
-                  )
+                                   )
+                        )
                   .build()
                   .makeMenuTool();
-        } else {
+        else
           return ItemCreator
               .of(CompMaterial.COMMAND_BLOCK)
               .name("&6" + STORAGE_TYPE)
               .lores(
                   Arrays.asList(
                       USE_JSON_LORE
-                  )
-              )
+                               )
+                    )
               .build()
               .makeMenuTool();
-        }
       }
     };
 
@@ -175,20 +194,18 @@ public final class StorageSettingsMenu
       @Override
       public ItemStack getItem() {
         //
-        if (StorageTypes.mySQLStorageProvider.isConnected()) {
+        if (StorageTypes.mySQLStorageProvider.isConnected())
           return ItemCreator
               .ofString(ItemSettings.ENABLED.itemType())
               .name("&7" + CONNECT)
-              .lores(Arrays.asList(
-                  CONNECTION_SUCCEEDED_LORE))
+              .lores(Arrays.asList(CONNECT_SUCCESS_LORE))
               .build()
               .makeMenuTool();
-        }
         return ItemCreator
             .ofString(ItemSettings.DISABLED.itemType())
             .name("&7" + CONNECT)
             .lores(Arrays.asList(
-                CONNECTION_FAILED_LORE))
+                CONNECT_FAILED_LORE))
             .build()
             .makeMenuTool();
       }
@@ -213,7 +230,7 @@ public final class StorageSettingsMenu
                     MySQL.HOST.isEmpty()
                         ? "&cNot set"
                         : MySQL.HOST)).replacedMessage()
-            ))
+                                ))
             .build()
             .makeMenuTool();
       }
@@ -237,7 +254,7 @@ public final class StorageSettingsMenu
             .lores(Arrays.asList(
                 replacer.replaceAll("type", "port", "currently", MySQL.PORT)
                     .replacedMessage()
-            ))
+                                ))
             .build()
             .makeMenuTool();
       }
@@ -263,7 +280,7 @@ public final class StorageSettingsMenu
                         MySQL.DATABASE.isEmpty()
                             ? "&cNot set"
                             : MySQL.DATABASE)).replacedMessage()
-            ))
+                                ))
             .build()
             .makeMenuTool();
       }
@@ -290,7 +307,7 @@ public final class StorageSettingsMenu
                         MySQL.USER.isEmpty()
                             ? "&cNot set"
                             : MySQL.USER)).replacedMessage()
-            ))
+                                ))
             .build()
             .makeMenuTool();
       }
@@ -319,7 +336,7 @@ public final class StorageSettingsMenu
                     MySQL.PASSWORD.isEmpty()
                         ? "&cnot set"
                         : "****")
-            ))
+                                ))
             .build()
             .makeMenuTool();
       }
@@ -328,33 +345,26 @@ public final class StorageSettingsMenu
 
   @Override
   public ItemStack getItemAt(final int slot) {
-    if (slot == USE_SLOT) {
+    if (slot == USE_SLOT)
       return useButton.getItem();
-    }
 
-    if (slot == CONNECT_SLOT) {
+    if (slot == CONNECT_SLOT)
       return connect.getItem();
-    }
 
-    if (slot == HOST_SLOT) {
+    if (slot == HOST_SLOT)
       return host.getItem();
-    }
 
-    if (slot == PORT_SLOT) {
+    if (slot == PORT_SLOT)
       return port.getItem();
-    }
 
-    if (slot == DATABASE_SLOT) {
+    if (slot == DATABASE_SLOT)
       return database.getItem();
-    }
 
-    if (slot == USER_SLOT) {
+    if (slot == USER_SLOT)
       return user.getItem();
-    }
 
-    if (slot == PASSWORD_SLOT) {
+    if (slot == PASSWORD_SLOT)
       return password.getItem();
-    }
 
     return super.getItemAt(slot);
   }
