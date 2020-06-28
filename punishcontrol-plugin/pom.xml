@@ -39,6 +39,7 @@
 
               <!-- We want our libraries in our final jar -->
               <include>org.mineacademy:Foundation*</include>
+              <include>org.mineacademy.libraries:foundation*</include>
               <include>org.mineacademy:BungeeFoundation*</include>
               <include>org.mineacademy:Protect*</include>
               <include>org.mineacademy:Burst*</include>

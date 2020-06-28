@@ -70,7 +70,7 @@ public final class LocalizableEditorMenu extends Menu {
 
   @Override
   public ItemStack getItemAt(int slot) {
-    if (slot < localizable.value().size() - 1)
+    if (slot < localizable.value().size())
       return ItemCreator
           .of(CompMaterial.PAPER)
           .name("&3" + PART + "&7-" + (slot + 1))
@@ -82,7 +82,7 @@ public final class LocalizableEditorMenu extends Menu {
           .build()
           .make();
 
-    if (slot == 24 && localizabeEditor.canMultiline())
+    if (slot == 22 && localizabeEditor.canMultiline())
       return ItemCreator
           .ofString(ItemSettings.ADD_ITEM.itemType())
           .name("&6" + ADD)
@@ -99,11 +99,11 @@ public final class LocalizableEditorMenu extends Menu {
       ItemStack clicked) {
 
     // Create & start edit conversation
-    if (slot < localizable.value().size() - 1)
+    if (slot < localizable.value().size())
       LocalizableEditConversation.create(localizabeEditor, slot).start(player);
 
     // Create & start add conversation
-    if (slot == 24)
+    if (slot == 22)
       LocalizableAddConversation.create(localizabeEditor).start(player);
 
     super.onMenuClick(player, slot, clicked);

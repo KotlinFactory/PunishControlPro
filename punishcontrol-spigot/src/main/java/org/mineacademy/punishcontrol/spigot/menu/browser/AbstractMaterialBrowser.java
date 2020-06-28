@@ -52,7 +52,7 @@ public abstract class AbstractMaterialBrowser
 
   private static boolean isItem(final CompMaterial material) {
     if (MinecraftVersion.newerThan(V.v1_13))
-      return material.getMaterial().isItem() && !material.getMaterial().isItem();
+      return material.getMaterial().isItem();
     return ItemStacks.isItem(material) && material.getMaterial() != Material.AIR;
   }
 
