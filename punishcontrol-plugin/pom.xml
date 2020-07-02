@@ -39,7 +39,7 @@
 
               <!-- We want our libraries in our final jar -->
               <include>org.mineacademy.libraries:foundation*</include>
-              <include>org.mineacademy.libararies:bungeefoundation*</include>
+              <include>org.mineacademy.libraries:bungeefoundation*</include>
               <include>org.mineacademy:Protect*</include>
               <include>org.mineacademy.libraries:burst*</include>
               <include>org.mineacademy.plugins.external:mccommons:*</include>
