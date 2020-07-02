@@ -14,10 +14,6 @@
 
   <repositories>
     <repository>
-      <id>mineacademy-repo</id>
-      <url>https://bitbucket.org/mineacademy/libraries/raw/master</url>
-    </repository>
-    <repository>
       <id>bungeecord-repo</id>
       <url>https://oss.sonatype.org/content/repositories/snapshots</url>
     </repository>
@@ -59,8 +55,8 @@
     </dependency>
 
     <dependency>
-      <groupId>org.mineacademy</groupId>
-      <artifactId>Burst</artifactId>
+      <groupId>org.mineacademy.libraries</groupId>
+      <artifactId>burst</artifactId>
       <version>1.0.1</version>
     </dependency>
 

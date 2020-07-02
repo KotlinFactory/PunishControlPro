@@ -11,6 +11,21 @@
     </dependency>
   </dependencies>
 
+  <repositories>
+    <repository>
+      <id>mineacademy-public</id>
+      <url>https://repo.mineacademy.org/repository/external-plugins/</url>
+    </repository>
+    <repository>
+      <id>mineacademy-external-plugins</id>
+      <url>https://repo.mineacademy.org/repository/plugins/</url>
+    </repository>
+    <repository>
+      <id>mineacademy-plugins</id>
+      <url>https://repo.mineacademy.org/repository/plugins/</url>
+    </repository>
+  </repositories>
+
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <author>leonhard</author>

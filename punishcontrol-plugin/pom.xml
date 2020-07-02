@@ -38,13 +38,12 @@
               <include>org.reflections:reflections*</include>
 
               <!-- We want our libraries in our final jar -->
-              <include>org.mineacademy:Foundation*</include>
               <include>org.mineacademy.libraries:foundation*</include>
-              <include>org.mineacademy:BungeeFoundation*</include>
+              <include>org.mineacademy.libararies:bungeefoundation*</include>
               <include>org.mineacademy:Protect*</include>
-              <include>org.mineacademy:Burst*</include>
-              <include>de.exceptionflug:protocolize-plugin:*</include>
-              <include>de.exceptionflug:mccommons-plugin-proxy:*</include>
+              <include>org.mineacademy.libraries:burst*</include>
+              <include>org.mineacademy.plugins.external:mccommons:*</include>
+              <include>org.mineacademy.plugins.external:protocolize:*</include>
               <include>de.leonhard:storage*</include>
               <include>com.github.JavaFactoryDev:LightningStorage*</include>
               <include>info.debatty:java-string-similarity*</include>

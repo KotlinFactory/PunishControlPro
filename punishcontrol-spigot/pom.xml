@@ -19,10 +19,6 @@
       <id>spigot-repo</id>
       <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots</url>
     </repository>
-    <repository>
-      <id>mineacademy-repo</id>
-      <url>https://repo.mineacademy.org/repository/maven-public/</url>
-    </repository>
   </repositories>
 
   <dependencies>
@@ -65,13 +61,6 @@
       <version>2.11</version>
       <scope>provided</scope>
     </dependency>
-
-    <dependency>
-      <groupId>org.mineacademy</groupId>
-      <artifactId>Foundation</artifactId>
-      <version>LATEST</version>
-    </dependency>
-
   </dependencies>
 
   <build>
