@@ -38,13 +38,6 @@
       <scope>provided</scope>
     </dependency>
 
-    <dependency>
-      <groupId>com.google.dagger</groupId>
-      <artifactId>dagger-compiler</artifactId>
-      <version>2.11</version>
-      <scope>provided</scope>
-    </dependency>
-
     <!-- Libraries -->
     <dependency>
       <groupId>com.github.JavaFactoryDev</groupId>
@@ -82,7 +75,7 @@
     <dependency>
       <groupId>info.debatty</groupId>
       <artifactId>java-string-similarity</artifactId>
-      <version>RELEASE</version>
+      <version>2.0.0</version>
     </dependency>
 
   </dependencies>

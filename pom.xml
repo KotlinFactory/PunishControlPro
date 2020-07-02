@@ -9,22 +9,30 @@
       <artifactId>dagger</artifactId>
       <version>2.26</version>
     </dependency>
+
+    <dependency>
+      <groupId>com.google.dagger</groupId>
+      <artifactId>dagger-compiler</artifactId>
+      <version>2.11</version>
+      <scope>provided</scope>
+    </dependency>
   </dependencies>
 
   <repositories>
     <repository>
       <id>mineacademy-public</id>
-      <url>https://repo.mineacademy.org/repository/external-plugins/</url>
+      <url>https://repo.mineacademy.org/repository/public/</url>
     </repository>
     <repository>
       <id>mineacademy-external-plugins</id>
-      <url>https://repo.mineacademy.org/repository/plugins/</url>
+      <url>https://repo.mineacademy.org/repository/external-plugins/</url>
     </repository>
     <repository>
       <id>mineacademy-plugins</id>
       <url>https://repo.mineacademy.org/repository/plugins/</url>
     </repository>
   </repositories>
+
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -38,7 +46,6 @@
     <maven.compiler.target>1.8</maven.compiler.target>
     <maven.compiler.source>1.8</maven.compiler.source>
   </properties>
-
   <groupId>org.mineacademy</groupId>
   <artifactId>PunishControlPro</artifactId>
   <packaging>pom</packaging>
