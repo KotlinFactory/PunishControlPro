@@ -18,7 +18,7 @@ public class Searcher {
     final List<SearchResult> result = new ArrayList<>();
     for (final String value : values) {
 
-      if (Advanced.STARTS_WITH) {
+      if (Advanced.STARTS_WITH)
         if (value.toLowerCase().startsWith(part.toLowerCase())) {
           result.add(new SearchResult() {
             @Override
@@ -33,12 +33,10 @@ public class Searcher {
           });
           continue;
         }
-      }
 
       final double similarity = JARO_WINKLER.similarity(part, value);
-      if (similarity < Advanced.MIN_SIMILARITY) {
+      if (similarity < Advanced.MIN_SIMILARITY)
         continue;
-      }
 
       result.add((
           new SearchResult() {

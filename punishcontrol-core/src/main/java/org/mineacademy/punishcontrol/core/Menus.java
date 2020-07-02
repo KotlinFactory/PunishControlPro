@@ -9,7 +9,7 @@ import org.mineacademy.punishcontrol.core.storage.StorageProvider;
 @UtilityClass
 public class Menus {
 
-  private static final StorageProvider STORAGE_PROVIDER = Providers.storageProvider();
+  private final StorageProvider STORAGE_PROVIDER = Providers.storageProvider();
 
   private final String[] INFO_LORE = {
       "§7Punish / More information", " ", "&7Banned: {false/true}",
