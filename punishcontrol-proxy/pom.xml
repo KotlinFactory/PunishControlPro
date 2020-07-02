@@ -47,7 +47,6 @@
     </dependency>
 
     <!-- BungeeCord -->
-
     <dependency>
       <groupId>net.md-5</groupId>
       <artifactId>bungeecord-api</artifactId>
@@ -57,7 +56,7 @@
     <dependency>
       <groupId>org.mineacademy.libraries</groupId>
       <artifactId>burst</artifactId>
-      <version>1.0.1</version>
+      <version>1.0.1-SNAPSHOT</version>
     </dependency>
 
     <dependency>
