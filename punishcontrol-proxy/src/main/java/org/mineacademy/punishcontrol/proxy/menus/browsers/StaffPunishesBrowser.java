@@ -32,7 +32,7 @@ public final class StaffPunishesBrowser extends AbstractPunishBrowser {
   // ----------------------------------------------------------------------------------------------------
 
   @NonNls @Localizable("Menu.Proxy.StaffPunishesBrowser.Show_Punishments_By")
-  private static final String SHOW_PUNISHMENTS_CREATED_BY = "Show punishments created by";
+  private static String SHOW_PUNISHMENTS_CREATED_BY = "Show punishments created by";
 
   // ----------------------------------------------------------------------------------------------------
   // Displaying

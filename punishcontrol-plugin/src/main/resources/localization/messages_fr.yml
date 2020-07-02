@@ -83,7 +83,7 @@ Menu:
       Name: Créateur de Modèle
       ChoosePermission:
         Name: Choisissez une permission
-    Results_Found: {results} resultat(s) obtenu(s)
+    Results_Found: '{results} resultat(s) obtenu(s)'
     PlayerBrowser:
       Information:
         - '&7Menu pour séléctionner'

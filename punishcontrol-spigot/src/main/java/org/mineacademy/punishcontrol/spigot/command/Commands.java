@@ -30,24 +30,22 @@ public class Commands {
   }
 
   public void removeCommands(final String... cmds) {
-    for (final String cmd : cmds) {
+    for (final String cmd : cmds)
       removeCommand(cmd);
-    }
   }
 
   public boolean isRegistered(final String command) {
     final String[] splitted = command.split(" ");
     final PluginCommand pluginCommand = Bukkit.getServer().getPluginCommand(splitted[0]);
 
-    if (pluginCommand == null) {
+    if (pluginCommand == null)
       return false;
-    }
 
     return pluginCommand.isRegistered();
   }
 
   @SneakyThrows
-  @SuppressWarnings("unchecked")
+  @SuppressWarnings({"unchecked"})
   private void removeCommand(final String command) {
     final Class<?> serverClass = Class
         .forName("org.bukkit.craftbukkit." + VERSION + ".CraftServer");

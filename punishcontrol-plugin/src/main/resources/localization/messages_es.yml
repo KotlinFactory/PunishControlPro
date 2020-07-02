@@ -1,19 +1,20 @@
 # !-------------------------------------------------------------------------------------------------!
-#                       Welcome to the spanish localization of PunishControl
+#                       Bienvenido a la localización en Español de PunishControl
+#                              Traducido por Angel Avila#9124 (AngellitoX)
 # !-------------------------------------------------------------------------------------------------!
 #
 #
 #
-#    For support and documentation, please visit:
+#    Para soporte y documentación, por favor, visita:
 #    - https://github.com/kangarko/PunishControl/wiki
 #
 # !-------------------------------------------------------------------------------------------------!
 #
-#    1) COLOR CODES are supported with the '&' character. See
+#    1) Los CÓDIGOS DE COLORES son funcionales utilizando el símbolo '&'. Visita
 #       - http://minecraftwiki.net/wiki/Formatting_codes
-#       [!] When you use them, omit the message with " " or ' '.
+#       [!] Cuando los utilices, encierra el mensaje usando los símbolos " " ó ' '.
 #
-#    2) For UNICODE CHARACTERS (smileys, symbols, ..), save the file in UTF-8 encoding. See
+#    2) Para CARACTERES UNICODE (íconos, emojis, símbolos, ...), guarda éste archivo en formato UTF-8 encoding. Visita
 #       - https://github.com/kangarko/ChatControl/wiki/Use-Right-Encoding
 #
 #
@@ -23,56 +24,234 @@
 Name: Spanish
 
 #
-# Messages used in commands
+# Mensajes utilizados en comandos
 #
 Commands:
   Player:
-    Never_Played: "&cEl Jugador {player} nunca ha jugado en el servidor."
-    Not_Online: "&cEl Jugador {player} &cno está en línea en este servidor."
-    Not_Exists: "&cEl Jugador {player} &cno existe."
+    Never_Played: '&cEl jugador {player} nunca se ha conectado a este servidor.'
+    Not_Online: '&cEl jugador {player} &cno está conectado en este servidor.'
+    Not_Exists: '&cEl jugador {player} &cno existe.'
 
-#
-# Message's when a player is punished
-#
 Punish:
-  # Placeholders: {console_line}, {player}, {type}, {reason}, {duration}, {expiration}, {ip}
+
   Message_To_Broadcast:
-    - "&7{chat_line}"
-    - "&7El Jugador {player} fue castigado."
-    - "&7Tipo: &6{type}"
-    - "&7Razón: {reason}"
-    - "&7IP: {ip}"
-    - "&7{chat_line}"
+    - '&7{chat_line}'
+    - '&7El jugador {player} ha sido sancionado.'
+    - '&7Tipo: &6{type}'
+    - '&7Razón: {reason}'
+    - '&7IP: {ip}'
+    - '&7{chat_line}'
 
   Ban_Message:
     - ""
-    - "&eSe le ha prohibido"
-    - "&eRazón: {reason}"
-    - "&eExpiración: {expiration}"
-    - ""
+    - '&eHas sido baneado'
+    - '&eRazón: {reason}'
+    - '&eExpiración: {expiration}'
+    - '&eCreador: {creator}'
+
+  Warn_Message:
+    - '&eHas recibido una advertencia: {reason}'
+    - '&eExpiración: {expiration}'
 
   Mute_Message:
-    - "&eHas sido silenciado"
-    - "&eRazón: {reason}"
-    - "&eExpiración: {expiration}"
+    - '&eHas sido silenciado.'
+    - '&eRazón: {reason}'
+    - '&eExpiración: {expiration}'
     - ""
 
-  #
-  Warn_Message:
-    - "&eSe le ha advertido: {reason}"
-    - "&eExpiración: {expiration}"
-
   Kick_Message:
-    - "&3You have been kicked!"
-    - "&6Reason: &7{reason}"
+    - "&3Has sido kickeado!"
+    - "&6Razón: &7{reason}"
+
+
+Menu:
+  Proxy:
+    TemplateCreator:
+      Choose_Duration:
+        Lore:
+          - '&7Elige la duración'
+          - '&7de la sanción'
+      Already:
+        SuperSilent: '&cEsta sanción ya es súper silenciosa'
+      Name: Creador de Plantilla
+      ChoosePermission:
+        Name: Elige el permiso
+    Results_Found: Encontrado {results} resultado(s)
+    PlayerPermissionBrowser:
+      Lore:
+        - '&7Menú para visualizar'
+        - '&7los permisos que tiene'
+        - '&7un jugador.'
+        - '&7Los cambios serán'
+        - '&7temporales.'
+    Create_New_Lore:
+      - ' '
+      - '&7Crear nueva sanción'
+    Template:
+      Make:
+        SuperSilent:
+          Lore:
+            - ""
+            - '&7Click para hacer'
+            - '&7la sanción'
+            - '&7súper silenciosa'
+          Name: Hacer súper silencioso
+        Not:
+          SuperSilent:
+            Lore:
+              - ""
+              - '&7Click para hacer'
+              - '&7la sanción'
+              - '&7NO súper silenciosa'
+          Silent:
+            Lore:
+              - ' '
+              - '&7Click para hacer'
+              - '&7la sanción'
+              - '&7NO silenciosa'
+        Silent:
+          Name: Hacer silencioso
+    ChooseAction:
+      Lore:
+        - '&7Menú para seleccionar'
+        - '&7acciones para jugadores'
+    LocalizablesBrowser:
+      Information:
+        - Menú para buscar y editar
+        - las traducciones de PunishControl
+    LocalizableEditorMenu:
+      Edit: Editar localización
+    PlayerBrowser:
+      Information:
+        - '&7Menú para seleccionar'
+        - '&7un jugador'
+      Compass_Lore:
+        - '&7Buscar a un jugador'
+    StorageSettingsMenu:
+      AlreadyConnecting: Conectándose
+      AlreadyConnected: Conectado
+      ConnectionFailed:
+        - ' '
+        - '&7Intenta conectarte'
+        - '&7a MySQL usando'
+        - '&7estos ajustes'
+        - '&7Estado actual: &cNo conectado'
+      Can_t_Connect: No se pudo conectar - Lee la consola
+    Punish:
+      Title: Buscar Sanciones
+      Lore:
+        - ""
+        - '&6Objetivo: &7{target}'
+        - '&6Razón: &7{reason}'
+        - '&6Creación: &7{creation}'
+        - '&6Duración: &7{duration}'
+        - '&6Fin: &7{end}'
+        - '&6Creador: &7{creator}'
+        - '&7Click derecho para remover'
+      Remove: Click derecho para remover
+      Already_Removed: Esta sanción ya está removida
+    Main:
+      Player_Lore:
+        - '&7Ver jugadores'
+        - '&7para seleccionar a'
+        - '&7uno para más'
+        - '&7acciones.'
+      View_Settings_Lore: Ver ajustes para
+    Material-Browser:
+      Information:
+        - ""
+        - '&7Menú para seleccionar materiales'
+        - '&7que encajen con tus gustos.'
+        - '&7Más items serán añadidos pronto.'
+    GroupBrowser:
+      Information:
+        - '&7Menú para visualizar'
+        - '&7los grupos que'
+        - '&7tenga un jugador.'
+        - '&7No se pueden hacer'
+        - '&7cambios por ahora.'
+      Lore:
+        - '&6Prioridad: &7{priority}'
+        - '&6Límite de Ban: &7{ban-limit}'
+        - '&6Límite de Mute: &7{mute-limit}'
+        - '&6Límite de Advertencias: &7{warn-limit}'
+        - '&6Anular sanciones: &7{override}'
+        - '&6Única plantilla: &7{template_only}'
+  Templates:
+    Information:
+      - '&7Menú para visualizar plantillas.'
+      - '&7Puedes editar las'
+      - '&7plantillas también'
+  Choose_Duration: Elegir duración
+  Main:
+    Punish_Lore:
+      - Buscar sanciones creadas.
+      - Click derecho para ver
+      - jugadores sancionados.
+  Settings:
+    Information:
+      - '&7Menú para elegir'
+      - '&7algún ajuste'
+    Choose:
+      Name: Elegir Ajustes
+  Template:
+    Add:
+      Lore:
+        - '&7Click aquí para añadir'
+        - '&7plantillas personalizadas.'
+      Name: Añadir plantillas
+    Lore:
+      - '&6Tipo: &7{type}'
+      - '&6Duración: &7{duration}'
+      - '&6Razón: &7{reason}'
+      - '&6Permiso: &7{permission}'
+      - '&6Silencioso: {silent}'
+      - '&6Súper-Silencioso: {super-silent}'
+      - '&6Acceso: &7{access}'
+      - Click derecho para remover
+
+
+
+Parts:
+  Add: Añadir
+  Has_No_Access: Sin acceso
+  Currently: Actualmente
+  Yes: Sí
+  Apply: Aplicar
+  Materials: Materiales
+  Break: Dispersión
+  Confirm: Confirmar
+  Languages: Lenguajes
+  Reason: Razón
+  Has_Access: Con acceso
+  Groups: Grupos
+  Change_Type: Cambiar tipo
+  Permission: Permiso
+  Permissions: Permisos
+  Settings: Ajustes
+  Punishments: Sanciones
+  Players: Jugadores
+  No: No
+  Messages: Mensajes
+  StorageType: Tipo de almacenamiento
+  Connect: Conectar
+  Silent: Silencioso
+  Duration: '&6Duración'
+  Permission_To: Permiso para
+  SuperSilent: Súper-silencioso
+  Not: no
+  Part: Parte
+  Action_For: Acción para
+  Select: Seleccionar
+  CreateNew: Crear Nuevo
 
 #
-# Hash value used in menus
-# Link: https://minecraft-heads.com/custom-heads/miscellaneous/23236-spain
+# Valor Hash utilizado en los menús
+# Link: https://minecraft-heads.com/custom-heads/miscellaneous/27577-united-kingdom
 #
 Skull_Hash: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzJiZDQ1MjE5ODMzMDllMGFkNzZjMWVlMjk4NzQyODc5NTdlYzNkOTZmOGQ4ODkzMjRkYThjODg3ZTQ4NWVhOCJ9fX0=
 
 #
-# Internal do not touch!
+# Código interno. ¡NO TOCAR!
 #
-Version: 1
+Version: '1'

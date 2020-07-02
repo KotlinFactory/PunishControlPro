@@ -22,23 +22,11 @@ import org.mineacademy.punishcontrol.proxy.conversations.DurationChooseConversat
 @Accessors(fluent = true)
 public abstract class AbstractDurationChooser extends AbstractMenu {
 
-  private static final int SIZE = 9 * 5;
-
-  // ----------------------------------------------------------------------------------------------------
-  // Button
-  // ----------------------------------------------------------------------------------------------------
-  private static final int PERMANENT_SLOT = 8;
-  private static final int YEAR_SLOT = 0;
-  private static final int MONTH_SLOT = 9;
-  private static final int DAY_SLOT = 9 * 3;
-  private static final int HOUR_SLOT = 9 * 4;
-  private static final int CLOCK_SLOT = 26;
-  private static final int APPLY_SLOT = 22;
-  // ----------------------------------------------------------------------------------------------------
+  // -----------------------------------------------------------
   // Localization
   // ----------------------------------------------------------------------------------------------------
   @NonNls @Localizable("Parts.Apply")
-  private static final String APPLY = "Apply";
+  private static String APPLY = "Apply";
   @NonNls @Localizable("Parts.Make_Permanent")
   private static String MAKE_PERMANENT = "Make permanent";
   @NonNls @Localizable(value = "Menu.Choose_Duration")
@@ -47,6 +35,20 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
   private static String[] RIGHT_LEFT_CLICK_LORE = {
       "&7Left click to add",
       "&7Right click to remove"};
+
+
+  // ----------------------------------------------------------------------------------------------------
+  // Button
+  // ----------------------------------------------------------------------------------------------------
+
+  private static final int SIZE = 9 * 5;
+  private static final int PERMANENT_SLOT = 8;
+  private static final int YEAR_SLOT = 0;
+  private static final int MONTH_SLOT = 9;
+  private static final int DAY_SLOT = 9 * 3;
+  private static final int HOUR_SLOT = 9 * 4;
+  private static final int CLOCK_SLOT = 26;
+  private static final int APPLY_SLOT = 22;
 
   // ----------------------------------------------------------------------------------------------------
   // Fields & Constructors
@@ -83,7 +85,7 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
             .lore("")
             .slot(APPLY_SLOT)
             .actionHandler("Apply")
-       );
+    );
 
     set(
         Item
@@ -95,7 +97,7 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
                 "&7" + Settings.Advanced.formatDate(System.currentTimeMillis() + ms))
             .slot(CLOCK_SLOT)
             .actionHandler("Clock")
-       );
+    );
 
     set(
         Item
@@ -104,7 +106,7 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
             .lore(RIGHT_LEFT_CLICK_LORE)
             .slot(YEAR_SLOT)
             .actionHandler("Year")
-       );
+    );
 
     set(
         Item
@@ -113,7 +115,7 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
             .lore(RIGHT_LEFT_CLICK_LORE)
             .slot(MONTH_SLOT)
             .actionHandler("Month")
-       );
+    );
 
     set(
         Item
@@ -122,7 +124,7 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
             .lore(RIGHT_LEFT_CLICK_LORE)
             .slot(DAY_SLOT)
             .actionHandler("Day")
-       );
+    );
 
     set(
         Item
@@ -131,7 +133,7 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
             .lore(RIGHT_LEFT_CLICK_LORE)
             .slot(HOUR_SLOT)
             .actionHandler("Hour")
-       );
+    );
 
     set(
         Item
@@ -140,7 +142,7 @@ public abstract class AbstractDurationChooser extends AbstractMenu {
             .lore("")
             .actionHandler("Perma")
             .slot(PERMANENT_SLOT)
-       );
+    );
   }
 
   protected abstract void confirm();

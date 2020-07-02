@@ -104,8 +104,7 @@ public final class PunishControl
                   "&7works brilliantly on BungeeCord.",
                   "&7Make sure to install PunishControl on",
                   "&7or our BungeeCord network ",
-                  "to make use of all its abilities"
-              )
+                  "to make use of all its abilities")
               .itemType(CompMaterial.GREEN_STAINED_GLASS)
       );
   }

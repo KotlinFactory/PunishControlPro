@@ -31,8 +31,8 @@
       <fileset dir="../BungeeFoundation/target/classes"/>
       <fileset dir="../BungeeDesigner/Burst/target/classes"/>
       <zipgroupfileset
-        dir="../BungeeDesigner/protocolize/protocolize-lib/target"
-        includes="**/*protocolize-lib.jar"/>
+        dir="../BungeeDesigner/protocolize/protocolize-plugin/target"
+        includes="**/*protocolize-plugin.jar"/>
       <zipgroupfileset
         dir="../mccommons/mccommons-plugin/mccommons-plugin-proxy/target"
         includes="**/*mccommons-plugin-proxy-2.0.0.jar"/>

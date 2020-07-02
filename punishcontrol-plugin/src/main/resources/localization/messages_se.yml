@@ -1,0 +1,781 @@
+Name: Swedish
+
+#
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Messages used in commands
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Commands:
+
+  Player:
+
+    Never_Played: '&cSpelaren {player} har aldrig spelat på servern.'
+
+    Not_Online: '&cSpelaren {player} &cär inte online på denna server.'
+
+    Not_Exists: '&cSpelaren {player} &cexisterar inte.'
+
+Punish:
+
+  Ban_Message:
+
+    - ""
+
+    - '&eDu har blivit bannlyst'
+
+    - '&eAnledning: {reason}'
+
+    - '&eUtgångsdatum: {expiration}'
+
+    - '&eSkapare: {creator}'
+
+  Kick_Message:
+
+    - '&3Du har sparkats!'
+
+    - '&6Anledning: &7{reason}'
+
+  Parts:
+
+    Month: Månad
+
+    Year: År
+
+    Day: Dag
+
+    Hour: Timme
+
+  Message_To_Broadcast:
+
+    - '&7{chat_line}'
+
+    - '&7Spelaren {player} straffades.'
+
+    - '&7Typ: &6{type}'
+
+    - '&7Anledning: {reason}'
+
+    - '&7IP: {ip}'
+
+    - '&7{chat_line}'
+
+  Warn_Message:
+
+    - '&eDu har varnats: {reason}'
+
+    - '&eUtgångsdatum: {expiration}'
+
+  Hash:
+
+    Month:
+
+      Hash: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDljNDVhMjRhYWFiZjQ5ZTIxN2MxNTQ4MzIwNDg0OGE3MzU4MmFiYTdmYWUxMGVlMmM1N2JkYjc2NDgyZiJ9fX0=
+
+    Year:
+
+      Hash: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYzUyZmIzODhlMzMyMTJhMjQ3OGI1ZTE1YTk2ZjI3YWNhNmM2MmFjNzE5ZTFlNWY4N2ExY2YwZGU3YjE1ZTkxOCJ9fX0=
+
+    Day:
+
+      Hash: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzE5M2RjMGQ0YzVlODBmZjlhOGEwNWQyZmNmZTI2OTUzOWNiMzkyNzE5MGJhYzE5ZGEyZmNlNjFkNzEifX19
+
+    Hour:
+
+      Hash: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvMzFmMzQ2MmE0NzM1NDlmMTQ2OWY4OTdmODRhOGQ0MTE5YmM3MWQ0YTVkODUyZTg1YzI2YjU4OGE1YzBjNzJmIn19fQ==
+
+  Mute_Message:
+
+    - '&eDu har tystats'
+
+    - '&eAnledning: {reason}'
+
+    - '&eUtgångsdatum: {expiration}'
+
+    - ""
+
+Menu:
+
+  Proxy:
+
+    NotificationBrowser:
+
+      Menu_Information:
+
+        - '&7Alla nuvarande notifikationer'
+
+        - '&7visas här'
+
+    TemplateCreator:
+
+      Choose_Duration:
+
+        Lore:
+
+          - '&7Välj'
+
+          - '&7längden på'
+
+          - '&7straffet'
+
+      Already:
+
+        SuperSilent: '&cStraffet är redan supertyst'
+
+      Name: Mallskapare
+
+      ChoosePermission:
+
+        Name: Välj tillstånd
+
+    Results_Found: Hittade {results} resultat
+
+    Custom_Item_Browser:
+
+      Name: Anpassade Föremål
+
+    PlayerPermissionBrowser:
+
+      Lore:
+
+        - '&7Meny för att visa'
+
+        - '&7tillstånden'
+
+        - '&7en spelare har'
+
+        - '&7ändringar kommer '
+
+        - '&7vara temporära'
+
+    Create_New_Lore:
+
+      - ' '
+
+      - '&7Skapa nytt straff'
+
+    PunishTypes:
+
+      ChooseType_Lore: Välj typ
+
+    StaffPunishesBrowser:
+
+      Show_Punishments_By: Visa straff skapade av
+
+    Template:
+
+      Make:
+
+        SuperSilent:
+
+          Lore:
+
+            - ""
+
+            - '&7Klicka för att'
+
+            - '&7göra straffet'
+
+            - '&7supertyst'
+
+          Name: Gör supertyst
+
+        Silent:
+
+          Lore:
+
+            - ""
+
+            - '&7Klicka för att'
+
+            - '&7göra straffet'
+
+            - '&7tyst'
+
+        Not:
+
+          SuperSilent:
+
+            Lore:
+
+              - ""
+
+              - '&7Klicka för att'
+
+              - '&7göra straffet'
+
+              - '&7inte supertyst'
+
+          Silent:
+
+            Lore:
+
+              - ' '
+
+              - '&7Klicka för att'
+
+              - '&7göra straffet'
+
+              - '&7inte tyst'
+
+        Silen:
+
+          Namet: Gör tyst
+
+    ChooseAction:
+
+      Settings_Lore:
+
+        - ' '
+
+        - '&7Inställningar för spelare'
+
+      Player_Offline_Lore:
+
+        - ' '
+
+        - '&cInaktiverad:'
+
+        - '&7Spelaren är offline'
+
+      Lore:
+
+        - '&7Meny för att välja '
+
+        - '&7Handlingar för spelare'
+
+      View_Punishments:
+
+        - ""
+
+        - '&7Visa straff'
+
+    ConfirmMenu:
+
+      ApplyAction:
+
+        Lore:
+
+          - '&7Tillämpa handling'
+
+    LanguageBrowser:
+
+      IS_CURRENT_LANGUAGE_CLICK_TO_EDIT: Är nuvarande språk. Klick för att ändra
+
+    LocalizablesBrowser:
+
+      Information:
+
+        - Meny för att bläddra och ändra
+
+        - lokaliserbara meddelanden i PunishControl
+
+    LocalizableEditorMenu:
+
+      Edit: Ändra lokaliserbara
+
+    PlayerBrowser:
+
+      Information:
+
+        - '&7Meny för att välja'
+
+        - '&7en spelare'
+
+      Compass_Lore:
+
+        - '&7Sök efter en spelare'
+
+    StorageSettingsMenu:
+
+      AlreadyConnecting: Ansluter redan
+
+      AlreadyConnected: Redan ansluten
+
+      ConnectionFailed:
+
+        - ' '
+
+        - '&7Försök att ansluta '
+
+        - '&7till MySQL med'
+
+        - '&7dessa inställningar'
+
+        - '&7Nuvarande tillstånd: &cInte ansluten'
+
+      Can_t_Connect: Kan inte ansluta - Se konsol
+
+    Menu:
+
+      Punish:
+
+        Menu_Information:
+
+          - Visa straff
+
+    Punish:
+
+      Title: Blädra mellan Straff
+
+      Lore:
+
+        - ""
+
+        - '&6Mål: &7{target}'
+
+        - '&6Anledning: &7{reason}'
+
+        - '&6Skapades: &7{creation}'
+
+        - '&6Varaktighet: &7{duration}'
+
+        - '&6Slut: &7{end}'
+
+        - '&6Skapare: &7{creator}'
+
+        - '&7Högerklicka för att ta bort'
+
+      Remove: Högerklicka för att ta bort
+
+      Already_Removed: Straff är redan borttaget
+
+    Main:
+
+      Player_Lore:
+
+        - '&7Visa spelare'
+
+        - '&7för att välja'
+
+        - '&7en för mer'
+
+        - '&7handlingar'
+
+      View_Settings_Lore: Visa Inställningar för
+
+    Material-Browser:
+
+      Information:
+
+        - ""
+
+        - '&7Meny för att välja föremål'
+
+        - '&7som uppfyller dina önskningar bäst'
+
+        - '&7mer föremål kommer att läggas till snart'
+
+      MenuInformation:
+
+        - ""
+
+        - '&7Meny för att välja föremål'
+
+        - '&7som uppfyller dina önskningar bäst'
+
+        - '&7mer föremål kommer att läggas till snart'
+
+    GroupBrowser:
+
+      Information:
+
+        - '&7Meny för att'
+
+        - '&7visa grupperna'
+
+        - '&7en spelare har'
+
+        - '&7ändringar kan'
+
+        - '&7inte göras än'
+
+      Lore:
+
+        - '&6Prioritet: &7{priority}'
+
+        - '&6Bannlysningsgräns: &7{ban-limit}'
+
+        - '&6Tystnadsgräns: &7{mute-limit}'
+
+        - '&6Varningsgräns: &7{warn-limit}'
+
+        - '&6Överskrida-Straff: &7{override}'
+
+        - '&6Endast mall: &7{template_only}'
+
+  Templates:
+
+    Information:
+
+      - '&7Meny för att visa mallar'
+
+      - '&7Du kan ändra'
+
+      - '&7mallarna också'
+
+  Choose_Duration: Välj varaktighet
+
+  Main:
+
+    Punish_Lore:
+
+      - Bläddra mellan skapade straff.
+
+      - Högerklicka för att visa
+
+      - straffade spelare
+
+  Settings:
+
+    Information:
+
+      - '&7Meny för att välja'
+
+      - '&7en inställning'
+
+    Choose:
+
+      Name: Välj Inställningar
+
+  Template:
+
+    Add:
+
+      Lore:
+
+        - '&7Klicka här för att'
+
+        - '&7Lägga till anpassade mallar'
+
+      Name: Lägg till mall
+
+    Lore:
+
+      - '&6Typ: &7{type}'
+
+      - '&6Varaktighet: &7{duration}'
+
+      - '&6Anledning: &7{reason}'
+
+      - '&6Tillstånd: &7{permission}'
+
+      - '&6Tyst: {silent}'
+
+      - '&6Supertyst: {super-silent}'
+
+      - '&6Tillgång: &7{access}'
+
+      - Högerklicka för att ta bort
+
+Parts:
+
+  Add: Lägg till
+
+  Has_No_Access: Har ingen tillgång
+
+  Currently: För närvarande
+
+  Kick: Sparka
+
+  Yes: Ja
+
+  Apply: Tillämpa
+
+  Materials: Material
+
+  Break: Avbryt
+
+  Confirm: Bekräfta
+
+  Languages: Språk
+
+  Removed: Borttagen
+
+  Reason: Anledningen
+
+  Choose_Action: Välj handling
+
+  Has_Access: Har tillgång
+
+  Groups: Grupper
+
+  Change_Type: Ändra typ
+
+  Permission: Tillstånd
+
+  Permissions: Tillstånd
+
+  Punish: Straff
+
+  Settings: Inställningar
+
+  No_Perm: Inget tillstånd
+
+  Punishments: Straff
+
+  Players: Spelare
+
+  No: Nej
+
+  Punish_Templates: StraffMallar
+
+  Messages: Meddelanden
+
+  StorageType: Lagringstyp
+
+  Connect: Anslut
+
+  Silent: Tyst
+
+  Duration: '&6Varaktighet'
+
+  Permission_To: Tillstånd för
+
+  SuperSilent: Supertyst
+
+  Not: inte
+
+  Data_For: Data för
+
+  Part: Del
+
+  Action_For: Handling för
+
+  Select: Välj
+
+  CreateNew: Skapa ny
+
+  Make_Permanent: Gör permanent
+
+#
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Hash value used in menus
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Link: https://minecraft-heads.com/custom-heads/miscellaneous/27577-united-kingdom
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Skull_Hash: eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvYTllZGNkZDdiMDYxNzNkN2QyMjFjNzI3NGM4NmNiYTM1NzMwMTcwNzg4YmI2YTFkYjA5Y2M2ODEwNDM1YjkyYyJ9fX0=
+
+#
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Internal do not touch!
+Version: '1'
+

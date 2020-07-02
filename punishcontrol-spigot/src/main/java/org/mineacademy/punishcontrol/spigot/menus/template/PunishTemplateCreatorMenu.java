@@ -182,6 +182,8 @@ public final class PunishTemplateCreatorMenu extends Menu {
     setSize(SIZE);
 
     setTitle("&8" + TEMPLATE_CREATOR);
+
+
     chooseDuration = new Button() {
       @Override
       public void onClickedInMenu(

@@ -13,6 +13,7 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 import org.mineacademy.fo.MinecraftVersion;
 import org.mineacademy.fo.MinecraftVersion.V;
+import org.mineacademy.fo.debug.Debugger;
 import org.mineacademy.fo.menu.Menu;
 import org.mineacademy.fo.menu.model.ItemCreator;
 import org.mineacademy.fo.remain.CompMaterial;
@@ -51,9 +52,14 @@ public abstract class AbstractMaterialBrowser
       .collect(Collectors.toList());
 
   private static boolean isItem(final CompMaterial material) {
-    if (MinecraftVersion.newerThan(V.v1_13))
-      return material.getMaterial().isItem();
-    return ItemStacks.isItem(material) && material.getMaterial() != Material.AIR;
+    try {
+      if (MinecraftVersion.newerThan(V.v1_13))
+        return material.getMaterial().isItem();
+      return ItemStacks.isItem(material) && material.getMaterial() != Material.AIR;
+    } catch (Throwable throwable) {
+      Debugger.debug("items", "Exception while checking whether an item is obtainable");
+      return false;
+    }
   }
 
   // ----------------------------------------------------------------------------------------------------
